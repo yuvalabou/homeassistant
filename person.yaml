@@ -1,0 +1,13 @@
+##############################################
+#                   PERSONS                  #
+##############################################
+- name: Yuval
+  id: yuval
+  device_trackers:
+    - device_tracker.yuval_mi9t #ping
+    - device_tracker.mi_9t #mobile app
+- name: Tohar
+  id: tohar
+  device_trackers:
+    - device_tracker.tohar_mi7 #ping
+    - device_tracker.redmi_note_7 #mobile app

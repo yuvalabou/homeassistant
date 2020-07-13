@@ -1,0 +1,226 @@
+##################################################
+#     Home Assistant Main Configuration File     #
+#            Yuval Aboulafia - 062020            #
+##################################################
+
+##################################################
+#                      CORE                      #
+##################################################
+# Home Assistant core settings.
+homeassistant:
+  # Name of the location where Home Assistant is running.
+  name: Home
+  # Location required to calculate the time the sun rises and sets.
+  latitude: !secret home_lat
+  longitude: !secret home_lon
+  # Impacts weather/sunrise data (altitude above sea level in meters).
+  elevation: !secret elevation
+  # metric for Metric, imperial for Imperial.
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones.
+  time_zone: Asia/Jerusalem
+  # Customizing entities.
+  customize: !include customize.yaml
+
+# Mobile App integration allows Home Assistant mobile app to easily integrate with Home Assistant.
+mobile_app:
+
+# The http integration serves all files and data required for the Home Assistant frontend.
+#http:
+
+# The api integration exposes a RESTful API and allows one to interact with a Home Assistant instance that is running headless.
+#api:
+
+##################################################
+#                       GUI                      #
+##################################################
+# Enables the frontend.
+frontend:
+  themes: !include_dir_merge_named themes
+
+# Enables custom UI Settings.
+lovelace:
+  mode: yaml
+  resources: !include lovelace/resources.yaml
+
+# Enables configuration UI.
+config:
+
+# Enables a map showing the location of tracked devices.
+map:
+
+# Iframe Panels
+#panel_iframe: !include panel_iframe.yaml
+
+##################################################
+#                     PERSONS                    #
+##################################################
+# Person integration allows connecting device tracker entities to one or more person entities.
+person: !include person.yaml
+
+# Presence detection and tracking.
+device_tracker: !include device_tracker.yaml
+
+# Zones allow you to specify certain regions on earth.
+zone: !include zone.yaml
+
+##################################################
+#                   DISCOVERY                    #
+##################################################
+# Discover some devices automatically.
+discovery:
+  ignore:
+    - yeelight
+
+# Discover some devices automatically.
+zeroconf:
+
+# Discover some devices automatically.
+ssdp:
+
+##################################################
+#                  INTEGRATIONS                  #
+##################################################
+# Xiaomi_miio vacuum platform allows you to control the state of your Xiaomi Mi Robot Vacuum.
+#vacuum:
+#  - platform: xiaomi_miio
+#    host: !secret vacuum_host
+#    token: !secret vacuum_token
+
+#media_player:
+#  - platform: androidtv
+#    host: !secret tv_host
+#    name: Pilot-TV
+#    adb_server_ip: !secret localhost
+
+# Uses the Speedtest.net web service to measure network bandwidth performance.
+speedtestdotnet:
+
+# The input_datetime integration allows the user to define date and time values.
+input_datetime:
+  both_date_and_time:
+    name: Input with both date and time
+    has_date: true
+    has_time: true
+  only_date:
+    name: Input with only date
+    has_date: true
+  only_time:
+    name: Input with only time
+    has_time: true
+
+# Displays a variety of information related to the Jewish Calendar as a variety of sensors.
+jewish_calendar:
+  language: hebrew
+
+# Allows you to monitor the system information provided by the Glances API.
+glances:
+
+# The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date.
+anniversaries: !include anniversaries.yaml
+
+# The var component is a Home Assistant integration for declaring and setting generic variable entities.
+#var: !include variables.yaml
+
+# The 'garbage_collection' component is a Home Assistant custom sensor for monitoring regular garbage collection schedule.
+garbage_collection: !include garbage_collection.yaml
+
+# Google calendar platform allows you to connect to your Google Calendars and generate binary sensors.
+#google:
+#  client_id: !secret gcalendar_id
+#  client_secret: !secret gcalendar_client_secret
+
+# Yeelight integration allows you to control your Yeelight Wifi bulbs with Home Assistant.
+yeelight: !include yeelight.yaml
+
+#notify:
+#  - platform: discord
+#    name: Discord
+#    token: !secret discord_bot
+
+# The pi_hole integration allows you to retrieve statistics and interact with a Pi-hole system.
+pi_hole:
+  host: !secret nanopi_host
+
+weather:
+  - platform: openweathermap
+    api_key: !secret openweathermap
+
+proxmoxve: !include proxmoxve.yaml
+
+shelly: !include shelly.yaml
+
+##################################################
+#                    LOG COMPONENTS              #
+##################################################
+# Enables support for tracking state changes over time.
+history: !include log_and_history_exclusion.yaml
+
+# View events in a logbook
+logbook: !include log_and_history_exclusion.yaml
+
+# Stores details in a database, which then are handled by the history integration.
+recorder:
+  db_url: !secret mariadb_address
+  purge_keep_days: 30
+  exclude:
+    entities:
+     # Date_Time platform.
+      - sensor.time
+      - sensor.time_date
+      - sensor.date
+      - sensor.date_time
+    domains:
+      - sun
+      - weather
+
+# Set the default level for the logger.
+logger:
+  default: warning
+  logs:
+    custom_components.logbook_cache: debug
+
+# Stores information about all logged errors and warnings in Home Assistant.
+system_log:
+  max_entries: 100
+
+##################################################
+#                     COMPONENTS                 #
+##################################################
+# The updater binary sensor will check daily for new releases.
+updater:
+  reporting: false
+  include_used_components: true
+
+# Track the sun.
+sun:
+
+# System health.
+system_health:
+
+# Python scripts that are exposed as services in Home Assistant.
+python_script:
+
+##################################################
+#                     DOMAINS                   #
+##################################################
+group: !include group.yaml
+automation: !include automation.yaml
+#scene: !include scene.yaml
+
+sensor: !include sensor.yaml
+binary_sensor: !include binary_sensor.yaml
+utility_meter: !include utility_meter.yaml
+timer: !include timer.yaml
+
+switch: !include switch.yaml
+light: !include light.yaml
+
+input_boolean: !include input_boolean.yaml
+#input_number: !include input_number.yaml
+input_select: !include input_select.yaml
+#input_text: !include input_text.yaml
+
+script: !include script.yaml
+#rest_command: !include rest_command.yaml
+#shell_command: !include shell_command.yaml

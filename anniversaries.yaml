@@ -1,0 +1,19 @@
+############################################
+#              ANNIVERSARIES               #
+############################################
+# Anniversary Countdown Sensor for Home Assistant
+# The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date such as birthdays, but can be used for any anniversary which occurs annually on the same date.
+# https://github.com/pinkywafer/Anniversaries
+sensors:
+  # Birthdays
+  - name: Yuval Birthday
+    date: '1990-05-19'
+  - name: Tohar Birthday
+    date: '1995-03-25'
+  - name: Harel-Nissim Birthday
+    date: '2016-07-04'
+  - name: Rotem-David Birthday
+    date: '2018-07-18'
+  # Anniversaries
+  - name: Marriage anniversary
+    date: '2015-09-02'

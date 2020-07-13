@@ -1,0 +1,55 @@
+############################################################
+#                        Power supply                      #
+############################################################
+substitutions:
+  devicename: ps
+  upper_devicename: Power supply
+
+esphome:
+  name: ${devicename}
+  platform: ESP8266
+  board: esp12e
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_pass
+  manual_ip:
+    static_ip: 10.0.0.81
+    gateway: 10.0.0.138
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${devicename}
+    password: !secret ap_pass
+# Enable backup AP
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Enable OTA Updates
+ota:
+
+# Code
+sensor:
+  # WiFi sensor
+  - platform: wifi_signal
+    name: ${upper_devicename} WiFi reception
+    update_interval: 60s
+
+binary_sensor:
+  - platform: status
+    name: ${upper_devicename} Connection
+
+switch:
+  - platform: restart
+    name: Restart ${upper_devicename}
+  - platform: gpio
+    name: ${upper_devicename} Toggle
+    pin: 
+      number: GPIO4
+      inverted: true

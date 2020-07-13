@@ -1,0 +1,8 @@
+###################################################
+#                    VARIABLES                    #
+###################################################
+electricity_price:
+  friendly_name: Electricity price
+  initial_value: '52.46'
+  unit_of_measurement: 'אגורות'
+  icon: mdi:currency-ils

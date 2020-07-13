@@ -1,0 +1,24 @@
+####################################################
+#                  INPUT BOOLEANS                  #
+####################################################
+# Vacuum
+#cleaned_today:
+#  name: 'Cleaned today'
+#  initial: 'off'
+#  icon: mdi:broom
+
+# Boiler
+boiler_today:
+  name: 'Boiler today'
+  initial: 'off'
+  icon: mdi:coolant-temperature
+
+# Movement detection
+shabat_mode:
+  name: 'מצב שבת'
+  initial: 'off'
+  icon: mdi:human-greeting
+
+night_light_override:
+  name: Night Light Override
+  initial: 'off'

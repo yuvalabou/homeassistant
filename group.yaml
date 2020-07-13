@@ -1,0 +1,9 @@
+######################################
+#               GROUPS               #
+######################################
+# Combine all Person entities to a Group
+person:
+  name: Person
+  entities:
+    - person.yuval
+    - person.tohar

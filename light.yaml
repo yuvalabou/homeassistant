@@ -1,0 +1,55 @@
+############################################
+#                  LIGHTS                  #
+############################################
+# Create light groups
+- platform: group
+  name: Living room lights
+  entities:
+    - light.bedroom1
+    - light.bedroom2
+
+- platform: group
+  name: Dining lights
+  entities:
+    - light.bedroom1
+    - light.bedroom2
+
+- platform: group
+  name: All lights
+  entities:
+    - light.master_bedroom_fairy
+    - light.master_bedroom
+    - light.bedroom1
+    - light.bedroom2
+
+- platform: group
+  name: Ceiling lights
+  entities:
+    - light.master_bedroom
+    - light.bedroom1
+    - light.bedroom2
+
+#- platform: group
+#  name: Wall lights
+#  entities:
+#    - light.wall_light_right
+#    - light.wall_light_left
+
+- platform: group
+  name: Public lights
+  entities:
+    - light.bedroom1
+    - light.bedroom2
+
+- platform: group
+  name: Room lights
+  entities:
+    - light.master_bedroom
+
+#- platform: group
+#  name: Important lights
+#  entities:
+#    - light.kitchen_countertop
+#    - light_hallway
+#    - light.ensuite
+#    - light.bathroom

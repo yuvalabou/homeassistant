@@ -1,0 +1,26 @@
+#############################################
+#               IFRAME PANELS               #
+#############################################
+# Xiaomi vacuum control page
+#valetudo :
+#  title: Valetudo
+#  icon: mdi:robot-vacuum
+#  url: !secret valetudo
+
+# Router config page
+router:
+  title: Router
+  icon: mdi:access-point
+  url: !secret gateway
+
+# TODO network map page
+#networkmap:
+#  title: network map
+#  icon: mdi:graph
+#  url: /local/graph/index.html
+
+# Transmision client
+#transmission:
+#  title: Transmission
+#  icon: mdi:download-network
+#  url: !secret transmission_client

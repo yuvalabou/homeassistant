@@ -1,0 +1,22 @@
+########################################
+#               YEELIGHT               #
+########################################
+devices:
+  10.0.0.47:
+    name: Master Bedroom
+    model: color2
+  10.0.0.20:
+    name: Bedroom1
+    model: color2
+  10.0.0.15:
+    name: Bedroom2
+    model: color2
+
+#custom_effects:
+#  - name: 'Notify'
+#    flow_params:
+#    count: 3
+#    transitions:
+#      - TemperatureTransition: [1900, 1000, 80]
+#      - TemperatureTransition: [1900, 2000, 60]
+#      - SleepTransition:       [1000]

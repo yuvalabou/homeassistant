@@ -1,0 +1,57 @@
+####################################################
+#                    LOG COMPONENTS                #
+####################################################
+exclude:
+  entities:
+    # Anniversaries
+    - sensor.yuval_birthday
+    - sensor.tohar_birthday
+    - sensor.harel_nissim_birthday
+    - sensor.rotem_david_birthday
+    - sensor.marriage_anniversary
+    # Date_Time platform
+    - sensor.time
+    - sensor.time_date
+    - sensor.date
+    - sensor.date_time
+    - binary_sensor.day
+    - binary_sensor.night
+    # Season platform
+    - sensor.season
+    # Random platform
+    - sensor.random_number
+    - binary_sensor.random_boolean
+    # Uptime
+    - sensor.wled_uptime
+    - sensor.uptime
+    # Garbage
+    - sensor.bio
+    - sensor.waste
+    - sensor.large
+    # Jewish Calendar
+    - sensor.jewish_calendar_alot_hashachar
+    - sensor.jewish_calendar_daf_yomi
+    - sensor.jewish_calendar_day_of_the_omer
+    - sensor.jewish_calendar_holiday
+    - sensor.jewish_calendar_latest_time_for_shma_gr_a
+    - sensor.jewish_calendar_latest_time_for_shma_mg_a
+    - sensor.jewish_calendar_latest_time_for_tefilla_gr_a
+    - sensor.jewish_calendar_latest_time_for_tefilla_mg_a
+    - sensor.jewish_calendar_mincha_gedola
+    - sensor.jewish_calendar_mincha_ketana
+    - sensor.jewish_calendar_parshat_hashavua
+    - sensor.jewish_calendar_plag_hamincha
+    - sensor.jewish_calendar_shkia
+    - sensor.jewish_calendar_t_set_hakochavim
+    - sensor.jewish_calendar_talit_and_tefillin
+    - sensor.jewish_calendar_upcoming_candle_lighting
+    - sensor.jewish_calendar_upcoming_havdalah
+    - sensor.jewish_calendar_upcoming_shabbat_candle_lighting
+    - sensor.jewish_calendar_upcoming_shabbat_havdalah
+    - sensor.current_version
+  domains:
+    - sun
+    - updater
+    - device_tracker
+    - script
+    - input_datetime

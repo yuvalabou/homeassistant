@@ -1,0 +1,23 @@
+#################################
+# The ShellyForHass integration #
+#################################
+# https://github.com/StyraHem/ShellyForHASS
+
+sensors: #sensors to show, can be override on each device
+  - current_consumption
+  - total_consumption
+  - uptime
+  - over_power
+  - device_temp
+  - switch
+upgrade_switch: true
+devices:  #configure devices
+  - id: "500291F0EC55"
+    entity_id: 'shelly_one_first'
+    name: 'Shelly one'
+#    light_switch: true  #add this switch as a light
+    sensors: #Override the global sensor
+      - device_temp
+      - switch
+      - uptime
+additional_information: true

@@ -1,0 +1,478 @@
+##############################################
+#                   SENSORS                  #
+##############################################
+# Date and Time
+- platform: time_date
+  display_options:
+    - time
+    - date
+    - date_time
+    - time_date
+
+# Seasons sensor
+- platform: season
+
+# Uptime sensor
+- platform: uptime
+  name: Time Online
+  unit_of_measurement: hours
+- platform: template
+  sensors:
+    uptime_friendly:
+      friendly_name: Home Assistant Uptime
+      icon_template: mdi:home-assistant
+      entity_id: sensor.time_online
+      value_template: >
+        {% set uptime = states('sensor.time_online') | float(-1) %}
+        {% if uptime >= 0 %}
+          {% set time = (3600 * uptime) | int %}
+          {% set minutes = ((time % 3600) / 60) | int %}
+          {% set hours = ((time % 86400) / 3600) | int %}
+          {% set days = (time / 86400) | int %}
+          {% if time < 60 %}
+            {{ time }} seconds
+          {% else %}
+            {%- if days > 0 -%}
+              {%- if days == 1 -%}
+                1 day
+              {%- else -%}
+                {{ days }} days
+              {%- endif -%}
+            {%- endif -%}
+            {%- if hours > 0 and days < 7 -%}
+              {%- if days > 0 -%}
+                {{ ', ' }}
+              {%- endif -%}
+              {%- if hours == 1 -%}
+                1 hour
+              {%- else -%}
+                {{ hours }} hours
+              {%- endif -%}
+            {%- endif -%}
+            {%- if days == 0 and minutes > 0 -%}
+              {%- if hours > 0 -%}
+                {{ ', ' }}{{ minutes }} min
+              {%- else -%}
+                {%- if minutes == 1 -%}
+                  1 minute
+                {%- else -%}
+                  {{ minutes }} minutes
+                {%- endif -%}
+              {%- endif -%}
+            {%- endif -%}
+          {% endif %}
+        {% else %}
+          unknown
+        {% endif %}
+
+# External IP address
+- platform: dnsip
+
+# Random Number
+- platform: random
+  name: Random Number
+
+# The version sensor platform that can display the current Home Assistant versions
+- platform: version
+
+###
+# Jewish Calendar
+###
+# formatted times
+- platform: template
+  sensors:
+    upcoming_candle_lighting_formatted:
+      friendly_name: Upcoming Candle Lighting
+      entity_id: sensor.jewish_calendar_upcoming_candle_lighting
+      value_template: >
+        {{ as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) | timestamp_custom('%H:%M') }}
+    upcoming_havdalah_formatted:
+      friendly_name: Upcoming Havdalah
+      entity_id: sensor.jewish_calendar_upcoming_havdalah
+      value_template: >
+        {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
+###
+# VACUUM
+# Xiaomi vacuum sensors
+#- platform: template
+#  sensors:
+#    vacuum_status:
+#      friendly_name: Status
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
+#      icon_template: >
+#        {% set val =  states('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
+#        {% if val == 'Charging' %}
+#          mdi:battery-charging
+#        {% elif val == 'Cleaning' %}
+#          mdi:move-resize
+#        {% elif val == 'Returning home' %}
+#          mdi:keyboard-return
+#        {% elif val == 'Idle' %}
+#          mdi:dots-horizontal
+#        {% elif val == 'Paused' %}
+#          mdi:pause-circle
+#        {% else %}
+#          mdi:help-circle
+#        {% endif %}
+#    vacuum_fan_speed:
+#      friendly_name: Fan Speed
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}
+#      icon_template: mdi:speedometer
+#    vacuum_battery:
+#      friendly_name: Vacuum Battery
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}
+#      unit_of_measurement: '%'
+#      icon_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}
+#    vacuum_cleaning_time:
+#      friendly_name: Time of Last Cycle
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}
+#      icon_template: mdi:timer
+#      unit_of_measurement: 'min'
+#    vacuum_cleaned_area:
+#      friendly_name: Area of Last Cycle
+#      unit_of_measurement: 'm ²'
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaned_area') }}
+#      icon_template: mdi:ruler
+#    vacuum_cleanmainbrush:
+#      friendly_name: Replace main brush
+#      unit_of_measurement: 'h'
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
+#      icon_template: mdi:screwdriver
+#    vacuum_cleansidebrush:
+#      friendly_name: Replace side brush
+#      unit_of_measurement: 'h'
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}
+#      icon_template: mdi:screwdriver
+#    vacuum_cleanfilter:
+#      friendly_name: Replace filter
+#      unit_of_measurement: 'h'
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
+#      icon_template: mdi:screwdriver
+#    vacuum_sensordirtyleft:
+#      friendly_name: Clean sensor
+#      unit_of_measurement: 'h'
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}
+#      icon_template: mdi:broom
+#    vacuum_last_cleaned:
+#      friendly_name: Last cleaned
+#      entity_id: vacuum.xiaomi_vacuum_cleaner
+#      value_template: >
+#          {{ as_timestamp(state_attr('vacuum.xiaomi_vacuum_cleaner', 'clean_stop')) | timestamp_custom("%A, %H:%M", true) }}
+#      icon_template: mdi:timetable
+
+###
+# Component Counters
+###
+- platform: template
+  sensors:
+    count_entities:
+      entity_id: sensor.date
+      value_template: >
+        {{ states | list | count }}
+    count_automations:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.automation | list | count }}
+    count_scripts:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.script | list | count }}
+    count_device_trackers:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.device_tracker | list | count }}
+    count_binary_sensors:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.binary_sensor | list | count }}
+    count_sensors:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.sensor | list | count }}
+    count_switches:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.switch | list | count }}
+    count_zones:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.zone | list | count }}
+    count_input_booleans:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.input_boolean | list | count }}
+    count_input_selects:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.input_select | list | count }}
+    count_input_datetimes:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.input_datetime | list | count }}
+    count_variables:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.var | list | count }}
+    count_timers:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.timer | list | count }}
+    count_lights:
+      entity_id: sensor.date
+      value_template: >
+        {{ states.light | list | count }}
+
+# Package tracking
+- platform: seventeentrack
+  username: !secret 17track_user
+  password: !secret 17track_pass
+
+# Sun2 - custom component
+#- platform: sun2
+#  monitored_conditions:
+#    - solar_midnight
+#    - astronomical_dawn
+#    - nautical_dawn
+#    - dawn
+#    - solar_noon
+#    - dusk
+#    - nautical_dusk
+#    - astronomical_dusk
+#    - daylight
+#    - civil_daylight
+#    - nautical_daylight
+#    - astronomical_daylight
+#    - night
+#    - civil_night
+#    - nautical_night
+#    - astronomical_night
+#    - elevation
+
+# TV tracking
+- platform: history_stats
+  name: Track TV usage
+  entity_id: binary_sensor.tv
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+- platform: template
+  sensors:
+    track_tv_usage_formatted:
+      friendly_name: Formatted TV usage
+      entity_id: sensor.track_tv_usage
+      value_template: >
+        {% set hours = states('sensor.track_tv_usage') | float %} 
+        {% set minutes = ((hours % 1) * 60) | int %}  
+        {% set hours = (hours - (hours % 1)) | int %}  
+        {{ '%02i.%02i'%(hours, minutes) }}
+      icon_template: mdi:timetable
+
+###
+# Steam
+###
+#- platform: steam_online
+#  api_key: !secret steam_api
+#  accounts:
+#    - 76561198173612681
+
+- platform: template
+  sensors:
+    steam_game:
+      friendly_name: Steam Game
+      entity_id: sensor.steam_76561198173612681
+      value_template: >
+        {{ state_attr('sensor.steam_76561198173612681', 'game') }}
+      icon_template: mdi:gamepad-square-outline
+
+- platform: history_stats
+  name: Track Steam playtime
+  entity_id: binary_sensor.steam_game_on
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+- platform: template
+  sensors:
+    track_steam_playtime_formatted:
+      friendly_name: Formatted Steam playtime
+      entity_id: sensor.track_steam_playtime
+      value_template: >
+        {% set hours = states('sensor.track_steam_playtime') | float %} 
+        {% set minutes = ((hours % 1) * 60) | int %}  
+        {% set hours = (hours - (hours % 1)) | int %}  
+        {{ '%02i.%02i'%(hours, minutes) }}
+      icon_template: mdi:timetable
+
+###
+# Climate sensors
+###
+# Outside temps
+- platform: template
+  sensors:
+    outside_temps:
+      friendly_name: Outside Temperature
+      value_template: >
+        {{ state_attr('weather.openweathermap', 'temperature') }}
+
+# Heat index
+- platform: template
+  sensors:
+    master_bedroom_heat_index:
+      friendly_name: 'Feels like'
+      value_template: >
+        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
+      unit_of_measurement: °C
+    living_room_heat_index:
+      friendly_name: 'Feels like'
+      value_template: >
+        {{ (((((((states('sensor.living_room_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.living_room_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.living_room_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
+      unit_of_measurement: °C
+    bathroom_heat_index:
+      friendly_name: 'Feels like'
+      value_template: >
+        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
+      unit_of_measurement: °C
+
+###
+# Electricity
+###
+- platform: history_stats
+  name: Shabat plate Power time
+  entity_id: binary_sensor.shabat_plate_is_on
+  state: 'on'
+  type: time
+  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+  end: '{{ now() }}'
+- platform: template
+  sensors:
+    estimated_shabat_plate_electricity_consumption:
+      friendly_name: Estimated Shabat plate Electricity consumption
+      icon_template: mdi:counter
+      unit_of_measurement: kWh
+      value_template: >
+        {{ (states('sensor.shabat_plate_power_time') | float) * 0.4 }}
+
+#- platform: template
+#  sensors:
+#    estimated_electricity_price_daily:
+#      friendly_name: Estimated Daily Electricity Price
+#      icon_template: mdi:currency-ils
+#      value_template: >
+#        {{ (((states('var.electricity_price') | float) * (states('sensor.shabat_plate_total_energy_usage_daily') | float)) / 100) | round(2) }}
+#    estimated_electricity_price_monthly:
+#      friendly_name: Estimated Monthly Electricity Price
+#      icon_template: mdi:currency-ils
+#      value_template: >
+#        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}
+
+###
+# Template to show components under each domain
+###
+- platform: template
+  sensors:
+    domain_components:
+      friendly_name: 'Domain Components'
+      value_template: >
+        {%- for d in states | groupby('domain') %}
+          {{d[0]}}
+          {%- for i in d[1] %}
+            - {{i.name}}
+          {%- endfor %}
+        {%- endfor %}
+
+- platform: sql
+  db_url: !secret mariadb_address
+  queries:
+    - name: DB size
+      query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+      column: 'value'
+      unit_of_measurement: MB
+
+- platform: command_line
+  name: PiHole Status
+  command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
+  value_template: >
+    {{ value_json.status }}
+
+###
+# WEATHER
+###
+- platform: template
+  sensors:
+    openweathermap_wind_speed:
+      friendly_name: 'Wind speed'
+      value_template: >
+        {{ state_attr('weather.openweathermap', 'wind_speed') }}
+- platform: template
+  sensors:
+    wind_scale_friendly:
+      friendly_name: 'Wind Scale'
+      icon_template: >
+        {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
+        {% if speed >= 75 %}
+          mdi:weather-tornado
+        {% elif speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >
+        {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
+        {% if speed >= 118 %}
+          Hurricane force
+        {% elif speed >= 103 %}
+          Violent storm
+        {% elif speed >= 89 %}
+          Storm
+        {% elif speed >= 75 %}
+          Strong gale
+        {% elif speed >= 62 %}
+          Fresh gale
+        {% elif speed >= 50 %}
+          High wind
+        {% elif speed >= 39 %}
+          Strong breeze
+        {% elif speed >= 29 %}
+          Fresh breeze
+        {% elif speed >= 20 %}
+          Moderate breeze
+        {% elif speed >= 12 %}
+          Gentle breeze
+        {% elif speed >= 6 %}
+          Light breeze
+        {% elif speed >= 1 %}
+          Light air
+        {% elif speed >= 0 %}
+          Calm
+        {% elif speed < 0 %}
+          unknown
+        {% endif %}
+
+#- platform: template
+#  sensors:
+#    hanging_clothes:
+#      value_template: >
+#         {}
+#        

@@ -1,0 +1,10 @@
+####################################################
+#               PRESENCE DETECTION                 #
+####################################################
+# Presence detection using Ping
+- platform: ping
+  hosts:
+    yuval_mi9t: 10.0.0.2
+    tohar_mi7: 10.0.0.14
+  count: 2
+  scan_interval: 300

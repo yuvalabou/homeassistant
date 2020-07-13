@@ -1,0 +1,1082 @@
+###
+# Define custom header
+# https://maykar.github.io/custom-header/#intro/intro
+###
+custom_header:
+  compact_mode: true
+  background: var(--primary-background-color);
+
+####################################################
+#                     CONFIG VIEWS                 #
+####################################################
+title: Aboulafia Home
+views:
+####################################################
+#                     FLOOR PLAN                   #
+####################################################
+#  - id: floor_plan
+#    title: Floor Plan
+#    panel: true
+#    icon: mdi:floor-plan
+#    cards:
+#      - type: vertical-stack
+#        cards:
+#          - type: custom:plan-coordinates ## UNCOMMENT TO SHOW CURSOR LOCATION
+#          - type: picture-elements
+#            image: /local/floor_plan/floor_plan.png
+#            elements:
+
+####################################################
+#                     MAIN VIEW                    #
+####################################################
+  - id: overview
+    title: Overview
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: picture-entity
+                image: '/local/assets/yuval.jpg'
+                entity: person.yuval
+              - entity: sensor.mi_9t_geocoded_location
+                name: Location
+              - entity: sensor.mi_9t_battery_level
+                name: Phone Battery
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: picture-entity
+                image: '/local/assets/tohar.jpg'
+                entity: person.tohar
+              - entity: sensor.redmi_note_7_geocoded_location
+                name: Location
+              - entity: sensor.redmi_note_7_battery_level
+                name: Phone Battery
+
+      - type: entities
+        entities:
+          - type: custom:weather-card
+            entity: weather.openweathermap
+            name: "Weather"
+            current: true
+            details: true
+            forecast: true
+            hourly_forecast: true
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:hui-element
+                card_type: glance
+                entities:
+                  - entity: sensor.wind_scale_friendly
+              - type: custom:hui-element
+                card_type: glance
+                entities:
+                  - entity: sensor.current_uv_level
+
+      - type: entities
+        title: "זמני היום"
+        show_header_toggle: false
+        entities:
+          - entity: sensor.jewish_calendar_date
+            name: "תאריך"
+          - entity: sensor.jewish_calendar_day_of_the_omer
+            name: "ספירת העומר"
+          - type: divider
+          - entity: sensor.jewish_calendar_parshat_hashavua
+            name: "פרשת השבוע"
+          - entity: sensor.jewish_calendar_upcoming_candle_lighting
+            type: custom:multiple-entity-row
+            name: "הדלקת נרות"
+            format: relative
+            entities:
+              - sensor.upcoming_candle_lighting_formatted
+          - entity: sensor.jewish_calendar_upcoming_havdalah
+            type: custom:multiple-entity-row
+            name: "הבדלה"
+            format: relative
+            entities:
+              - sensor.upcoming_havdalah_formatted
+          - type: divider
+          - entity: sensor.jewish_calendar_daf_yomi
+            name: "דף יומי"
+
+      - type: entities
+        title: Behavior
+        show_header_toggle: false
+        entities:
+          - switch.shabat_mode
+          - input_select.shabat_lights_off_time
+
+      - type: entities
+        entities:
+          - switch.night_light_override
+      - type: custom:auto-entities
+        card:
+          type: entities
+          title: Active Lights
+          show_header_toggle: false
+        show_empty: false
+        filter:
+          include:
+            - domain: light
+              state: 'on'
+            - domain: light
+              state: 'unavailable'
+
+#      - type: horizontal-stack
+#        cards:
+#          - type: button
+#            entity: switch.open_close
+#          - type: button
+#            entity: switch.car_unlock
+
+#      - type: "custom:atomic-calendar"
+#        title: "Calendar"
+#        enableModeChange: true
+#        defaultMode: 1
+#        showColors: true
+#        maxDaysToShow: 7
+#        showLocation: true
+#        showProgressBar: true
+#        entities:
+#          - entity: calendar.family_calendar
+
+#      - !include lovelace/vacuum_card.yaml
+
+####################################################
+#                       OUTDOOR                    #
+####################################################
+#  - id: outdoor
+#    title: Outdoor
+#    cards:
+#      - type: horizontal-stack
+#        cards:
+#          - type: custom:mini-graph-card
+#            entities:
+#          - type: custom:mini-graph-card
+#            entities:
+#
+####################################################
+#                     LIVING ROOM                  #
+####################################################
+  - id: living_room
+    title: Living Room
+    icon: mdi:sofa
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:banner-card
+            heading: "\U0001F373 Kitchen"
+            background: "#FCF2EA"
+            row_size: 2
+            entities:
+#              - entity: sensor.kitchen_occupied
+#                map_state:
+#                  'on': mdi:run
+#                  'off': mdi:walk
+#              - entity: sensor.sink_full # add "sink full" sensor using ultrasonic sensor
+#                map_state:
+#                  'on': mdi:tray-full # example
+#                  'off': mdi:silverware-clean # example
+#              - entity: switch.above_sink_light
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.shabat_plate_connection
+                state: "on"
+            card:
+              type: entities
+              show_header_toggle: false
+              title: Shabat-Plate
+              entities:
+                - switch.shabat_plate
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.living_room_temperature
+                    name: Temperature
+                    show_points: false
+                  - entity: sensor.living_room_heat_index
+                    show_state: true
+                    show_graph: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.living_room_humidity
+                    name: Humidity
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.living_room_motion
+              - sensor.living_room_humidity_range
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: light
+            entity: light.living_room_lights
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.bedroom1
+              - type: light
+                entity: light.bedroom2
+          - switch.night_light_override
+
+####################################################
+#                     MASTER BEDROOM               #
+####################################################
+  - id: master_bedroom
+    title: Master Bedroom
+    icon: mdi:bed-king-outline
+    cards:
+      - type: custom:banner-card
+        heading: "\U0001F6BF Ensuite"
+        background: "#8FCEDA"
+        row_size: 3
+        entities:
+          - sensor.ensuite_temperature
+          - sensor.ensuite_humidity
+          - switch.ensuite_light
+          - switch.boiler
+          - switch.ensuite_heater
+          - entity: sensor.ensuite_occupied
+            #size:
+            map_state:
+              'on': mdi:emoticon-poop
+              'off': mdi:human-male-female
+          - entity: binary_sensor.ensuite_door
+            #size:
+            map_state:
+              'on': mdi:door-open
+              'off': mdi:door-closed
+          - entity: binary_sensor.ensuite_window
+            #size:
+            map_state:
+              'on': mdi:window-open
+              'off': mdi:window-closed
+          - entity: binary_sensor.ensuite_toilet_paper_left
+            #size:
+            map_state:
+              'on': mdi:paper-roll
+              'off': mdi:sync-alert
+
+      - type: conditional
+        conditions:
+          - entity: light.master_bedroom_fairy
+            state: "off"
+        card:
+          type: entities
+          entities:
+            - entity: light.master_bedroom_fairy
+              name: Master Bedroom Fairy
+      - type: conditional
+        conditions:
+          - entity: light.master_bedroom_fairy
+            state: "on"
+        card:
+          type: light
+          entity: light.master_bedroom_fairy
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.master_bedroom_temperature
+                    name: Temperature
+                    show_points: false
+                  - entity: sensor.master_bedroom_heat_index
+                    show_state: true
+                    show_graph: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.master_bedroom_humidity
+                    name: Humidity
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+                  legend: false
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.master_bedroom_motion
+              - sensor.master_bedroom_humidity_range
+          - switch.shabat_select
+
+      - type: light
+        entity: light.master_bedroom
+
+#      - type: conditional
+#        conditions:
+#          - entity: person.yuval
+#            state: 'home'
+#        card:
+#          type: custom:restriction-card
+#          restrictions:
+#            pin:
+#              code:
+#          duration: 30
+#          card:
+#            type: glance
+#            title: Safe
+#            entities:
+#              - switch.unlock_safe
+#              - binary_sensor.safe_state
+#              - sensor.safe_last_opened
+#              - binary_sensor.safe_status
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.mi_9t_battery_level
+                    show:
+                      points: false
+                      labels: false
+                      fill: fade
+                    hours_to_show: 6
+                    color_thresholds:
+                      - value: 60
+                        color: "#4DFF00"
+                      - value: 40
+                        color: "#F0FF00"
+                      - value: 20
+                        color: "#FF6000"
+                      - value: 10
+                        color: "#FF0F00"
+                  - sensor.mi_9t_battery_state
+              - type: entities
+                entities:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.redmi_note_7_battery_level
+                    show:
+                      points: false
+                      labels: false
+                      fill: fade
+                    hours_to_show: 6
+                    color_thresholds:
+                      - value: 60
+                        color: "#4DFF00"
+                      - value: 40
+                        color: "#F0FF00"
+                      - value: 20
+                        color: "#FF6000"
+                      - value: 10
+                        color: "#FF0F00"
+                  - sensor.mi_9t_battery_state
+
+####################################################
+#                       BEDROOM                    #
+####################################################
+  - id: bedroom_mamad
+    title: Bedroom
+    icon: mdi:bed-single-outline
+    cards:
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.bedroom_temperature
+                    name: Temperature
+                    show_points: false
+                  - entity: sensor.bedroom_heat_index
+                    show_state: true
+                    show_graph: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.bedroom_humidity
+                    name: Humidity
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+                  legend: false
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.bedroom_motion
+              - sensor.bedroom_humidity_range
+          - switch.shabat_select
+
+      - type: light
+        entity: light.bedroom1
+
+####################################################
+#                    WORK BEDROOM                  #
+####################################################
+  - id: work_room
+    title: Work Room
+    icon: mdi:desk
+    cards:
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.work_bedroom_temperature
+                    name: Temperature
+                    show_points: false
+                  - entity: sensor.work_bedroom_heat_index
+                    show_state: true
+                    show_graph: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.work_bedroom_humidity
+                    name: Humidity
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+                  legend: false
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.work_bedroom_motion
+              - sensor.work_bedroom_humidity_range
+          - switch.shabat_select
+
+      - type: light
+        entity: light.bedroom2
+
+      - type: entities
+        entities:
+          - sensor.steam_76561198173612681
+          - sensor.steam_game
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            entities:
+              - entity: sensor.track_steam_playtime_formatted
+                unit: hours
+                name: Steam playtime
+            show:
+              graph: bar
+              labels: false
+            hours_to_show: 168
+            group_by: date
+            color_thresholds:
+              - value: 1
+                color: "#29A797"
+              - value: 2
+                color: "#F19631"
+              - value: 3
+                color: "#D2212A"
+
+####################################################
+#                       BATHROOM                    #
+####################################################
+  - id: bathroom
+    title: Bathroom
+    icon: mdi:shower
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.bathroom_temperature
+                    name: Temperature
+                    show_points: false
+                  - entity: sensor.bathroom_heat_index
+                    show_state: true
+                    show_graph: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.bathroom_humidity
+                    name: Humidity
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+                  legend: false
+
+      - type: entities
+        title: Vent
+        show_header_toggle: false
+        entities:
+          - switch.vent
+
+      - type: entities
+        title: Boiler
+        show_header_toggle: false
+        entities:
+          - switch.boiler
+          - sensor.boiler_energy
+
+      - type: entities
+        title: Bathroom Heater
+        show_header_toggle: false
+        entities:
+          - switch.bathroom_heater
+          - sensor.bathroom_heater_energy
+
+      - type: entities
+        title: Washing Machine
+        show_header_toggle: false
+        entities:
+          - sensor.washing_machine
+          - sensor.dryer
+
+####################################################
+#                    EXTRA STUFF                   #
+####################################################
+  - id: extra_stuff
+    title: Extra Stuff
+    icon: mdi:information-outline
+    cards:
+#      - type: custom:banner-card
+#        heading: "Basement"
+#        row_size: 3
+#        entities:
+#          - sensor.basement_temp
+#          - sensor.basement_humidity
+#          - sensor.basment_mold_indicator
+#          - sensor.basement_motion
+#          - sensor.basment_light
+
+      - type: custom:banner-card
+        heading: "\U0001F5D1 Garbage Collection"
+        background: "#F7E2C9"
+        row_size: 3
+        entities:
+          - entity: sensor.waste
+            attribute: verbose_state
+          - entity: sensor.bio
+            attribute: verbose_state
+          - entity: sensor.large
+            attribute: verbose_state
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://brands.home-assistant.io/seventeentrack/logo.png'
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - entity: sensor.seventeentrack_packages_not_found
+                name: Not-Found
+              - entity: sensor.seventeentrack_packages_in_transit
+                name: In-Transit
+              - entity: sensor.seventeentrack_packages_ready_to_be_picked_up
+                name: Ready to be Picked-Up
+          - type: custom:auto-entities
+            card:
+              type: entities
+              title: Package List
+              show_header_toggle: false
+            filter:
+              include:
+                - entity_id: 'sensor.seventeentrack_package_*'
+
+      - type: custom:banner-card
+        heading: "\U0001F382 Birthdays"
+        background: "#E64B51"
+        row_size: 2
+        entities:
+          - entity: sensor.anniversary_yuval_birthday
+          - entity: sensor.anniversary_tohar_birthday
+          - entity: sensor.anniversary_harel_nissim_birthday
+          - entity: sensor.anniversary_rotem_david_birthday
+          - entity: sensor.anniversary_marriage_anniversary
+
+####################################################
+#                     Statistics                   #
+####################################################
+  - id: statistics
+    title: Statistics
+    icon: mdi:chart-areaspline
+    cards:
+      - type: entities
+        entities:
+          - var.electricity_price
+          - sensor.estimated_electricity_price_daily
+#          - sensor.estimated_electricity_price_monthly
+
+      - type: custom:mini-graph-card
+        name: Temperature
+        hours_to_show: 84
+        entities:
+          - entity: sensor.living_room_temperature
+            show_points: false
+#          - entity: sensor.master_bedroom_temperature
+#            show_points: false
+          - entity: sensor.outside_temps
+            name: Outside
+            show_points: false
+        show:
+          fill: fade
+          state: false
+          labels: true
+          labels_secondary: false
+          points: false
+        line_width: 3
+        color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.current_uv_index
+            name: UV index
+        show:
+          fill: fade
+          points: false
+
+      - type: custom:mini-graph-card
+        name: Motion last 3 Hours
+        icon: mdi:motion-sensor
+        hours_to_show: 3
+        points_per_hour: 60
+        update_interval: 30
+        aggregate_func: max
+        line_width: 2
+        smoothing: false
+        entities:
+          - entity: binary_sensor.day
+            show_points: false
+            show_legend: false
+            show_line: false
+            show_state: false
+            color: white
+          - entity: binary_sensor.living_room_motion
+            show_points: false
+#          - entity: binary_sensor.master_bedroom_motion
+#            show_points: false
+        state_map:
+          - value: "off"
+            label: Clear
+          - value: "on"
+            label: Detected
+        show:
+          fill: fade
+
+      - type: custom:mini-graph-card
+        name: Lights
+        icon: mdi:lightbulb-on
+        points_per_hour: 60
+        hours_to_show: 3
+        aggregate_func: max
+        line_width: 2
+        smoothing: false
+        entities:
+          - entity: binary_sensor.living_room_light_is_on
+            show_points: false
+          - entity: binary_sensor.master_bedroom_light_is_on
+            show_points: false
+#          - entity: binary_sensor.master_bedroom_fairy_is_on
+#            show_points: false
+          - entity: binary_sensor.day
+            show_points: false
+            show_legend: false
+            show_line: false
+            show_state: false
+            color: white
+        state_map:
+          - value: "off"
+            label: כבוי
+          - value: "on"
+            label: דולק
+        show:
+          fill: fade
+          labels: false
+
+      - type: entities
+        entities:
+          - entity: binary_sensor.tv
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            name: TV Usage
+            hours_to_show: 168
+            group_by: date
+            entities:
+              - entity: sensor.track_tv_usage_formatted
+                unit: hours
+            color_thresholds:
+              - value: 1
+                color: "#29A797"
+              - value: 2
+                color: "#F19631"
+              - value: 3
+                color: "#D2212A"
+            show:
+              graph: bar
+              labels: false
+          - type: custom:hui-element
+            card_type: media-control
+            entity: media_player.pilot_tv
+
+# Boiler
+      - type: custom:mini-graph-card
+        name: Boiler Power Consumption
+        unit: kWh
+        hours_to_show: 750
+        line_width: 1
+        entities:
+          - entity: sensor.boiler_total_energy_usage_daily
+            name: Daily
+            color: "#04FC04"
+            show_state: true
+            show_points: false
+          - entity: sensor.boiler_total_energy_usage_weekly
+            name: Weekly
+            color: "yellow"
+            show_state: false
+            show_points: false
+          - entity: sensor.boiler_total_energy_usage_monthly
+            name: Monthly
+            color: "red"
+            show_state: false
+            show_points: false
+        show:
+          fill: fade
+
+      - type: entities
+        title: Appliances
+        show_header_toggle: false
+        entities:
+          - entity: sensor.shabat_plate_total_energy_usage_daily
+
+####################################################
+#                CONNECTED DEVICES                 #
+####################################################
+#  - id: connected devices
+#    title: Connected devices
+#    panel: true
+#    icon: mdi:devices
+#    cards:
+#      - type: vertical-stack
+#        cards:
+#          - type: custom:plan-coordinates ## UNCOMMENT TO SHOW CURSOR LOCATION
+#          - type: picture-elements
+#            image: /local/floor_plan/floor_plan.png
+#            elements:
+
+####################################################
+#                     UTILITIES                    #
+####################################################
+  - id: utilities
+    icon: mdi:server
+    cards:
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                icon: mdi:download-network
+                entities:
+                  - entity: sensor.speedtest_download
+                    name: Download
+                show:
+                  points: false
+                  fill: fade
+              - type: custom:mini-graph-card
+                icon: mdi:upload-network
+                entities:
+                  - entity: sensor.speedtest_upload
+                    name: Upload
+                show:
+                  fill: fade
+                  points: false
+          - type: divider
+          - entity: sensor.myip
+            name: External IP
+
+      - type: entities
+        title: Set Theme
+        show_header_toggle: false
+        entities:
+          - input_select.theme_list
+
+      - type: glance
+        title: Component Count
+        columns: 4
+        entities:
+          - entity: sensor.count_entities
+            name: Entities
+            icon: mdi:format-list-bulleted-square
+          - entity: sensor.count_lights
+            name: Lights
+            icon: mdi:lightbulb-group
+          - entity: sensor.count_sensors
+            name: Sensors
+            icon: mdi:resistor
+          - entity: sensor.count_binary_sensors
+            name: Binary Sensors
+            icon: mdi:unfold-more-horizontal
+          - entity: sensor.count_automations
+            name: Automations
+            icon: mdi:autorenew
+          - entity: sensor.count_scripts
+            name: Scripts
+            icon: mdi:script-text-outline
+          - entity: sensor.count_zones
+            name: Zones
+            icon: mdi:map-marker-radius
+          - entity: sensor.count_device_trackers
+            name: Device Trackers
+            icon: mdi:map-marker
+          - entity: sensor.count_switches
+            name: Switches
+            icon: mdi:light-switch
+          - entity: sensor.count_input_booleans
+            name: Input Booleans
+            icon: mdi:toggle-switch
+          - entity: sensor.count_input_selects
+            name: Input Select
+            icon: mdi:view-list
+          - entity: sensor.count_input_datetimes
+            name: Input Date Times
+            icon: mdi:calendar-clock
+          - entity: sensor.count_variables
+            name: Count Variables
+            icon: mdi:numeric
+          - entity: sensor.count_timers
+            name: Count Timers
+            icon: mdi:clock
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: '/local/assets/dell-logo-banner.jpg'
+#          - type: custom:hui-element
+#            card_type: horizontal-stack
+#            cards:
+#              - type: gauge
+#                name: CPU Used
+#                entity: sensor.glances_cpu_used
+#                severity:
+#                  green: 0
+#                  yellow: 45
+#                  red: 85
+#              - type: gauge
+#                name: CPU Temp
+#                entity: sensor.glances_cpu_temp
+#                severity:
+#                  green: 0
+#                  yellow: 60
+#                  red: 80
+#              - type: gauge
+#                name: RAM Used
+#                entity: sensor.glances_ram_used_percent
+#                severity:
+#                  green: 0
+#                  yellow: 50
+#                  red: 75
+          - type: divider
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            icon: mdi:database
+            entities:
+              - entity: sensor.db_size
+                name: Database size
+            show:
+              fill: fade
+              points: false
+          - type: divider
+          - entity: sensor.current_version
+          - type: divider
+          - entity: sensor.uptime_friendly
+          - entity: script.server_restart
+            icon: mdi:restart
+          - entity: script.homeassistant_restart
+            icon: mdi:restart
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: gauge
+                name: CPU Used
+                entity: sensor.glances_cpu_used
+                severity:
+                  green: 0
+                  yellow: 45
+                  red: 85
+              - type: gauge
+                name: CPU Temp
+                entity: sensor.glances_cpu_thermal_1_temp
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 80
+              - type: gauge
+                name: RAM Used
+                entity: sensor.glances_ram_used_percent
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
+            tap_action:
+              action: url
+              url_path: 'http://10.0.0.6/admin/index.php'
+
+          - sensor.pihole_status
+          - sensor.pi_hole_ads_percentage_blocked_today
+          - sensor.pi_hole_domains_blocked
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            entities:
+              - entity: sensor.pi_hole_ads_blocked_today
+                color: "#FF0F00"
+              - entity: sensor.pi_hole_dns_queries_today
+              - entity: sensor.pi_hole_dns_queries_forwarded
+                color: "#4DFF00"
+            show:
+              points: false
+              legend: false
+            line_width: 2
+            hours_to_show: 72
+          - sensor.pi_hole_dns_queries_cached
+          - sensor.pi_hole_dns_unique_domains
+          - sensor.pi_hole_dns_unique_clients
+          - sensor.pi_hole_seen_clients
+
+      - type: entities
+        entities:
+          - entity: script.reload_themes
+            icon: mdi:reload
+          - entity: script.reload_lovelace_resources
+            icon: mdi:reload
+          - entity: script.reload_automations
+            icon: mdi:reload
+          - entity: script.reload_scenes
+            icon: mdi:reload
+          - entity: script.reload_groups
+            icon: mdi:reload
+          - entity: script.reload_scripts
+            icon: mdi:reload
+          - entity: script.reload_input_boolean
+            icon: mdi:reload
+          - entity: script.reload_input_select
+            icon: mdi:reload
+          - entity: script.reload_timers
+            icon: mdi:reload
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://brands.home-assistant.io/esphome/logo.png'
+          - switch.restart_living_room
+          - switch.restart_master_bedroom
+          - type: divider
+          - switch.restart_shabat_plate
+#          - switch.restart_safe
+#          - switch.restart_car_remote
+#          - switch.restart_power_supply
+
+#      - type: entities
+#        title: Power supply
+#        show_header_toggle: false
+#        entities:
+#          - switch.power_supply_toggle
+
+#      - type: custom:card-templater
+#        card:
+#          title_template: >
+#            {{ state_attr('sensor.my_config', 'components') |length }} Components Loaded
+#          content_template: >
+#            {{ state_attr('sensor.overview_components' , 'text') }}
+#          type: markdown
+#        entities:
+#          - sensor.overview_components
+#          - sensor.my_config
+

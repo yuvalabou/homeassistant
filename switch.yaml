@@ -1,0 +1,32 @@
+#############################################
+#                  SWITCHES                 #
+#############################################
+- platform: template
+  switches:
+    shabat_mode:
+      value_template: >
+        {{ states('input_boolean.shabat_mode') }}
+      friendly_name: 'מצב שבת'
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.shabat_mode
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.shabat_mode
+
+- platform: template
+  switches:
+    night_light_override: 
+      value_template: >
+        {{ states('input_boolean.night_light_override') }}
+      friendly_name: Night Light Override
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.night_light_override
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.night_light_override

@@ -1,0 +1,104 @@
+###########################################################
+#                    Master Bedroom                       #
+###########################################################
+substitutions:
+  devicename: master_bedroom_multisensor
+  upper_devicename: Master Bedroom
+  template_id: master_bedroom
+
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_pass
+  # Optional manual IP
+  manual_ip:
+    static_ip: 10.0.0.71
+    gateway: 10.0.0.138
+    subnet: 255.255.255.0
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${upper_devicename} Fallback Hotspot
+    password: !secret ap_pass
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+###
+# Code
+###
+i2c:
+  sda: D2
+  scl: D1
+  scan: True
+
+mcp23017:
+  - id: 'mcp23017_hub'
+    address: 0x20
+
+binary_sensor:
+  # Motion sensor
+  - platform: gpio
+    pin:
+      number: D6
+    name: ${upper_devicename} Motion
+    device_class: motion
+    filters:
+      - delayed_on: 1500ms
+      - delayed_off: 30s
+  - platform: status
+    name: ${upper_devicename} Connection
+
+sensor:
+  # Temperature and Humidity sensor
+  - platform: bme280
+    temperature:
+      name: ${upper_devicename} Temperature
+      id: ${template_id}_temperature
+      oversampling: 8x
+    pressure:
+      name: ${upper_devicename} Pressure
+    humidity:
+      name: ${upper_devicename} Humidity
+      id: ${template_id}_humidity
+    address: 0x76
+    update_interval: 60s
+  # WiFi sensor
+  - platform: wifi_signal
+    name: ${upper_devicename} WiFi reception
+    update_interval: 60s
+  - platform: adc
+    pin: VCC
+    name: ${devicename} VCC voltage
+
+text_sensor:
+  - platform: template
+    name: ${upper_devicename} Humidity Range
+    lambda: |-
+      if (id(${template_id}_humidity).state > 65) {
+        return {"Humid"};
+      } else if (id(${template_id}_humidity).state < 40) {
+        return {"Dry"};
+      } else {
+        return {"Comfortable"};
+      }
+    update_interval: 60s
+
+switch:
+  - platform: gpio
+    name: ${upper_devicename} Shabat Select
+    pin:
+     number: D5
+     inverted: yes
+  - platform: restart
+    name: Restart ${upper_devicename}

@@ -1,0 +1,84 @@
+############################################################
+#                        Shabat Plate                      #
+############################################################
+substitutions:
+  devicename: shabat_plate
+  upper_devicename: Shabat Plate
+
+esphome:
+  name: ${devicename}
+  platform: ESP8266
+  board: esp01_1m
+  on_boot:
+    priority: -100
+    then:
+      - switch.turn_on: relay
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_pass
+  manual_ip:
+    static_ip: 10.0.0.60
+    gateway: 10.0.0.138
+    subnet: 255.255.255.0
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: ${devicename}
+    password: !secret ap_pass
+# Enable backup AP
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+# Enable OTA Updates
+ota:
+
+# Code
+sensor:
+  # WiFi sensor
+  - platform: wifi_signal
+    name: ${upper_devicename} WiFi reception
+    update_interval: 60s
+  # Uptime sensor
+  - platform: uptime
+    id: uptime_hours
+    filters:
+      - lambda: return (x / 3600.0);
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    id: shabat_plate_physical_switch
+    on_press:
+      - switch.toggle: relay
+  - platform: status
+    name: ${upper_devicename} Connection
+  - platform: template
+    name: Shabat plate is ON
+    lambda: |-
+      if (id(relay).state == 'on') {
+        return true;
+      } else {
+        return false;
+      }
+
+switch:
+  - platform: gpio
+    name: ${upper_devicename}
+    pin: GPIO12
+    id: relay
+  - platform: restart
+    name: Restart ${upper_devicename}
+
+status_led:
+  pin:
+    number: GPIO13
+    inverted: yes

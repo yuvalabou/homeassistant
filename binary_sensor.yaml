@@ -1,0 +1,139 @@
+##############################################
+#               BINARY SENSORS               #
+##############################################
+# Binary sensor for checking if a device is online
+#- platform: ping
+#  host: !secret vacuum_host
+#  name: Vacuum
+#  count: 5
+#  scan_interval: 300
+#- platform: ping
+#  host: !secret laptop_host
+#  name: Yuval laptop
+#  count: 2
+#  scan_interval: 300
+- platform: ping
+  host: !secret nanopi_host
+  name: NanoPi
+  count: 2
+  scan_interval: 300
+- platform: ping
+  host: !secret tv_host
+  name: TV
+  count: 2
+  scan_interval: 300
+
+# Random Boolean sensor
+- platform: random
+  name: Random Boolean
+
+# Time of Day sensor
+- platform: tod
+  name: Night
+  after: sunset
+  before: sunrise
+- platform: tod
+  name: Day
+  after: sunrise
+  before: sunset
+
+# Workday sensor
+- platform: workday
+  country: IL
+  workdays:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+  excludes:
+    - holiday
+
+# Sensor for checking if someone is playing a game on steam right now
+- platform: template
+  sensors:
+    steam_game_on:
+      friendly_name: Is Steam Playing?
+      icon_template: mdi:steam
+      value_template: >
+        {% if is_state('sensor.steam_game', 'None') %}
+          False
+        {% else %}
+          True
+        {% endif %}
+
+# Shabat notification trigger
+- platform: template
+  sensors:
+    shabat_notification_trigger:
+      friendly_name: Shabat 10 min Notification Trigger
+      value_template: >
+        {% set now = strptime(states('sensor.time'), '%H:%M') %}
+        {% set now_min = now.hour * 60 + now.minute %}
+        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
+        {% set then_min = then.hour * 60 + then.minute %}
+        {% set timediff = then_min - now_min %}
+        {{ 0 <= timediff <= 10 }}
+- platform: template
+  sensors:
+    shabat_notification_trigger_salatim:
+      friendly_name: Shabat Half hour Notification Trigger
+      value_template: >
+        {% set now = strptime(states('sensor.time'), '%H:%M') %}
+        {% set now_min = now.hour * 60 + now.minute %}
+        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
+        {% set then_min = then.hour * 60 + then.minute %}
+        {% set timediff = then_min - now_min %}
+        {{ 0 <= timediff <= 30 }}
+
+# Template Lights to show which lights are on
+- platform: template
+  sensors:
+    master_bedroom_light_is_on:
+      friendly_name: Master Bedroom Light is on
+      value_template: >
+        {% if is_state('light.master_bedroom', 'on') %}
+          True
+        {% else %}
+          False
+        {% endif %}
+#    master_bedroom_fairy_is_on:
+#      friendly_name: Master Bedroom Fairy is on
+#      value_template: >
+#        {% if is_state('light.master_bedroom_fairy', 'on') %}
+#          True
+#        {% else %}
+#          False
+#        {% endif %}
+    living_room_light_is_on:
+      friendly_name: Living Room Light is on
+      value_template: >
+        {% if is_state('light.living_room_lights', 'on') %}
+          True
+        {% else %}
+          False
+        {% endif %}
+
+- platform: template
+  sensors:
+    is_fast_day:
+      entity_id: sensor.date
+      value_template: >
+        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == '5' }}
+      icon_template: >
+        {% if is_state('binary_sensor.is_fast_day', 'on') %}
+          mdi:food-off
+        {% else %}
+          mdi:food
+        {% endif %}
+
+#- platform: command_line
+#  name: Pi-hole Status
+#  command: !secret pihole_status
+#  device_class: connectivity
+#  value_template: >-
+#    {% if value_json.status == 'enabled' %}
+#      {{'ON'}}
+#    {% else %}
+#      {{'OFF'}}
+#    {% endif %}
