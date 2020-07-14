@@ -28,8 +28,6 @@
           script.set_noctis
         {% elif trigger.to_state.state == 'Synthwave' %}
           script.set_synthwave
-        {% elif trigger.to_state.state == 'Solarized-Light' %}
-          script.set_solaraized_light
         {% endif %}
 
 ###

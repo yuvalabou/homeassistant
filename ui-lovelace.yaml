@@ -71,10 +71,10 @@ views:
                 card_type: glance
                 entities:
                   - entity: sensor.wind_scale_friendly
-              - type: custom:hui-element
-                card_type: glance
-                entities:
-                  - entity: sensor.current_uv_level
+#              - type: custom:hui-element
+#                card_type: glance
+#                entities:
+#                  - 
 
       - type: entities
         title: "זמני היום"
@@ -254,53 +254,53 @@ views:
     title: Master Bedroom
     icon: mdi:bed-king-outline
     cards:
-      - type: custom:banner-card
-        heading: "\U0001F6BF Ensuite"
-        background: "#8FCEDA"
-        row_size: 3
-        entities:
-          - sensor.ensuite_temperature
-          - sensor.ensuite_humidity
-          - switch.ensuite_light
-          - switch.boiler
-          - switch.ensuite_heater
-          - entity: sensor.ensuite_occupied
-            #size:
-            map_state:
-              'on': mdi:emoticon-poop
-              'off': mdi:human-male-female
-          - entity: binary_sensor.ensuite_door
-            #size:
-            map_state:
-              'on': mdi:door-open
-              'off': mdi:door-closed
-          - entity: binary_sensor.ensuite_window
-            #size:
-            map_state:
-              'on': mdi:window-open
-              'off': mdi:window-closed
-          - entity: binary_sensor.ensuite_toilet_paper_left
-            #size:
-            map_state:
-              'on': mdi:paper-roll
-              'off': mdi:sync-alert
+#      - type: custom:banner-card
+#       heading: "\U0001F6BF Ensuite"
+#        background: "#8FCEDA"
+#        row_size: 3
+#        entities:
+#          - sensor.ensuite_temperature
+#          - sensor.ensuite_humidity
+#          - switch.ensuite_light
+#          - switch.boiler
+#          - switch.ensuite_heater
+#          - entity: sensor.ensuite_occupied
+#            #size:
+#            map_state:
+#              'on': mdi:emoticon-poop
+#              'off': mdi:human-male-female
+#          - entity: binary_sensor.ensuite_door
+#            #size:
+#            map_state:
+#              'on': mdi:door-open
+#              'off': mdi:door-closed
+#          - entity: binary_sensor.ensuite_window
+#            #size:
+#            map_state:
+#              'on': mdi:window-open
+#              'off': mdi:window-closed
+#          - entity: binary_sensor.ensuite_toilet_paper_left
+#            #size:
+#            map_state:
+#              'on': mdi:paper-roll
+#              'off': mdi:sync-alert
 
-      - type: conditional
-        conditions:
-          - entity: light.master_bedroom_fairy
-            state: "off"
-        card:
-          type: entities
-          entities:
-            - entity: light.master_bedroom_fairy
-              name: Master Bedroom Fairy
-      - type: conditional
-        conditions:
-          - entity: light.master_bedroom_fairy
-            state: "on"
-        card:
-          type: light
-          entity: light.master_bedroom_fairy
+#      - type: conditional
+#        conditions:
+#          - entity: light.master_bedroom_fairy
+#            state: "off"
+#        card:
+#          type: entities
+#          entities:
+#            - entity: light.master_bedroom_fairy
+#              name: Master Bedroom Fairy
+#      - type: conditional
+#        conditions:
+#          - entity: light.master_bedroom_fairy
+#            state: "on"
+#        card:
+#          type: light
+#          entity: light.master_bedroom_fairy
 
       - type: entities
         show_header_toggle: false
@@ -375,11 +375,14 @@ views:
                   - type: custom:mini-graph-card
                     entities:
                       - entity: sensor.mi_9t_battery_level
+                        name: Yuval Battery
                     show:
                       points: false
                       labels: false
                       fill: fade
                     hours_to_show: 6
+                    lower_bound: 0
+                    upper_bound: 100
                     color_thresholds:
                       - value: 60
                         color: "#4DFF00"
@@ -395,11 +398,14 @@ views:
                   - type: custom:mini-graph-card
                     entities:
                       - entity: sensor.redmi_note_7_battery_level
+                        name: Tohar Battery
                     show:
                       points: false
                       labels: false
                       fill: fade
                     hours_to_show: 6
+                    lower_bound: 0
+                    upper_bound: 100
                     color_thresholds:
                       - value: 60
                         color: "#4DFF00"
@@ -409,7 +415,7 @@ views:
                         color: "#FF6000"
                       - value: 10
                         color: "#FF0F00"
-                  - sensor.mi_9t_battery_state
+                  - sensor.redmi_note_7_battery_state
 
 ####################################################
 #                       BEDROOM                    #
@@ -679,6 +685,9 @@ views:
           - sensor.estimated_electricity_price_daily
 #          - sensor.estimated_electricity_price_monthly
 
+      - type: custom:animated-consumption-card
+        entity: sensor.total_power_consumption
+
       - type: custom:mini-graph-card
         name: Temperature
         hours_to_show: 84
@@ -698,14 +707,6 @@ views:
           points: false
         line_width: 3
         color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.current_uv_index
-            name: UV index
-        show:
-          fill: fade
-          points: false
 
       - type: custom:mini-graph-card
         name: Motion last 3 Hours

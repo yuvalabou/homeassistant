@@ -7,7 +7,6 @@ theme_list:
   options:
     - Noctis
     - Synthwave
-    - Solarized-Light
   icon: mdi:monitor-dashboard
 
 # Vacumm

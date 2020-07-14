@@ -39,3 +39,5 @@
   type: module
 - url: /hacsfiles/lovelace-canary/canary.js
   type: module
+- url: /hacsfiles/animated-consumption-card/animated-consumption-card.js
+  type: module

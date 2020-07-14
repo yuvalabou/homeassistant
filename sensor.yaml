@@ -290,10 +290,10 @@
 ###
 # Steam
 ###
-#- platform: steam_online
-#  api_key: !secret steam_api
-#  accounts:
-#    - 76561198173612681
+- platform: steam_online
+  api_key: !secret steam_api
+  accounts:
+    - 76561198173612681
 
 - platform: template
   sensors:
@@ -356,6 +356,15 @@
 ###
 # Electricity
 ###
+- platform: template
+  sensors:
+    total_power_consumption:
+      friendly_name: Total Power Consumption
+      unit_of_measurement: kW
+      icon_template: mdi:counter
+      value_template: >
+        {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
+
 - platform: history_stats
   name: Shabat plate Power time
   entity_id: binary_sensor.shabat_plate_is_on
@@ -384,21 +393,6 @@
 #      icon_template: mdi:currency-ils
 #      value_template: >
 #        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}
-
-###
-# Template to show components under each domain
-###
-- platform: template
-  sensors:
-    domain_components:
-      friendly_name: 'Domain Components'
-      value_template: >
-        {%- for d in states | groupby('domain') %}
-          {{d[0]}}
-          {%- for i in d[1] %}
-            - {{i.name}}
-          {%- endfor %}
-        {%- endfor %}
 
 - platform: sql
   db_url: !secret mariadb_address

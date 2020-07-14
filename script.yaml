@@ -70,12 +70,6 @@ set_synthwave:
     service: frontend.set_theme
     data:
       name: synthwave
-set_solaraized_light:
-  alias: Set Solarized-Light
-  sequence:
-    service: frontend.set_theme
-    data:
-      name: solarized_light
 
 ###
 # Vacuum
