@@ -14,12 +14,12 @@
 
 # Uptime sensor
 - platform: uptime
-  name: Time Online
+  name: 'Time Online'
   unit_of_measurement: hours
 - platform: template
   sensors:
     uptime_friendly:
-      friendly_name: Home Assistant Uptime
+      friendly_name: 'Home Assistant Uptime'
       icon_template: mdi:home-assistant
       entity_id: sensor.time_online
       value_template: >
@@ -82,12 +82,12 @@
 - platform: template
   sensors:
     upcoming_candle_lighting_formatted:
-      friendly_name: Upcoming Candle Lighting
+      friendly_name: 'Upcoming Candle Lighting'
       entity_id: sensor.jewish_calendar_upcoming_candle_lighting
       value_template: >
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) | timestamp_custom('%H:%M') }}
     upcoming_havdalah_formatted:
-      friendly_name: Upcoming Havdalah
+      friendly_name: 'Upcoming Havdalah'
       entity_id: sensor.jewish_calendar_upcoming_havdalah
       value_template: >
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
@@ -246,30 +246,9 @@
   username: !secret 17track_user
   password: !secret 17track_pass
 
-# Sun2 - custom component
-#- platform: sun2
-#  monitored_conditions:
-#    - solar_midnight
-#    - astronomical_dawn
-#    - nautical_dawn
-#    - dawn
-#    - solar_noon
-#    - dusk
-#    - nautical_dusk
-#    - astronomical_dusk
-#    - daylight
-#    - civil_daylight
-#    - nautical_daylight
-#    - astronomical_daylight
-#    - night
-#    - civil_night
-#    - nautical_night
-#    - astronomical_night
-#    - elevation
-
 # TV tracking
 - platform: history_stats
-  name: Track TV usage
+  name: 'Track TV usage'
   entity_id: binary_sensor.tv
   state: 'on'
   type: time
@@ -278,7 +257,7 @@
 - platform: template
   sensors:
     track_tv_usage_formatted:
-      friendly_name: Formatted TV usage
+      friendly_name: 'Formatted TV usage'
       entity_id: sensor.track_tv_usage
       value_template: >
         {% set hours = states('sensor.track_tv_usage') | float %} 
@@ -298,14 +277,14 @@
 - platform: template
   sensors:
     steam_game:
-      friendly_name: Steam Game
+      friendly_name: 'Steam Game'
       entity_id: sensor.steam_76561198173612681
       value_template: >
         {{ state_attr('sensor.steam_76561198173612681', 'game') }}
       icon_template: mdi:gamepad-square-outline
 
 - platform: history_stats
-  name: Track Steam playtime
+  name: 'Track Steam playtime'
   entity_id: binary_sensor.steam_game_on
   state: 'on'
   type: time
@@ -314,7 +293,7 @@
 - platform: template
   sensors:
     track_steam_playtime_formatted:
-      friendly_name: Formatted Steam playtime
+      friendly_name: 'Formatted Steam playtime'
       entity_id: sensor.track_steam_playtime
       value_template: >
         {% set hours = states('sensor.track_steam_playtime') | float %} 
@@ -330,28 +309,28 @@
 - platform: template
   sensors:
     outside_temps:
-      friendly_name: Outside Temperature
+      friendly_name: 'Outside Temperature'
       value_template: >
-        {{ state_attr('weather.openweathermap', 'temperature') }}
+        {{ state_attr('weather.openweathermap', 'temperature') | round }}
 
 # Heat index
 - platform: template
   sensors:
-    master_bedroom_heat_index:
-      friendly_name: 'Feels like'
-      value_template: >
-        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-      unit_of_measurement: °C
     living_room_heat_index:
       friendly_name: 'Feels like'
       value_template: >
         {{ (((((((states('sensor.living_room_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.living_room_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.living_room_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
       unit_of_measurement: °C
-    bathroom_heat_index:
-      friendly_name: 'Feels like'
-      value_template: >
-        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-      unit_of_measurement: °C
+#    master_bedroom_heat_index:
+#      friendly_name: 'Feels like'
+#      value_template: >
+#        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
+#      unit_of_measurement: °C
+#    bathroom_heat_index:
+#      friendly_name: 'Feels like'
+#      value_template: >
+#        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
+#      unit_of_measurement: °C
 
 ###
 # Electricity
@@ -359,14 +338,14 @@
 - platform: template
   sensors:
     total_power_consumption:
-      friendly_name: Total Power Consumption
+      friendly_name: 'Total Power Consumption'
       unit_of_measurement: kW
       icon_template: mdi:counter
       value_template: >
         {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
 
 - platform: history_stats
-  name: Shabat plate Power time
+  name: 'Shabat plate Power time'
   entity_id: binary_sensor.shabat_plate_is_on
   state: 'on'
   type: time
@@ -375,7 +354,7 @@
 - platform: template
   sensors:
     estimated_shabat_plate_electricity_consumption:
-      friendly_name: Estimated Shabat plate Electricity consumption
+      friendly_name: 'Estimated Shabat plate Electricity consumption'
       icon_template: mdi:counter
       unit_of_measurement: kWh
       value_template: >
@@ -384,12 +363,12 @@
 #- platform: template
 #  sensors:
 #    estimated_electricity_price_daily:
-#      friendly_name: Estimated Daily Electricity Price
+#      friendly_name: 'Estimated Daily Electricity Price'
 #      icon_template: mdi:currency-ils
 #      value_template: >
 #        {{ (((states('var.electricity_price') | float) * (states('sensor.shabat_plate_total_energy_usage_daily') | float)) / 100) | round(2) }}
 #    estimated_electricity_price_monthly:
-#      friendly_name: Estimated Monthly Electricity Price
+#      friendly_name: 'Estimated Monthly Electricity Price'
 #      icon_template: mdi:currency-ils
 #      value_template: >
 #        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}
@@ -397,13 +376,13 @@
 - platform: sql
   db_url: !secret mariadb_address
   queries:
-    - name: DB size
+    - name: 'DB size'
       query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
       column: 'value'
       unit_of_measurement: MB
 
 - platform: command_line
-  name: PiHole Status
+  name: 'PiHole Status'
   command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
   value_template: >
     {{ value_json.status }}

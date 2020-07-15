@@ -20,5 +20,5 @@ shabat_mode:
   icon: mdi:human-greeting
 
 night_light_override:
-  name: Night Light Override
+  name: 'Night Light Override'
   initial: 'off'

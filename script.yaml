@@ -4,68 +4,68 @@
 ### MACHINE CONTROL
 # Restart Homeassistant
 homeassistant_restart:
-  alias: Restart Home Assistant
+  alias: 'Restart Home Assistant'
   sequence:
     - service: homeassistant.restart
 # Restart Server
 server_restart:
-  alias: Restart Server
+  alias: 'Restart Server'
   sequence:
     - service: hassio.host_reboot
 # Reload themes
 reload_themes:
-  alias: Reload themes
+  alias: 'Reload themes'
   sequence:
     - service: frontend.reload_themes
 # Reload automations
 reload_automations:
-  alias: Reload automations
+  alias: 'Reload automations'
   sequence:
     - service: automation.reload
 # Reload groups
 reload_groups:
-  alias: Reload groups
+  alias: 'Reload groups'
   sequence:
     - service: group.reload
 # Reload scripts
 reload_scripts:
-  alias: Reload scripts
+  alias: 'Reload scripts'
   sequence:
     - service: script.reload
 # Reload scenes
 reload_scenes:
-  alias: Reload scenes
+  alias: 'Reload scenes'
   sequence:
     - service: scene.reload
 # Reload input booleans
 reload_input_boolean:
-  alias: Reload input booleans
+  alias: 'Reload input booleans'
   sequence:
     - service: input_boolean.reload
 # Reload input selects
 reload_input_select:
-  alias: Reload input selects
+  alias: 'Reload input selects'
   sequence:
     - service: input_select.reload
 reload_timers:
-  alias: Reload Timers
+  alias: 'Reload Timers'
   sequence:
     - service: timer.reload
 # Reload Lovelace resources
 reload_lovelace_resources:
-  alias: Reload lovelace resources
+  alias: 'Reload lovelace resources'
   sequence:
     - service: lovelace.reload_resources
 
 # Set themes
 set_noctis:
-  alias: Set Noctis
+  alias: 'Set Noctis'
   sequence:
     service: frontend.set_theme
     data:
       name: noctis
 set_synthwave:
-  alias: Set Synthwave
+  alias: 'Set Synthwave'
   sequence:
     service: frontend.set_theme
     data:
@@ -148,7 +148,7 @@ set_synthwave:
 ### Lights
 # Shabat and Chag lighting
 shabat_chag_lighting_sequence:
-  alias: shabat and chag lighting sequence
+  alias: 'shabat and chag lighting sequence'
   sequence:
     - service: light.turn_on
       data:
@@ -158,7 +158,7 @@ shabat_chag_lighting_sequence:
     - service: script.turn_on
       entity_id: script.shabat_chag_lighting
 shabat_chag_lighting:
-  alias: shabat and chag lighting
+  alias: 'shabat and chag lighting'
   sequence:
     - service: light.turn_on
       data:
@@ -174,7 +174,7 @@ shabat_chag_lighting:
         kelvin: 4000
 
 shabat_chag_end_lighting_sequence:
-  alias: shabat and chag lighting sequence
+  alias: 'shabat and chag lighting sequence'
   sequence:
     - service: light.turn_on
       data:

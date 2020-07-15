@@ -1,9 +1,0 @@
-- host: !secret server
-  username: !secret proxmox_user
-  password: !secret proxmox_pass
-  verify_ssl: false
-  realm: pve
-  nodes:
-    - node: pve
-      vms:
-        - 100

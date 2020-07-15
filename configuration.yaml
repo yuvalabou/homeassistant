@@ -49,9 +49,6 @@ config:
 # Enables a map showing the location of tracked devices.
 map:
 
-# Iframe Panels
-#panel_iframe: !include panel_iframe.yaml
-
 ##################################################
 #                     PERSONS                    #
 ##################################################
@@ -119,9 +116,6 @@ glances:
 # The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date.
 anniversaries: !include anniversaries.yaml
 
-# The var component is a Home Assistant integration for declaring and setting generic variable entities.
-#var: !include variables.yaml
-
 # The 'garbage_collection' component is a Home Assistant custom sensor for monitoring regular garbage collection schedule.
 garbage_collection: !include garbage_collection.yaml
 
@@ -142,12 +136,25 @@ yeelight: !include yeelight.yaml
 pi_hole:
   host: !secret nanopi_host
 
+# Openweathermap weather platform uses OpenWeatherMap as a source for current meteorological data for your location.
 weather:
   - platform: openweathermap
     api_key: !secret openweathermap
 
-proxmoxve: !include proxmoxve.yaml
+# Proxmox VE is an open-source server virtualization environment. This integration allows you to poll various data from your instance.
+proxmoxve:
+  - host: !secret server
+    username: !secret proxmox_user
+    password: !secret proxmox_pass
+    verify_ssl: false
+    realm: pve
+    nodes:
+      - node: pve
+        vms:
+          - 100
 
+# This platform adds components for Shelly smart home devices to Home Assistant.
+# There is no configuration needed, it will find all devices on your LAN and add them to Home Assistant.
 shelly: !include shelly.yaml
 
 ##################################################
@@ -165,7 +172,6 @@ recorder:
   purge_keep_days: 30
   exclude:
     entities:
-     # Date_Time platform.
       - sensor.time
       - sensor.time_date
       - sensor.date
@@ -177,12 +183,10 @@ recorder:
 # Set the default level for the logger.
 logger:
   default: warning
-  logs:
-    custom_components.logbook_cache: debug
 
 # Stores information about all logged errors and warnings in Home Assistant.
 system_log:
-  max_entries: 100
+  max_entries: 150
 
 ##################################################
 #                     COMPONENTS                 #
@@ -190,7 +194,6 @@ system_log:
 # The updater binary sensor will check daily for new releases.
 updater:
   reporting: false
-  include_used_components: true
 
 # Track the sun.
 sun:
@@ -199,7 +202,7 @@ sun:
 system_health:
 
 # Python scripts that are exposed as services in Home Assistant.
-python_script:
+#python_script:
 
 ##################################################
 #                     DOMAINS                   #

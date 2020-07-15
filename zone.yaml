@@ -1,7 +1,7 @@
 #####################################
 #               ZONES               #
 #####################################
-- name: Home
+- name: 'Home'
   latitude: !secret home_lat
   longitude: !secret home_lon
   radius: 100

@@ -3,7 +3,7 @@
 ###################################################
 # Set theme
 theme_list:
-  name: Set UI Theme
+  name: 'Set Theme'
   options:
     - Noctis
     - Synthwave
@@ -23,7 +23,7 @@ theme_list:
 
 # Shabat light-off time
 shabat_lights_off_time:
-  name: Shabat turn off light time
+  name: 'Shabat turn off light time'
   icon: mdi:clock
   initial: '22:00'
   options:

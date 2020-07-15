@@ -2,14 +2,14 @@
 #               GARBAGE COLLECTION               #
 ##################################################
 sensors:
-  - name: Waste
+  - name: 'Waste'
     frequency: "weekly"
     verbose_state: true
     verbose_format: 'in {days} days'
     collection_days:
       - sun
       - wed
-  - name: Bio
+  - name: 'Bio'
     frequency: "odd-weeks"
     verbose_state: true
     verbose_format: 'in {days} days'
@@ -17,7 +17,7 @@ sensors:
       - sun
       - mon
       - tue
-  - name: Large
+  - name: 'Large'
     frequency: "weekly"
     verbose_state: true
     verbose_format: 'in {days} days'

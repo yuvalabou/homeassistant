@@ -11,13 +11,13 @@ sensors: #sensors to show, can be override on each device
   - device_temp
   - switch
 upgrade_switch: true
+additional_information: true
 devices:  #configure devices
   - id: "500291F0EC55"
-    entity_id: 'shelly_one_first'
+    entity_id: shelly_one_first
     name: 'Shelly one'
 #    light_switch: true  #add this switch as a light
-    sensors: #Override the global sensor
+    sensors: #Overrides the global sensor
       - device_temp
       - switch
       - uptime
-additional_information: true

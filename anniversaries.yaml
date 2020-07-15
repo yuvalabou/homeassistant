@@ -6,14 +6,14 @@
 # https://github.com/pinkywafer/Anniversaries
 sensors:
   # Birthdays
-  - name: Yuval Birthday
+  - name: 'Yuval Birthday'
     date: '1990-05-19'
-  - name: Tohar Birthday
+  - name: 'Tohar Birthday'
     date: '1995-03-25'
-  - name: Harel-Nissim Birthday
+  - name: 'Harel-Nissim Birthday'
     date: '2016-07-04'
-  - name: Rotem-David Birthday
+  - name: 'Rotem-David Birthday'
     date: '2018-07-18'
   # Anniversaries
-  - name: Marriage anniversary
+  - name: 'Marriage anniversary'
     date: '2015-09-02'

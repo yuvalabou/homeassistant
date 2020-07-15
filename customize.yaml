@@ -41,10 +41,10 @@ sensor.pihole_status:
 
 # Utility meter
 sensor.shabat_plate_total_energy_usage_daily:
-  friendly_name: Shabat-Plate Daily electriciy usage
+  friendly_name: 'Shabat-Plate Daily electriciy usage'
   unit_of_measurement: kWh
 sensor.shabat_plate_total_energy_usage_monthly:
-  friendly_name: Shabat-Plate Monthly electriciy usage
+  friendly_name: 'Shabat-Plate Monthly electriciy usage'
   unit_of_measurement: kWh
 
 # ESPHOME Sensor icons

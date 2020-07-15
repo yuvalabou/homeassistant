@@ -5,7 +5,7 @@
 #  UI
 ###
 # Set theme on start-up
-- alias: Set theme on start-up
+- alias: 'Set theme on start-up'
   trigger:
     platform: homeassistant
     event: start
@@ -18,7 +18,7 @@
         entity_id: input_select.theme_list
         option: Noctis
 # Select theme manually
-- alias: Select theme
+- alias: 'Select theme'
   trigger:
     platform: state
     entity_id: input_select.theme_list
@@ -34,7 +34,7 @@
 # GLOBAL
 ###
 # Turn-off movement detection at Shabat\Chag
-- alias: Enable Shabat Mode at Shabat\Chag
+- alias: 'Enable Shabat Mode at Shabat\Chag'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -45,7 +45,7 @@
     - service: switch.turn_on
       entity_id: switch.shabat_mode
 # Turn-on movement detection at Shabat\Chag end
-- alias: Disable Shabat Mode at Shabat\Chag
+- alias: 'Disable Shabat Mode at Shabat\Chag'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -57,7 +57,7 @@
       entity_id: switch.shabat_mode
 
 # Turn-off movement detection in multisensors at Shabat\Chag
-- alias: Disable Multisensors Motion sensors
+- alias: 'Disable Multisensors Motion sensors'
   trigger:
     platform: state
     entity_id: switch.shabat_mode
@@ -66,7 +66,7 @@
     - service: switch.turn_on
       entity_id: switch.shabat_select
 # Turn-on movement detection in multisensors at Shabat\Chag end
-- alias: Enable Multisensors Motion sensors
+- alias: 'Enable Multisensors Motion sensors'
   trigger:
     platform: state
     entity_id: switch.shabat_mode
@@ -76,7 +76,7 @@
       entity_id: switch.shabat_select
 
 ### Shabat and Chag
-- alias: Shabat and Chag Lighting
+- alias: 'Shabat and Chag Lighting'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -89,7 +89,7 @@
     - service: script.turn_on
       entity_id: script.shabat_chag_lighting_sequence
 
-- alias: Shabat and Chag Lighting off
+- alias: 'Shabat and Chag Lighting off'
   trigger:
     platform: template
     value_template: >
@@ -104,7 +104,7 @@
         entity_id: light.public_lights
         transition: 300
 
-- alias: Shabat Morning lighting
+- alias: 'Shabat Morning lighting'
   trigger:
     platform: time
     at: '08:00:00'
@@ -124,7 +124,7 @@
         transition: 120
         brightness_pct: 70
 
-- alias: Shabat Morning Dining lighting
+- alias: 'Shabat Morning Dining lighting'
   trigger:
     platform: time
     at: '09:30:00'
@@ -144,7 +144,7 @@
         transition: 60
         brightness_pct: 100
 
-- alias: Shabat and Chag end lighting
+- alias: 'Shabat and Chag end lighting'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -286,7 +286,7 @@
 
 ## Shabat Plate
 # Turn-off in Shabat at 11:00am
-- alias: Shabat Enter operation #Precoution for Shabat after Chag
+- alias: 'Shabat Enter operation' #Precoution for Shabat after Chag
   trigger:
     platform: sun
     event: sunset
@@ -298,7 +298,7 @@
     - service: switch.turn_on
       data:
         entity_id: switch.shabat_plate
-- alias: Shabat operation
+- alias: 'Shabat operation'
   trigger:
     platform: time
     at: '11:30:00'
@@ -312,7 +312,7 @@
         entity_id: switch.shabat_plate
 
 # Chag operations
-- alias: Start Chag timer
+- alias: 'Start Chag timer'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -333,7 +333,7 @@
       data:
         entity_id: switch.shabat_plate 
 
-- alias: Turn-off plate on chag eve
+- alias: 'Turn-off plate on chag eve'
   trigger:
     platform: event
     event_type: timer.finished
@@ -344,7 +344,7 @@
       data:
         entity_id: switch.shabat_plate 
 
-- alias: Chag operation
+- alias: 'Chag operation'
   trigger:
     platform: time
     at: '08:00:00'
@@ -367,7 +367,7 @@
         entity_id: switch.shabat_plate 
 
 # Turn-on in Shabat for 'seuda-shlishit'
-- alias: Seuda-Shlishit
+- alias: 'Seuda-Shlishit'
   trigger:
     platform: sun
     event: sunset
@@ -382,7 +382,7 @@
         entity_id: switch.shabat_plate
 
 # Turn-off at the end of shabat/Chag
-- alias: Shabat/Chag ends
+- alias: 'Shabat/Chag ends'
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -396,7 +396,7 @@
 ###
 ## Lights
 # Turn-off fairy lights at night
-- alias: Master bedroom - turn off fairy lights at night
+- alias: 'Master bedroom - turn off fairy lights at night'
   trigger:
     platform: time
     at: '23:00:00'
@@ -406,7 +406,7 @@
 
 ### Lights
 # Turn-off lights when away
-- alias: Turn-off lights when away
+- alias: 'Turn-off lights when away'
   trigger:
     platform: state
     entity_id: group.person
@@ -416,7 +416,7 @@
       entity_id: light.all_lights
 
 # Light-up in the morning
-- alias: Turn on living room lights in workday morning-early
+- alias: 'Turn on living room lights in workday morning-early'
   trigger:
     platform: time
     at: '05:45:00'
@@ -436,7 +436,7 @@
         kelvin: 2800
         brightness_pct: 30
         transition: 300
-- alias: Turn on living room lights in workday morning-later
+- alias: 'Turn on living room lights in workday morning-later'
   trigger:
     platform: time
     at: '06:30:00'
@@ -458,7 +458,7 @@
         transition: 600
 
 # Light-up master bedroom the morning
-- alias: Turn on the master bedroom light in a workday morning
+- alias: 'Turn on the master bedroom light in a workday morning'
   trigger:
     platform: time
     at: '06:30:00'
@@ -480,7 +480,7 @@
         transition: 600
 
 # Light-up night lights on movement detection
-- alias: Turn on lights on movement detection at night
+- alias: 'Turn on lights on movement detection at night'
   trigger:
     platform: state
     entity_id: binary_sensor.living_room_motion
@@ -492,10 +492,9 @@
           entity_id: binary_sensor.night
           state: 'on'
         - condition: state
-          entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-          state: 'off'
-        - condition: state
-          entity_id: input_boolean.night_light_override
+          entity_id: 
+            - binary_sensor.jewish_calendar_issur_melacha_in_effect
+            - input_boolean.night_light_override
           state: 'off'
   action:
     - service: light.turn_on
@@ -505,7 +504,7 @@
         brightness_pct: 1
     - service: timer.start
       entity_id: timer.motion_lights_night
-- alias: Turn off lights on movement detection at night 2 minutes after triggered
+- alias: 'Turn off lights on movement detection at night 2 minutes after triggered'
   trigger:
     platform: event
     event_type: timer.finished
@@ -521,7 +520,7 @@
 # Notifications
 ###
 ## Shabat notifications
-- alias: Notify for Salatim
+- alias: 'Notify for Salatim'
   trigger:
     platform: state
     entity_id: binary_sensor.shabat_notification_trigger_salatim
@@ -533,9 +532,9 @@
   action:
     - service: notify.mobile_app_mi_9t
       data:
-        title: שבת שלום!
-        message: זכרת להכין מיחם, חציל וסלטים אחרים?
-- alias: Notify for Shabat
+        title: 'שבת שלום!'
+        message: 'זכרת להכין מיחם, חציל וסלטים אחרים?'
+- alias: 'Notify for Shabat'
   trigger:
     platform: state
     entity_id: binary_sensor.shabat_notification_trigger
@@ -547,64 +546,9 @@
   action:
     - service: notify.mobile_app_mi_9t
       data:
-        title: שבת שלום!
-        message: שבת נכנסת בעוד 10 דקות.
+        title: 'שבת שלום!'
+        message: 'שבת נכנסת בעוד 10 דקות.'
     - service: notify.mobile_app_redmi_note_7
       data:
-        title: שבת שלום!
-        message: שבת נכנסת בעוד 10 דקות.
-
-## Discord
-- alias: Notify for motion in master bedroom while we are out
-  trigger:
-    platform: state
-    entity_id: binary_sensor.master_bedroom_motion
-    to: 'on'
-  condition:
-    - condition: state
-      entity_id: group.person
-      state: 'not_home'
-  action:
-    - service: notify.discord
-      data:
-        message: "Motion detected at master bedroom"
-        target: ["706803073711996991"]
-- alias: Notify for motion in Living room while we are out
-  trigger:
-    platform: state
-    entity_id: binary_sensor.living_room_motion
-    to: 'on'
-  condition:
-    - condition: state
-      entity_id: group.person
-      state: 'not_home'
-  action:
-    - service: notify.discord
-      data:
-        message: "Motion detected at Living room"
-        target: ["706803073711996991"]
-#        data:
-#          photo:
-#            url:
-
-### Pi-Hole
-- alias: Disable Pi-Hole
-  trigger:
-    platform: state
-    entity_id: input_select.pihole_time
-  action:
-    service: shell_command.pihole_disable
-
-- alias: Reset PiHole Disable Time
-  trigger:
-    - platform: state
-      entity_id: script.enable_pihole
-    - platform: state
-      entity_id: sensor.pihole_status
-      from: 'disabled'
-      to: 'enabled'
-  action:
-    service: input_select.select_option
-    data:
-      entity_id: input_select.pihole_time
-      option: Select Time
+        title: 'שבת שלום!'
+        message: 'שבת נכנסת בעוד 10 דקות.'

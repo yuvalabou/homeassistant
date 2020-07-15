@@ -4,9 +4,9 @@
 - platform: template
   switches:
     shabat_mode:
+      friendly_name: 'מצב שבת'
       value_template: >
         {{ states('input_boolean.shabat_mode') }}
-      friendly_name: 'מצב שבת'
       turn_on:
         service: input_boolean.turn_on
         data:
@@ -19,9 +19,9 @@
 - platform: template
   switches:
     night_light_override: 
+      friendly_name: 'Night Light Override'
       value_template: >
         {{ states('input_boolean.night_light_override') }}
-      friendly_name: Night Light Override
       turn_on:
         service: input_boolean.turn_on
         data:
