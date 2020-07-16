@@ -9,7 +9,7 @@ custom_header:
 ####################################################
 #                     CONFIG VIEWS                 #
 ####################################################
-title: Aboulafia Home
+title: 'Aboulafia Home'
 views:
 ####################################################
 #                     FLOOR PLAN                   #
@@ -30,7 +30,7 @@ views:
 #                     MAIN VIEW                    #
 ####################################################
   - id: overview
-    title: Overview
+    title: 'Overview'
     cards:
       - type: horizontal-stack
         cards:
@@ -41,9 +41,9 @@ views:
                 image: '/local/assets/yuval.jpg'
                 entity: person.yuval
               - entity: sensor.mi_9t_geocoded_location
-                name: Location
+                name: 'Location'
               - entity: sensor.mi_9t_battery_level
-                name: Phone Battery
+                name: 'Phone Battery'
           - type: entities
             entities:
               - type: custom:hui-element
@@ -51,15 +51,15 @@ views:
                 image: '/local/assets/tohar.jpg'
                 entity: person.tohar
               - entity: sensor.redmi_note_7_geocoded_location
-                name: Location
+                name: 'Location'
               - entity: sensor.redmi_note_7_battery_level
-                name: Phone Battery
+                name: 'Phone Battery'
 
       - type: entities
         entities:
           - type: custom:weather-card
             entity: weather.openweathermap
-            name: "Weather"
+            name: 'Weather'
             current: true
             details: true
             forecast: true
@@ -77,34 +77,34 @@ views:
 #                  - 
 
       - type: entities
-        title: "זמני היום"
+        title: 'זמני היום'
         show_header_toggle: false
         entities:
           - entity: sensor.jewish_calendar_date
-            name: "תאריך"
+            name: 'תאריך'
           - entity: sensor.jewish_calendar_day_of_the_omer
-            name: "ספירת העומר"
+            name: 'ספירת העומר'
           - type: divider
           - entity: sensor.jewish_calendar_parshat_hashavua
-            name: "פרשת השבוע"
+            name: 'פרשת השבוע'
           - entity: sensor.jewish_calendar_upcoming_candle_lighting
             type: custom:multiple-entity-row
-            name: "הדלקת נרות"
+            name: 'הדלקת נרות'
             format: relative
             entities:
               - sensor.upcoming_candle_lighting_formatted
           - entity: sensor.jewish_calendar_upcoming_havdalah
             type: custom:multiple-entity-row
-            name: "הבדלה"
+            name: 'הבדלה'
             format: relative
             entities:
               - sensor.upcoming_havdalah_formatted
           - type: divider
           - entity: sensor.jewish_calendar_daf_yomi
-            name: "דף יומי"
+            name: 'דף יומי'
 
       - type: entities
-        title: Behavior
+        title: 'תאורת שבת'
         show_header_toggle: false
         entities:
           - switch.shabat_mode
@@ -116,7 +116,7 @@ views:
       - type: custom:auto-entities
         card:
           type: entities
-          title: Active Lights
+          title: 'Active Lights'
           show_header_toggle: false
         show_empty: false
         filter:
@@ -163,7 +163,7 @@ views:
 #                     LIVING ROOM                  #
 ####################################################
   - id: living_room
-    title: Living Room
+    title: 'Living Room'
     icon: mdi:sofa
     cards:
       - type: vertical-stack
@@ -185,11 +185,11 @@ views:
           - type: conditional
             conditions:
               - entity: binary_sensor.shabat_plate_connection
-                state: "on"
+                state: 'on'
             card:
               type: entities
               show_header_toggle: false
-              title: Shabat-Plate
+              title: 'פלטה'
               entities:
                 - switch.shabat_plate
 
@@ -202,7 +202,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.living_room_temperature
-                    name: Temperature
+                    name: 'Temperature'
                     show_points: false
                   - entity: sensor.living_room_heat_index
                     show_state: true
@@ -218,7 +218,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.living_room_humidity
-                    name: Humidity
+                    name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
@@ -251,7 +251,7 @@ views:
 #                     MASTER BEDROOM               #
 ####################################################
   - id: master_bedroom
-    title: Master Bedroom
+    title: 'Master Bedroom'
     icon: mdi:bed-king-outline
     cards:
 #      - type: custom:banner-card
@@ -311,7 +311,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.master_bedroom_temperature
-                    name: Temperature
+                    name: 'Temperature'
                     show_points: false
                   - entity: sensor.master_bedroom_heat_index
                     show_state: true
@@ -327,7 +327,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.master_bedroom_humidity
-                    name: Humidity
+                    name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
@@ -375,7 +375,7 @@ views:
                   - type: custom:mini-graph-card
                     entities:
                       - entity: sensor.mi_9t_battery_level
-                        name: Yuval Battery
+                        name: 'Mi9T Battery'
                     show:
                       points: false
                       labels: false
@@ -392,13 +392,14 @@ views:
                         color: "#FF6000"
                       - value: 10
                         color: "#FF0F00"
-                  - sensor.mi_9t_battery_state
+                  - entity: sensor.mi_9t_battery_state
+                    name: 'Mi9T Battery'
               - type: entities
                 entities:
                   - type: custom:mini-graph-card
                     entities:
                       - entity: sensor.redmi_note_7_battery_level
-                        name: Tohar Battery
+                        name: 'Note 7 Battery'
                     show:
                       points: false
                       labels: false
@@ -415,13 +416,14 @@ views:
                         color: "#FF6000"
                       - value: 10
                         color: "#FF0F00"
-                  - sensor.redmi_note_7_battery_state
+                  - entity: sensor.redmi_note_7_battery_state
+                    name: 'Note 7 Battery'
 
 ####################################################
 #                       BEDROOM                    #
 ####################################################
   - id: bedroom_mamad
-    title: Bedroom
+    title: 'Bedroom'
     icon: mdi:bed-single-outline
     cards:
       - type: entities
@@ -433,7 +435,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.bedroom_temperature
-                    name: Temperature
+                    name: 'Temperature'
                     show_points: false
                   - entity: sensor.bedroom_heat_index
                     show_state: true
@@ -449,7 +451,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.bedroom_humidity
-                    name: Humidity
+                    name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
@@ -472,7 +474,7 @@ views:
 #                    WORK BEDROOM                  #
 ####################################################
   - id: work_room
-    title: Work Room
+    title: 'Work Room'
     icon: mdi:desk
     cards:
       - type: entities
@@ -484,7 +486,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.work_bedroom_temperature
-                    name: Temperature
+                    name: 'Temperature'
                     show_points: false
                   - entity: sensor.work_bedroom_heat_index
                     show_state: true
@@ -500,7 +502,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.work_bedroom_humidity
-                    name: Humidity
+                    name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
@@ -528,7 +530,7 @@ views:
             entities:
               - entity: sensor.track_steam_playtime_formatted
                 unit: hours
-                name: Steam playtime
+                name: 'Steam playtime'
             show:
               graph: bar
               labels: false
@@ -546,7 +548,7 @@ views:
 #                       BATHROOM                    #
 ####################################################
   - id: bathroom
-    title: Bathroom
+    title: 'Bathroom'
     icon: mdi:shower
     cards:
       - type: vertical-stack
@@ -556,7 +558,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.bathroom_temperature
-                    name: Temperature
+                    name: 'Temperature'
                     show_points: false
                   - entity: sensor.bathroom_heat_index
                     show_state: true
@@ -572,7 +574,7 @@ views:
               - type: custom:mini-graph-card
                 entities:
                   - entity: sensor.bathroom_humidity
-                    name: Humidity
+                    name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
@@ -582,38 +584,38 @@ views:
                   labels: false
                   legend: false
 
-      - type: entities
-        title: Vent
-        show_header_toggle: false
-        entities:
-          - switch.vent
-
-      - type: entities
-        title: Boiler
-        show_header_toggle: false
-        entities:
-          - switch.boiler
-          - sensor.boiler_energy
-
-      - type: entities
-        title: Bathroom Heater
-        show_header_toggle: false
-        entities:
-          - switch.bathroom_heater
-          - sensor.bathroom_heater_energy
-
-      - type: entities
-        title: Washing Machine
-        show_header_toggle: false
-        entities:
-          - sensor.washing_machine
-          - sensor.dryer
+#      - type: entities
+#        title: Vent
+#        show_header_toggle: false
+#        entities:
+#          - switch.vent
+#
+#      - type: entities
+#        title: Boiler
+#        show_header_toggle: false
+#        entities:
+#          - switch.boiler
+#          - sensor.boiler_energy
+#
+#      - type: entities
+#        title: Bathroom Heater
+#        show_header_toggle: false
+#        entities:
+#          - switch.bathroom_heater
+#          - sensor.bathroom_heater_energy
+#
+#      - type: entities
+#        title: Washing Machine
+#        show_header_toggle: false
+#        entities:
+#          - sensor.washing_machine
+#          - sensor.dryer
 
 ####################################################
 #                    EXTRA STUFF                   #
 ####################################################
   - id: extra_stuff
-    title: Extra Stuff
+    title: 'Extra Stuff'
     icon: mdi:information-outline
     cards:
 #      - type: custom:banner-card
@@ -626,18 +628,6 @@ views:
 #          - sensor.basement_motion
 #          - sensor.basment_light
 
-      - type: custom:banner-card
-        heading: "\U0001F5D1 Garbage Collection"
-        background: "#F7E2C9"
-        row_size: 3
-        entities:
-          - entity: sensor.waste
-            attribute: verbose_state
-          - entity: sensor.bio
-            attribute: verbose_state
-          - entity: sensor.large
-            attribute: verbose_state
-
       - type: entities
         entities:
           - type: custom:hui-element
@@ -647,15 +637,15 @@ views:
             card_type: glance
             entities:
               - entity: sensor.seventeentrack_packages_not_found
-                name: Not-Found
+                name: 'Not-Found'
               - entity: sensor.seventeentrack_packages_in_transit
-                name: In-Transit
+                name: 'In-Transit'
               - entity: sensor.seventeentrack_packages_ready_to_be_picked_up
-                name: Ready to be Picked-Up
+                name: 'Ready to be Picked-Up'
           - type: custom:auto-entities
             card:
               type: entities
-              title: Package List
+              title: 'Package List'
               show_header_toggle: false
             filter:
               include:
@@ -676,20 +666,20 @@ views:
 #                     Statistics                   #
 ####################################################
   - id: statistics
-    title: Statistics
+    title: 'Statistics'
     icon: mdi:chart-areaspline
     cards:
-      - type: entities
-        entities:
-          - var.electricity_price
-          - sensor.estimated_electricity_price_daily
+#      - type: entities
+#        entities:
+#          - var.electricity_price
+#          - sensor.estimated_electricity_price_daily
 #          - sensor.estimated_electricity_price_monthly
 
       - type: custom:animated-consumption-card
         entity: sensor.total_power_consumption
 
       - type: custom:mini-graph-card
-        name: Temperature
+        name: 'Temperature'
         hours_to_show: 84
         entities:
           - entity: sensor.living_room_temperature
@@ -697,7 +687,7 @@ views:
 #          - entity: sensor.master_bedroom_temperature
 #            show_points: false
           - entity: sensor.outside_temps
-            name: Outside
+            name: 'Outside'
             show_points: false
         show:
           fill: fade
@@ -709,7 +699,7 @@ views:
         color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
 
       - type: custom:mini-graph-card
-        name: Motion last 3 Hours
+        name: 'Motion last 3 Hours'
         icon: mdi:motion-sensor
         hours_to_show: 3
         points_per_hour: 60
@@ -730,14 +720,14 @@ views:
 #            show_points: false
         state_map:
           - value: "off"
-            label: Clear
+            label: 'Clear'
           - value: "on"
-            label: Detected
+            label: 'Detected'
         show:
           fill: fade
 
       - type: custom:mini-graph-card
-        name: Lights
+        name: 'Lights'
         icon: mdi:lightbulb-on
         points_per_hour: 60
         hours_to_show: 3
@@ -759,9 +749,9 @@ views:
             color: white
         state_map:
           - value: "off"
-            label: כבוי
+            label: 'כבוי'
           - value: "on"
-            label: דולק
+            label: 'דולק'
         show:
           fill: fade
           labels: false
@@ -771,7 +761,7 @@ views:
           - entity: binary_sensor.tv
           - type: custom:hui-element
             card_type: custom:mini-graph-card
-            name: TV Usage
+            name: 'TV Usage'
             hours_to_show: 168
             group_by: date
             entities:
@@ -793,23 +783,23 @@ views:
 
 # Boiler
       - type: custom:mini-graph-card
-        name: Boiler Power Consumption
+        name: 'Boiler Power Consumption'
         unit: kWh
         hours_to_show: 750
         line_width: 1
         entities:
           - entity: sensor.boiler_total_energy_usage_daily
-            name: Daily
+            name: 'Daily'
             color: "#04FC04"
             show_state: true
             show_points: false
           - entity: sensor.boiler_total_energy_usage_weekly
-            name: Weekly
+            name: 'Weekly'
             color: "yellow"
             show_state: false
             show_points: false
           - entity: sensor.boiler_total_energy_usage_monthly
-            name: Monthly
+            name: 'Monthly'
             color: "red"
             show_state: false
             show_points: false
@@ -817,7 +807,7 @@ views:
           fill: fade
 
       - type: entities
-        title: Appliances
+        title: 'Appliances'
         show_header_toggle: false
         entities:
           - entity: sensor.shabat_plate_total_energy_usage_daily
@@ -836,7 +826,7 @@ views:
 #          - type: picture-elements
 #            image: /local/floor_plan/floor_plan.png
 #            elements:
-
+#
 ####################################################
 #                     UTILITIES                    #
 ####################################################
@@ -852,7 +842,7 @@ views:
                 icon: mdi:download-network
                 entities:
                   - entity: sensor.speedtest_download
-                    name: Download
+                    name: 'Download'
                 show:
                   points: false
                   fill: fade
@@ -860,65 +850,65 @@ views:
                 icon: mdi:upload-network
                 entities:
                   - entity: sensor.speedtest_upload
-                    name: Upload
+                    name: 'Upload'
                 show:
                   fill: fade
                   points: false
           - type: divider
           - entity: sensor.myip
-            name: External IP
+            name: 'External IP'
 
       - type: entities
-        title: Set Theme
+        title: 'Set Theme'
         show_header_toggle: false
         entities:
           - input_select.theme_list
 
       - type: glance
-        title: Component Count
+        title: 'Component Count'
         columns: 4
         entities:
           - entity: sensor.count_entities
-            name: Entities
+            name: 'Entities'
             icon: mdi:format-list-bulleted-square
           - entity: sensor.count_lights
-            name: Lights
+            name: 'Lights'
             icon: mdi:lightbulb-group
           - entity: sensor.count_sensors
-            name: Sensors
+            name: 'Sensors'
             icon: mdi:resistor
           - entity: sensor.count_binary_sensors
-            name: Binary Sensors
+            name: 'Binary Sensors'
             icon: mdi:unfold-more-horizontal
           - entity: sensor.count_automations
-            name: Automations
+            name: 'Automations'
             icon: mdi:autorenew
           - entity: sensor.count_scripts
-            name: Scripts
+            name: 'Scripts'
             icon: mdi:script-text-outline
           - entity: sensor.count_zones
-            name: Zones
+            name: 'Zones'
             icon: mdi:map-marker-radius
           - entity: sensor.count_device_trackers
-            name: Device Trackers
+            name: 'Device Trackers'
             icon: mdi:map-marker
           - entity: sensor.count_switches
-            name: Switches
+            name: 'Switches'
             icon: mdi:light-switch
           - entity: sensor.count_input_booleans
-            name: Input Booleans
+            name: 'Input Booleans'
             icon: mdi:toggle-switch
           - entity: sensor.count_input_selects
-            name: Input Select
+            name: 'Input Select'
             icon: mdi:view-list
           - entity: sensor.count_input_datetimes
-            name: Input Date Times
+            name: 'Input Date Times'
             icon: mdi:calendar-clock
           - entity: sensor.count_variables
-            name: Count Variables
+            name: 'Count Variables'
             icon: mdi:numeric
           - entity: sensor.count_timers
-            name: Count Timers
+            name: 'Count Timers'
             icon: mdi:clock
 
       - type: entities
@@ -956,7 +946,7 @@ views:
             icon: mdi:database
             entities:
               - entity: sensor.db_size
-                name: Database size
+                name: 'Database'
             show:
               fill: fade
               points: false
@@ -978,14 +968,14 @@ views:
             card_type: horizontal-stack
             cards:
               - type: gauge
-                name: CPU Used
+                name: 'CPU Used'
                 entity: sensor.glances_cpu_used
                 severity:
                   green: 0
                   yellow: 45
                   red: 85
               - type: gauge
-                name: CPU Temp
+                name: 'CPU Temp'
                 entity: sensor.glances_cpu_thermal_1_temp
                 severity:
                   green: 0

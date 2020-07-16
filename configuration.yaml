@@ -116,9 +116,6 @@ glances:
 # The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date.
 anniversaries: !include anniversaries.yaml
 
-# The 'garbage_collection' component is a Home Assistant custom sensor for monitoring regular garbage collection schedule.
-garbage_collection: !include garbage_collection.yaml
-
 # Google calendar platform allows you to connect to your Google Calendars and generate binary sensors.
 #google:
 #  client_id: !secret gcalendar_id
