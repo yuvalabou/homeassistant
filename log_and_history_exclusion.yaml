@@ -24,10 +24,6 @@ exclude:
     # Uptime
     - sensor.wled_uptime
     - sensor.uptime
-    # Garbage
-    - sensor.bio
-    - sensor.waste
-    - sensor.large
     # Jewish Calendar
     - sensor.jewish_calendar_alot_hashachar
     - sensor.jewish_calendar_daf_yomi
@@ -48,10 +44,21 @@ exclude:
     - sensor.jewish_calendar_upcoming_havdalah
     - sensor.jewish_calendar_upcoming_shabbat_candle_lighting
     - sensor.jewish_calendar_upcoming_shabbat_havdalah
+    - binary_sensor.is_fast_day
+    # Glances
+    - sensor.glances_gpu_thermal_1_temp
+    - sensor.glances_ram_free
+    - sensor.glances_sleeping
+    # MISC
     - sensor.current_version
+    - sensor.myip
+    - sensor.local_ip
+    - sensor.wind_speed
+    - sensor.wind_scale
   domains:
     - sun
     - updater
     - device_tracker
     - script
     - input_datetime
+    - automation

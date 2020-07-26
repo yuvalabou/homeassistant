@@ -82,6 +82,8 @@ views:
         entities:
           - entity: sensor.jewish_calendar_date
             name: 'תאריך'
+          - entity: binary_sensor.is_fast_day
+            name: 'צום'
           - entity: sensor.jewish_calendar_day_of_the_omer
             name: 'ספירת העומר'
           - type: divider
@@ -831,6 +833,7 @@ views:
 #                     UTILITIES                    #
 ####################################################
   - id: utilities
+    title: 'System Monitor'
     icon: mdi:server
     cards:
       - type: entities
@@ -904,11 +907,11 @@ views:
           - entity: sensor.count_input_datetimes
             name: 'Input Date Times'
             icon: mdi:calendar-clock
-          - entity: sensor.count_variables
-            name: 'Count Variables'
-            icon: mdi:numeric
+#          - entity: sensor.count_variables
+#            name: 'Variables'
+#            icon: mdi:numeric
           - entity: sensor.count_timers
-            name: 'Count Timers'
+            name: 'Timers'
             icon: mdi:clock
 
       - type: entities

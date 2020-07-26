@@ -23,7 +23,7 @@
     platform: state
     entity_id: input_select.theme_list
   action:
-    - service_template: >
+    - service_template: >-
         {% if trigger.to_state.state == 'Noctis' %}
           script.set_noctis
         {% elif trigger.to_state.state == 'Synthwave' %}

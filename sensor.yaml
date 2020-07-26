@@ -228,10 +228,10 @@
       entity_id: sensor.date
       value_template: >
         {{ states.input_datetime | list | count }}
-    count_variables:
-      entity_id: sensor.date
-      value_template: >
-        {{ states.var | list | count }}
+#    count_variables:
+#      entity_id: sensor.date
+#      value_template: >
+#        {{ states.var | list | count }}
     count_timers:
       entity_id: sensor.date
       value_template: >
@@ -305,14 +305,6 @@
 ###
 # Climate sensors
 ###
-# Outside temps
-- platform: template
-  sensors:
-    outside_temps:
-      friendly_name: 'Outside Temperature'
-      value_template: >
-        {{ state_attr('weather.openweathermap', 'temperature') | round }}
-
 # Heat index
 - platform: template
   sensors:
@@ -381,6 +373,9 @@
       column: 'value'
       unit_of_measurement: MB
 
+###
+# PiHole
+###
 - platform: command_line
   name: 'PiHole Status'
   command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
@@ -390,12 +385,20 @@
 ###
 # WEATHER
 ###
+# Outside temps
+- platform: template
+  sensors:
+    outside_temps:
+      friendly_name: 'Outside Temperature'
+      unit_of_measurement: °C
+      value_template: >
+        {{ state_attr('weather.openweathermap', 'temperature') | round }}
 - platform: template
   sensors:
     openweathermap_wind_speed:
       friendly_name: 'Wind speed'
       value_template: >
-        {{ state_attr('weather.openweathermap', 'wind_speed') }}
+        {{ state_attr('weather.openweathermap', 'wind_speed') | round }}
 - platform: template
   sensors:
     wind_scale_friendly:
