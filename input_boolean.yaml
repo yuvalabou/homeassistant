@@ -8,10 +8,10 @@
 #  icon: mdi:broom
 
 # Boiler
-boiler_today:
-  name: 'Boiler today'
-  initial: 'off'
-  icon: mdi:coolant-temperature
+#boiler_today:
+#  name: 'Boiler today'
+#  initial: 'off'
+#  icon: mdi:coolant-temperature
 
 # Movement detection
 shabat_mode:

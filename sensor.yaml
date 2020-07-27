@@ -22,7 +22,7 @@
       friendly_name: 'Home Assistant Uptime'
       icon_template: mdi:home-assistant
       entity_id: sensor.time_online
-      value_template: >
+      value_template: >-
         {% set uptime = states('sensor.time_online') | float(-1) %}
         {% if uptime >= 0 %}
           {% set time = (3600 * uptime) | int %}
@@ -84,12 +84,12 @@
     upcoming_candle_lighting_formatted:
       friendly_name: 'Upcoming Candle Lighting'
       entity_id: sensor.jewish_calendar_upcoming_candle_lighting
-      value_template: >
+      value_template: >-
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) | timestamp_custom('%H:%M') }}
     upcoming_havdalah_formatted:
       friendly_name: 'Upcoming Havdalah'
       entity_id: sensor.jewish_calendar_upcoming_havdalah
-      value_template: >
+      value_template: >-
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
 ###
 # VACUUM
@@ -99,9 +99,9 @@
 #    vacuum_status:
 #      friendly_name: Status
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
-#      icon_template: >
+#      icon_template: >-
 #        {% set val =  states('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
 #        {% if val == 'Charging' %}
 #          mdi:battery-charging
@@ -119,21 +119,21 @@
 #    vacuum_fan_speed:
 #      friendly_name: Fan Speed
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}
 #      icon_template: mdi:speedometer
 #    vacuum_battery:
 #      friendly_name: Vacuum Battery
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}
 #      unit_of_measurement: '%'
-#      icon_template: >
+#      icon_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}
 #    vacuum_cleaning_time:
 #      friendly_name: Time of Last Cycle
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}
 #      icon_template: mdi:timer
 #      unit_of_measurement: 'min'
@@ -141,41 +141,41 @@
 #      friendly_name: Area of Last Cycle
 #      unit_of_measurement: 'm ²'
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaned_area') }}
 #      icon_template: mdi:ruler
 #    vacuum_cleanmainbrush:
 #      friendly_name: Replace main brush
 #      unit_of_measurement: 'h'
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
 #      icon_template: mdi:screwdriver
 #    vacuum_cleansidebrush:
 #      friendly_name: Replace side brush
 #      unit_of_measurement: 'h'
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}
 #      icon_template: mdi:screwdriver
 #    vacuum_cleanfilter:
 #      friendly_name: Replace filter
 #      unit_of_measurement: 'h'
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
 #      icon_template: mdi:screwdriver
 #    vacuum_sensordirtyleft:
 #      friendly_name: Clean sensor
 #      unit_of_measurement: 'h'
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}
 #      icon_template: mdi:broom
 #    vacuum_last_cleaned:
 #      friendly_name: Last cleaned
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
-#      value_template: >
+#      value_template: >-
 #          {{ as_timestamp(state_attr('vacuum.xiaomi_vacuum_cleaner', 'clean_stop')) | timestamp_custom("%A, %H:%M", true) }}
 #      icon_template: mdi:timetable
 
@@ -185,60 +185,73 @@
 - platform: template
   sensors:
     count_entities:
+      friendly_name: 'Entities'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states | list | count }}
     count_automations:
+      friendly_name: 'Automations'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.automation | list | count }}
     count_scripts:
+      friendly_name: 'Scripts'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.script | list | count }}
     count_device_trackers:
+      friendly_name: 'Device Trackers'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.device_tracker | list | count }}
     count_binary_sensors:
+      friendly_name: 'Binary Sensors'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.binary_sensor | list | count }}
     count_sensors:
+      friendly_name: 'Sensors'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.sensor | list | count }}
     count_switches:
+      friendly_name: 'Switches'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.switch | list | count }}
     count_zones:
+      friendly_name: 'Zones'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.zone | list | count }}
     count_input_booleans:
+      friendly_name: 'Input Booleans'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.input_boolean | list | count }}
     count_input_selects:
+      friendly_name: 'Input Select'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.input_select | list | count }}
     count_input_datetimes:
+      friendly_name: 'Input Date\Time'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.input_datetime | list | count }}
 #    count_variables:
 #      entity_id: sensor.date
-#      value_template: >
+#      value_template: >-
 #        {{ states.var | list | count }}
     count_timers:
+      friendly_name: 'Timers'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.timer | list | count }}
     count_lights:
+      friendly_name: 'Lights'
       entity_id: sensor.date
-      value_template: >
+      value_template: >-
         {{ states.light | list | count }}
 
 # Package tracking
@@ -259,7 +272,7 @@
     track_tv_usage_formatted:
       friendly_name: 'Formatted TV usage'
       entity_id: sensor.track_tv_usage
-      value_template: >
+      value_template: >-
         {% set hours = states('sensor.track_tv_usage') | float %} 
         {% set minutes = ((hours % 1) * 60) | int %}  
         {% set hours = (hours - (hours % 1)) | int %}  
@@ -279,7 +292,7 @@
     steam_game:
       friendly_name: 'Steam Game'
       entity_id: sensor.steam_76561198173612681
-      value_template: >
+      value_template: >-
         {{ state_attr('sensor.steam_76561198173612681', 'game') }}
       icon_template: mdi:gamepad-square-outline
 
@@ -295,7 +308,7 @@
     track_steam_playtime_formatted:
       friendly_name: 'Formatted Steam playtime'
       entity_id: sensor.track_steam_playtime
-      value_template: >
+      value_template: >-
         {% set hours = states('sensor.track_steam_playtime') | float %} 
         {% set minutes = ((hours % 1) * 60) | int %}  
         {% set hours = (hours - (hours % 1)) | int %}  
@@ -310,17 +323,17 @@
   sensors:
     living_room_heat_index:
       friendly_name: 'Feels like'
-      value_template: >
+      value_template: >-
         {{ (((((((states('sensor.living_room_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.living_room_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.living_room_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
       unit_of_measurement: °C
 #    master_bedroom_heat_index:
 #      friendly_name: 'Feels like'
-#      value_template: >
+#      value_template: >-
 #        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
 #      unit_of_measurement: °C
 #    bathroom_heat_index:
 #      friendly_name: 'Feels like'
-#      value_template: >
+#      value_template: >-
 #        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
 #      unit_of_measurement: °C
 
@@ -333,7 +346,7 @@
       friendly_name: 'Total Power Consumption'
       unit_of_measurement: kW
       icon_template: mdi:counter
-      value_template: >
+      value_template: >-
         {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
 
 - platform: history_stats
@@ -349,7 +362,7 @@
       friendly_name: 'Estimated Shabat plate Electricity consumption'
       icon_template: mdi:counter
       unit_of_measurement: kWh
-      value_template: >
+      value_template: >-
         {{ (states('sensor.shabat_plate_power_time') | float) * 0.4 }}
 
 #- platform: template
@@ -357,12 +370,12 @@
 #    estimated_electricity_price_daily:
 #      friendly_name: 'Estimated Daily Electricity Price'
 #      icon_template: mdi:currency-ils
-#      value_template: >
+#      value_template: >-
 #        {{ (((states('var.electricity_price') | float) * (states('sensor.shabat_plate_total_energy_usage_daily') | float)) / 100) | round(2) }}
 #    estimated_electricity_price_monthly:
 #      friendly_name: 'Estimated Monthly Electricity Price'
 #      icon_template: mdi:currency-ils
-#      value_template: >
+#      value_template: >-
 #        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}
 
 - platform: sql
@@ -379,7 +392,7 @@
 - platform: command_line
   name: 'PiHole Status'
   command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
-  value_template: >
+  value_template: >-
     {{ value_json.status }}
 
 ###
@@ -391,19 +404,19 @@
     outside_temps:
       friendly_name: 'Outside Temperature'
       unit_of_measurement: °C
-      value_template: >
+      value_template: >-
         {{ state_attr('weather.openweathermap', 'temperature') | round }}
 - platform: template
   sensors:
     openweathermap_wind_speed:
       friendly_name: 'Wind speed'
-      value_template: >
+      value_template: >-
         {{ state_attr('weather.openweathermap', 'wind_speed') | round }}
 - platform: template
   sensors:
     wind_scale_friendly:
       friendly_name: 'Wind Scale'
-      icon_template: >
+      icon_template: >-
         {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
         {% if speed >= 75 %}
           mdi:weather-tornado
@@ -414,7 +427,7 @@
         {% else %}
           mdi:cloud-question
         {% endif %}
-      value_template: >
+      value_template: >-
         {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
         {% if speed >= 118 %}
           Hurricane force
@@ -449,6 +462,6 @@
 #- platform: template
 #  sensors:
 #    hanging_clothes:
-#      value_template: >
+#      value_template: >-
 #         {}
 #        
