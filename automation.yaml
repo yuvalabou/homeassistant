@@ -6,6 +6,7 @@
 ###
 # Set theme on start-up
 - alias: 'Set theme on start-up'
+  id: 5b3806c0-2bcc-4bc8-b538-ce724c934817
   trigger:
     platform: homeassistant
     event: start
@@ -19,6 +20,7 @@
         option: Noctis
 # Select theme manually
 - alias: 'Select theme'
+  id: 653bfb33-82f2-4b2d-9c9c-cb4e1087f8df
   trigger:
     platform: state
     entity_id: input_select.theme_list
@@ -35,6 +37,7 @@
 ###
 # Turn-off movement detection at Shabat\Chag
 - alias: 'Enable Shabat Mode at Shabat\Chag'
+  id: 501ee07f-794c-4b49-ba18-5e21f111510c
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -46,6 +49,7 @@
       entity_id: switch.shabat_mode
 # Turn-on movement detection at Shabat\Chag end
 - alias: 'Disable Shabat Mode at Shabat\Chag'
+  id: 6b9bd845-cb16-4fb9-bad2-003aeb2b9363
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -58,6 +62,7 @@
 
 # Turn-off movement detection in multisensors at Shabat\Chag
 - alias: 'Disable Multisensors Motion sensors'
+  id: 011001b9-dfee-43fb-b635-9f3f1c81388a
   trigger:
     platform: state
     entity_id: switch.shabat_mode
@@ -67,6 +72,7 @@
       entity_id: switch.shabat_select
 # Turn-on movement detection in multisensors at Shabat\Chag end
 - alias: 'Enable Multisensors Motion sensors'
+  id: 2fcfe963-6207-4429-ad51-1656eaed14dd
   trigger:
     platform: state
     entity_id: switch.shabat_mode
@@ -77,6 +83,7 @@
 
 ### Shabat and Chag
 - alias: 'Shabat and Chag Lighting'
+  id: 66aff0fc-7022-4577-9d72-2f35104ca746
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -90,6 +97,7 @@
       entity_id: script.shabat_chag_lighting_sequence
 
 - alias: 'Shabat and Chag Lighting off'
+  id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
     platform: template
     value_template: >
@@ -105,6 +113,7 @@
         transition: 300
 
 - alias: 'Shabat Morning lighting'
+  id: 3ac9405a-dde0-41f2-850b-413cb15a708d
   trigger:
     platform: time
     at: '08:00:00'
@@ -125,6 +134,7 @@
         brightness_pct: 70
 
 - alias: 'Shabat Morning Dining lighting'
+  id: d2980177-8560-43f1-9fc4-26afd6406e73
   trigger:
     platform: time
     at: '09:30:00'
@@ -145,6 +155,7 @@
         brightness_pct: 100
 
 - alias: 'Shabat and Chag end lighting'
+  id: 92ec94d8-89b9-4417-9c03-5711d20e5d32
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -161,7 +172,8 @@
 # VACUUM
 ###
 # Vacuum waits until everybody left
-#- alias: Vacuum waits until everybody left
+#- alias: 'Vacuum waits until everybody left'
+#  id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
 #  trigger:
 #    platform: state
 #    entity_id: group.person
@@ -181,15 +193,16 @@
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
 #    - service: notify.mobile_app_mi_9t
 #      data:
-#        title: Now Cleaning
-#        message: The house Was empty - so anyway, I started cleaning.
+#        title: 'Now Cleaning'
+#        message: 'The house Was empty - so anyway, I started cleaning.'
 #    - service: notify.mobile_app_redmi_note_7
 #      data:
-#        title: Now Cleaning
-#        message: The house Was empty - so anyway, I started cleaning.
+#        title: 'Now Cleaning'
+#        message: 'The house Was empty - so anyway, I started cleaning.'
 
 # Vacuum return to dock if in error state more then 1 hr
-#- alias: Return to dock if error for 1 hr
+#- alias: 'Return to dock if error for 1 hr'
+#  id: c70477c9-66c0-43db-9036-570aa6bfcb09
 #  trigger:
 #    platform: state
 #    entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -201,15 +214,16 @@
 #      entity_id: vacuum.xiaomi_vacuum_cleaner
 #    - service: notify.mobile_app_mi_9t
 #      data:
-#        title: Returning to Dock
-#        message: You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!
+#        title: 'Returning to Dock'
+#        message: 'You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!'
 #    - service: notify.mobile_app_redmi_note_7
 #      data:
-#        title: Returning to Dock
-#        message: You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!
+#        title: 'Returning to Dock'
+#        message: 'You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!'
 
 # Set vacuum input_boolean to 'on' even if turned-on manually for minimal cleaning time
-#- alias: Vacuum - set to cleaned today
+#- alias: 'Vacuum - set to cleaned today'
+#  id: 8d53ce02-066c-4a51-a369-3e13d1220cee
 #  trigger:
 #    platform: state
 #    entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -221,6 +235,7 @@
 
 # Reset cleaning counter
 #- alias: Vacuum - reset 'cleaned today'
+#  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
 #  initial_state: 'on'
 #  trigger:
 #    platform: time
@@ -230,14 +245,16 @@
 #      entity_id: input_boolean.cleaned_today
 
 # Vacuum - Intelligent Mode
-#- alias: Intelligent Turbo mode
+#- alias: 'Intelligent Turbo mode'
+#  id: c8258c50-16dd-4b3d-b743-7a806bdb1018
 #  trigger:
 #    platform: state
 #    entity_id: group.person
 #    to: 'not_home'
 #  action:
 #    - service: script.vacuum_set_turbo
-#- alias: Intelligent Quiet mode
+#- alias: 'Intelligent Quiet mode'
+#  id: f4000e26-b404-4d74-93a0-85b9900a7278
 #  trigger:
 #    platform: state
 #    entity_id: group.person
@@ -246,12 +263,13 @@
 #    - service: script.vacuum_set_silent
 
 # Vacuum - Set mode
-#- alias: Vacuum - set mode
+#- alias: 'Vacuum - set mode'
+#  id: 339c44db-f51b-4174-b396-18e69213b4e7
 #  trigger:
 #    platform: state
 #    entity_id: input_select.vacuum_fan_speed_list
 #  action:
-#    - service_template: >
+#    - service_template: >-
 #        {% if trigger.to_state.state == 'Silent' %}
 #          script.vacuum_set_silent
 #        {% elif trigger.to_state.state == 'Standard' %}
@@ -269,7 +287,8 @@
 ###
 ## Lights
 # Turn on sink lights to max when someone in the kitchen
-#- alias: Sink lights max brightness
+#- alias: 'Sink lights max brightness'
+#  id: ec0d69d8-ec67-4146-81f1-de85066a37a7
 #  trigger:
 #    platform: state
 #    to: 'on'
@@ -287,6 +306,7 @@
 ## Shabat Plate
 # Turn-off in Shabat at 11:00am
 - alias: 'Shabat Enter operation' #Precoution for Shabat after Chag
+  id: 175ea9fb-d7b6-419f-992d-a7cea43a7420
   trigger:
     platform: sun
     event: sunset
@@ -299,6 +319,7 @@
       data:
         entity_id: switch.shabat_plate
 - alias: 'Shabat operation'
+  id: 48acb771-25fe-4629-9ce7-77dfc35adeab
   trigger:
     platform: time
     at: '11:30:00'
@@ -313,6 +334,7 @@
 
 # Chag operations
 - alias: 'Start Chag timer'
+  id: f6711174-7249-43d3-a70a-e1a9fa147ffe
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -334,6 +356,7 @@
         entity_id: switch.shabat_plate 
 
 - alias: 'Turn-off plate on chag eve'
+  id: ab698dfc-9a41-4f15-bf63-cd95eaf95ee2
   trigger:
     platform: event
     event_type: timer.finished
@@ -345,6 +368,7 @@
         entity_id: switch.shabat_plate 
 
 - alias: 'Chag operation'
+  id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
   trigger:
     platform: time
     at: '08:00:00'
@@ -368,6 +392,7 @@
 
 # Turn-on in Shabat for 'seuda-shlishit'
 - alias: 'Seuda-Shlishit'
+  id: eec856fd-3958-4296-984a-c62458c75c97
   trigger:
     platform: sun
     event: sunset
@@ -383,6 +408,7 @@
 
 # Turn-off at the end of shabat/Chag
 - alias: 'Shabat/Chag ends'
+  id: 0cb6679a-5286-419e-95be-fe5c2850a247
   trigger:
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -396,17 +422,19 @@
 ###
 ## Lights
 # Turn-off fairy lights at night
-- alias: 'Master bedroom - turn off fairy lights at night'
-  trigger:
-    platform: time
-    at: '23:00:00'
-  action:
-    - service: light.turn_off
-      entity_id: light.wled
+#- alias: 'turn off master-bedroom fairy lights at night'
+#  id: 1a5b17ca-d49e-4ffb-b665-9fe4cd63d904
+#  trigger:
+#    platform: time
+#    at: '23:00:00'
+#  action:
+#    - service: light.turn_off
+#      entity_id: light.wled
 
 ### Lights
 # Turn-off lights when away
 - alias: 'Turn-off lights when away'
+  id: c4219e30-3edb-4e1d-9621-eba64f593883
   trigger:
     platform: state
     entity_id: group.person
@@ -417,6 +445,7 @@
 
 # Light-up in the morning
 - alias: 'Turn on living room lights in workday morning-early'
+  id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
     platform: time
     at: '05:45:00'
@@ -437,6 +466,7 @@
         brightness_pct: 30
         transition: 300
 - alias: 'Turn on living room lights in workday morning-later'
+  id: 3a42a962-7bf3-4952-b8a2-99591aa827f5
   trigger:
     platform: time
     at: '06:30:00'
@@ -458,10 +488,11 @@
         transition: 600
 
 # Light-up master bedroom the morning
-- alias: 'Turn on the master bedroom light in a workday morning'
+- alias: 'Turn on the master-bedroom lights in a workday morning'
+  id: cb2d8573-74f4-440c-9b2e-23057b5e492c
   trigger:
     platform: time
-    at: '06:30:00'
+    at: '06:45:00'
   condition:
     - condition: and
       conditions:
@@ -476,11 +507,12 @@
       data:
         entity_id: light.master_bedroom
         kelvin: 3000
-        brightness_pct: 70
+        brightness_pct: 60
         transition: 600
 
 # Light-up night lights on movement detection
-- alias: 'Turn on lights on movement detection at night'
+- alias: 'Turn on lights when movement detected at night'
+  id: bbe9c72e-6578-4fd1-b25c-12908145ac14
   trigger:
     platform: state
     entity_id: binary_sensor.living_room_motion
@@ -504,7 +536,8 @@
         brightness_pct: 1
     - service: timer.start
       entity_id: timer.motion_lights_night
-- alias: 'Turn off lights on movement detection at night 2 minutes after triggered'
+- alias: 'Turn off lights when movement is not detected set minutes after triggered'
+  id: 395fbb3d-01ec-477e-a5dc-aab76acef310
   trigger:
     platform: event
     event_type: timer.finished
@@ -521,6 +554,7 @@
 ###
 ## Shabat notifications
 - alias: 'Notify for Salatim'
+  id: c5553611-fb7b-42d7-80af-2608a31c2c25
   trigger:
     platform: state
     entity_id: binary_sensor.shabat_notification_trigger_salatim
@@ -535,6 +569,7 @@
         title: 'שבת שלום!'
         message: 'זכרת להכין מיחם, חציל וסלטים אחרים?'
 - alias: 'Notify for Shabat'
+  id: 1145acf8-55b2-4564-bab8-94090f75d7d5
   trigger:
     platform: state
     entity_id: binary_sensor.shabat_notification_trigger
