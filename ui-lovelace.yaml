@@ -76,6 +76,9 @@ views:
 #                entities:
 #                  - 
 
+      - type: custom:animated-consumption-card
+        entity: sensor.realtime_shabat_plate_electricity_consumption
+
       - type: entities
         title: 'זמני היום'
         show_header_toggle: false
@@ -677,9 +680,6 @@ views:
 #          - sensor.estimated_electricity_price_daily
 #          - sensor.estimated_electricity_price_monthly
 
-      - type: custom:animated-consumption-card
-        entity: sensor.total_power_consumption
-
       - type: custom:mini-graph-card
         name: 'Temperature'
         hours_to_show: 84
@@ -784,35 +784,35 @@ views:
             entity: media_player.pilot_tv
 
 # Boiler
-      - type: custom:mini-graph-card
-        name: 'Boiler Power Consumption'
-        unit: kWh
-        hours_to_show: 750
-        line_width: 1
-        entities:
-          - entity: sensor.boiler_total_energy_usage_daily
-            name: 'Daily'
-            color: "#04FC04"
-            show_state: true
-            show_points: false
-          - entity: sensor.boiler_total_energy_usage_weekly
-            name: 'Weekly'
-            color: "yellow"
-            show_state: false
-            show_points: false
-          - entity: sensor.boiler_total_energy_usage_monthly
-            name: 'Monthly'
-            color: "red"
-            show_state: false
-            show_points: false
-        show:
-          fill: fade
+#      - type: custom:mini-graph-card
+#        name: 'Boiler Power Consumption'
+#        unit: kW
+#        hours_to_show: 750
+#        line_width: 1
+#        entities:
+#          - entity: sensor.boiler_total_energy_usage_daily
+#            name: 'Daily'
+#            color: "#04FC04"
+#            show_state: true
+#            show_points: false
+#          - entity: sensor.boiler_total_energy_usage_weekly
+#            name: 'Weekly'
+#            color: "yellow"
+#            show_state: false
+#            show_points: false
+#          - entity: sensor.boiler_total_energy_usage_monthly
+#            name: 'Monthly'
+#            color: "red"
+#            show_state: false
+#            show_points: false
+#        show:
+#          fill: fade
 
       - type: entities
         title: 'Appliances'
         show_header_toggle: false
         entities:
-          - entity: sensor.shabat_plate_total_energy_usage_daily
+          - sensor.shabat_plate_total_energy_usage_daily
 
 ####################################################
 #                CONNECTED DEVICES                 #

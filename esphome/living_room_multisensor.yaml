@@ -13,30 +13,20 @@ esphome:
 
 wifi:
   ssid: !secret ssid
-  password: !secret wifi_pass
-  # Optional manual IP
+  password: !secret wifi_passwd
   manual_ip:
     static_ip: 10.0.0.70
-    gateway: 10.0.0.138
+    gateway: !secret gateway
     subnet: 255.255.255.0
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: ${upper_devicename} Fallback Hotspot
-    password: !secret ap_pass
+    password: !secret ap_passwd
 
 captive_portal:
-
-# Enable logging
 logger:
-
-# Enable Home Assistant API
 api:
-
 ota:
 
-###
-# Code
-###
 i2c:
   sda: D2
   scl: D1
@@ -47,7 +37,6 @@ mcp23008:
     address: 0x20
 
 binary_sensor:
-  # Motion sensor
   - platform: gpio
     pin:
       number: D5
@@ -60,7 +49,6 @@ binary_sensor:
     name: ${upper_devicename} Connection
 
 sensor:
-  # Temperature and Humidity sensor
   - platform: bme280
     temperature:
       name: ${upper_devicename} Temperature
@@ -73,7 +61,6 @@ sensor:
       id: ${template_id}_humidity
     address: 0x76
     update_interval: 60s
-  # WiFi sensor
   - platform: wifi_signal
     name: ${upper_devicename} WiFi reception
     update_interval: 60s

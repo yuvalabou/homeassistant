@@ -350,7 +350,7 @@
         {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
 
 - platform: history_stats
-  name: 'Shabat plate Power time'
+  name: 'Shabat plate Is ON'
   entity_id: binary_sensor.shabat_plate_is_on
   state: 'on'
   type: time
@@ -361,9 +361,19 @@
     estimated_shabat_plate_electricity_consumption:
       friendly_name: 'Estimated Shabat plate Electricity consumption'
       icon_template: mdi:counter
-      unit_of_measurement: kWh
+      unit_of_measurement: kW
       value_template: >-
-        {{ (states('sensor.shabat_plate_power_time') | float) * 0.4 }}
+        {{ (states('sensor.shabat_plate_is_on') | float) * 0.4 }}
+    realtime_shabat_plate_electricity_consumption:
+      friendly_name: 'Realtime Shabat plate Electricity consumption'
+      icon_template: mdi:counter
+      unit_of_measurement: W
+      value_template: >-
+        {% if is_state('binary_sensor.shabat_plate_is_on', 'on') %}
+          400
+        {%- else -%}
+          0
+        {%- endif -%}
 
 #- platform: template
 #  sensors:

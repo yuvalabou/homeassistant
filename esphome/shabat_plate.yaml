@@ -10,41 +10,30 @@ esphome:
   platform: ESP8266
   board: esp01_1m
   on_boot:
-    priority: -100
+    priority: -10
     then:
       - switch.turn_on: relay
 
 wifi:
   ssid: !secret ssid
-  password: !secret wifi_pass
+  password: !secret wifi_passwd
   manual_ip:
     static_ip: 10.0.0.60
-    gateway: 10.0.0.138
+    gateway: !secret gateway
     subnet: 255.255.255.0
-
-  # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
     ssid: ${devicename}
-    password: !secret ap_pass
-# Enable backup AP
+    password: !secret ap_passwd
+
 captive_portal:
-
-# Enable logging
 logger:
-
-# Enable Home Assistant API
 api:
-
-# Enable OTA Updates
 ota:
 
-# Code
 sensor:
-  # WiFi sensor
   - platform: wifi_signal
     name: ${upper_devicename} WiFi reception
     update_interval: 60s
-  # Uptime sensor
   - platform: uptime
     id: uptime_hours
     filters:
@@ -64,7 +53,7 @@ binary_sensor:
   - platform: template
     name: Shabat plate is ON
     lambda: |-
-      if (id(relay).state == 'on') {
+      if (id(relay).state) {
         return true;
       } else {
         return false;

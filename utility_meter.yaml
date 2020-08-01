@@ -3,10 +3,10 @@
 ##############################################
 ### Aplliances
 shabat_plate_total_energy_usage_daily:
-  source: sensor.shabat_plate_power_consumption
+  source: sensor.estimated_shabat_plate_electricity_consumption
   cycle: daily
 shabat_plate_total_energy_usage_monthly:
-  source: sensor.shabat_plate_power_consumption
+  source: sensor.estimated_shabat_plate_electricity_consumption
   cycle: monthly
 
 ### Boiler
