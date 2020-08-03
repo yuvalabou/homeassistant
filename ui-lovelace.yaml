@@ -237,6 +237,9 @@ views:
               - binary_sensor.living_room_motion
               - sensor.living_room_humidity_range
 
+      - type: thermostat
+        entity: climate.slvn
+
       - type: entities
         show_header_toggle: false
         entities:
@@ -347,6 +350,9 @@ views:
               - binary_sensor.master_bedroom_motion
               - sensor.master_bedroom_humidity_range
           - switch.shabat_select
+
+      - type: thermostat
+        entity: climate.shynh
 
       - type: light
         entity: light.master_bedroom

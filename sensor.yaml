@@ -253,8 +253,13 @@
       entity_id: sensor.date
       value_template: >-
         {{ states.light | list | count }}
+    count_climates:
+      friendly_name: 'Climate'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.climate | list | count }}
 
-# Package tracking
+        # Package tracking
 - platform: seventeentrack
   username: !secret 17track_user
   password: !secret 17track_pass

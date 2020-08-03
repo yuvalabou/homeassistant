@@ -22,13 +22,13 @@ homeassistant:
   # Customizing entities.
   customize: !include customize.yaml
 
-# Mobile App integration allows Home Assistant mobile app to easily integrate with Home Assistant.
+# Allows Home Assistant mobile app to easily integrate with Home Assistant.
 mobile_app:
 
-# The http integration serves all files and data required for the Home Assistant frontend.
+# Serves all files and data required for the Home Assistant frontend.
 #http:
 
-# The api integration exposes a RESTful API and allows one to interact with a Home Assistant instance that is running headless.
+# Exposes a RESTful API and allows one to interact with a Home Assistant instance that is running headless.
 #api:
 
 ##################################################
@@ -52,13 +52,13 @@ map:
 ##################################################
 #                     PERSONS                    #
 ##################################################
-# Person integration allows connecting device tracker entities to one or more person entities.
+# Allows connecting device tracker entities to one or more person entities.
 person: !include person.yaml
 
 # Presence detection and tracking.
 device_tracker: !include device_tracker.yaml
 
-# Zones allow you to specify certain regions on earth.
+# Allow you to specify certain regions on earth.
 zone: !include zone.yaml
 
 ##################################################
@@ -78,7 +78,7 @@ ssdp:
 ##################################################
 #                  INTEGRATIONS                  #
 ##################################################
-# Xiaomi_miio vacuum platform allows you to control the state of your Xiaomi Mi Robot Vacuum.
+# Allows you to control the state of your Xiaomi Mi Robot Vacuum.
 #vacuum:
 #  - platform: xiaomi_miio
 #    host: !secret vacuum_host
@@ -93,7 +93,7 @@ ssdp:
 # Uses the Speedtest.net web service to measure network bandwidth performance.
 speedtestdotnet:
 
-# The input_datetime integration allows the user to define date and time values.
+# Allows the user to define date and time values.
 input_datetime:
   both_date_and_time:
     name: Input with both date and time
@@ -116,12 +116,12 @@ glances:
 # The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date.
 anniversaries: !include anniversaries.yaml
 
-# Google calendar platform allows you to connect to your Google Calendars and generate binary sensors.
+# Connect to your Google Calendars and generate binary sensors.
 #google:
 #  client_id: !secret gcalendar_id
 #  client_secret: !secret gcalendar_client_secret
 
-# Yeelight integration allows you to control your Yeelight Wifi bulbs with Home Assistant.
+# Allows you to control your Yeelight Wifi bulbs with Home Assistant.
 yeelight: !include yeelight.yaml
 
 #notify:
@@ -129,16 +129,21 @@ yeelight: !include yeelight.yaml
 #    name: Discord
 #    token: !secret discord_bot
 
-# The pi_hole integration allows you to retrieve statistics and interact with a Pi-hole system.
+# Allows you to retrieve statistics and interact with a Pi-hole system.
 pi_hole:
   host: !secret nanopi_host
 
-# Openweathermap weather platform uses OpenWeatherMap as a source for current meteorological data for your location.
+# Uses OpenWeatherMap as a source for current meteorological data for your location.
 weather:
   - platform: openweathermap
     api_key: !secret openweathermap
 
-# Proxmox VE is an open-source server virtualization environment. This integration allows you to poll various data from your instance.
+# Integrates Sensibo Air Conditioning controller into Home Assistant.
+climate:
+  - platform: sensibo
+    api_key: !secret sensibo
+
+# Proxmox VE is an open-source server virtualization environment. Allows you to poll various data from your instance.
 proxmoxve:
   - host: !secret server
     username: !secret proxmox_user
@@ -149,8 +154,9 @@ proxmoxve:
       - node: pve
         vms:
           - 100
+          - 101
 
-# This platform adds components for Shelly smart home devices to Home Assistant.
+# Adds components for Shelly smart home devices to Home Assistant.
 # There is no configuration needed, it will find all devices on your LAN and add them to Home Assistant.
 shelly: !include shelly.yaml
 
@@ -188,7 +194,7 @@ system_log:
 ##################################################
 #                     COMPONENTS                 #
 ##################################################
-# The updater binary sensor will check daily for new releases.
+# Checks daily for new releases.
 updater:
   reporting: false
 
