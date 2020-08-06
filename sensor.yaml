@@ -259,7 +259,7 @@
       value_template: >-
         {{ states.climate | list | count }}
 
-        # Package tracking
+# Package tracking
 - platform: seventeentrack
   username: !secret 17track_user
   password: !secret 17track_pass
@@ -330,17 +330,17 @@
       friendly_name: 'Feels like'
       value_template: >-
         {{ (((((((states('sensor.living_room_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.living_room_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.living_room_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-      unit_of_measurement: °C
+      unit_of_measurement: '°C'
 #    master_bedroom_heat_index:
 #      friendly_name: 'Feels like'
 #      value_template: >-
 #        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-#      unit_of_measurement: °C
+#      unit_of_measurement: '°C'
 #    bathroom_heat_index:
 #      friendly_name: 'Feels like'
 #      value_template: >-
 #        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-#      unit_of_measurement: °C
+#      unit_of_measurement: '°C'
 
 ###
 # Electricity
@@ -479,4 +479,16 @@
 #    hanging_clothes:
 #      value_template: >-
 #         {}
-#        
+
+- platform: template
+  sensors:
+    master_bedroom_sensibo_humidity:
+      friendly_name: 'Master Bedroom Humidity'
+      unit_of_measurement: '%'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'current_humidity') }}
+    master_bedroom_sensibo_temperature:
+      friendly_name: 'Master Bedroom temperature'
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'current_temperature') }}

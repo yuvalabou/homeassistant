@@ -318,12 +318,12 @@ views:
             cards:
               - type: custom:mini-graph-card
                 entities:
-                  - entity: sensor.master_bedroom_temperature
+                  - entity: sensor.master_bedroom_sensibo_temperature
                     name: 'Temperature'
                     show_points: false
-                  - entity: sensor.master_bedroom_heat_index
-                    show_state: true
-                    show_graph: false
+#                  - entity: sensor.master_bedroom_heat_index
+#                    show_state: true
+#                    show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 show:
@@ -334,7 +334,7 @@ views:
                   legend: false
               - type: custom:mini-graph-card
                 entities:
-                  - entity: sensor.master_bedroom_humidity
+                  - entity: sensor.master_bedroom_sensibo_humidity
                     name: 'Humidity'
                 font_size: 80
                 lower_bound: 0
@@ -482,55 +482,85 @@ views:
         entity: light.bedroom1
 
 ####################################################
-#                    WORK BEDROOM                  #
+#                    Home Office                   #
 ####################################################
   - id: work_room
-    title: 'Work Room'
+    title: 'Home Office'
     icon: mdi:desk
     cards:
-      - type: entities
-        show_header_toggle: false
-        entities:
-          - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.work_bedroom_temperature
-                    name: 'Temperature'
-                    show_points: false
-                  - entity: sensor.work_bedroom_heat_index
-                    show_state: true
-                    show_graph: false
-                font_size: 80
-                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-                show:
-                  fill: fade
-                  points: false
-                  labels: true
-                  labels_secondary: false
-                  legend: false
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.work_bedroom_humidity
-                    name: 'Humidity'
-                font_size: 80
-                lower_bound: 0
-                upper_bound: 100
-                show:
-                  fill: fade
-                  points: false
-                  labels: false
-                  legend: false
-          - type: custom:hui-element
-            card_type: glance
-            entities:
-              - binary_sensor.work_bedroom_motion
-              - sensor.work_bedroom_humidity_range
-          - switch.shabat_select
+#      - type: entities
+#        show_header_toggle: false
+#        entities:
+#          - type: custom:hui-element
+#            card_type: horizontal-stack
+#            cards:
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.work_bedroom_temperature
+#                    name: 'Temperature'
+#                    show_points: false
+#                  - entity: sensor.work_bedroom_heat_index
+#                    show_state: true
+#                    show_graph: false
+#                font_size: 80
+#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: true
+#                  labels_secondary: false
+#                  legend: false
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.work_bedroom_humidity
+#                    name: 'Humidity'
+#                font_size: 80
+#                lower_bound: 0
+#                upper_bound: 100
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: false
+#                  legend: false
+#          - type: custom:hui-element
+#            card_type: glance
+#            entities:
+#              - binary_sensor.work_bedroom_motion
+#              - sensor.work_bedroom_humidity_range
+#          - switch.shabat_select
 
       - type: light
         entity: light.bedroom2
+
+      - type: entities
+        title: 'Printer'
+        entities:
+          - sensor.mfc_j4410dw_status
+          - binary_sensor.printer
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:bar-card
+                name: 'Cyan'
+                color: 'cyan'
+                direction: up
+                height: 100px
+                entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
+              - type: custom:bar-card
+                name: 'Magenta'
+                color: 'magenta'
+                direction: up
+                entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
+              - type: custom:bar-card
+                name: 'Yellow'
+                color: 'yellow'
+                direction: up
+                entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
+              - type: custom:bar-card
+                name: 'Black'
+                color: 'black'
+                direction: up
+                entity: sensor.brother_mfc_j4410dw_black_ink_cartridge
 
       - type: entities
         entities:
@@ -692,8 +722,8 @@ views:
         entities:
           - entity: sensor.living_room_temperature
             show_points: false
-#          - entity: sensor.master_bedroom_temperature
-#            show_points: false
+          - entity: sensor.master_bedroom_sensibo_temperature
+            show_points: false
           - entity: sensor.outside_temps
             name: 'Outside'
             show_points: false
@@ -738,7 +768,7 @@ views:
         name: 'Lights'
         icon: mdi:lightbulb-on
         points_per_hour: 60
-        hours_to_show: 3
+        hours_to_show: 12
         aggregate_func: max
         line_width: 2
         smoothing: false
@@ -749,6 +779,34 @@ views:
             show_points: false
 #          - entity: binary_sensor.master_bedroom_fairy_is_on
 #            show_points: false
+          - entity: binary_sensor.day
+            show_points: false
+            show_legend: false
+            show_line: false
+            show_state: false
+            color: white
+        state_map:
+          - value: "off"
+            label: 'כבוי'
+          - value: "on"
+            label: 'דולק'
+        show:
+          fill: fade
+          labels: false
+
+      - type: custom:mini-graph-card
+        name: 'AC'
+        icon: mdi:air-conditioner
+        points_per_hour: 60
+        hours_to_show: 12
+        aggregate_func: max
+        line_width: 2
+        smoothing: false
+        entities:
+          - entity: binary_sensor.living_room_ac_is_on
+            show_points: false
+          - entity: binary_sensor.master_bedroom_ac_is_on
+            show_points: false
           - entity: binary_sensor.day
             show_points: false
             show_legend: false
@@ -919,6 +977,9 @@ views:
           - entity: sensor.count_timers
             name: 'Timers'
             icon: mdi:clock
+          - entity: sensor.count_climates
+            name: 'Climate'
+            icon: mdi:air-conditioner
 
       - type: entities
         entities:

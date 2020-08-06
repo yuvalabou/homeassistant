@@ -41,3 +41,5 @@
   type: module
 - url: /hacsfiles/animated-consumption-card/animated-consumption-card.js
   type: module
+- url: /hacsfiles/bar-card/bar-card.js
+  type: module

@@ -587,3 +587,79 @@
       data:
         title: 'שבת שלום!'
         message: 'שבת נכנסת בעוד 10 דקות.'
+
+- alias: 'Turn off Living-Room AC at night'
+  id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
+  trigger:
+    platform: time
+    at: '22:00:00'
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.slvn
+
+- alias: 'Turn on AC before arriving home'
+  id: 4c8ce2bf-8e22-4959-8272-2faeb884cf8c
+  trigger:
+    platform: time
+    at: '16:00:00'
+  condition:
+    - condition: and
+      conditions:
+        - condition: template
+          value_template: >-
+            {{ states('sensor.living_room_temperature') > '26' }}
+        - condition: state
+          entity_id: binary_sensor.workday_sensor
+          state:  'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.slvn
+    - delay:
+        seconds: 2
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.slvn
+        temperature: 24
+        mode: cool
+
+- alias: 'Master Bedroom AC night on'
+  id: 4bbb5a20-5b66-4a7f-ac31-09bc5e90a85b
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.master_bedroom_temp_thres
+      from: 'on'
+      to: 'off'
+  condition:
+    condition: and
+    conditions: 
+      - condition: state
+        entity_id: group.person
+        state: 'home'
+      - condition: time
+        after: '20:00:00'
+        before: '06:00:00'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.shynh
+    - delay:
+        seconds: 2
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.shynh
+        temperature: 23
+        mode: cool
+- alias: 'Master Bedroom AC range off'
+  id: 4149a58b-7c72-4403-abd8-c211fc4e2cec
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.master_bedroom_temp_thres
+      from: 'off'
+      to: 'on'
+      for:
+        minutes: 30
+  action:
+    - service: climate.turn_off
+      entity_id: climate.shynh
