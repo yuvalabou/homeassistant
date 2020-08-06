@@ -588,6 +588,9 @@
         title: 'שבת שלום!'
         message: 'שבת נכנסת בעוד 10 דקות.'
 
+###
+# Climate
+###
 - alias: 'Turn off Living-Room AC at night'
   id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
   trigger:
@@ -611,7 +614,7 @@
             {{ states('sensor.living_room_temperature') > '26' }}
         - condition: state
           entity_id: binary_sensor.workday_sensor
-          state:  'on'
+          state: 'on'
   action:
     - service: climate.turn_on
       data:
@@ -621,8 +624,21 @@
     - service: climate.set_temperature
       data:
         entity_id: climate.slvn
-        temperature: 24
+        temperature: 23
         mode: cool
+- alias: 'Turn off AC if we did not arrived'
+  id: ef558f55-51e6-4aaf-83db-72d066ad6826
+  trigger:
+    platform: time
+    at: '16:45:00'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'not_home'
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.slvn
 
 - alias: 'Master Bedroom AC night on'
   id: 4bbb5a20-5b66-4a7f-ac31-09bc5e90a85b

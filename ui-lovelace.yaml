@@ -209,9 +209,6 @@ views:
                   - entity: sensor.living_room_temperature
                     name: 'Temperature'
                     show_points: false
-                  - entity: sensor.living_room_heat_index
-                    show_state: true
-                    show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 show:
@@ -235,7 +232,8 @@ views:
             card_type: glance
             entities:
               - binary_sensor.living_room_motion
-              - sensor.living_room_humidity_range
+              - entity: sensor.living_room_humidity_range
+                name: 'Humidity'
 
       - type: thermostat
         entity: climate.slvn
@@ -321,9 +319,6 @@ views:
                   - entity: sensor.master_bedroom_sensibo_temperature
                     name: 'Temperature'
                     show_points: false
-#                  - entity: sensor.master_bedroom_heat_index
-#                    show_state: true
-#                    show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 show:
@@ -348,7 +343,8 @@ views:
             card_type: glance
             entities:
               - binary_sensor.master_bedroom_motion
-              - sensor.master_bedroom_humidity_range
+              - entity: sensor.master_bedroom_humidity_range
+                name: 'Humidity'
           - switch.shabat_select
 
       - type: thermostat
@@ -475,7 +471,8 @@ views:
             card_type: glance
             entities:
               - binary_sensor.bedroom_motion
-              - sensor.bedroom_humidity_range
+              - entity: sensor.bedroom_humidity_range
+                name: 'humidity'
           - switch.shabat_select
 
       - type: light
@@ -499,9 +496,6 @@ views:
 #                  - entity: sensor.work_bedroom_temperature
 #                    name: 'Temperature'
 #                    show_points: false
-#                  - entity: sensor.work_bedroom_heat_index
-#                    show_state: true
-#                    show_graph: false
 #                font_size: 80
 #                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
 #                show:
@@ -526,7 +520,8 @@ views:
 #            card_type: glance
 #            entities:
 #              - binary_sensor.work_bedroom_motion
-#              - sensor.work_bedroom_humidity_range
+#              - entity: sensor.work_bedroom_humidity_range
+#                name: 'Humidity'
 #          - switch.shabat_select
 
       - type: light
@@ -601,9 +596,6 @@ views:
                   - entity: sensor.bathroom_temperature
                     name: 'Temperature'
                     show_points: false
-                  - entity: sensor.bathroom_heat_index
-                    show_state: true
-                    show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 show:

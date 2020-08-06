@@ -321,28 +321,6 @@
       icon_template: mdi:timetable
 
 ###
-# Climate sensors
-###
-# Heat index
-- platform: template
-  sensors:
-    living_room_heat_index:
-      friendly_name: 'Feels like'
-      value_template: >-
-        {{ (((((((states('sensor.living_room_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.living_room_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.living_room_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-      unit_of_measurement: '°C'
-#    master_bedroom_heat_index:
-#      friendly_name: 'Feels like'
-#      value_template: >-
-#        {{ (((((((states('sensor.master_bedroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.master_bedroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.master_bedroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-#      unit_of_measurement: '°C'
-#    bathroom_heat_index:
-#      friendly_name: 'Feels like'
-#      value_template: >-
-#        {{ (((((((states('sensor.bathroom_temperature') | float)*1.8)+32) + 61.0 + (((((states('sensor.bathroom_temperature') | float)*1.8)+32)-68.0)*1.2) + ((states('sensor.bathroom_humidity') | float)*0.094))*0.5)-32)/1.8) | round(1) }}
-#      unit_of_measurement: '°C'
-
-###
 # Electricity
 ###
 - platform: template
