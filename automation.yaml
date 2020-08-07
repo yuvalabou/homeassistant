@@ -692,7 +692,64 @@
         entity_id: climate.shynh
         temperature: 23
         mode: cool
-- alias: 'Master Bedroom AC night climate off'
+
+- alias: 'Master bedroom AC shabbat morning start'
+  id: 880cfa3e-b040-4e89-a04e-7832d2c28024
+  trigger:
+    - platform: time
+      at: '07:00:00'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.shynh
+    - delay:
+        seconds: 2
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.shynh
+        temperature: 23
+        mode: cool
+- alias: 'Master Bedroom AC shabbat climate on'
+  id: 880cfa3e-b040-4e89-a04e-7832d2c28024
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.master_bedroom_temp_thres
+      from: 'on'
+      to: 'off'
+      for:
+        minutes: 5
+  condition:
+    condition: and
+    conditions: 
+      - condition: state
+        entity_id: group.person
+        state: 'home'
+      - condition: time
+        after: '07:00:00'
+        before: '19:00:00'
+      - condition: state
+        entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+        state: 'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.shynh
+    - delay:
+        seconds: 2
+    - service: climate.set_temperature
+      data:
+        entity_id: climate.shynh
+        temperature: 23
+        mode: cool
+
+- alias: 'Master Bedroom AC comfort climate off'
   id: 4149a58b-7c72-4403-abd8-c211fc4e2cec
   trigger:
     - platform: state
@@ -731,9 +788,9 @@
     - service: climate.set_temperature
       data:
         entity_id: climate.slvn
-        temperature: 23
+        temperature: 24
         mode: cool
-- alias: 'Living room AC shabbat climate off'
+- alias: 'Living room AC comfort climate off'
   id: 4149a58b-7c72-4403-abd8-c211fc4e2cec
   trigger:
     - platform: state
@@ -745,6 +802,7 @@
   action:
     - service: climate.turn_off
       entity_id: climate.slvn
+
 - alias: 'Living room AC shabbat climate on'
   id: 4bbb5a20-5b66-4a7f-ac31-09bc5e90a85b
   trigger:
@@ -775,7 +833,7 @@
     - service: climate.set_temperature
       data:
         entity_id: climate.slvn
-        temperature: 23
+        temperature: 24
         mode: cool
 
 - alias: 'Turn off all AC when shabbat ends'
