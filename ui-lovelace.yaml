@@ -171,13 +171,13 @@ views:
     title: 'Living Room'
     icon: mdi:sofa
     cards:
-      - type: vertical-stack
-        cards:
-          - type: custom:banner-card
-            heading: "\U0001F373 Kitchen"
-            background: "#FCF2EA"
-            row_size: 2
-            entities:
+#      - type: vertical-stack
+#        cards:
+#          - type: custom:banner-card
+#            heading: "\U0001F373 Kitchen"
+#            background: "#FCF2EA"
+#            row_size: 2
+#            entities:
 #              - entity: sensor.kitchen_occupied
 #                map_state:
 #                  'on': mdi:run
@@ -187,16 +187,16 @@ views:
 #                  'on': mdi:tray-full # example
 #                  'off': mdi:silverware-clean # example
 #              - entity: switch.above_sink_light
-          - type: conditional
-            conditions:
-              - entity: binary_sensor.shabat_plate_connection
-                state: 'on'
-            card:
-              type: entities
-              show_header_toggle: false
-              title: 'פלטה'
-              entities:
-                - switch.shabat_plate
+#          - type: conditional
+#            conditions:
+#              - entity: binary_sensor.shabat_plate_connection
+#                state: 'on'
+#            card:
+#              type: entities
+#              show_header_toggle: false
+#              title: 'פלטה'
+#              entities:
+#                - switch.shabat_plate
 
       - type: entities
         show_header_toggle: false
@@ -211,6 +211,7 @@ views:
                     show_points: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -224,6 +225,7 @@ views:
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -321,6 +323,7 @@ views:
                     show_points: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -334,6 +337,7 @@ views:
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -449,6 +453,7 @@ views:
                     show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -462,6 +467,7 @@ views:
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -598,6 +604,7 @@ views:
                     show_points: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -611,6 +618,7 @@ views:
                 font_size: 80
                 lower_bound: 0
                 upper_bound: 100
+                points_per_hour: 6
                 show:
                   fill: fade
                   points: false
@@ -651,16 +659,6 @@ views:
     title: 'Extra Stuff'
     icon: mdi:information-outline
     cards:
-#      - type: custom:banner-card
-#        heading: "Basement"
-#        row_size: 3
-#        entities:
-#          - sensor.basement_temp
-#          - sensor.basement_humidity
-#          - sensor.basment_mold_indicator
-#          - sensor.basement_motion
-#          - sensor.basment_light
-
       - type: entities
         entities:
           - type: custom:hui-element
@@ -704,7 +702,6 @@ views:
     cards:
 #      - type: entities
 #        entities:
-#          - var.electricity_price
 #          - sensor.estimated_electricity_price_daily
 #          - sensor.estimated_electricity_price_monthly
 
@@ -863,12 +860,12 @@ views:
 #            show_points: false
 #        show:
 #          fill: fade
-
-      - type: entities
-        title: 'Appliances'
-        show_header_toggle: false
-        entities:
-          - sensor.shabat_plate_total_energy_usage_daily
+#
+#      - type: entities
+#        title: 'Appliances'
+#        show_header_toggle: false
+#        entities:
+#          - sensor.shabat_plate_total_energy_usage_daily
 
 ####################################################
 #                CONNECTED DEVICES                 #
@@ -963,9 +960,6 @@ views:
           - entity: sensor.count_input_datetimes
             name: 'Input Date Times'
             icon: mdi:calendar-clock
-#          - entity: sensor.count_variables
-#            name: 'Variables'
-#            icon: mdi:numeric
           - entity: sensor.count_timers
             name: 'Timers'
             icon: mdi:clock
@@ -1059,7 +1053,6 @@ views:
             tap_action:
               action: url
               url_path: 'http://10.0.0.6/admin/index.php'
-
           - sensor.pihole_status
           - sensor.pi_hole_ads_percentage_blocked_today
           - sensor.pi_hole_domains_blocked
