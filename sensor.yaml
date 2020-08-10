@@ -239,10 +239,6 @@
       entity_id: sensor.date
       value_template: >-
         {{ states.input_datetime | list | count }}
-#    count_variables:
-#      entity_id: sensor.date
-#      value_template: >-
-#        {{ states.var | list | count }}
     count_timers:
       friendly_name: 'Timers'
       entity_id: sensor.date
@@ -262,7 +258,7 @@
 # Package tracking
 - platform: seventeentrack
   username: !secret 17track_user
-  password: !secret 17track_pass
+  password: !secret 17track_passwd
 
 # TV tracking
 - platform: history_stats
@@ -323,40 +319,40 @@
 ###
 # Electricity
 ###
-- platform: template
-  sensors:
-    total_power_consumption:
-      friendly_name: 'Total Power Consumption'
-      unit_of_measurement: kW
-      icon_template: mdi:counter
-      value_template: >-
-        {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
-
-- platform: history_stats
-  name: 'Shabat plate Is ON'
-  entity_id: binary_sensor.shabat_plate_is_on
-  state: 'on'
-  type: time
-  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-  end: '{{ now() }}'
-- platform: template
-  sensors:
-    estimated_shabat_plate_electricity_consumption:
-      friendly_name: 'Estimated Shabat plate Electricity consumption'
-      icon_template: mdi:counter
-      unit_of_measurement: kW
-      value_template: >-
-        {{ (states('sensor.shabat_plate_is_on') | float) * 0.4 }}
-    realtime_shabat_plate_electricity_consumption:
-      friendly_name: 'Realtime Shabat plate Electricity consumption'
-      icon_template: mdi:counter
-      unit_of_measurement: W
-      value_template: >-
-        {% if is_state('binary_sensor.shabat_plate_is_on', 'on') %}
-          400
-        {%- else -%}
-          0
-        {%- endif -%}
+#- platform: template
+#  sensors:
+#    total_power_consumption:
+#      friendly_name: 'Total Power Consumption'
+#      unit_of_measurement: kW
+#      icon_template: mdi:counter
+#      value_template: >-
+#        {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
+#
+#- platform: history_stats
+#  name: 'Shabat plate Is ON'
+#  entity_id: binary_sensor.shabat_plate_is_on
+#  state: 'on'
+#  type: time
+#  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+#  end: '{{ now() }}'
+#- platform: template
+#  sensors:
+#    estimated_shabat_plate_electricity_consumption:
+#      friendly_name: 'Estimated Shabat plate Electricity consumption'
+#      icon_template: mdi:counter
+#      unit_of_measurement: kW
+#      value_template: >-
+#        {{ (states('sensor.shabat_plate_is_on') | float) * 0.4 }}
+#    realtime_shabat_plate_electricity_consumption:
+#      friendly_name: 'Realtime Shabat plate Electricity consumption'
+#      icon_template: mdi:counter
+#      unit_of_measurement: W
+#      value_template: >-
+#        {% if is_state('binary_sensor.shabat_plate_is_on', 'on') %}
+#          400
+#        {%- else -%}
+#          0
+#        {%- endif -%}
 
 #- platform: template
 #  sensors:
@@ -451,12 +447,6 @@
         {% elif speed < 0 %}
           unknown
         {% endif %}
-
-#- platform: template
-#  sensors:
-#    hanging_clothes:
-#      value_template: >-
-#         {}
 
 - platform: template
   sensors:

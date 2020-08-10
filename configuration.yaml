@@ -147,7 +147,7 @@ climate:
 proxmoxve:
   - host: !secret server
     username: !secret proxmox_user
-    password: !secret proxmox_pass
+    password: !secret proxmox_passwd
     verify_ssl: false
     realm: pve
     nodes:
@@ -211,12 +211,12 @@ system_health:
 #                     DOMAINS                   #
 ##################################################
 group: !include group.yaml
-automation: !include automation.yaml
+automation: !include_dir_merge_list automation/
 #scene: !include scene.yaml
 
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
-utility_meter: !include utility_meter.yaml
+#utility_meter: !include utility_meter.yaml
 timer: !include timer.yaml
 
 switch: !include switch.yaml

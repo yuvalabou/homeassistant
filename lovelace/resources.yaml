@@ -25,8 +25,8 @@
 #  type: module
 #- url: /hacsfiles/restriction-card/restriction-card.js
 #  type: module
-- url: /hacsfiles/lovelace-card-templater/lovelace-card-templater.js
-  type: module
+#- url: /hacsfiles/lovelace-card-templater/lovelace-card-templater.js
+#  type: module
 - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
   type: module
 #- url: /hacsfiles/button-entity-row/button-entity-row.js
