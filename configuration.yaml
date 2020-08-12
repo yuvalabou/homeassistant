@@ -49,6 +49,10 @@ config:
 # Enables a map showing the location of tracked devices.
 map:
 
+# Custom panel that show colorful logs for Home Assistant (core), and the supervisor (if you have it).
+# https://github.com/custom-components/uilogs
+uilogs:
+
 ##################################################
 #                     PERSONS                    #
 ##################################################
@@ -158,6 +162,7 @@ proxmoxve:
 
 # Adds components for Shelly smart home devices to Home Assistant.
 # There is no configuration needed, it will find all devices on your LAN and add them to Home Assistant.
+# https://github.com/StyraHem/ShellyForHASS
 shelly: !include shelly.yaml
 
 ##################################################

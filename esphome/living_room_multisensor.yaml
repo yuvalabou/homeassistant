@@ -39,7 +39,7 @@ mcp23008:
 binary_sensor:
   - platform: gpio
     pin:
-      number: D5
+      number: D6
     name: ${upper_devicename} Motion
     device_class: motion
     filters:
@@ -64,9 +64,9 @@ sensor:
   - platform: wifi_signal
     name: ${upper_devicename} WiFi reception
     update_interval: 60s
-  - platform: adc
-    pin: VCC
-    name: ${devicename} VCC voltage
+#  - platform: adc
+#    pin: VCC
+#    name: ${devicename} VCC voltage
 
 text_sensor:
   - platform: template
@@ -84,3 +84,8 @@ text_sensor:
 switch:
   - platform: restart
     name: Restart ${upper_devicename}
+  - platform: gpio
+    name: ${upper_devicename} Shabat Select
+    pin:
+      number: D5
+      inverted: yes

@@ -1,0 +1,49 @@
+###
+# Shabat mode
+###
+# Enters Shabat mode on Shabat\Chag
+- alias: 'Enable Shabat Mode at Shabat\Chag'
+  id: 501ee07f-794c-4b49-ba18-5e21f111510c
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'on'
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.shabat_mode
+# Exits Shabat mode on Shabat\Chag end
+- alias: 'Disable Shabat Mode at Shabat\Chag'
+  id: 6b9bd845-cb16-4fb9-bad2-003aeb2b9363
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'off'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.shabat_mode
+
+###
+# Disables and Enables motions sensors when required
+###
+- alias: 'Disable Movement sensors on select'
+  id: a67305f9-6d69-4150-bdb8-dd3633f3df6a
+  trigger:
+    platform: state
+    entity_id: switch.shabat_mode
+    to: 'on'
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id: switch.living_room_shabat_select
+- alias: 'Enables Movement sensors on select'
+  id: b7a16de0-46cc-49c7-b2ce-2b28008ca64e
+  trigger:
+    platform: state
+    entity_id: switch.shabat_mode
+    to: 'off'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.living_room_shabat_select

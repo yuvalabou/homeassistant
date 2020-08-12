@@ -225,7 +225,7 @@
       value_template: >-
         {{ states.zone | list | count }}
     count_input_booleans:
-      friendly_name: 'Input Booleans'
+      friendly_name: 'Input Boolean'
       entity_id: sensor.date
       value_template: >-
         {{ states.input_boolean | list | count }}
@@ -235,7 +235,7 @@
       value_template: >-
         {{ states.input_select | list | count }}
     count_input_datetimes:
-      friendly_name: 'Input Date\Time'
+      friendly_name: 'Date\Time'
       entity_id: sensor.date
       value_template: >-
         {{ states.input_datetime | list | count }}
@@ -367,6 +367,9 @@
 #      value_template: >-
 #        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}
 
+###
+# SQL
+###
 - platform: sql
   db_url: !secret mariadb_address
   queries:
@@ -380,6 +383,7 @@
 ###
 - platform: command_line
   name: 'PiHole Status'
+  scan_interval: 20
   command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
   value_template: >-
     {{ value_json.status }}
@@ -448,6 +452,9 @@
           unknown
         {% endif %}
 
+###
+# Indoor Climate
+###
 - platform: template
   sensors:
     master_bedroom_sensibo_humidity:
@@ -460,3 +467,16 @@
       unit_of_measurement: '°C'
       value_template: >-
         {{ state_attr('climate.shynh', 'current_temperature') }}
+
+- platform: template
+  sensors:
+    living_room_climate_set_temp:
+      friendly_name: 'Living Room Set Temperature'
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.slvn', 'temperature') }}
+    master_bedroom_climate_set_temp:
+      friendly_name: 'Master Bedroom Set Temperature'
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'temperature') }}

@@ -98,7 +98,7 @@ switch:
   - platform: gpio
     name: ${upper_devicename} Shabat Select
     pin:
-     number: D5
-     inverted: yes
+      number: D5
+      inverted: yes
   - platform: restart
     name: Restart ${upper_devicename}

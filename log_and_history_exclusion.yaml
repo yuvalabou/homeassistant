@@ -24,6 +24,7 @@ exclude:
     # Uptime
     - sensor.wled_uptime
     - sensor.uptime
+    - sensor.uptime_friendly
     # Jewish Calendar
     - sensor.jewish_calendar_alot_hashachar
     - sensor.jewish_calendar_daf_yomi
@@ -59,6 +60,4 @@ exclude:
     - sun
     - updater
     - device_tracker
-    - script
     - input_datetime
-    - automation

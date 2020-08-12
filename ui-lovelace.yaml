@@ -209,6 +209,9 @@ views:
                   - entity: sensor.living_room_temperature
                     name: 'Temperature'
                     show_points: false
+                  - entity: sensor.living_room_climate_set_temp
+                    color: "white"
+                    show_fill: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 points_per_hour: 6
@@ -237,8 +240,17 @@ views:
               - entity: sensor.living_room_humidity_range
                 name: 'Humidity'
 
-      - type: thermostat
+      - type: custom:simple-thermostat
         entity: climate.slvn
+        step_size: 1
+        name: false
+        control:
+          _names: false
+        hide:
+          temperature: true
+        sensors:
+          - entity: sensor.living_room_temperature
+            name: 'Temperature'
 
       - type: entities
         show_header_toggle: false
@@ -321,6 +333,9 @@ views:
                   - entity: sensor.master_bedroom_sensibo_temperature
                     name: 'Temperature'
                     show_points: false
+                  - entity: sensor.master_bedroom_climate_set_temp
+                    color: "white"
+                    show_fill: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 points_per_hour: 6
@@ -351,8 +366,12 @@ views:
                 name: 'Humidity'
           - switch.shabat_select
 
-      - type: thermostat
+      - type: custom:simple-thermostat
         entity: climate.shynh
+        step_size: 1
+        name: false
+        control:
+          _names: false
 
       - type: light
         entity: light.master_bedroom
@@ -392,6 +411,7 @@ views:
                       labels: false
                       fill: fade
                     hours_to_show: 6
+                    points_per_hour: 3
                     lower_bound: 0
                     upper_bound: 100
                     color_thresholds:
@@ -416,6 +436,7 @@ views:
                       labels: false
                       fill: fade
                     hours_to_show: 6
+                    points_per_hour: 3
                     lower_bound: 0
                     upper_bound: 100
                     color_thresholds:
@@ -448,9 +469,6 @@ views:
                   - entity: sensor.bedroom_temperature
                     name: 'Temperature'
                     show_points: false
-                  - entity: sensor.bedroom_heat_index
-                    show_state: true
-                    show_graph: false
                 font_size: 80
                 color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
                 points_per_hour: 6
@@ -832,9 +850,9 @@ views:
             show:
               graph: bar
               labels: false
-          - type: custom:hui-element
-            card_type: media-control
-            entity: media_player.pilot_tv
+#          - type: custom:hui-element
+#            card_type: media-control
+#            entity: media_player.pilot_tv
 
 # Boiler
 #      - type: custom:mini-graph-card
@@ -899,6 +917,7 @@ views:
                 entities:
                   - entity: sensor.speedtest_download
                     name: 'Download'
+                points_per_hour: 1
                 show:
                   points: false
                   fill: fade
@@ -907,6 +926,7 @@ views:
                 entities:
                   - entity: sensor.speedtest_upload
                     name: 'Upload'
+                points-per_hour: 1
                 show:
                   fill: fade
                   points: false
@@ -1003,6 +1023,7 @@ views:
             entities:
               - entity: sensor.db_size
                 name: 'Database'
+#            points_per_hour: 1
             show:
               fill: fade
               points: false
@@ -1102,9 +1123,9 @@ views:
             card_type: picture
             image: 'https://brands.home-assistant.io/esphome/logo.png'
           - switch.restart_living_room
-          - switch.restart_master_bedroom
-          - type: divider
-          - switch.restart_shabat_plate
+#          - switch.restart_master_bedroom
+#          - type: divider
+#          - switch.restart_shabat_plate
 #          - switch.restart_safe
 #          - switch.restart_car_remote
 #          - switch.restart_power_supply
@@ -1114,15 +1135,4 @@ views:
 #        show_header_toggle: false
 #        entities:
 #          - switch.power_supply_toggle
-
-#      - type: custom:card-templater
-#        card:
-#          title_template: >
-#            {{ state_attr('sensor.my_config', 'components') |length }} Components Loaded
-#          content_template: >
-#            {{ state_attr('sensor.overview_components' , 'text') }}
-#          type: markdown
-#        entities:
-#          - sensor.overview_components
-#          - sensor.my_config
 

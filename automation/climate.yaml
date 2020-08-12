@@ -120,7 +120,7 @@
         entity_id: climate.shynh
         temperature: 23
 - alias: 'Master Bedroom AC shabbat climate on'
-  id: 880cfa3e-b040-4e89-a04e-7832d2c28024
+  id: bffd958d-fc77-4819-adaf-603273968eb7
   trigger:
     - platform: state
       entity_id: binary_sensor.master_bedroom_temp_thres
@@ -192,7 +192,7 @@
         entity_id: climate.slvn
         temperature: 24
 - alias: 'Living room AC comfort climate off'
-  id: 4149a58b-7c72-4403-abd8-c211fc4e2cec
+  id: b7be1e48-eb8f-4a24-a860-7af910766fc8
   trigger:
     - platform: state
       entity_id: binary_sensor.living_room_temp_thres
@@ -205,7 +205,7 @@
       entity_id: climate.slvn
 
 - alias: 'Living room AC shabbat climate on'
-  id: 4bbb5a20-5b66-4a7f-ac31-09bc5e90a85b
+  id: 292c2018-a4fc-406e-90af-69cc579a840c
   trigger:
     - platform: state
       entity_id: binary_sensor.master_bedroom_temp_thres

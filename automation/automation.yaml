@@ -35,52 +35,6 @@
 ###
 # GLOBAL
 ###
-# Turn-off movement detection at Shabat\Chag
-- alias: 'Enable Shabat Mode at Shabat\Chag'
-  id: 501ee07f-794c-4b49-ba18-5e21f111510c
-  trigger:
-    platform: state
-    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-    to: 'on'
-  action:
-    - service: input_boolean.turn_on
-      entity_id: input_boolean.shabat_mode
-    - service: switch.turn_on
-      entity_id: switch.shabat_mode
-# Turn-on movement detection at Shabat\Chag end
-- alias: 'Disable Shabat Mode at Shabat\Chag'
-  id: 6b9bd845-cb16-4fb9-bad2-003aeb2b9363
-  trigger:
-    platform: state
-    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-    to: 'off'
-  action:
-    - service: input_boolean.turn_off
-      entity_id: input_boolean.shabat_mode
-    - service: switch.turn_off
-      entity_id: switch.shabat_mode
-
-# Turn-off movement detection in multisensors at Shabat\Chag
-- alias: 'Disable Multisensors Motion sensors'
-  id: 011001b9-dfee-43fb-b635-9f3f1c81388a
-  trigger:
-    platform: state
-    entity_id: switch.shabat_mode
-    to: 'on'
-  action:
-    - service: switch.turn_on
-      entity_id: switch.shabat_select
-# Turn-on movement detection in multisensors at Shabat\Chag end
-- alias: 'Enable Multisensors Motion sensors'
-  id: 2fcfe963-6207-4429-ad51-1656eaed14dd
-  trigger:
-    platform: state
-    entity_id: switch.shabat_mode
-    to: 'off'
-  action:
-    - service: switch.turn_off
-      entity_id: switch.shabat_select
-
 ### Shabat and Chag
 - alias: 'Shabat and Chag Lighting'
   id: 66aff0fc-7022-4577-9d72-2f35104ca746
