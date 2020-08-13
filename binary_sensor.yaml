@@ -158,10 +158,10 @@
 - platform: threshold
   entity_id: sensor.master_bedroom_sensibo_temperature
   lower: 21
-  upper: 25
+  upper: 24
   name: master_bedroom_temp_thres
 - platform: threshold
   entity_id: sensor.living_room_temperature
   lower: 21
-  upper: 25
+  upper: 24
   name: living_room_temp_thres

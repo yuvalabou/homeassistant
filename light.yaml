@@ -17,7 +17,7 @@
 - platform: group
   name: 'All lights'
   entities:
-    - light.master_bedroom_fairy
+#    - light.master_bedroom_fairy
     - light.master_bedroom
     - light.bedroom1
     - light.bedroom2

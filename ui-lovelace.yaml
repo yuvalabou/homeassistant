@@ -454,53 +454,53 @@ views:
 ####################################################
 #                       BEDROOM                    #
 ####################################################
-  - id: bedroom_mamad
-    title: 'Bedroom'
-    icon: mdi:bed-single-outline
-    cards:
-      - type: entities
-        show_header_toggle: false
-        entities:
-          - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.bedroom_temperature
-                    name: 'Temperature'
-                    show_points: false
-                font_size: 80
-                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: true
-                  labels_secondary: false
-                  legend: false
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.bedroom_humidity
-                    name: 'Humidity'
-                font_size: 80
-                lower_bound: 0
-                upper_bound: 100
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: false
-                  legend: false
-          - type: custom:hui-element
-            card_type: glance
-            entities:
-              - binary_sensor.bedroom_motion
-              - entity: sensor.bedroom_humidity_range
-                name: 'humidity'
-          - switch.shabat_select
+#  - id: bedroom_mamad
+#    title: 'Bedroom'
+#    icon: mdi:bed-single-outline
+#    cards:
+#      - type: entities
+#        show_header_toggle: false
+#        entities:
+#          - type: custom:hui-element
+#            card_type: horizontal-stack
+#            cards:
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bedroom_temperature
+#                    name: 'Temperature'
+#                    show_points: false
+#                font_size: 80
+#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: true
+#                  labels_secondary: false
+#                  legend: false
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bedroom_humidity
+#                    name: 'Humidity'
+#                font_size: 80
+#                lower_bound: 0
+#                upper_bound: 100
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: false
+#                  legend: false
+#          - type: custom:hui-element
+#            card_type: glance
+#            entities:
+#              - binary_sensor.bedroom_motion
+#              - entity: sensor.bedroom_humidity_range
+#                name: 'humidity'
+#          - switch.shabat_select
 
-      - type: light
-        entity: light.bedroom1
+#      - type: light
+#        entity: light.bedroom1
 
 ####################################################
 #                    Home Office                   #
@@ -548,8 +548,8 @@ views:
 #                name: 'Humidity'
 #          - switch.shabat_select
 
-      - type: light
-        entity: light.bedroom2
+#      - type: light
+#        entity: light.home_office
 
       - type: entities
         title: 'Printer'
@@ -607,41 +607,41 @@ views:
 ####################################################
 #                       BATHROOM                    #
 ####################################################
-  - id: bathroom
-    title: 'Bathroom'
-    icon: mdi:shower
-    cards:
-      - type: vertical-stack
-        cards:
-          - type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.bathroom_temperature
-                    name: 'Temperature'
-                    show_points: false
-                font_size: 80
-                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: true
-                  labels_secondary: false
-                  legend: false
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.bathroom_humidity
-                    name: 'Humidity'
-                font_size: 80
-                lower_bound: 0
-                upper_bound: 100
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: false
-                  legend: false
+#  - id: bathroom
+#    title: 'Bathroom'
+#    icon: mdi:shower
+#    cards:
+#      - type: vertical-stack
+#        cards:
+#          - type: horizontal-stack
+#            cards:
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bathroom_temperature
+#                    name: 'Temperature'
+#                    show_points: false
+#                font_size: 80
+#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: true
+#                  labels_secondary: false
+#                  legend: false
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bathroom_humidity
+#                    name: 'Humidity'
+#                font_size: 80
+#                lower_bound: 0
+#                upper_bound: 100
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: false
+#                  legend: false
 
 #      - type: entities
 #        title: Vent
@@ -761,8 +761,10 @@ views:
             color: white
           - entity: binary_sensor.living_room_motion
             show_points: false
+            color: "#7FB1CF"
 #          - entity: binary_sensor.master_bedroom_motion
 #            show_points: false
+#            color: "#A886F7"
         state_map:
           - value: "off"
             label: 'Clear'
@@ -782,8 +784,10 @@ views:
         entities:
           - entity: binary_sensor.living_room_light_is_on
             show_points: false
+            color: "#7FB1CF"
           - entity: binary_sensor.master_bedroom_light_is_on
             show_points: false
+            color: "#A886F7"
 #          - entity: binary_sensor.master_bedroom_fairy_is_on
 #            show_points: false
           - entity: binary_sensor.day
@@ -812,8 +816,10 @@ views:
         entities:
           - entity: binary_sensor.living_room_ac_is_on
             show_points: false
+            color: "#7FB1CF"
           - entity: binary_sensor.master_bedroom_ac_is_on
             show_points: false
+            color: "#A886F7"
           - entity: binary_sensor.day
             show_points: false
             show_legend: false
@@ -946,46 +952,32 @@ views:
         entities:
           - entity: sensor.count_entities
             name: 'Entities'
-            icon: mdi:format-list-bulleted-square
           - entity: sensor.count_lights
             name: 'Lights'
-            icon: mdi:lightbulb-group
           - entity: sensor.count_sensors
             name: 'Sensors'
-            icon: mdi:resistor
           - entity: sensor.count_binary_sensors
             name: 'Binary Sensors'
-            icon: mdi:unfold-more-horizontal
           - entity: sensor.count_automations
             name: 'Automations'
-            icon: mdi:autorenew
           - entity: sensor.count_scripts
             name: 'Scripts'
-            icon: mdi:script-text-outline
           - entity: sensor.count_zones
             name: 'Zones'
-            icon: mdi:map-marker-radius
           - entity: sensor.count_device_trackers
             name: 'Device Trackers'
-            icon: mdi:map-marker
           - entity: sensor.count_switches
             name: 'Switches'
-            icon: mdi:light-switch
           - entity: sensor.count_input_booleans
             name: 'Input Booleans'
-            icon: mdi:toggle-switch
           - entity: sensor.count_input_selects
             name: 'Input Select'
-            icon: mdi:view-list
           - entity: sensor.count_input_datetimes
             name: 'Input Date Times'
-            icon: mdi:calendar-clock
           - entity: sensor.count_timers
             name: 'Timers'
-            icon: mdi:clock
           - entity: sensor.count_climates
             name: 'Climate'
-            icon: mdi:air-conditioner
 
       - type: entities
         entities:
@@ -1065,35 +1057,35 @@ views:
                   green: 0
                   yellow: 50
                   red: 75
-
-      - type: entities
-        entities:
           - type: custom:hui-element
-            card_type: picture
-            image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
-            tap_action:
-              action: url
-              url_path: 'http://10.0.0.6/admin/index.php'
-          - sensor.pihole_status
-          - sensor.pi_hole_ads_percentage_blocked_today
-          - sensor.pi_hole_domains_blocked
-          - type: custom:hui-element
-            card_type: custom:mini-graph-card
+            card_type: entities
             entities:
-              - entity: sensor.pi_hole_ads_blocked_today
-                color: "#FF0F00"
-              - entity: sensor.pi_hole_dns_queries_today
-              - entity: sensor.pi_hole_dns_queries_forwarded
-                color: "#4DFF00"
-            show:
-              points: false
-              legend: false
-            line_width: 2
-            hours_to_show: 72
-          - sensor.pi_hole_dns_queries_cached
-          - sensor.pi_hole_dns_unique_domains
-          - sensor.pi_hole_dns_unique_clients
-          - sensor.pi_hole_seen_clients
+              - type: custom:hui-element
+                card_type: picture
+                image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
+                tap_action:
+                  action: url
+                  url_path: 'http://10.0.0.6/admin/index.php'
+              - sensor.pihole_status
+              - sensor.pi_hole_ads_percentage_blocked_today
+              - sensor.pi_hole_domains_blocked
+              - type: custom:hui-element
+                card_type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.pi_hole_ads_blocked_today
+                    color: "#FF0F00"
+                  - entity: sensor.pi_hole_dns_queries_today
+                  - entity: sensor.pi_hole_dns_queries_forwarded
+                    color: "#4DFF00"
+                show:
+                  points: false
+                  legend: false
+                line_width: 2
+                hours_to_show: 72
+              - sensor.pi_hole_dns_queries_cached
+              - sensor.pi_hole_dns_unique_domains
+              - sensor.pi_hole_dns_unique_clients
+              - sensor.pi_hole_seen_clients
 
       - type: entities
         entities:
@@ -1135,4 +1127,3 @@ views:
 #        show_header_toggle: false
 #        entities:
 #          - switch.power_supply_toggle
-
