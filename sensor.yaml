@@ -412,19 +412,19 @@
       friendly_name: 'Outside Temperature'
       unit_of_measurement: °C
       value_template: >-
-        {{ state_attr('weather.openweathermap', 'temperature') | round }}
+        {{ state_attr('weather.home', 'temperature') | round }}
 - platform: template
   sensors:
-    openweathermap_wind_speed:
+    accuweather_wind_speed:
       friendly_name: 'Wind speed'
       value_template: >-
-        {{ state_attr('weather.openweathermap', 'wind_speed') | round }}
+        {{ state_attr('weather.home', 'wind_speed') | round }}
 - platform: template
   sensors:
     wind_scale_friendly:
       friendly_name: 'Wind Scale'
       icon_template: >-
-        {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
+        {% set speed = (states('sensor.accuweather_wind_speed') | float(-1) * 3600 / 1000) %}
         {% if speed >= 75 %}
           mdi:weather-tornado
         {% elif speed >= 39 %}
@@ -435,7 +435,7 @@
           mdi:cloud-question
         {% endif %}
       value_template: >-
-        {% set speed = (states('sensor.openweathermap_wind_speed')|float(-1) * 3600 / 1000) %}
+        {% set speed = (states('sensor.accuweather_wind_speed') | float(-1) * 3600 / 1000) %}
         {% if speed >= 118 %}
           Hurricane force
         {% elif speed >= 103 %}
@@ -464,6 +464,43 @@
           Calm
         {% elif speed < 0 %}
           unknown
+        {% endif %}
+
+- platform: template
+  sensors:
+    uv_index_friendly:
+      friendly_name: 'UV index friendly'
+      value_template: >-
+        {% set index = (states('sensor.home_uv_index')) | int %}
+        {% if index >= 11 %}
+          Dangerous
+        {% elif index >= 8 %}
+          High risk
+        {% elif index >= 6 %}
+          Sunburn
+        {% elif index >= 3 %}
+          Sunglasses
+        {% elif index >= 1 %}
+          No risk
+        {% elif index >= 0 %}
+          No UV radiation
+        {% elif index < 0 %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set index = (states('sensor.home_uv_index')) | int %}
+        {% if index >= 11 %}
+          mdi:close-octagon
+        {% elif index >= 8 %}
+          mdi:alert
+        {% elif index >= 6 %}
+          mdi:shield-sun
+        {% elif index >= 3 %}
+          mdi:sunglasses
+        {% elif index >= 0 %}
+          mdi:check-bold
+        {% elif index < 0 %}
+          mdi:eye
         {% endif %}
 
 ###

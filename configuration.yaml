@@ -137,11 +137,6 @@ yeelight: !include yeelight.yaml
 pi_hole:
   host: !secret nanopi_host
 
-# Uses OpenWeatherMap as a source for current meteorological data for your location.
-weather:
-  - platform: openweathermap
-    api_key: !secret openweathermap
-
 # Integrates Sensibo Air Conditioning controller into Home Assistant.
 climate:
   - platform: sensibo
@@ -158,7 +153,6 @@ proxmoxve:
       - node: pve
         vms:
           - 100
-          - 101
 
 # Adds components for Shelly smart home devices to Home Assistant.
 # There is no configuration needed, it will find all devices on your LAN and add them to Home Assistant.

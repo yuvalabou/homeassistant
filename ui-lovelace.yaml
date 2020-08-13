@@ -58,12 +58,10 @@ views:
       - type: entities
         entities:
           - type: custom:weather-card
-            entity: weather.openweathermap
-            name: 'Weather'
+            entity: weather.home
+#            name: 'Weather'
             current: true
             details: true
-            forecast: true
-            hourly_forecast: true
           - type: custom:hui-element
             card_type: horizontal-stack
             cards:
@@ -71,10 +69,10 @@ views:
                 card_type: glance
                 entities:
                   - entity: sensor.wind_scale_friendly
-#              - type: custom:hui-element
-#                card_type: glance
-#                entities:
-#                  - 
+              - type: custom:hui-element
+                card_type: glance
+                entities:
+                  - entity: sensor.uv_index_friendly
 
       - type: custom:animated-consumption-card
         entity: sensor.realtime_shabat_plate_electricity_consumption

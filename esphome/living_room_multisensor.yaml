@@ -53,7 +53,7 @@ sensor:
     temperature:
       name: ${upper_devicename} Temperature
       id: ${template_id}_temperature
-      oversampling: 8x
+      oversampling: 16x
     pressure:
       name: ${upper_devicename} Pressure
     humidity:
