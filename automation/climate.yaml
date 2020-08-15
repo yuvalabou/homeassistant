@@ -220,7 +220,7 @@
         entity_id: climate.slvn
 
 - alias: 'Turn off all AC when shabbat ends'
-  id: f570b89f-8ce5-4b09-9230-1acc55c54528
+  id: dcc2346f-99f5-4437-80d6-1183d28372c6
   trigger:
     - platform: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
