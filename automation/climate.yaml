@@ -29,12 +29,6 @@
     - service: climate.turn_on
       data:
         entity_id: climate.slvn
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.slvn
-        temperature: 23
 - alias: 'Turn off AC if we did not arrived'
   id: ef558f55-51e6-4aaf-83db-72d066ad6826
   trigger:
@@ -65,12 +59,6 @@
     - service: climate.turn_on
       data:
         entity_id: climate.shynh
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 23
 - alias: 'Master Bedroom AC night climate on'
   id: 4bbb5a20-5b66-4a7f-ac31-09bc5e90a85b
   trigger:
@@ -88,23 +76,17 @@
         state: 'home'
       - condition: time
         after: '20:00:00'
-        before: '06:00:00'
+        before: '07:00:00'
   action:
     - service: climate.turn_on
       data:
         entity_id: climate.shynh
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 23
 
 - alias: 'Master bedroom AC shabbat morning start'
   id: 880cfa3e-b040-4e89-a04e-7832d2c28024
   trigger:
     - platform: time
-      at: '08:00:00'
+      at: '12:00:00'
   condition:
     - condition: state
       entity_id: group.person
@@ -116,12 +98,6 @@
     - service: climate.turn_on
       data:
         entity_id: climate.shynh
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 23
 - alias: 'Master Bedroom AC shabbat climate on'
   id: bffd958d-fc77-4819-adaf-603273968eb7
   trigger:
@@ -147,12 +123,6 @@
     - service: climate.turn_on
       data:
         entity_id: climate.shynh
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 23
 
 - alias: 'Master Bedroom AC comfort climate off'
   id: 4149a58b-7c72-4403-abd8-c211fc4e2cec
@@ -167,11 +137,13 @@
     - service: climate.turn_off
       entity_id: climate.shynh
 
-- alias: 'Turn on living room AC on shabbat morning if its hot'
+- alias: 'Turn on living room AC on shabbat if its hot'
   id: 7cc3353c-e1ba-4757-8d32-df0a9c853264
   trigger:
     - platform: time
       at: '09:00:00'
+    - platform: time
+      at: '15:00:00'
   condition:
     condition: and
     conditions:
@@ -188,12 +160,21 @@
     - service: climate.turn_on
       data:
         entity_id: climate.slvn
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
+
+- alias: 'Turn off Living room AC on shabbat noon'
+  id: f570b89f-8ce5-4b09-9230-1acc55c54528
+  trigger:
+    - platform: time
+      at: '12:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state:  'on'
+  action:
+    - service: climate.turn_off
       data:
         entity_id: climate.slvn
-        temperature: 24
+
 - alias: 'Living room AC comfort climate off'
   id: b7be1e48-eb8f-4a24-a860-7af910766fc8
   trigger:
@@ -222,22 +203,21 @@
       - condition: state
         entity_id: group.person
         state: 'home'
-      - condition: time
-        after: '09:00:00'
-        before: '19:00:00'
       - condition: state
         entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
         state:  'on'
+      - condition: or
+        conditions:
+          - condition: time
+            after: '09:00:00'
+            before: '12:00:00'
+          - condition: time
+            after: '15:00:00'
+            before: '20:00:00'
   action:
     - service: climate.turn_on
       data:
         entity_id: climate.slvn
-    - delay:
-        seconds: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.slvn
-        temperature: 24
 
 - alias: 'Turn off all AC when shabbat ends'
   id: f570b89f-8ce5-4b09-9230-1acc55c54528

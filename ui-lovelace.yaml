@@ -118,7 +118,7 @@ views:
           - switch.night_light_override
       - type: custom:auto-entities
         card:
-          type: entities
+          type: glance
           title: 'Active Lights'
           show_header_toggle: false
         show_empty: false
@@ -128,6 +128,8 @@ views:
               state: 'on'
             - domain: light
               state: 'unavailable'
+          exclude:
+            - entity_id: '*lights'
 
 #      - type: horizontal-stack
 #        cards:
