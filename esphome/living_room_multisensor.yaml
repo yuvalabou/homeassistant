@@ -40,13 +40,14 @@ binary_sensor:
   - platform: gpio
     pin:
       number: D6
+#      mode: INPUT_PULLUP
     name: ${upper_devicename} Motion
     device_class: motion
     filters:
       - delayed_on: 1500ms
       - delayed_off: 30s
   - platform: status
-    name: ${upper_devicename} Connection
+    name: ${upper_devicename}
 
 sensor:
   - platform: bme280
@@ -61,9 +62,9 @@ sensor:
       id: ${template_id}_humidity
     address: 0x76
     update_interval: 60s
-  - platform: wifi_signal
-    name: ${upper_devicename} WiFi reception
-    update_interval: 60s
+#  - platform: wifi_signal
+#    name: ${upper_devicename} WiFi reception
+#    update_interval: 60s
 #  - platform: adc
 #    pin: VCC
 #    name: ${devicename} VCC voltage
