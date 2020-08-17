@@ -153,6 +153,7 @@ proxmoxve:
       - node: pve
         vms:
           - 100
+          - 101
 
 # Adds components for Shelly smart home devices to Home Assistant.
 # There is no configuration needed, it will find all devices on your LAN and add them to Home Assistant.
@@ -215,7 +216,7 @@ automation: !include_dir_merge_list automation/
 
 sensor: !include sensor.yaml
 binary_sensor: !include binary_sensor.yaml
-#utility_meter: !include utility_meter.yaml
+utility_meter: !include utility_meter.yaml
 timer: !include timer.yaml
 
 switch: !include switch.yaml

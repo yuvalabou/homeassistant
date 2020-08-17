@@ -75,7 +75,7 @@ views:
                   - entity: sensor.uv_index_friendly
 
       - type: custom:animated-consumption-card
-        entity: sensor.realtime_shabat_plate_electricity_consumption
+        entity: sensor.total_ac_power_consumption
 
       - type: entities
         title: 'זמני היום'
@@ -424,7 +424,9 @@ views:
                       - value: 10
                         color: "#FF0F00"
                   - entity: sensor.mi_9t_battery_state
-                    name: 'Mi9T Battery'
+                    name: 'Battery'
+                  - entity: sensor.mi_9t_next_alarm
+                    name: 'Alarm'
               - type: entities
                 entities:
                   - type: custom:mini-graph-card
@@ -734,6 +736,8 @@ views:
           - entity: sensor.outside_temps
             name: 'Outside'
             show_points: false
+            color: "white"
+            show_fill: false
         show:
           fill: fade
           state: false
@@ -753,18 +757,18 @@ views:
         line_width: 2
         smoothing: false
         entities:
-          - entity: binary_sensor.day
-            show_points: false
-            show_legend: false
-            show_line: false
-            show_state: false
-            color: white
           - entity: binary_sensor.living_room_motion
             show_points: false
             color: "#7FB1CF"
 #          - entity: binary_sensor.master_bedroom_motion
 #            show_points: false
 #            color: "#A886F7"
+          - entity: binary_sensor.day
+            show_points: false
+            show_legend: false
+            show_line: false
+            show_state: false
+            color: white
         state_map:
           - value: "off"
             label: 'Clear'
@@ -859,6 +863,31 @@ views:
 #          - type: custom:hui-element
 #            card_type: media-control
 #            entity: media_player.pilot_tv
+
+# Climate
+      - type: custom:mini-graph-card
+        name: 'AC Power Consumption'
+        unit: 'kW'
+        hours_to_show: 750
+        line_width: 1
+        entities:
+          - entity: sensor.total_ac_energy_usage_daily
+            name: 'Daily'
+            color: "#04FC04"
+            show_state: true
+            show_points: false
+          - entity: sensor.total_ac_energy_usage_weekly
+            name: 'Weekly'
+            color: "yellow"
+            show_state: false
+            show_points: false
+          - entity: sensor.total_ac_energy_usage_monthly
+            name: 'Monthly'
+            color: "red"
+            show_state: false
+            show_points: false
+        show:
+          fill: fade
 
 # Boiler
 #      - type: custom:mini-graph-card
@@ -1114,6 +1143,10 @@ views:
           - type: custom:hui-element
             card_type: picture
             image: 'https://brands.home-assistant.io/esphome/logo.png'
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.living_room
           - switch.restart_living_room
 #          - switch.restart_master_bedroom
 #          - type: divider

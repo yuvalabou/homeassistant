@@ -3,6 +3,10 @@
   trigger:
     platform: time
     at: '22:00:00'
+  condition:
+      - condition: state
+        entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+        state:  'off'
   action:
     - service: climate.turn_off
       data:
@@ -137,6 +141,21 @@
     - service: climate.turn_off
       entity_id: climate.shynh
 
+- alias: 'Turn off Living-Room AC at night'
+  id: c7396673-d257-4267-a72f-060ee4d43603
+  trigger:
+    platform: template
+    value_template: >
+      {{ states('sensor.time') == states('input_select.shabat_lights_off_time') }}
+  condition:
+      - condition: state
+        entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+        state:  'on'
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.slvn
+
 - alias: 'Turn on living room AC on shabbat if its hot'
   id: 7cc3353c-e1ba-4757-8d32-df0a9c853264
   trigger:
@@ -213,7 +232,7 @@
             before: '12:00:00'
           - condition: time
             after: '15:00:00'
-            before: '20:00:00'
+            before: '19:00:00'
   action:
     - service: climate.turn_on
       data:
