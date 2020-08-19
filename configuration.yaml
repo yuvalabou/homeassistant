@@ -135,7 +135,8 @@ yeelight: !include yeelight.yaml
 
 # Allows you to retrieve statistics and interact with a Pi-hole system.
 pi_hole:
-  host: !secret nanopi_host
+  host: !secret nanopi_neo2
+  api_key: !secret pi_hole_key
 
 # Integrates Sensibo Air Conditioning controller into Home Assistant.
 climate:
@@ -164,10 +165,10 @@ shelly: !include shelly.yaml
 #                    LOG COMPONENTS              #
 ##################################################
 # Enables support for tracking state changes over time.
-history: !include log_and_history_exclusion.yaml
+history: !include history_exclude.yaml
 
 # View events in a logbook
-logbook: !include log_and_history_exclusion.yaml
+logbook: !include log_exclude.yaml
 
 # Stores details in a database, which then are handled by the history integration.
 recorder:
@@ -208,7 +209,7 @@ system_health:
 #python_script:
 
 ##################################################
-#                     DOMAINS                   #
+#                     DOMAINS                    #
 ##################################################
 group: !include group.yaml
 automation: !include_dir_merge_list automation/

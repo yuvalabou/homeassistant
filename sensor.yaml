@@ -91,6 +91,7 @@
       entity_id: sensor.jewish_calendar_upcoming_havdalah
       value_template: >-
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
+
 ###
 # VACUUM
 # Xiaomi vacuum sensors

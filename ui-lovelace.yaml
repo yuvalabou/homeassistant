@@ -59,7 +59,6 @@ views:
         entities:
           - type: custom:weather-card
             entity: weather.home
-#            name: 'Weather'
             current: true
             details: true
           - type: custom:hui-element
@@ -95,13 +94,15 @@ views:
             name: 'הדלקת נרות'
             format: relative
             entities:
-              - sensor.upcoming_candle_lighting_formatted
+              - entity: sensor.upcoming_candle_lighting_formatted
+                name: false
           - entity: sensor.jewish_calendar_upcoming_havdalah
             type: custom:multiple-entity-row
             name: 'הבדלה'
             format: relative
             entities:
-              - sensor.upcoming_havdalah_formatted
+              - entity: sensor.upcoming_havdalah_formatted
+                name: false
           - type: divider
           - entity: sensor.jewish_calendar_daf_yomi
             name: 'דף יומי'
@@ -358,13 +359,13 @@ views:
                   points: false
                   labels: false
                   legend: false
-          - type: custom:hui-element
-            card_type: glance
-            entities:
-              - binary_sensor.master_bedroom_motion
-              - entity: sensor.master_bedroom_humidity_range
-                name: 'Humidity'
-          - switch.shabat_select
+#          - type: custom:hui-element
+#            card_type: glance
+#            entities:
+#              - binary_sensor.master_bedroom_motion
+#              - entity: sensor.master_bedroom_humidity_range
+#                name: 'Humidity'
+#          - switch.shabat_select
 
       - type: custom:simple-thermostat
         entity: climate.shynh
@@ -451,7 +452,9 @@ views:
                       - value: 10
                         color: "#FF0F00"
                   - entity: sensor.redmi_note_7_battery_state
-                    name: 'Note 7 Battery'
+                    name: 'Battery'
+                  - entity: sensor.redmi_note_7_next_alarm
+                    name: 'Alarm'
 
 ####################################################
 #                       BEDROOM                    #
@@ -1066,7 +1069,7 @@ views:
             card_type: horizontal-stack
             cards:
               - type: gauge
-                name: 'CPU Used'
+                name: 'CPU Use'
                 entity: sensor.glances_cpu_used
                 severity:
                   green: 0
@@ -1080,7 +1083,7 @@ views:
                   yellow: 60
                   red: 80
               - type: gauge
-                name: RAM Used
+                name: 'RAM Use'
                 entity: sensor.glances_ram_used_percent
                 severity:
                   green: 0
@@ -1115,6 +1118,50 @@ views:
               - sensor.pi_hole_dns_unique_domains
               - sensor.pi_hole_dns_unique_clients
               - sensor.pi_hole_seen_clients
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://new-desk.com/wp-content/uploads/2019/09/RPi-Logo-Landscape-Reg-SCREEN.png'
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: gauge
+                name: 'CPU Use'
+                entity: sensor.glances_rpi2_cpu_used
+                severity:
+                  green: 0
+                  yellow: 45
+                  red: 85
+              - type: gauge
+                name: 'CPU Temp'
+                entity: sensor.glances_rpi2_cpu_thermal_1_temp
+                severity:
+                  green: 0
+                  yellow: 60
+                  red: 80
+              - type: gauge
+                name: 'RAM Use'
+                entity: sensor.glances_rpi2_ram_used_percent
+                severity:
+                  green: 0
+                  yellow: 50
+                  red: 75
+          - type: custom:bar-card
+            entities:
+              - entity: sensor.glances_rpi2_mnt_used_percent
+                name: 'External HDD'
+                severity:
+                  - color: '#FF0F00'
+                    from: 91
+                    to: 100
+              - entity: sensor.glances_rpi2_used_percent
+                name: 'SD Storage'
+                severity:
+                  - color: '#FF0F00'
+                    from: 91
+                    to: 100
 
       - type: entities
         entities:

@@ -18,6 +18,10 @@ binary_sensor.printer:
   icon: mdi:printer
 #binary_sensor.vacuum:
 #  icon: mdi:robot-vacuum
+binary_sensor.nanopi_neo2:
+  icon: mdi:raspberry-pi
+binary_sensor.rpi2:
+  icon: mdi:raspberry-pi
 
 # Lights
 light.living_room_lights:

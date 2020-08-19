@@ -4,37 +4,40 @@
 # Binary sensor for checking if a device is online
 #- platform: ping
 #  host: !secret vacuum_host
-#  name: Vacuum
+#  name: 'Vacuum'
 #  count: 5
 #  scan_interval: 300
-#- platform: ping
-#  host: !secret laptop_host
-#  name: Yuval laptop
-#  count: 2
-#  scan_interval: 300
 - platform: ping
-  host: !secret nanopi_host
-  name: NanoPi
+  host: !secret laptop
+  name: 'Laptop'
   count: 2
   scan_interval: 300
 - platform: ping
-  host: !secret tv_host
-  name: TV
+  host: !secret nanopi_neo2
+  name: 'NanoPi-NEO2'
+  count: 2
+  scan_interval: 300
+- platform: ping
+  host: !secret tv
+  name: 'TV'
   count: 2
   scan_interval: 300
 - platform: ping
   host: !secret printer
-  name: Printer
+  name: 'Printer'
   count: 2
   scan_interval: 300
+- platform: ping
+  host: !secret rpi2
+  name: 'Raspberry-Pi2'
 
 # Random Boolean sensor
 - platform: random
-  name: Random Boolean
+  name: 'Random Boolean'
 
 # Time of Day sensor
 - platform: tod
-  name: Night
+  name: 's'
   after: sunset
   before: sunrise
 - platform: tod
@@ -70,7 +73,7 @@
 # Shabat notification trigger
 - platform: template
   sensors:
-    shabat_notification_trigger:
+    shabat_notification_10m:
       friendly_name: 'Shabat 10 min Notification Trigger'
       value_template: >-
         {% set now = strptime(states('sensor.time'), '%H:%M') %}
@@ -81,7 +84,7 @@
         {{ 0 <= timediff <= 10 }}
 - platform: template
   sensors:
-    shabat_notification_trigger_salatim:
+    shabat_notification_trigger_30m:
       friendly_name: 'Shabat Half hour Notification Trigger'
       value_template: >-
         {% set now = strptime(states('sensor.time'), '%H:%M') %}
@@ -95,30 +98,29 @@
 - platform: template
   sensors:
     master_bedroom_light_is_on:
-      friendly_name: 'Master Bedroom Light is on'
+      friendly_name: 'Master Bedroom Light'
       value_template: >-
-        {% if is_state('light.master_bedroom', 'on') %}
-          True
+        {{ is_state('light.master_bedroom', 'on') }}
+      icon_template: >-
+        {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
+          mdi:lightbulb
         {% else %}
-          False
+          mdi:lightbulb-off
         {% endif %}
-#    master_bedroom_fairy_is_on:
-#      friendly_name: Master Bedroom Fairy is on
-#      value_template: >-
-#        {% if is_state('light.master_bedroom_fairy', 'on') %}
-#          True
-#        {% else %}
-#          False
-#        {% endif %}
     living_room_light_is_on:
-      friendly_name: 'Living Room Light is on'
+      friendly_name: 'Living Room Lights'
       value_template: >-
-        {% if is_state('light.living_room_lights', 'on') %}
-          True
+        {{ is_state('light.living_room_lights', 'on') }}
+      icon_template: >-
+        {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
+          mdi:lightbulb-group
         {% else %}
-          False
+          mdi:lightbulb-group-off
         {% endif %}
 
+###
+# Jewish calendar
+###
 - platform: template
   sensors:
     is_fast_day:
