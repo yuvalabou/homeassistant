@@ -4,6 +4,8 @@ exclude:
     - binary_sensor.night
     - sensor.uptime_friendly
     - sensor.dnsip
+    - binary_sensor.random_boolean
+    - sensor.random_number
 
     - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime
