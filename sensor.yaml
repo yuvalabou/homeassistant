@@ -93,6 +93,18 @@
         {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
 
 ###
+# Mobile APP Alarm
+###
+- platform: template
+  sensors:
+    redmi_note_7_next_alarm_formatted:
+      value_template: >-
+        {{ as_timestamp(states('sensor.redmi_note_7_next_alarm')) | timestamp_custom('%H:%M') }}
+    mi_9t_next_alarm_formatted:
+      value_template: >-
+        {{ as_timestamp(states('sensor.mi_9t_next_alarm')) | timestamp_custom('%H:%M') }}
+
+###
 # VACUUM
 # Xiaomi vacuum sensors
 #- platform: template
