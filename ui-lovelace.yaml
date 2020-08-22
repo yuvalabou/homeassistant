@@ -117,9 +117,10 @@ views:
       - type: entities
         entities:
           - switch.night_light_override
+
       - type: custom:auto-entities
         card:
-          type: glance
+          type: entities
           title: 'Active Lights'
           show_header_toggle: false
         show_empty: false
@@ -131,13 +132,6 @@ views:
               state: 'unavailable'
           exclude:
             - entity_id: '*lights'
-
-#      - type: horizontal-stack
-#        cards:
-#          - type: button
-#            entity: switch.open_close
-#          - type: button
-#            entity: switch.car_unlock
 
 #      - type: "custom:atomic-calendar"
 #        title: "Calendar"
@@ -566,23 +560,23 @@ views:
             cards:
               - type: custom:bar-card
                 name: 'Cyan'
-                color: 'cyan'
+                color: "cyan"
                 direction: up
                 height: 100px
                 entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
               - type: custom:bar-card
                 name: 'Magenta'
-                color: 'magenta'
+                color: "magenta"
                 direction: up
                 entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
               - type: custom:bar-card
                 name: 'Yellow'
-                color: 'yellow'
+                color: "yellow"
                 direction: up
                 entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
               - type: custom:bar-card
                 name: 'Black'
-                color: 'black'
+                color: "black"
                 direction: up
                 entity: sensor.brother_mfc_j4410dw_black_ink_cartridge
 
