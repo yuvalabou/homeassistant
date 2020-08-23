@@ -314,7 +314,6 @@
   api_key: !secret steam_api
   accounts:
     - 76561198173612681
-
 - platform: template
   sensors:
     steam_game:
@@ -341,7 +340,7 @@
         {% set minutes = ((hours % 1) * 60) | int %}  
         {% set hours = (hours - (hours % 1)) | int %}  
         {{ '%02i.%02i'%(hours, minutes) }}
-      icon_template: mdi:timetable
+      icon_template: mdi:steam
 
 ###
 # Electricity
@@ -403,7 +402,7 @@
     - name: 'DB size'
       query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1024 / 1024, 1) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
       column: 'value'
-      unit_of_measurement: MB
+      unit_of_measurement: 'MB'
 
 ###
 # PiHole
@@ -423,17 +422,18 @@
   sensors:
     outside_temps:
       friendly_name: 'Outside Temperature'
-      unit_of_measurement: °C
+      unit_of_measurement: '°C'
       value_template: >-
         {{ state_attr('weather.home', 'temperature') | round }}
+      icon_template: mdi:thermometer
+
 - platform: template
   sensors:
     accuweather_wind_speed:
       friendly_name: 'Wind speed'
       value_template: >-
         {{ state_attr('weather.home', 'wind_speed') | round }}
-- platform: template
-  sensors:
+      icon_template: mdi:weather-windy
     wind_scale_friendly:
       friendly_name: 'Wind Scale'
       icon_template: >-
@@ -580,4 +580,4 @@
       friendly_name: 'Total AC power consumption'
       unit_of_measurement: 'kW'
       value_template: >-
-        {{ (states('sensor.living_room_ac_power_consumption') | float ) + (states('sensor.master_bedroom_ac_power_consumption') | float ) }}
+        {{ (states('sensor.living_room_ac_power_consumption') | float) + (states('sensor.master_bedroom_ac_power_consumption') | float) }}

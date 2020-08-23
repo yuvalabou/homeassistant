@@ -1,5 +1,5 @@
 ###################################################
-#                  CUSTOMIZAIONS                  #
+#                  CUSTOMIZATIONS                 #
 ###################################################
 #  Persons
 person.yuval:
@@ -9,18 +9,25 @@ person.tohar:
 
 #  Devices
 binary_sensor.yuval_laptop:
+  device_class: connectivity
   icon: mdi:laptop
 #binary_sensor.mibox_3:
+#  device_class: connectivity
 #  icon: mdi:monitor
 binary_sensor.tv:
+  device_class: connectivity
   icon: mdi:television-classic
 binary_sensor.printer:
+  device_class: connectivity
   icon: mdi:printer
 #binary_sensor.vacuum:
+#  device_class: connectivity
 #  icon: mdi:robot-vacuum
 binary_sensor.nanopi_neo2:
+  device_class: connectivity
   icon: mdi:raspberry-pi
 binary_sensor.rpi2:
+  device_class: connectivity
   icon: mdi:raspberry-pi
 
 # Lights
@@ -30,7 +37,7 @@ light.living_room_lights:
 # Time Tracking
 sensor.track_tv_usage:
   icon: mdi:chart-timeline-variant
-sensor.track_steam_playtime_formatted:
+sensor.track_steam_playtime:
   icon: mdi:steam
 
 # Switches

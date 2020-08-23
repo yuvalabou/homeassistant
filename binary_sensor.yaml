@@ -57,7 +57,7 @@
   excludes:
     - holiday
 
-# Sensor for checking if someone is playing a game on steam right now
+# Sensor for checking if someone is playing a game on steam
 - platform: template
   sensors:
     steam_game_on:
@@ -82,8 +82,6 @@
         {% set then_min = then.hour * 60 + then.minute %}
         {% set timediff = then_min - now_min %}
         {{ 0 <= timediff <= 10 }}
-- platform: template
-  sensors:
     shabat_notification_trigger_30m:
       friendly_name: 'Shabat Half hour Notification Trigger'
       value_template: >-

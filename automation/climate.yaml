@@ -145,7 +145,7 @@
   id: c7396673-d257-4267-a72f-060ee4d43603
   trigger:
     platform: template
-    value_template: >
+    value_template: >-
       {{ states('sensor.time') == states('input_select.shabat_lights_off_time') }}
   condition:
       - condition: state
