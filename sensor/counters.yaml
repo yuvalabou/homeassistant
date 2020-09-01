@@ -74,7 +74,7 @@
       entity_id: sensor.date
       value_template: >-
         {{ states.timer | list | count }}
-      icon_template: mdi:timer
+      icon_template: mdi:timer-outline
     count_lights:
       friendly_name: 'Lights'
       entity_id: sensor.date
