@@ -1,0 +1,38 @@
+###
+# Jewish calendar
+###
+- platform: template
+  sensors:
+    is_fast_day:
+      friendly_name: 'צום'
+      entity_id: sensor.jewish_calendar_holiday
+      value_template: >-
+        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == '5' }}
+      icon_template: >-
+        {% if is_state('binary_sensor.is_fast_day', 'on') %}
+          mdi:food-off
+        {% else %}
+          mdi:food
+        {% endif %}
+
+# Shabat notification trigger
+- platform: template
+  sensors:
+    shabat_notification_10m:
+      friendly_name: 'Shabat 10 min Notification Trigger'
+      value_template: >-
+        {% set now = strptime(states('sensor.time'), '%H:%M') %}
+        {% set now_min = now.hour * 60 + now.minute %}
+        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
+        {% set then_min = then.hour * 60 + then.minute %}
+        {% set timediff = then_min - now_min %}
+        {{ 0 <= timediff <= 10 }}
+    shabat_notification_trigger_30m:
+      friendly_name: 'Shabat Half hour Notification Trigger'
+      value_template: >-
+        {% set now = strptime(states('sensor.time'), '%H:%M') %}
+        {% set now_min = now.hour * 60 + now.minute %}
+        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
+        {% set then_min = then.hour * 60 + then.minute %}
+        {% set timediff = then_min - now_min %}
+        {{ 0 <= timediff <= 30 }}

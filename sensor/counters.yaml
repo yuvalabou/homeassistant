@@ -1,0 +1,89 @@
+###
+# Component Counters
+###
+- platform: template
+  sensors:
+    count_entities:
+      friendly_name: 'Entities'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states | list | count }}
+      icon_template: mdi:format-list-bulleted-square
+    count_automations:
+      friendly_name: 'Automations'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.automation | list | count }}
+      icon_template: mdi:autorenew
+    count_scripts:
+      friendly_name: 'Scripts'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.script | list | count }}
+      icon_template: mdi:script-text-outline
+    count_device_trackers:
+      friendly_name: 'Device Trackers'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.device_tracker | list | count }}
+      icon_template: mdi:map-marker
+    count_binary_sensors:
+      friendly_name: 'Binary Sensors'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.binary_sensor | list | count }}
+      icon_template: mdi:unfold-more-horizontal
+    count_sensors:
+      friendly_name: 'Sensors'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.sensor | list | count }}
+      icon_template: mdi:resistor
+    count_switches:
+      friendly_name: 'Switches'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.switch | list | count }}
+      icon_template: mdi:light-switch
+    count_zones:
+      friendly_name: 'Zones'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.zone | list | count }}
+      icon_template: mdi:map-marker-radius
+    count_input_booleans:
+      friendly_name: 'Input Boolean'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.input_boolean | list | count }}
+      icon_template: mdi:toggle-switch
+    count_input_selects:
+      friendly_name: 'Input Select'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.input_select | list | count }}
+      icon_template: mdi:view-list
+    count_input_datetimes:
+      friendly_name: 'Date\Time'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.input_datetime | list | count }}
+      icon_template: mdi:timetable
+    count_timers:
+      friendly_name: 'Timers'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.timer | list | count }}
+      icon_template: mdi:timer
+    count_lights:
+      friendly_name: 'Lights'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.light | list | count }}
+      icon_template: mdi:lightbulb-group
+    count_climates:
+      friendly_name: 'Climate'
+      entity_id: sensor.date
+      value_template: >-
+        {{ states.climate | list | count }}
+      icon_template: mdi:air-conditioner

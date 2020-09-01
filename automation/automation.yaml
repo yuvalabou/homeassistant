@@ -67,17 +67,7 @@
 #    - service: light.turn_off
 #      entity_id: light.wled
 
-### Lights
-# Turn-off lights when away
-- alias: 'Turn-off lights when away'
-  id: c4219e30-3edb-4e1d-9621-eba64f593883
-  trigger:
-    platform: state
-    entity_id: group.person
-    to: 'not_home'
-  action:
-    - service: light.turn_off
-      entity_id: light.all_lights
+
 
 # Light-up in the morning
 - alias: 'Turn on living room lights in workday morning-early'

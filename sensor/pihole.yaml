@@ -1,0 +1,9 @@
+###
+# PiHole
+###
+- platform: command_line
+  name: 'PiHole Status'
+  scan_interval: 20
+  command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
+  value_template: >-
+    {{ value_json.status }}

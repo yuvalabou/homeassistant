@@ -4,7 +4,7 @@
 - name: 'Home'
   latitude: !secret home_lat
   longitude: !secret home_lon
-  radius: 100
+  radius: 50
   icon: mdi:home
 
 #- name: Yuval's Work

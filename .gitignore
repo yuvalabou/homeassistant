@@ -22,6 +22,9 @@ deps
 glances
 www/floor_plan
 www/graph
+www/community
+custom_components
+themes
 
 # Ignore files
 *.db

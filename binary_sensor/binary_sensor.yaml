@@ -1,0 +1,6 @@
+##############################################
+#               BINARY SENSORS               #
+##############################################
+# Random Boolean sensor
+- platform: random
+  name: 'Random Boolean'

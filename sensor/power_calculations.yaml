@@ -1,0 +1,89 @@
+###
+# Power calculations
+###
+
+#- platform: template
+#  sensors:
+#    total_power_consumption:
+#      friendly_name: 'Total Power Consumption'
+#      unit_of_measurement: kW
+#      icon_template: mdi:counter
+#      value_template: >-
+#        {{ states('sensor.estimated_shabat_plate_electricity_consumption') }}
+
+# AC
+- platform: template
+  sensors:
+    living_room_ac_power_consumption:
+      friendly_name: 'Living room AC power consumption'
+      unit_of_measurement: 'kW'
+      value_template: >-
+        {% if is_state('binary_sensor.living_room_ac_is_on', 'on') and
+              is_state('climate.slvn', 'cool') %}
+          2.04
+        {% elif is_state('binary_sensor.living_room_ac_is_on', 'on') and
+                is_state('climate.slvn', 'heat') %}%}
+          2.317
+        {% else %}
+          0
+        {% endif %}
+      icon_template: mdi:flash
+    master_bedroom_ac_power_consumption:
+      friendly_name: 'Master Bedroom AC power consumption'
+      unit_of_measurement: 'kW'
+      value_template: >-
+        {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') and
+              is_state('climate.shynh', 'cool') %}
+          0.8
+        {% elif is_state('binary_sensor.master_bedroom_ac_is_on', 'on') and
+                is_state('climate.shynh', 'heat') %}%}
+          0.8
+        {% else %}
+          0
+        {% endif %}
+      icon_template: mdi:flash
+    total_ac_power_consumption:
+      friendly_name: 'Total AC power consumption'
+      unit_of_measurement: 'kW'
+      value_template: >-
+        {{ (states('sensor.living_room_ac_power_consumption') | float) + (states('sensor.master_bedroom_ac_power_consumption') | float) }}
+      icon_template: mdi:flash
+
+#- platform: history_stats
+#  name: 'Shabat plate Is ON'
+#  entity_id: binary_sensor.shabat_plate_is_on
+#  state: 'on'
+#  type: time
+#  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
+#  end: '{{ now() }}'
+#- platform: template
+#  sensors:
+#    estimated_shabat_plate_electricity_consumption:
+#      friendly_name: 'Estimated Shabat plate Electricity consumption'
+#      icon_template: mdi:counter
+#      unit_of_measurement: kW
+#      value_template: >-
+#        {{ (states('sensor.shabat_plate_is_on') | float) * 0.4 }}
+#    realtime_shabat_plate_electricity_consumption:
+#      friendly_name: 'Realtime Shabat plate Electricity consumption'
+#      icon_template: mdi:counter
+#      unit_of_measurement: W
+#      value_template: >-
+#        {% if is_state('binary_sensor.shabat_plate_is_on', 'on') %}
+#          400
+#        {%- else -%}
+#          0
+#        {%- endif -%}
+
+#- platform: template
+#  sensors:
+#    estimated_electricity_price_daily:
+#      friendly_name: 'Estimated Daily Electricity Price'
+#      icon_template: mdi:currency-ils
+#      value_template: >-
+#        {{ (((states('var.electricity_price') | float) * (states('sensor.shabat_plate_total_energy_usage_daily') | float)) / 100) | round(2) }}
+#    estimated_electricity_price_monthly:
+#      friendly_name: 'Estimated Monthly Electricity Price'
+#      icon_template: mdi:currency-ils
+#      value_template: >-
+#        {{ (((states('var.electricity_price') | float) * ((states('sensor.boiler_total_energy_usage_monthly') | float) + (states('sensor.shabat_plate_total_energy_usage_monthly')))) / 100) | round(2) }}

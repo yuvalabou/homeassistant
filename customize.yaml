@@ -56,12 +56,8 @@ sensor.pihole_status:
 #sensor.shabat_plate_total_energy_usage_daily:
 #  friendly_name: 'Shabat-Plate Daily electriciy usage'
 #  unit_of_measurement: kWh
+#  icon: mdi:counter
 #sensor.shabat_plate_total_energy_usage_monthly:
 #  friendly_name: 'Shabat-Plate Monthly electriciy usage'
 #  unit_of_measurement: kWh
-
-# ESPHOME Sensor icons
-sensor.living_room_humidity_range:
-  icon: mdi:water-percent
-sensor.master_bedroom_humidity_range:
-  icon: mdi:water-percent
+#  icon: mdi:counter

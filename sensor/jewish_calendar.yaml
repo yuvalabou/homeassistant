@@ -1,0 +1,15 @@
+# formatted times
+- platform: template
+  sensors:
+    upcoming_candle_lighting_formatted:
+      friendly_name: 'Upcoming Candle Lighting'
+      entity_id: sensor.jewish_calendar_upcoming_candle_lighting
+      value_template: >-
+        {{ as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) | timestamp_custom('%H:%M') }}
+      icon_template: mdi:candle
+    upcoming_havdalah_formatted:
+      friendly_name: 'Upcoming Havdalah'
+      entity_id: sensor.jewish_calendar_upcoming_havdalah
+      value_template: >-
+        {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%H:%M') }}
+      icon_template: mdi:candle

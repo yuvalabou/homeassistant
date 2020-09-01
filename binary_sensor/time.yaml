@@ -1,0 +1,21 @@
+# Time of Day sensor
+- platform: tod
+  name: 'Night'
+  after: sunset
+  before: sunrise
+- platform: tod
+  name: 'Day'
+  after: sunrise
+  before: sunset
+
+# Workday sensor
+- platform: workday
+  country: IL
+  workdays:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+  excludes:
+    - holiday

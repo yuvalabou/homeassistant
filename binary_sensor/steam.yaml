@@ -1,0 +1,12 @@
+# Sensor for checking if someone is playing a game on steam
+- platform: template
+  sensors:
+    steam_game_on:
+      friendly_name: 'Is Steam Playing?'
+      icon_template: mdi:steam
+      value_template: >-
+        {% if is_state('sensor.steam_game', 'None') %}
+          False
+        {% else %}
+          True
+        {% endif %}

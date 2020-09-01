@@ -3,6 +3,13 @@
 ############################################
 # Create light groups
 - platform: group
+  name: 'All lights'
+  entities:
+    - light.master_bedroom
+    - light.bedroom1
+    - light.bedroom2
+
+- platform: group
   name: 'Living room lights'
   entities:
     - light.bedroom1
@@ -11,14 +18,6 @@
 - platform: group
   name: 'Dining lights'
   entities:
-    - light.bedroom1
-    - light.bedroom2
-
-- platform: group
-  name: 'All lights'
-  entities:
-#    - light.master_bedroom_fairy
-    - light.master_bedroom
     - light.bedroom1
     - light.bedroom2
 

@@ -940,6 +940,7 @@ views:
     icon: mdi:server
     cards:
       - type: entities
+        title: 'Internet'
         entities:
           - type: custom:hui-element
             card_type: horizontal-stack
@@ -1008,8 +1009,9 @@ views:
       - type: entities
         entities:
           - type: custom:hui-element
-            card_type: picture
-            image: '/local/assets/dell-logo-banner.jpg'
+            card_type: picture-entity
+            image: 'https://repository-images.githubusercontent.com/12888993/0f9eb780-655b-11e9-85cb-0d3956096fe5'
+            entity: sensor.current_version
 #          - type: custom:hui-element
 #            card_type: horizontal-stack
 #            cards:
@@ -1034,25 +1036,20 @@ views:
 #                  green: 0
 #                  yellow: 50
 #                  red: 75
-          - type: divider
+          - entity: sensor.uptime_friendly
+          - entity: script.server_restart
+            icon: mdi:restart
+          - entity: script.homeassistant_restart
+            icon: mdi:restart
           - type: custom:hui-element
             card_type: custom:mini-graph-card
             icon: mdi:database
             entities:
               - entity: sensor.db_size
                 name: 'Database'
-#            points_per_hour: 1
             show:
               fill: fade
               points: false
-          - type: divider
-          - entity: sensor.current_version
-          - type: divider
-          - entity: sensor.uptime_friendly
-          - entity: script.server_restart
-            icon: mdi:restart
-          - entity: script.homeassistant_restart
-            icon: mdi:restart
 
       - type: entities
         entities:
@@ -1083,6 +1080,15 @@ views:
                   green: 0
                   yellow: 50
                   red: 75
+          - type: custom:bar-card
+            entities:
+              - entity: sensor.glances_used_percent
+                name: 'SD Storage'
+                severity:
+                  - color: '#FF0F00'
+                    from: 91
+                    to: 100
+
           - type: custom:hui-element
             card_type: entities
             entities:

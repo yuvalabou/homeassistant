@@ -213,9 +213,8 @@ system_health:
 ##################################################
 group: !include group.yaml
 automation: !include_dir_merge_list automation/
-#scene: !include scene.yaml
-sensor: !include sensor.yaml
-binary_sensor: !include binary_sensor.yaml
+sensor: !include_dir_merge_list  sensor/
+binary_sensor: !include_dir_merge_list binary_sensor/
 utility_meter: !include utility_meter.yaml
 timer: !include timer.yaml
 switch: !include switch.yaml
@@ -225,5 +224,4 @@ input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml
 #input_text: !include input_text.yaml
 script: !include script.yaml
-#rest_command: !include rest_command.yaml
 #shell_command: !include shell_command.yaml
