@@ -117,9 +117,6 @@ jewish_calendar:
 # Allows you to monitor the system information provided by the Glances API.
 glances:
 
-# The 'anniversaries' component is a Home Assistant custom sensor which counts down to a recurring date.
-#anniversaries: !include anniversaries.yaml
-
 # Connect to your Google Calendars and generate binary sensors.
 #google:
 #  client_id: !secret gcalendar_id

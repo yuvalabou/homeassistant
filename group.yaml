@@ -7,3 +7,4 @@ person:
   entities:
     - person.yuval
     - person.tohar
+  icon: mdi:account-multiple

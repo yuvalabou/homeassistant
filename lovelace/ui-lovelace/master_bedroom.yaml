@@ -1,0 +1,187 @@
+####################################################
+#                     MASTER BEDROOM               #
+####################################################
+  - id: master_bedroom
+    title: 'Master Bedroom'
+    icon: mdi:bed-king-outline
+    cards:
+#      - type: custom:banner-card
+#       heading: "\U0001F6BF Ensuite"
+#        background: "#8FCEDA"
+#        row_size: 3
+#        entities:
+#          - sensor.ensuite_temperature
+#          - sensor.ensuite_humidity
+#          - switch.ensuite_light
+#          - switch.boiler
+#          - switch.ensuite_heater
+#          - entity: sensor.ensuite_occupied
+#            #size:
+#            map_state:
+#              'on': mdi:emoticon-poop
+#              'off': mdi:human-male-female
+#          - entity: binary_sensor.ensuite_door
+#            #size:
+#            map_state:
+#              'on': mdi:door-open
+#              'off': mdi:door-closed
+#          - entity: binary_sensor.ensuite_window
+#            #size:
+#            map_state:
+#              'on': mdi:window-open
+#              'off': mdi:window-closed
+#          - entity: binary_sensor.ensuite_toilet_paper_left
+#            #size:
+#            map_state:
+#              'on': mdi:paper-roll
+#              'off': mdi:sync-alert
+
+#      - type: conditional
+#        conditions:
+#          - entity: light.master_bedroom_fairy
+#            state: "off"
+#        card:
+#          type: entities
+#          entities:
+#            - entity: light.master_bedroom_fairy
+#              name: Master Bedroom Fairy
+#      - type: conditional
+#        conditions:
+#          - entity: light.master_bedroom_fairy
+#            state: "on"
+#        card:
+#          type: light
+#          entity: light.master_bedroom_fairy
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.master_bedroom_sensibo_temperature
+                    name: 'Temperature'
+                    show_points: false
+                  - entity: sensor.master_bedroom_climate_set_temp
+                    color: "white"
+                    show_fill: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.master_bedroom_sensibo_humidity
+                    name: 'Humidity'
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                points_per_hour: 6
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+                  legend: false
+#          - type: custom:hui-element
+#            card_type: glance
+#            entities:
+#              - binary_sensor.master_bedroom_motion
+#              - entity: sensor.master_bedroom_humidity_range
+#                name: 'Humidity'
+#          - switch.shabat_select
+
+      - type: custom:simple-thermostat
+        entity: climate.shynh
+        step_size: 1
+        name: false
+        control:
+          _names: false
+
+      - type: light
+        entity: light.master_bedroom
+
+#      - type: conditional
+#        conditions:
+#          - entity: person.yuval
+#            state: 'home'
+#        card:
+#          type: custom:restriction-card
+#          restrictions:
+#            pin:
+#              code:
+#          duration: 30
+#          card:
+#            type: glance
+#            title: Safe
+#            entities:
+#              - switch.unlock_safe
+#              - binary_sensor.safe_state
+#              - sensor.safe_last_opened
+#              - binary_sensor.safe_status
+
+      - type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: entities
+                entities:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.mi_9t_battery_level
+                        name: 'Mi9T Battery'
+                    show:
+                      points: false
+                      labels: false
+                      fill: fade
+                    hours_to_show: 6
+                    points_per_hour: 3
+                    lower_bound: 0
+                    upper_bound: 100
+                    color_thresholds:
+                      - value: 60
+                        color: "#4DFF00"
+                      - value: 40
+                        color: "#F0FF00"
+                      - value: 20
+                        color: "#FF6000"
+                      - value: 10
+                        color: "#FF0F00"
+                  - entity: sensor.mi_9t_battery_state
+                    name: 'Battery'
+                  - entity: sensor.mi_9t_next_alarm
+                    name: 'Alarm'
+              - type: entities
+                entities:
+                  - type: custom:mini-graph-card
+                    entities:
+                      - entity: sensor.redmi_note_7_battery_level
+                        name: 'Note 7 Battery'
+                    show:
+                      points: false
+                      labels: false
+                      fill: fade
+                    hours_to_show: 6
+                    points_per_hour: 3
+                    lower_bound: 0
+                    upper_bound: 100
+                    color_thresholds:
+                      - value: 60
+                        color: "#4DFF00"
+                      - value: 40
+                        color: "#F0FF00"
+                      - value: 20
+                        color: "#FF6000"
+                      - value: 10
+                        color: "#FF0F00"
+                  - entity: sensor.redmi_note_7_battery_state
+                    name: 'Battery'
+                  - entity: sensor.redmi_note_7_next_alarm
+                    name: 'Alarm'

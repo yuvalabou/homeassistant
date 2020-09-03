@@ -1,0 +1,50 @@
+####################################################
+#                       BEDROOM                    #
+####################################################
+#  - id: bedroom_mamad
+#    title: 'Bedroom'
+#    icon: mdi:bed-single-outline
+#    cards:
+#      - type: entities
+#        show_header_toggle: false
+#        entities:
+#          - type: custom:hui-element
+#            card_type: horizontal-stack
+#            cards:
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bedroom_temperature
+#                    name: 'Temperature'
+#                    show_points: false
+#                font_size: 80
+#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: true
+#                  labels_secondary: false
+#                  legend: false
+#              - type: custom:mini-graph-card
+#                entities:
+#                  - entity: sensor.bedroom_humidity
+#                    name: 'Humidity'
+#                font_size: 80
+#                lower_bound: 0
+#                upper_bound: 100
+#                points_per_hour: 6
+#                show:
+#                  fill: fade
+#                  points: false
+#                  labels: false
+#                  legend: false
+#          - type: custom:hui-element
+#            card_type: glance
+#            entities:
+#              - binary_sensor.bedroom_motion
+#              - entity: sensor.bedroom_humidity_range
+#                name: 'humidity'
+#          - switch.shabat_select
+
+#      - type: light
+#        entity: light.bedroom1

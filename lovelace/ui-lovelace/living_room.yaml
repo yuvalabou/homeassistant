@@ -1,0 +1,102 @@
+####################################################
+#                     LIVING ROOM                  #
+####################################################
+  - id: living_room
+    title: 'Living Room'
+    icon: mdi:sofa
+    cards:
+#      - type: vertical-stack
+#        cards:
+#          - type: custom:banner-card
+#            heading: "\U0001F373 Kitchen"
+#            background: "#FCF2EA"
+#            row_size: 2
+#            entities:
+#              - entity: sensor.kitchen_occupied
+#                map_state:
+#                  'on': mdi:run
+#                  'off': mdi:walk
+#              - entity: sensor.sink_full # add "sink full" sensor using ultrasonic sensor
+#                map_state:
+#                  'on': mdi:tray-full # example
+#                  'off': mdi:silverware-clean # example
+#              - entity: switch.above_sink_light
+#          - type: conditional
+#            conditions:
+#              - entity: binary_sensor.shabat_plate_connection
+#                state: 'on'
+#            card:
+#              type: entities
+#              show_header_toggle: false
+#              title: 'פלטה'
+#              entities:
+#                - switch.shabat_plate
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.living_room_temperature
+                    name: 'Temperature'
+                    show_points: false
+                  - entity: sensor.living_room_climate_set_temp
+                    color: "white"
+                    show_fill: false
+                font_size: 80
+                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+                points_per_hour: 6
+                show:
+                  fill: fade
+                  points: false
+                  labels: true
+                  labels_secondary: false
+                  legend: false
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.living_room_humidity
+                    name: 'Humidity'
+                font_size: 80
+                lower_bound: 0
+                upper_bound: 100
+                points_per_hour: 6
+                show:
+                  fill: fade
+                  points: false
+                  labels: false
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - binary_sensor.living_room_motion
+              - entity: sensor.living_room_humidity_range
+                name: 'Humidity'
+
+      - type: custom:simple-thermostat
+        entity: climate.slvn
+        step_size: 1
+        name: false
+        control:
+          _names: false
+        hide:
+          temperature: true
+        sensors:
+          - entity: sensor.living_room_temperature
+            name: 'Temperature'
+
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - type: custom:hui-element
+            card_type: light
+            entity: light.living_room_lights
+          - type: custom:hui-element
+            card_type: horizontal-stack
+            cards:
+              - type: light
+                entity: light.bedroom1
+              - type: light
+                entity: light.bedroom2
+          - switch.night_light_override

@@ -14,7 +14,7 @@
 # Movement detection
 shabat_mode:
   name: 'מצב שבת'
-  icon: mdi:human-greeting
+  icon: mdi:candle
 
 night_light_override:
   name: 'Night Light Override'
