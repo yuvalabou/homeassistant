@@ -1,178 +1,178 @@
 ####################################################
 #                     Statistics                   #
 ####################################################
-  - id: statistics
-    title: 'Statistics'
-    icon: mdi:chart-areaspline
-    cards:
+id: statistics
+title: 'Statistics'
+icon: mdi:chart-areaspline
+cards:
 #      - type: entities
 #        entities:
 #          - sensor.estimated_electricity_price_daily
 #          - sensor.estimated_electricity_price_monthly
 
-      - type: custom:mini-graph-card
-        name: 'Temperature'
-        hours_to_show: 84
-        entities:
-          - entity: sensor.living_room_temperature
-            show_points: false
-          - entity: sensor.master_bedroom_sensibo_temperature
-            show_points: false
-          - entity: sensor.outside_temps
-            name: 'Outside'
-            show_points: false
-            color: "white"
-            show_fill: false
-        show:
-          fill: fade
-          state: false
-          labels: true
-          labels_secondary: false
-          points: false
-        line_width: 3
-        color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+  - type: custom:mini-graph-card
+    name: 'Temperature'
+    hours_to_show: 84
+    entities:
+      - entity: sensor.living_room_temperature
+        show_points: false
+      - entity: sensor.master_bedroom_sensibo_temperature
+        show_points: false
+      - entity: sensor.outside_temps
+        name: 'Outside'
+        show_points: false
+        color: "white"
+        show_fill: false
+    show:
+      fill: fade
+      state: false
+      labels: true
+      labels_secondary: false
+      points: false
+    line_width: 3
+    color_thresholds: !include ../graph_card_temperature_thresholds.yaml
 
-      - type: custom:mini-graph-card
-        name: 'Motion last 3 Hours'
-        icon: mdi:motion-sensor
-        hours_to_show: 3
-        points_per_hour: 60
-        update_interval: 30
-        aggregate_func: max
-        line_width: 2
-        smoothing: false
-        entities:
-          - entity: binary_sensor.living_room_motion
-            show_points: false
-            color: "#7FB1CF"
+  - type: custom:mini-graph-card
+    name: 'Motion last 3 Hours'
+    icon: mdi:motion-sensor
+    hours_to_show: 3
+    points_per_hour: 60
+    update_interval: 30
+    aggregate_func: max
+    line_width: 2
+    smoothing: false
+    entities:
+      - entity: binary_sensor.living_room_motion
+        show_points: false
+        color: "#7FB1CF"
 #          - entity: binary_sensor.master_bedroom_motion
 #            show_points: false
 #            color: "#A886F7"
-          - entity: binary_sensor.day
-            show_points: false
-            show_legend: false
-            show_line: false
-            show_state: false
-            color: white
-        state_map:
-          - value: "off"
-            label: 'Clear'
-          - value: "on"
-            label: 'Detected'
-        show:
-          fill: fade
+      - entity: binary_sensor.day
+        show_points: false
+        show_legend: false
+        show_line: false
+        show_state: false
+        color: white
+    state_map:
+      - value: "off"
+        label: 'Clear'
+      - value: "on"
+        label: 'Detected'
+    show:
+      fill: fade
 
-      - type: custom:mini-graph-card
-        name: 'Lights'
-        icon: mdi:lightbulb-on
-        points_per_hour: 60
-        hours_to_show: 12
-        aggregate_func: max
-        line_width: 2
-        smoothing: false
-        entities:
-          - entity: binary_sensor.living_room_light_is_on
-            show_points: false
-            color: "#7FB1CF"
-          - entity: binary_sensor.master_bedroom_light_is_on
-            show_points: false
-            color: "#A886F7"
+  - type: custom:mini-graph-card
+    name: 'Lights'
+    icon: mdi:lightbulb-on
+    points_per_hour: 60
+    hours_to_show: 12
+    aggregate_func: max
+    line_width: 2
+    smoothing: false
+    entities:
+      - entity: binary_sensor.living_room_light_is_on
+        show_points: false
+        color: "#7FB1CF"
+      - entity: binary_sensor.master_bedroom_light_is_on
+        show_points: false
+        color: "#A886F7"
 #          - entity: binary_sensor.master_bedroom_fairy_is_on
 #            show_points: false
-          - entity: binary_sensor.day
-            show_points: false
-            show_legend: false
-            show_line: false
-            show_state: false
-            color: white
-        state_map:
-          - value: "off"
-            label: 'כבוי'
-          - value: "on"
-            label: 'דולק'
-        show:
-          fill: fade
-          labels: false
+      - entity: binary_sensor.day
+        show_points: false
+        show_legend: false
+        show_line: false
+        show_state: false
+        color: white
+    state_map:
+      - value: "off"
+        label: 'כבוי'
+      - value: "on"
+        label: 'דולק'
+    show:
+      fill: fade
+      labels: false
 
-      - type: custom:mini-graph-card
-        name: 'AC'
-        icon: mdi:air-conditioner
-        points_per_hour: 60
-        hours_to_show: 12
-        aggregate_func: max
-        line_width: 2
-        smoothing: false
-        entities:
-          - entity: binary_sensor.living_room_ac_is_on
-            show_points: false
-            color: "#7FB1CF"
-          - entity: binary_sensor.master_bedroom_ac_is_on
-            show_points: false
-            color: "#A886F7"
-          - entity: binary_sensor.day
-            show_points: false
-            show_legend: false
-            show_line: false
-            show_state: false
-            color: white
-        state_map:
-          - value: "off"
-            label: 'כבוי'
-          - value: "on"
-            label: 'דולק'
-        show:
-          fill: fade
-          labels: false
+  - type: custom:mini-graph-card
+    name: 'AC'
+    icon: mdi:air-conditioner
+    points_per_hour: 60
+    hours_to_show: 12
+    aggregate_func: max
+    line_width: 2
+    smoothing: false
+    entities:
+      - entity: binary_sensor.living_room_ac_is_on
+        show_points: false
+        color: "#7FB1CF"
+      - entity: binary_sensor.master_bedroom_ac_is_on
+        show_points: false
+        color: "#A886F7"
+      - entity: binary_sensor.day
+        show_points: false
+        show_legend: false
+        show_line: false
+        show_state: false
+        color: white
+    state_map:
+      - value: "off"
+        label: 'כבוי'
+      - value: "on"
+        label: 'דולק'
+    show:
+      fill: fade
+      labels: false
 
-      - type: entities
+  - type: entities
+    entities:
+      - entity: binary_sensor.tv
+      - type: custom:hui-element
+        card_type: custom:mini-graph-card
+        name: 'TV Usage'
+        hours_to_show: 168
+        group_by: date
         entities:
-          - entity: binary_sensor.tv
-          - type: custom:hui-element
-            card_type: custom:mini-graph-card
-            name: 'TV Usage'
-            hours_to_show: 168
-            group_by: date
-            entities:
-              - entity: sensor.track_tv_usage_formatted
-                unit: hours
-            color_thresholds:
-              - value: 1
-                color: "#29A797"
-              - value: 2
-                color: "#F19631"
-              - value: 3
-                color: "#D2212A"
-            show:
-              graph: bar
-              labels: false
+          - entity: sensor.track_tv_usage_formatted
+            unit: hours
+        color_thresholds:
+          - value: 1
+            color: "#29A797"
+          - value: 2
+            color: "#F19631"
+          - value: 3
+            color: "#D2212A"
+        show:
+          graph: bar
+          labels: false
 #          - type: custom:hui-element
 #            card_type: media-control
 #            entity: media_player.pilot_tv
 
 # Climate
-      - type: custom:mini-graph-card
-        name: 'AC Power Consumption'
-        unit: 'kW'
-        hours_to_show: 750
-        line_width: 1
-        entities:
-          - entity: sensor.total_ac_energy_usage_daily
-            name: 'Daily'
-            color: "#04FC04"
-            show_state: true
-            show_points: false
-          - entity: sensor.total_ac_energy_usage_weekly
-            name: 'Weekly'
-            color: "yellow"
-            show_state: false
-            show_points: false
-          - entity: sensor.total_ac_energy_usage_monthly
-            name: 'Monthly'
-            color: "red"
-            show_state: false
-            show_points: false
-        show:
-          fill: fade
+  - type: custom:mini-graph-card
+    name: 'AC Power Consumption'
+    unit: 'kW'
+    hours_to_show: 750
+    line_width: 1
+    entities:
+      - entity: sensor.total_ac_energy_usage_daily
+        name: 'Daily'
+        color: "#04FC04"
+        show_state: true
+        show_points: false
+      - entity: sensor.total_ac_energy_usage_weekly
+        name: 'Weekly'
+        color: "yellow"
+        show_state: false
+        show_points: false
+      - entity: sensor.total_ac_energy_usage_monthly
+        name: 'Monthly'
+        color: "red"
+        show_state: false
+        show_points: false
+    show:
+      fill: fade
 
 # Boiler
 #      - type: custom:mini-graph-card

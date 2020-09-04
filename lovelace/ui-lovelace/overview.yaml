@@ -1,109 +1,109 @@
 ####################################################
 #                     MAIN VIEW                    #
 ####################################################
-  - id: overview
-    title: 'Overview'
+id: overview
+title: 'Overview'
+cards:
+  - type: horizontal-stack
     cards:
-      - type: horizontal-stack
-        cards:
-          - type: entities
-            entities:
-              - type: custom:hui-element
-                card_type: picture-entity
-                image: '/local/assets/yuval.jpg'
-                entity: person.yuval
-              - entity: sensor.mi_9t_geocoded_location
-                name: 'Location'
-              - entity: sensor.mi_9t_battery_level
-                name: 'Phone Battery'
-          - type: entities
-            entities:
-              - type: custom:hui-element
-                card_type: picture-entity
-                image: '/local/assets/tohar.jpg'
-                entity: person.tohar
-              - entity: sensor.redmi_note_7_geocoded_location
-                name: 'Location'
-              - entity: sensor.redmi_note_7_battery_level
-                name: 'Phone Battery'
-
       - type: entities
         entities:
-          - type: custom:weather-card
-            entity: weather.home
-            current: true
-            details: true
           - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: custom:hui-element
-                card_type: glance
-                entities:
-                  - entity: sensor.wind_scale_friendly
-              - type: custom:hui-element
-                card_type: glance
-                entities:
-                  - entity: sensor.uv_index_friendly
-
-      - type: custom:animated-consumption-card
-        entity: sensor.total_ac_power_consumption
-
+            card_type: picture-entity
+            image: '/local/assets/yuval.jpg'
+            entity: person.yuval
+          - entity: sensor.mi_9t_geocoded_location
+            name: 'Location'
+          - entity: sensor.mi_9t_battery_level
+            name: 'Phone Battery'
       - type: entities
-        title: 'זמני היום'
-        show_header_toggle: false
         entities:
-          - entity: sensor.jewish_calendar_date
-            name: 'תאריך'
-          - entity: binary_sensor.is_fast_day
-            name: 'צום'
-          - entity: sensor.jewish_calendar_day_of_the_omer
-            name: 'ספירת העומר'
-          - type: divider
-          - entity: sensor.jewish_calendar_parshat_hashavua
-            name: 'פרשת השבוע'
-          - entity: sensor.jewish_calendar_upcoming_candle_lighting
-            type: custom:multiple-entity-row
-            name: 'הדלקת נרות'
-            format: relative
+          - type: custom:hui-element
+            card_type: picture-entity
+            image: '/local/assets/tohar.jpg'
+            entity: person.tohar
+          - entity: sensor.redmi_note_7_geocoded_location
+            name: 'Location'
+          - entity: sensor.redmi_note_7_battery_level
+            name: 'Phone Battery'
+
+  - type: entities
+    entities:
+      - type: custom:weather-card
+        entity: weather.home
+        current: true
+        details: true
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:hui-element
+            card_type: glance
             entities:
-              - entity: sensor.upcoming_candle_lighting_formatted
-                name: false
-          - entity: sensor.jewish_calendar_upcoming_havdalah
-            type: custom:multiple-entity-row
-            name: 'הבדלה'
-            format: relative
+              - entity: sensor.wind_scale_friendly
+          - type: custom:hui-element
+            card_type: glance
             entities:
-              - entity: sensor.upcoming_havdalah_formatted
-                name: false
-          - type: divider
-          - entity: sensor.jewish_calendar_daf_yomi
-            name: 'דף יומי'
+              - entity: sensor.uv_index_friendly
 
-      - type: entities
-        title: 'תאורת שבת'
-        show_header_toggle: false
+  - type: custom:animated-consumption-card
+    entity: sensor.total_ac_power_consumption
+
+  - type: entities
+    title: 'זמני היום'
+    show_header_toggle: false
+    entities:
+      - entity: sensor.jewish_calendar_date
+        name: 'תאריך'
+      - entity: binary_sensor.is_fast_day
+        name: 'צום'
+      - entity: sensor.jewish_calendar_day_of_the_omer
+        name: 'ספירת העומר'
+      - type: divider
+      - entity: sensor.jewish_calendar_parshat_hashavua
+        name: 'פרשת השבוע'
+      - entity: sensor.jewish_calendar_upcoming_candle_lighting
+        type: custom:multiple-entity-row
+        name: 'הדלקת נרות'
+        format: relative
         entities:
-          - switch.shabat_mode
-          - input_select.shabat_lights_off_time
-
-      - type: entities
+          - entity: sensor.upcoming_candle_lighting_formatted
+            name: false
+      - entity: sensor.jewish_calendar_upcoming_havdalah
+        type: custom:multiple-entity-row
+        name: 'הבדלה'
+        format: relative
         entities:
-          - switch.night_light_override
+          - entity: sensor.upcoming_havdalah_formatted
+            name: false
+      - type: divider
+      - entity: sensor.jewish_calendar_daf_yomi
+        name: 'דף יומי'
 
-      - type: custom:auto-entities
-        card:
-          type: entities
-          title: 'Active Lights'
-          show_header_toggle: false
-        show_empty: false
-        filter:
-          include:
-            - domain: light
-              state: 'on'
-            - domain: light
-              state: 'unavailable'
-          exclude:
-            - entity_id: '*lights'
+  - type: entities
+    title: 'תאורת שבת'
+    show_header_toggle: false
+    entities:
+      - switch.shabat_mode
+      - input_select.shabat_lights_off_time
+
+  - type: entities
+    entities:
+      - switch.night_light_override
+
+  - type: custom:auto-entities
+    card:
+      type: entities
+      title: 'Active Lights'
+      show_header_toggle: false
+    show_empty: false
+    filter:
+      include:
+        - domain: light
+          state: 'on'
+        - domain: light
+          state: 'unavailable'
+      exclude:
+        - entity_id: '*lights'
 
 #      - type: "custom:atomic-calendar"
 #        title: "Calendar"

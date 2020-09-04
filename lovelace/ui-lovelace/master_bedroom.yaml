@@ -1,10 +1,10 @@
 ####################################################
 #                     MASTER BEDROOM               #
 ####################################################
-  - id: master_bedroom
-    title: 'Master Bedroom'
-    icon: mdi:bed-king-outline
-    cards:
+id: master_bedroom
+title: 'Master Bedroom'
+icon: mdi:bed-king-outline
+cards:
 #      - type: custom:banner-card
 #       heading: "\U0001F6BF Ensuite"
 #        background: "#8FCEDA"
@@ -53,42 +53,42 @@
 #          type: light
 #          entity: light.master_bedroom_fairy
 
-      - type: entities
-        show_header_toggle: false
-        entities:
-          - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.master_bedroom_sensibo_temperature
-                    name: 'Temperature'
-                    show_points: false
-                  - entity: sensor.master_bedroom_climate_set_temp
-                    color: "white"
-                    show_fill: false
-                font_size: 80
-                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: true
-                  labels_secondary: false
-                  legend: false
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.master_bedroom_sensibo_humidity
-                    name: 'Humidity'
-                font_size: 80
-                lower_bound: 0
-                upper_bound: 100
-                points_per_hour: 6
-                show:
-                  fill: fade
-                  points: false
-                  labels: false
-                  legend: false
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_sensibo_temperature
+                name: 'Temperature'
+                show_points: false
+              - entity: sensor.master_bedroom_climate_set_temp
+                color: "white"
+                show_fill: false
+            font_size: 80
+            color_thresholds: !include ../graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_sensibo_humidity
+                name: 'Humidity'
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: false
+              legend: false
 #          - type: custom:hui-element
 #            card_type: glance
 #            entities:
@@ -97,15 +97,15 @@
 #                name: 'Humidity'
 #          - switch.shabat_select
 
-      - type: custom:simple-thermostat
-        entity: climate.shynh
-        step_size: 1
-        name: false
-        control:
-          _names: false
+  - type: custom:simple-thermostat
+    entity: climate.shynh
+    step_size: 1
+    name: false
+    control:
+      _names: false
 
-      - type: light
-        entity: light.master_bedroom
+  - type: light
+    entity: light.master_bedroom
 
 #      - type: conditional
 #        conditions:
@@ -126,62 +126,62 @@
 #              - sensor.safe_last_opened
 #              - binary_sensor.safe_status
 
-      - type: entities
-        entities:
-          - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: entities
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - type: custom:mini-graph-card
                 entities:
-                  - type: custom:mini-graph-card
-                    entities:
-                      - entity: sensor.mi_9t_battery_level
-                        name: 'Mi9T Battery'
-                    show:
-                      points: false
-                      labels: false
-                      fill: fade
-                    hours_to_show: 6
-                    points_per_hour: 3
-                    lower_bound: 0
-                    upper_bound: 100
-                    color_thresholds:
-                      - value: 60
-                        color: "#4DFF00"
-                      - value: 40
-                        color: "#F0FF00"
-                      - value: 20
-                        color: "#FF6000"
-                      - value: 10
-                        color: "#FF0F00"
-                  - entity: sensor.mi_9t_battery_state
-                    name: 'Battery'
-                  - entity: sensor.mi_9t_next_alarm
-                    name: 'Alarm'
-              - type: entities
+                  - entity: sensor.mi_9t_battery_level
+                    name: 'Mi9T Battery'
+                show:
+                  points: false
+                  labels: false
+                  fill: fade
+                hours_to_show: 6
+                points_per_hour: 3
+                lower_bound: 0
+                upper_bound: 100
+                color_thresholds:
+                  - value: 60
+                    color: "#4DFF00"
+                  - value: 40
+                    color: "#F0FF00"
+                  - value: 20
+                    color: "#FF6000"
+                  - value: 10
+                    color: "#FF0F00"
+              - entity: sensor.mi_9t_battery_state
+                name: 'Battery'
+              - entity: sensor.mi_9t_next_alarm
+                name: 'Alarm'
+          - type: entities
+            entities:
+              - type: custom:mini-graph-card
                 entities:
-                  - type: custom:mini-graph-card
-                    entities:
-                      - entity: sensor.redmi_note_7_battery_level
-                        name: 'Note 7 Battery'
-                    show:
-                      points: false
-                      labels: false
-                      fill: fade
-                    hours_to_show: 6
-                    points_per_hour: 3
-                    lower_bound: 0
-                    upper_bound: 100
-                    color_thresholds:
-                      - value: 60
-                        color: "#4DFF00"
-                      - value: 40
-                        color: "#F0FF00"
-                      - value: 20
-                        color: "#FF6000"
-                      - value: 10
-                        color: "#FF0F00"
-                  - entity: sensor.redmi_note_7_battery_state
-                    name: 'Battery'
-                  - entity: sensor.redmi_note_7_next_alarm
-                    name: 'Alarm'
+                  - entity: sensor.redmi_note_7_battery_level
+                    name: 'Note 7 Battery'
+                show:
+                  points: false
+                  labels: false
+                  fill: fade
+                hours_to_show: 6
+                points_per_hour: 3
+                lower_bound: 0
+                upper_bound: 100
+                color_thresholds:
+                  - value: 60
+                    color: "#4DFF00"
+                  - value: 40
+                    color: "#F0FF00"
+                  - value: 20
+                    color: "#FF6000"
+                  - value: 10
+                    color: "#FF0F00"
+              - entity: sensor.redmi_note_7_battery_state
+                name: 'Battery'
+              - entity: sensor.redmi_note_7_next_alarm
+                name: 'Alarm'

@@ -1,10 +1,10 @@
 ####################################################
 #                    Home Office                   #
 ####################################################
-  - id: work_room
-    title: 'Home Office'
-    icon: mdi:desk
-    cards:
+id: work_room
+title: 'Home Office'
+icon: mdi:desk
+cards:
 #      - type: entities
 #        show_header_toggle: false
 #        entities:
@@ -17,7 +17,7 @@
 #                    name: 'Temperature'
 #                    show_points: false
 #                font_size: 80
-#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
+#                color_thresholds: !include ../graph_card_temperature_thresholds.yaml
 #                show:
 #                  fill: fade
 #                  points: false
@@ -47,55 +47,55 @@
 #      - type: light
 #        entity: light.home_office
 
-      - type: entities
-        title: 'Printer'
-        entities:
-          - sensor.mfc_j4410dw_status
-          - binary_sensor.printer
-          - type: custom:hui-element
-            card_type: horizontal-stack
-            cards:
-              - type: custom:bar-card
-                name: 'Cyan'
-                color: "cyan"
-                direction: up
-                height: 100px
-                entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
-              - type: custom:bar-card
-                name: 'Magenta'
-                color: "magenta"
-                direction: up
-                entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
-              - type: custom:bar-card
-                name: 'Yellow'
-                color: "yellow"
-                direction: up
-                entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
-              - type: custom:bar-card
-                name: 'Black'
-                color: "black"
-                direction: up
-                entity: sensor.brother_mfc_j4410dw_black_ink_cartridge
+  - type: entities
+    title: 'Printer'
+    entities:
+      - sensor.mfc_j4410dw_status
+      - binary_sensor.printer
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:bar-card
+            name: 'Cyan'
+            color: "cyan"
+            direction: up
+            height: 100px
+            entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
+          - type: custom:bar-card
+            name: 'Magenta'
+            color: "magenta"
+            direction: up
+            entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
+          - type: custom:bar-card
+            name: 'Yellow'
+            color: "yellow"
+            direction: up
+            entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
+          - type: custom:bar-card
+            name: 'Black'
+            color: "black"
+            direction: up
+            entity: sensor.brother_mfc_j4410dw_black_ink_cartridge
 
-      - type: entities
+  - type: entities
+    entities:
+      - sensor.steam_76561198173612681
+      - sensor.steam_game
+      - type: custom:hui-element
+        card_type: custom:mini-graph-card
         entities:
-          - sensor.steam_76561198173612681
-          - sensor.steam_game
-          - type: custom:hui-element
-            card_type: custom:mini-graph-card
-            entities:
-              - entity: sensor.track_steam_playtime_formatted
-                unit: hours
-                name: 'Steam playtime'
-            show:
-              graph: bar
-              labels: false
-            hours_to_show: 168
-            group_by: date
-            color_thresholds:
-              - value: 1
-                color: "#29A797"
-              - value: 2
-                color: "#F19631"
-              - value: 3
-                color: "#D2212A"
+          - entity: sensor.track_steam_playtime_formatted
+            unit: hours
+            name: 'Steam playtime'
+        show:
+          graph: bar
+          labels: false
+        hours_to_show: 168
+        group_by: date
+        color_thresholds:
+          - value: 1
+            color: "#29A797"
+          - value: 2
+            color: "#F19631"
+          - value: 3
+            color: "#D2212A"
