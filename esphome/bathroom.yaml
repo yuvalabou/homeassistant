@@ -15,7 +15,7 @@ wifi:
   ssid: !secret ssid
   password: !secret wifi_passwd
   manual_ip:
-    static_ip: 10.0.0.70
+    static_ip: 10.0.0.73
     gateway: !secret gateway
     subnet: 255.255.255.0
   ap:
@@ -32,9 +32,9 @@ i2c:
   scl: D1
   scan: True
 
-mcp23008:
-  - id: mcp23008_hub
-    address: 0x20
+#mcp23008:
+#  - id: mcp23008_hub
+#    address: 0x20
 
 binary_sensor:
   - platform: gpio
@@ -75,13 +75,15 @@ sensor:
 #    update_interval: 60s
 #  - platform: adc
 #    pin: VCC
-#    name: ${devicename} VCC voltage
+#    name: "${devicename} VCC voltage"
 
 text_sensor:
   - platform: template
     name: "${upper_devicename} Humidity Range"
     lambda: |-
-      if (id(${template_id}_humidity).state > 65) {
+      if (id(${template_id}_humidity).state > 80) {
+        return {"Very Humid"};
+      } else if (id(${template_id}_humidity).state > 65) {
         return {"Humid"};
       } else if (id(${template_id}_humidity).state < 40) {
         return {"Dry"};

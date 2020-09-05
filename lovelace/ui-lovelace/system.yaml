@@ -260,7 +260,9 @@ cards:
         card_type: glance
         entities:
           - binary_sensor.living_room
+          - binary_sensor.bathroom
       - switch.restart_living_room
+      - switch.restart_bathroom
 #          - switch.restart_master_bedroom
 #          - type: divider
 #          - switch.restart_shabat_plate

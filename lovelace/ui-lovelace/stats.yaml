@@ -18,6 +18,8 @@ cards:
         show_points: false
       - entity: sensor.master_bedroom_sensibo_temperature
         show_points: false
+      - entity: sensor.bathroom_temperature
+        show_points: false
       - entity: sensor.outside_temps
         name: 'Outside'
         show_points: false
@@ -45,6 +47,9 @@ cards:
       - entity: binary_sensor.living_room_motion
         show_points: false
         color: "#7FB1CF"
+      - entity: binary_sensor.bathroom_motion
+        show_points: false
+        color: "#C4BAB0"
 #          - entity: binary_sensor.master_bedroom_motion
 #            show_points: false
 #            color: "#A886F7"

@@ -23,27 +23,3 @@
     - service: switch.turn_off
       data:
         entity_id: switch.shabat_mode
-
-###
-# Disables and Enables motions sensors when required
-###
-- alias: 'Disable Movement sensors on select'
-  id: a67305f9-6d69-4150-bdb8-dd3633f3df6a
-  trigger:
-    platform: state
-    entity_id: switch.shabat_mode
-    to: 'on'
-  action:
-    - service: switch.turn_on
-      data:
-        entity_id: switch.living_room_shabat_select
-- alias: 'Enables Movement sensors on select'
-  id: b7a16de0-46cc-49c7-b2ce-2b28008ca64e
-  trigger:
-    platform: state
-    entity_id: switch.shabat_mode
-    to: 'off'
-  action:
-    - service: switch.turn_off
-      data:
-        entity_id: switch.living_room_shabat_select

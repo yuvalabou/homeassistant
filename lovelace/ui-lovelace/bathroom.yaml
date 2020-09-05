@@ -1,65 +1,72 @@
 ####################################################
 #                      BATHROOM                    #
 ####################################################
-#  - id: bathroom
-#    title: 'Bathroom'
-#    icon: mdi:shower
-#    cards:
-#      - type: vertical-stack
-#        cards:
-#          - type: horizontal-stack
-#            cards:
-#              - type: custom:mini-graph-card
-#                entities:
-#                  - entity: sensor.bathroom_temperature
-#                    name: 'Temperature'
-#                    show_points: false
-#                font_size: 80
-#                color_thresholds: !include lovelace/graph_card_temperature_thresholds.yaml
-#                points_per_hour: 6
-#                show:
-#                  fill: fade
-#                  points: false
-#                  labels: true
-#                  labels_secondary: false
-#                  legend: false
-#              - type: custom:mini-graph-card
-#                entities:
-#                  - entity: sensor.bathroom_humidity
-#                    name: 'Humidity'
-#                font_size: 80
-#                lower_bound: 0
-#                upper_bound: 100
-#                points_per_hour: 6
-#                show:
-#                  fill: fade
-#                  points: false
-#                  labels: false
-#                  legend: false
+id: bathroom
+title: 'Bathroom'
+icon: mdi:shower
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.bathroom_temperature
+                name: 'Temperature'
+                show_points: false
+            font_size: 80
+            color_thresholds: !include ../graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.bathroom_humidity
+                name: 'Humidity'
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: false
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - binary_sensor.bathroom_motion
+          - entity: sensor.bathroom_humidity_range
+            name: 'Humidity'
 
-#      - type: entities
-#        title: Vent
-#        show_header_toggle: false
-#        entities:
-#          - switch.vent
+#  - type: entities
+#    title: Vent
+#    show_header_toggle: false
+#    entities:
+#      - switch.vent
 #
-#      - type: entities
-#        title: Boiler
-#        show_header_toggle: false
-#        entities:
-#          - switch.boiler
-#          - sensor.boiler_energy
+#  - type: entities
+#    title: Boiler
+#    show_header_toggle: false
+#    entities:
+#      - switch.boiler
+#      - sensor.boiler_energy
 #
-#      - type: entities
-#        title: Bathroom Heater
-#        show_header_toggle: false
-#        entities:
-#          - switch.bathroom_heater
-#          - sensor.bathroom_heater_energy
+#  - type: entities
+#    title: Bathroom Heater
+#    show_header_toggle: false
+#    entities:
+#      - switch.bathroom_heater
+#      - sensor.bathroom_heater_energy
 #
-#      - type: entities
-#        title: Washing Machine
-#        show_header_toggle: false
-#        entities:
-#          - sensor.washing_machine
-#          - sensor.dryer
+#  - type: entities
+#    title: Washing Machine
+#    show_header_toggle: false
+#    entities:
+#      - sensor.washing_machine
+#      - sensor.dryer

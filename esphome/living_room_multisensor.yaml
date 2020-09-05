@@ -81,7 +81,9 @@ text_sensor:
   - platform: template
     name: "${upper_devicename} Humidity Range"
     lambda: |-
-      if (id(${template_id}_humidity).state > 65) {
+      if (id(${template_id}_humidity).state > 80) {
+        return {"Very Humid"};
+      } else if (id(${template_id}_humidity).state > 65) {
         return {"Humid"};
       } else if (id(${template_id}_humidity).state < 40) {
         return {"Dry"};

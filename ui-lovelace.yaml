@@ -15,7 +15,7 @@ views:
   - !include lovelace/ui-lovelace/living_room.yaml
   - !include lovelace/ui-lovelace/master_bedroom.yaml
 #  - !include lovelace/ui-lovelace/bedroom.yaml
-#  - !include lovelace/ui-lovelace/bathroom.yaml
+  - !include lovelace/ui-lovelace/bathroom.yaml
   - !include lovelace/ui-lovelace/home_office.yaml
   - !include lovelace/ui-lovelace/stats.yaml
   - !include lovelace/ui-lovelace/system.yaml
