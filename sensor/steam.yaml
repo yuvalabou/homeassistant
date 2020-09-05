@@ -27,8 +27,8 @@
       friendly_name: 'Formatted Steam playtime'
       entity_id: sensor.track_steam_playtime
       value_template: >-
-        {% set hours = states('sensor.track_steam_playtime') | float %} 
-        {% set minutes = ((hours % 1) * 60) | int %}  
-        {% set hours = (hours - (hours % 1)) | int %}  
+        {% set hours = states('sensor.track_steam_playtime') | float %}
+        {% set minutes = ((hours % 1) * 60) | int %}
+        {% set hours = (hours - (hours % 1)) | int %}
         {{ '%02i.%02i'%(hours, minutes) }}
       icon_template: mdi:steam

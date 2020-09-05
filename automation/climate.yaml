@@ -74,7 +74,7 @@
         minutes: 5
   condition:
     condition: and
-    conditions: 
+    conditions:
       - condition: state
         entity_id: group.person
         state: 'home'
@@ -113,7 +113,7 @@
         minutes: 5
   condition:
     condition: and
-    conditions: 
+    conditions:
       - condition: state
         entity_id: group.person
         state: 'home'
@@ -218,7 +218,7 @@
         minutes: 5
   condition:
     condition: and
-    conditions: 
+    conditions:
       - condition: state
         entity_id: group.person
         state: 'home'

@@ -50,6 +50,6 @@ switch:
     name: Restart ${upper_devicename}
   - platform: gpio
     name: ${upper_devicename} Toggle
-    pin: 
+    pin:
       number: GPIO4
       inverted: true

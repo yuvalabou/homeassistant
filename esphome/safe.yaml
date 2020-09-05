@@ -70,7 +70,7 @@ sensor:
   - platform: adc
     pin: VCC
     name: ${devicename} VCC voltage
-    
+
 text_sensor:
   - platform: template
     name: ${upper_devicename} Last Opened

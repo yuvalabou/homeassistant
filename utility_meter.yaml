@@ -20,7 +20,7 @@
 #  source: sensor.boiler_power_consumption
 #  cycle: monthly
 
-### 
+###
 # Climate
 ###
 living_room_ac_total_energy_usage_daily:
