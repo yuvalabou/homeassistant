@@ -27,3 +27,10 @@
 - platform: ping
   host: !secret rpi2
   name: 'Raspberry-Pi2'
+  count: 2
+  scan_interval: 300
+- platform: ping
+  host: !secret vacuum_host
+  name: 'Vacuum'
+  count: 2
+  scan_interval: 300

@@ -9,7 +9,6 @@
   sensors:
     steam_game:
       friendly_name: 'Steam Game'
-      entity_id: sensor.steam_76561198173612681
       value_template: >-
         {{ state_attr('sensor.steam_76561198173612681', 'game') }}
       icon_template: mdi:gamepad-square-outline
@@ -25,7 +24,6 @@
   sensors:
     track_steam_playtime_formatted:
       friendly_name: 'Formatted Steam playtime'
-      entity_id: sensor.track_steam_playtime
       value_template: >-
         {% set hours = states('sensor.track_steam_playtime') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}

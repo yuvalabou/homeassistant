@@ -5,14 +5,12 @@
   type: module
 - url: /hacsfiles/weather-card/weather-card.js
   type: module
-#- url: /hacsfiles/lovelace-fold-entity-row/fold-entity-row.js
-#  type: module
+- url: /hacsfiles/lovelace-fold-entity-row/fold-entity-row.js
+  type: module
 - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
 - url: /hacsfiles/banner-card/banner-card.js
   type: module
-- url: /hacsfiles/plan-coordinates/plan-coordinates.js
-  type: js
 - url: /hacsfiles/custom-header/custom-header.js
   type: module
 #- url: /hacsfiles/button-card/button-card.js
@@ -34,4 +32,6 @@
 - url: /hacsfiles/bar-card/bar-card.js
   type: module
 - url: /hacsfiles/simple-thermostat/simple-thermostat.js?v=1
+  type: module
+- url: /hacsfiles/battery-state-card/battery-state-card.js
   type: module

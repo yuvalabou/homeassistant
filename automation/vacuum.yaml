@@ -1,110 +1,110 @@
 # Vacuum waits until everybody left
-#- alias: 'Vacuum waits until everybody left'
-#  id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
-#  trigger:
-#    platform: state
-#    entity_id: group.person
-#    to: 'not_home'
-#  condition:
-#    - condition: time
-#      after: '07:00:00'
-#      before: '20:00:00'
-#    - condition: state
-#      entity_id: binary_sensor.workday_sensor
-#      state: 'on'
-#    - condition: state
-#      entity_id: input_boolean.cleaned_today
-#      state: 'off'
-#  action:
-#    - service: vacuum.start
-#      entity_id: vacuum.xiaomi_vacuum_cleaner
-#    - service: notify.mobile_app_mi_9t
-#      data:
-#        title: 'Now Cleaning'
-#        message: 'The house Was empty - so anyway, I started cleaning.'
-#    - service: notify.mobile_app_redmi_note_7
-#      data:
-#        title: 'Now Cleaning'
-#        message: 'The house Was empty - so anyway, I started cleaning.'
+- alias: 'Vacuum waits until everybody left'
+  id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  condition:
+    - condition: time
+      after: '07:00:00'
+      before: '20:00:00'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.cleaned_today
+      state: 'off'
+  action:
+    - service: vacuum.start
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: notify.mobile_app_mi_9t
+      data:
+        title: 'Now Cleaning'
+        message: "The house Was empty - so anyway, I started cleaning."
+    - service: notify.mobile_app_redmi_note_7
+      data:
+        title: 'Now Cleaning'
+        message: "The house Was empty - so anyway, I started cleaning."
 
 # Vacuum return to dock if in error state more then 1 hr
-#- alias: 'Return to dock if error for 1 hr'
-#  id: c70477c9-66c0-43db-9036-570aa6bfcb09
-#  trigger:
-#    platform: state
-#    entity_id: vacuum.xiaomi_vacuum_cleaner
-#    from: 'cleaning'
-#    to: 'error'
-#    for: '01:00:00'
-#  action:
-#    - service: vacuum.return_to_base
-#      entity_id: vacuum.xiaomi_vacuum_cleaner
-#    - service: notify.mobile_app_mi_9t
-#      data:
-#        title: 'Returning to Dock'
-#        message: 'You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!'
-#    - service: notify.mobile_app_redmi_note_7
-#      data:
-#        title: 'Returning to Dock'
-#        message: 'You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!'
+- alias: 'Return to dock if error for 1 hr'
+  id: c70477c9-66c0-43db-9036-570aa6bfcb09
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    from: 'cleaning'
+    to: 'error'
+    for: '01:00:00'
+  action:
+    - service: vacuum.return_to_base
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: notify.mobile_app_mi_9t
+      data:
+        title: 'Returning to Dock'
+        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
+    - service: notify.mobile_app_redmi_note_7
+      data:
+        title: 'Returning to Dock'
+        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
 
 # Set vacuum input_boolean to 'on' even if turned-on manually for minimal cleaning time
-#- alias: 'Vacuum - set to cleaned today'
-#  id: 8d53ce02-066c-4a51-a369-3e13d1220cee
-#  trigger:
-#    platform: state
-#    entity_id: vacuum.xiaomi_vacuum_cleaner
-#    to: 'cleaning'
-#    for: '00:10:00'
-#  action:
-#    - service: input_boolean.turn_on
-#      entity_id: input_boolean.cleaned_today
+- alias: 'Vacuum - set to cleaned today'
+  id: 8d53ce02-066c-4a51-a369-3e13d1220cee
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'cleaning'
+    for: '00:10:00'
+  action:
+    - service: input_boolean.turn_on
+      entity_id: input_boolean.cleaned_today
 
 # Reset cleaning counter
-#- alias: Vacuum - reset 'cleaned today'
-#  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
-#  initial_state: 'on'
-#  trigger:
-#    platform: time
-#    at: '00:00:00'
-#  action:
-#    - service: input_boolean.turn_off
-#      entity_id: input_boolean.cleaned_today
+- alias: Vacuum - reset 'cleaned today'
+  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
+  initial_state: 'on'
+  trigger:
+    platform: time
+    at: '00:00:00'
+  action:
+    - service: input_boolean.turn_off
+      entity_id: input_boolean.cleaned_today
 
 # Vacuum - Intelligent Mode
-#- alias: 'Intelligent Turbo mode'
-#  id: c8258c50-16dd-4b3d-b743-7a806bdb1018
-#  trigger:
-#    platform: state
-#    entity_id: group.person
-#    to: 'not_home'
-#  action:
-#    - service: script.vacuum_set_turbo
-#- alias: 'Intelligent Quiet mode'
-#  id: f4000e26-b404-4d74-93a0-85b9900a7278
-#  trigger:
-#    platform: state
-#    entity_id: group.person
-#    to: 'home'
-#  action:
-#    - service: script.vacuum_set_silent
+- alias: 'Intelligent Turbo mode'
+  id: c8258c50-16dd-4b3d-b743-7a806bdb1018
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  action:
+    - service: script.vacuum_set_turbo
+- alias: 'Intelligent Quiet mode'
+  id: f4000e26-b404-4d74-93a0-85b9900a7278
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'home'
+  action:
+    - service: script.vacuum_set_silent
 
 # Vacuum - Set mode
-#- alias: 'Vacuum - set mode'
-#  id: 339c44db-f51b-4174-b396-18e69213b4e7
-#  trigger:
-#    platform: state
-#    entity_id: input_select.vacuum_fan_speed_list
-#  action:
-#    - service_template: >-
-#        {% if trigger.to_state.state == 'Silent' %}
-#          script.vacuum_set_silent
-#        {% elif trigger.to_state.state == 'Standard' %}
-#          script.vacuum_set_standard
-#        {% elif trigger.to_state.state == 'Medium' %}
-#          script.vacuum_set_medium
-#        {% elif trigger.to_state.state == 'Turbo' %}
-#          script.vacuum_set_turbo
-#        {% elif trigger.to_state.state == 'Gentle' %}
-#          script.vacuum_set_gentle
-#        {% endif %}
+- alias: 'Vacuum - set mode'
+  id: 339c44db-f51b-4174-b396-18e69213b4e7
+  trigger:
+    platform: state
+    entity_id: input_select.vacuum_fan_speed_list
+  action:
+    - service_template: >-
+        {% if trigger.to_state.state == 'Silent' %}
+          script.vacuum_set_silent
+        {% elif trigger.to_state.state == 'Standard' %}
+          script.vacuum_set_standard
+        {% elif trigger.to_state.state == 'Medium' %}
+          script.vacuum_set_medium
+        {% elif trigger.to_state.state == 'Turbo' %}
+          script.vacuum_set_turbo
+        {% elif trigger.to_state.state == 'Gentle' %}
+          script.vacuum_set_gentle
+        {% endif %}

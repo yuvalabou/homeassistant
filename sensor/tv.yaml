@@ -12,7 +12,6 @@
   sensors:
     track_tv_usage_formatted:
       friendly_name: 'Formatted TV usage'
-      entity_id: sensor.track_tv_usage
       value_template: >-
         {% set hours = states('sensor.track_tv_usage') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}

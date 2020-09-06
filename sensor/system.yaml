@@ -7,7 +7,6 @@
     uptime_friendly:
       friendly_name: 'Home Assistant Uptime'
       icon_template: mdi:home-assistant
-      entity_id: sensor.time_online
       value_template: >-
         {% set uptime = states('sensor.time_online') | float(-1) %}
         {% if uptime >= 0 %}

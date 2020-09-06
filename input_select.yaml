@@ -11,15 +11,15 @@ theme_list:
 
 # Vacumm
 # Set fan speed
-#vacuum_fan_speed_list:
-#  name: Vacuum - Set fan speed
-#  options:
-#  - Silent
-#  - Standard
-#  - Medium
-#  - Turbo
-#  - Gentle
-#  icon: mdi:fan
+vacuum_fan_speed_list:
+  name: Vacuum - Set fan speed
+  options:
+  - Silent
+  - Standard
+  - Medium
+  - Turbo
+  - Gentle
+  icon: mdi:fan
 
 # Shabat light-off time
 shabat_lights_off_time:

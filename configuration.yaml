@@ -79,10 +79,10 @@ ssdp:
 #                  INTEGRATIONS                  #
 ##################################################
 # Allows you to control the state of your Xiaomi Mi Robot Vacuum.
-#vacuum:
-#  - platform: xiaomi_miio
-#    host: !secret vacuum_host
-#    token: !secret vacuum_token
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret vacuum_host
+    token: !secret vacuum_token
 
 #media_player:
 #  - platform: androidtv
@@ -200,9 +200,9 @@ system_health:
 #                     DOMAINS                    #
 ##################################################
 group: !include group.yaml
-automation: !include_dir_merge_list automation/
-sensor: !include_dir_merge_list  sensor/
-binary_sensor: !include_dir_merge_list binary_sensor/
+automation: !include_dir_merge_list automation
+sensor: !include_dir_merge_list sensor
+binary_sensor: !include_dir_merge_list binary_sensor
 utility_meter: !include utility_meter.yaml
 timer: !include timer.yaml
 switch: !include switch.yaml
@@ -211,5 +211,5 @@ input_boolean: !include input_boolean.yaml
 #input_number: !include input_number.yaml
 input_select: !include input_select.yaml
 #input_text: !include input_text.yaml
-script: !include_dir_merge_list script.yaml/
+script: !include_dir_merge_named script
 #shell_command: !include shell_command.yaml

@@ -15,7 +15,7 @@ TBD
 
 | Entities | Sensors | Binary Sensors | Automations | Scripts |
 |:--------:|:-------:|:--------------:|:-----------:|:-------:|
-|335       |207      |30              |42           |16       |
+|359       |214      |29              |49           |25       |
 
 <hr --- </hr>
 
@@ -35,7 +35,7 @@ TBD
 
 | Lovelace Mode | Resources | Views |
 |:-------------:|:---------:|:-----:|
-|YAML           |13         |7      |
+|YAML           |14         |8      |
 
 <hr --- </hr>
 

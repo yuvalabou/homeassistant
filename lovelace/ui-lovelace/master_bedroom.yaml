@@ -128,60 +128,30 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: entities
-            entities:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.mi_9t_battery_level
-                    name: 'Mi9T Battery'
-                show:
-                  points: false
-                  labels: false
-                  fill: fade
-                hours_to_show: 6
-                points_per_hour: 3
-                lower_bound: 0
-                upper_bound: 100
-                color_thresholds:
-                  - value: 60
-                    color: "#4DFF00"
-                  - value: 40
-                    color: "#F0FF00"
-                  - value: 20
-                    color: "#FF6000"
-                  - value: 10
-                    color: "#FF0F00"
-              - entity: sensor.mi_9t_battery_state
-                name: 'Battery'
-              - entity: sensor.mi_9t_next_alarm
-                name: 'Alarm'
-          - type: entities
-            entities:
-              - type: custom:mini-graph-card
-                entities:
-                  - entity: sensor.redmi_note_7_battery_level
-                    name: 'Note 7 Battery'
-                show:
-                  points: false
-                  labels: false
-                  fill: fade
-                hours_to_show: 6
-                points_per_hour: 3
-                lower_bound: 0
-                upper_bound: 100
-                color_thresholds:
-                  - value: 60
-                    color: "#4DFF00"
-                  - value: 40
-                    color: "#F0FF00"
-                  - value: 20
-                    color: "#FF6000"
-                  - value: 10
-                    color: "#FF0F00"
-              - entity: sensor.redmi_note_7_battery_state
-                name: 'Battery'
-              - entity: sensor.redmi_note_7_next_alarm
-                name: 'Alarm'
+      - type: custom:battery-state-card
+        entities:
+          - entity: sensor.mi_9t_battery_level
+            name: 'Yuval battery'
+            charging_state:
+              entity_id: sensor.mi_9t_battery_state
+              state: 'charging'
+            color_gradient:
+              - "#ff0000" # red
+              - "#ffff00" # yellow
+              - "#00ff00" # green
+      - entity: sensor.mi_9t_next_alarm
+        name: 'Alarm'
+      - type: divider
+      - type: custom:battery-state-card
+        entities:
+          - entity: sensor.redmi_note_7_battery_level
+            name: 'Tohar battery'
+            charging_state:
+              entity_id: sensor.redmi_note_7_battery_state
+              state: 'charging'
+            color_gradient:
+              - "#ff0000" # red
+              - "#ffff00" # yellow
+              - "#00ff00" # green
+      - entity: sensor.redmi_note_7_next_alarm
+        name: 'Alarm'

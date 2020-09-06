@@ -2,9 +2,9 @@
 #                  INPUT BOOLEANS                  #
 ####################################################
 # Vacuum
-#cleaned_today:
-#  name: 'Cleaned today'
-#  icon: mdi:broom
+cleaned_today:
+  name: 'Cleaned today'
+  icon: mdi:broom
 
 # Boiler
 #boiler_today:
