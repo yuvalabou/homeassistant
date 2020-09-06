@@ -1,0 +1,46 @@
+###
+# Lights
+###
+
+# Shabat and Chag lighting
+shabat_chag_lighting_sequence:
+  alias: 'shabat and chag lighting sequence'
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.ceiling_lights
+        effect: Random Loop
+    - delay: '00:00:03'
+    - service: script.turn_on
+      entity_id: script.shabat_chag_lighting
+shabat_chag_lighting:
+  alias: 'shabat and chag lighting'
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        brightness_pct: 90
+        kelvin: 3200
+    - service: light.turn_off
+      entity_id: light.room_lights
+    - service: light.turn_on
+      data:
+        entity_id: light.important_lights
+        brightness_pct: 70
+        kelvin: 4000
+
+shabat_chag_end_lighting_sequence:
+  alias: 'shabat and chag lighting sequence'
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Random Loop
+    - delay: '00:00:03'
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Stop
+    - service: light.turn_off
+      data:
+        entity_id: light.important_lights

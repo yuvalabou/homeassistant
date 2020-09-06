@@ -1,0 +1,17 @@
+###
+# Themes
+###
+
+# Set themes
+set_noctis:
+  alias: 'Set Noctis'
+  sequence:
+    service: frontend.set_theme
+    data:
+      name: noctis
+set_synthwave:
+  alias: 'Set Synthwave'
+  sequence:
+    service: frontend.set_theme
+    data:
+      name: synthwave
