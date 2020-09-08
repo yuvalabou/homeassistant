@@ -36,23 +36,6 @@ cards:
 #              'on': mdi:paper-roll
 #              'off': mdi:sync-alert
 
-#      - type: conditional
-#        conditions:
-#          - entity: light.master_bedroom_fairy
-#            state: "off"
-#        card:
-#          type: entities
-#          entities:
-#            - entity: light.master_bedroom_fairy
-#              name: Master Bedroom Fairy
-#      - type: conditional
-#        conditions:
-#          - entity: light.master_bedroom_fairy
-#            state: "on"
-#        card:
-#          type: light
-#          entity: light.master_bedroom_fairy
-
   - type: entities
     show_header_toggle: false
     entities:

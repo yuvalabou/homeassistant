@@ -42,13 +42,13 @@
     - service: notify.mobile_app_mi_9t
       data:
         title: 'Finished cleaning'
-          data:
-            image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+        data:
+          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
     - service: notify.mobile_app_redmi_note_7
       data:
         title: 'Finished cleaning'
-          data:
-            image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+        data:
+          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
 # Vacuum return to dock if in error state more then 1 hr
 - alias: 'Return to dock if error for 1 hr'
@@ -86,7 +86,7 @@
 # Reset daily cleaning counter
 - alias: "Vacuum - Reset 'cleaned today'"
   id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
-  initial_state: 'on'
+  initial_state: on
   trigger:
     platform: time
     at: '00:00:00'

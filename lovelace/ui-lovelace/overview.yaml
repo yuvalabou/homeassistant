@@ -115,5 +115,3 @@ cards:
 #        showProgressBar: true
 #        entities:
 #          - entity: calendar.family_calendar
-
-#      - !include lovelace/vacuum_card.yaml

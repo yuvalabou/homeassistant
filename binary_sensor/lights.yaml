@@ -1,4 +1,7 @@
-# Template Lights to show which lights are on
+###
+# Lights
+###
+# Template Sensors to show which lights are on
 - platform: template
   sensors:
     master_bedroom_light_is_on:

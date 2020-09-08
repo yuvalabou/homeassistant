@@ -33,14 +33,13 @@ i2c:
   scan: True
 
 #mcp23008:
-#  - id: mcp23008_hub
+#  - id: mcp23017_hub
 #    address: 0x20
 
 binary_sensor:
   - platform: gpio
     pin:
       number: D6
-#      mode: INPUT_PULLUP
     name: "${upper_devicename} Motion"
     device_class: motion
     filters:

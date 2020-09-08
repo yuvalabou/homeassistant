@@ -5,10 +5,10 @@ id: statistics
 title: 'Statistics'
 icon: mdi:chart-areaspline
 cards:
-#      - type: entities
-#        entities:
-#          - sensor.estimated_electricity_price_daily
-#          - sensor.estimated_electricity_price_monthly
+#  - type: entities
+#    entities:
+#      - sensor.estimated_electricity_price_daily
+#      - sensor.estimated_electricity_price_monthly
 
   - type: custom:mini-graph-card
     name: 'Temperature'
@@ -82,8 +82,6 @@ cards:
       - entity: binary_sensor.master_bedroom_light_is_on
         show_points: false
         color: "#A886F7"
-#          - entity: binary_sensor.master_bedroom_fairy_is_on
-#            show_points: false
       - entity: binary_sensor.day
         show_points: false
         show_legend: false

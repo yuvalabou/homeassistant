@@ -25,12 +25,6 @@ homeassistant:
 # Allows Home Assistant mobile app to easily integrate with Home Assistant.
 mobile_app:
 
-# Serves all files and data required for the Home Assistant frontend.
-#http:
-
-# Exposes a RESTful API and allows one to interact with a Home Assistant instance that is running headless.
-#api:
-
 ##################################################
 #                       GUI                      #
 ##################################################
@@ -114,17 +108,13 @@ jewish_calendar:
 glances:
 
 # Connect to your Google Calendars and generate binary sensors.
+# TODO - integrate the calendar
 #google:
 #  client_id: !secret gcalendar_id
 #  client_secret: !secret gcalendar_client_secret
 
 # Allows you to control your Yeelight Wifi bulbs with Home Assistant.
 yeelight: !include yeelight.yaml
-
-#notify:
-#  - platform: discord
-#    name: Discord
-#    token: !secret discord_bot
 
 # Allows you to retrieve statistics and interact with a Pi-hole system.
 pi_hole:

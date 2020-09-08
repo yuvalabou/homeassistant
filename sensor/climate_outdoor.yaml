@@ -11,6 +11,7 @@
         {{ state_attr('weather.home', 'temperature') | round }}
       icon_template: mdi:thermometer
 
+# Wind sensors
 - platform: template
   sensors:
     accuweather_wind_speed:
@@ -63,6 +64,7 @@
           unknown
         {% endif %}
 
+# UV Sensor
 - platform: template
   sensors:
     uv_index_friendly:

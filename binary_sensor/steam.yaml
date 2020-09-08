@@ -1,3 +1,6 @@
+###
+# Steam
+###
 # Sensor for checking if someone is playing a game on steam
 - platform: template
   sensors:

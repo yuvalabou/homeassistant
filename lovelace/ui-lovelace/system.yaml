@@ -268,10 +268,3 @@ cards:
 #          - switch.restart_shabat_plate
 #          - switch.restart_safe
 #          - switch.restart_car_remote
-#          - switch.restart_power_supply
-
-#      - type: entities
-#        title: Power supply
-#        show_header_toggle: false
-#        entities:
-#          - switch.power_supply_toggle

@@ -20,9 +20,9 @@ binary_sensor.tv:
 binary_sensor.printer:
   device_class: connectivity
   icon: mdi:printer
-#binary_sensor.vacuum:
-#  device_class: connectivity
-#  icon: mdi:robot-vacuum
+binary_sensor.vacuum:
+  device_class: connectivity
+  icon: mdi:robot-vacuum
 binary_sensor.nanopi_neo2:
   device_class: connectivity
   icon: mdi:raspberry-pi

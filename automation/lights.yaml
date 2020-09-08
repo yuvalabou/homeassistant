@@ -1,4 +1,6 @@
-### Lights
+###
+# Lights
+###
 # Turn-off lights when away
 - alias: 'Turn-off lights when away'
   id: c4219e30-3edb-4e1d-9621-eba64f593883
@@ -11,40 +13,8 @@
       entity_id: light.all_lights
 
 ###
-# KITCHEN
-###
-## Lights
-# Turn on sink lights to max when someone in the kitchen
-#- alias: 'Sink lights max brightness'
-#  id: ec0d69d8-ec67-4146-81f1-de85066a37a7
-#  trigger:
-#    platform: state
-#    to: 'on'
-#    entity_id: sensor.kitchen_work_movement
-#  condition:
-#    - condition: state
-#      entity_id: input_boolean.movement_detection
-#      state: 'on'
-#  action:
-#    - service: light.turn_on
-#      data:
-#        entity_id: light.kitchen_work_light
-#        brightness_pct: 100
-
-###
 # MASTER BEDROOM
 ###
-## Lights
-# Turn-off fairy lights at night
-#- alias: 'turn off master-bedroom fairy lights at night'
-#  id: 1a5b17ca-d49e-4ffb-b665-9fe4cd63d904
-#  trigger:
-#    platform: time
-#    at: '23:00:00'
-#  action:
-#    - service: light.turn_off
-#      entity_id: light.wled
-
 # Light-up in the morning
 - alias: 'Turn on living room lights in workday morning-early'
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e

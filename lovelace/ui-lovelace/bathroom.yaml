@@ -44,6 +44,7 @@ cards:
           - entity: sensor.bathroom_humidity_range
             name: 'Humidity'
 
+####### TODO - Placeholders
 #  - type: entities
 #    title: Vent
 #    show_header_toggle: false
