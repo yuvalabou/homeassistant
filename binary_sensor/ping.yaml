@@ -1,9 +1,12 @@
+###
+# Ping
+###
 # Binary sensor for checking if a device is online
-#- platform: ping
-#  host: !secret vacuum_host
-#  name: 'Vacuum'
-#  count: 5
-#  scan_interval: 300
+- platform: ping
+  host: !secret vacuum_host
+  name: 'Vacuum'
+  count: 5
+  scan_interval: 300
 - platform: ping
   host: !secret laptop
   name: 'Laptop'
@@ -29,8 +32,4 @@
   name: 'Raspberry-Pi2'
   count: 2
   scan_interval: 300
-- platform: ping
-  host: !secret vacuum_host
-  name: 'Vacuum'
-  count: 2
-  scan_interval: 300
+  
