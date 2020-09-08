@@ -1,5 +1,8 @@
-# Vacuum waits until everybody left
-- alias: 'Vacuum waits until everybody left'
+###
+# Vacuum
+###
+# Vacuum waits until everybody leave to start cleaning
+- alias: 'Vacuum - Wait until everybody leave to start cleaning'
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
     platform: state
@@ -21,11 +24,31 @@
     - service: notify.mobile_app_mi_9t
       data:
         title: 'Now Cleaning'
-        message: "The house Was empty - so anyway, I started cleaning."
+        message: "The house was empty - so anyway, I started cleaning."
     - service: notify.mobile_app_redmi_note_7
       data:
         title: 'Now Cleaning'
-        message: "The house Was empty - so anyway, I started cleaning."
+        message: "The house was empty - so anyway, I started cleaning."
+
+# Vacuum nofity on complete
+- alias: 'Vacuum - Notify on complete'
+  id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    from: 'cleaning'
+    to: 'returning to dock'
+  action:
+    - service: notify.mobile_app_mi_9t
+      data:
+        title: 'Finished cleaning'
+          data:
+            image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+    - service: notify.mobile_app_redmi_note_7
+      data:
+        title: 'Finished cleaning'
+          data:
+            image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
 # Vacuum return to dock if in error state more then 1 hr
 - alias: 'Return to dock if error for 1 hr'
@@ -49,7 +72,7 @@
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
 
 # Set vacuum input_boolean to 'on' even if turned-on manually for minimal cleaning time
-- alias: 'Vacuum - set to cleaned today'
+- alias: 'Vacuum - Set to cleaned today'
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
     platform: state
@@ -60,8 +83,8 @@
     - service: input_boolean.turn_on
       entity_id: input_boolean.cleaned_today
 
-# Reset cleaning counter
-- alias: Vacuum - reset 'cleaned today'
+# Reset daily cleaning counter
+- alias: "Vacuum - Reset 'cleaned today'"
   id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
   initial_state: 'on'
   trigger:
@@ -90,7 +113,7 @@
     - service: script.vacuum_set_silent
 
 # Vacuum - Set mode
-- alias: 'Vacuum - set mode'
+- alias: 'Vacuum - Set mode'
   id: 339c44db-f51b-4174-b396-18e69213b4e7
   trigger:
     platform: state
