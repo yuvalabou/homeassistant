@@ -18,3 +18,4 @@ shabat_mode:
 
 night_light_override:
   name: 'Night Light Override'
+  icon: mdi:shield-half-full

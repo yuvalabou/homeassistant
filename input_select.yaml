@@ -4,21 +4,21 @@
 # Set theme
 theme_list:
   name: 'Set Theme'
+  icon: mdi:monitor-dashboard
   options:
     - Noctis
     - Synthwave
-  icon: mdi:monitor-dashboard
 
 # Vacumm
 # Set fan speed
 vacuum_fan_speed_list:
-  name: Vacuum - Set fan speed
+  name: 'Vacuum - Set fan speed'
+  icon: mdi:fan
   options:
     - Silent
     - Standard
     - Turbo
     - Max
-  icon: mdi:fan
 
 # Shabat light-off time
 shabat_lights_off_time:

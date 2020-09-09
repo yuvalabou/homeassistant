@@ -2,6 +2,7 @@
 # Scripts to reload entities
 ###
 
+# TODO: Cleanup comments
 # Reload themes
 reload_themes:
   alias: 'Reload themes'

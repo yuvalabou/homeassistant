@@ -40,12 +40,6 @@ sensor.track_tv_usage:
 sensor.track_steam_playtime:
   icon: mdi:steam
 
-# Switches
-switch.shabat_mode:
-  icon: mdi:candle
-switch.night_light_override:
-  icon: mdi:shield-half-full
-
 # Sensors
 sensor.myip:
   icon: mdi:ip-network

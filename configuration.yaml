@@ -78,12 +78,6 @@ vacuum:
     host: !secret vacuum_host
     token: !secret vacuum_token
 
-#media_player:
-#  - platform: androidtv
-#    host: !secret tv_host
-#    name: Pilot-TV
-#    adb_server_ip: !secret localhost
-
 # Uses the Speedtest.net web service to measure network bandwidth performance.
 speedtestdotnet:
 
@@ -108,7 +102,7 @@ jewish_calendar:
 glances:
 
 # Connect to your Google Calendars and generate binary sensors.
-# TODO - integrate the calendar
+# TODO: integrate the calendar
 #google:
 #  client_id: !secret gcalendar_id
 #  client_secret: !secret gcalendar_client_secret

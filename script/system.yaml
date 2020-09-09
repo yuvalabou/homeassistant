@@ -1,13 +1,10 @@
 ###
-# Machine control
+# Server control
 ###
-
-# Restart Homeassistant
 homeassistant_restart:
   alias: 'Restart Home Assistant'
   sequence:
     - service: homeassistant.restart
-# Restart Server
 server_restart:
   alias: 'Restart Server'
   sequence:

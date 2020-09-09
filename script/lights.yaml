@@ -5,6 +5,7 @@
 # Shabat and Chag lighting
 shabat_chag_lighting_sequence:
   alias: 'shabat and chag lighting sequence'
+#  description: TODO:
   sequence:
     - service: light.turn_on
       data:
@@ -15,6 +16,7 @@ shabat_chag_lighting_sequence:
       entity_id: script.shabat_chag_lighting
 shabat_chag_lighting:
   alias: 'shabat and chag lighting'
+#  description: TODO:
   sequence:
     - service: light.turn_on
       data:
@@ -31,6 +33,7 @@ shabat_chag_lighting:
 
 shabat_chag_end_lighting_sequence:
   alias: 'shabat and chag lighting sequence'
+#  description: TODO:
   sequence:
     - service: light.turn_on
       data:

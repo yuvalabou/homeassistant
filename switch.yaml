@@ -29,10 +29,10 @@
           data:
             entity_id: switch.bathroom_shabat_select
       icon_template: >-
-        {% if is_state('switch.shabat_mode', 'off') %}
-          mdi:motion-sensor
-        {% else %}
+        {% if is_state('switch.shabat_mode', 'on') %}
           mdi:motion-sensor-off
+        {% else %}
+          mdi:motion-sensor
         {% endif %}
 
 - platform: template
@@ -50,3 +50,9 @@
         service: input_boolean.turn_off
         data:
           entity_id: input_boolean.night_light_override
+      icon_template: >-
+        {% if is_state('switch.night_light_override', 'on') %}
+          mdi:shield
+        {% else %}
+          mdi:shield-off
+        {% endif %}

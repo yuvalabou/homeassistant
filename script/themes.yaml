@@ -2,7 +2,6 @@
 # Themes
 ###
 
-# Set themes
 set_noctis:
   alias: 'Set Noctis'
   sequence:
