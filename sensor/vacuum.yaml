@@ -8,16 +8,16 @@
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
       icon_template: >-
-        {% set val =  states('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
-        {% if val == 'Charging' %}
+        {% set status =  states('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
+        {% if status == 'Charging' %}
           mdi:battery-charging
-        {% elif val == 'Cleaning' %}
+        {% elif status == 'Cleaning' %}
           mdi:move-resize
-        {% elif val == 'Returning home' %}
-          mdi:keyboard-return
-        {% elif val == 'Idle' %}
+        {% elif status == 'Returning home' %}
+          mdi:home-import-outline
+        {% elif status == 'Idle' %}
           mdi:dots-horizontal
-        {% elif val == 'Paused' %}
+        {% elif status == 'Paused' %}
           mdi:pause-circle
         {% else %}
           mdi:help-circle
@@ -26,7 +26,7 @@
       friendly_name: 'Fan Speed'
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}
-      icon_template: mdi:speedometer
+      icon_template: mdi:fan
     vacuum_battery:
       friendly_name: 'Vacuum Battery'
       value_template: >-

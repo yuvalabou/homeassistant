@@ -20,15 +20,20 @@
       state: 'off'
   action:
     - service: vacuum.start
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: notify.mobile_app_mi_9t
       data:
         title: 'Now Cleaning'
-        message: "The house was empty - so anyway, I started cleaning."
+        data:
+          message: "The house was empty - So I started cleaning."
+          image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
     - service: notify.mobile_app_redmi_note_7
       data:
         title: 'Now Cleaning'
-        message: "The house was empty - so anyway, I started cleaning."
+        data:
+          message: "The house was empty - So I started cleaning."
+          image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
 
 # Vacuum nofity on complete
 - alias: 'Vacuum - Notify on complete'
@@ -61,7 +66,8 @@
     for: '01:00:00'
   action:
     - service: vacuum.return_to_base
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: notify.mobile_app_mi_9t
       data:
         title: 'Returning to Dock'
@@ -81,7 +87,8 @@
     for: '00:10:00'
   action:
     - service: input_boolean.turn_on
-      entity_id: input_boolean.cleaned_today
+      data:
+        entity_id: input_boolean.cleaned_today
 
 # Reset daily cleaning counter
 - alias: "Vacuum - Reset 'cleaned today'"
@@ -92,7 +99,8 @@
     at: '00:00:00'
   action:
     - service: input_boolean.turn_off
-      entity_id: input_boolean.cleaned_today
+      data:
+        entity_id: input_boolean.cleaned_today
 
 # Vacuum - Intelligent Mode
 - alias: 'Intelligent Turbo mode'
@@ -124,10 +132,8 @@
           script.vacuum_set_silent
         {% elif trigger.to_state.state == 'Standard' %}
           script.vacuum_set_standard
-        {% elif trigger.to_state.state == 'Medium' %}
-          script.vacuum_set_medium
         {% elif trigger.to_state.state == 'Turbo' %}
           script.vacuum_set_turbo
-        {% elif trigger.to_state.state == 'Gentle' %}
-          script.vacuum_set_gentle
+        {% elif trigger.to_state.state == 'Max' %}
+          script.vacuum_set_max
         {% endif %}
