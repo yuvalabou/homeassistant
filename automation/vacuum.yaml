@@ -24,15 +24,15 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: notify.mobile_app_mi_9t
       data:
-        title: 'Now Cleaning'
+        title: "Cleaning started"
+        message: "The house was empty - So I started cleaning."
         data:
-          message: "The house was empty - So I started cleaning."
           image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
     - service: notify.mobile_app_redmi_note_7
       data:
-        title: 'Now Cleaning'
+        title: "Cleaning started"
+        message: "The house was empty - So I started cleaning."
         data:
-          message: "The house was empty - So I started cleaning."
           image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
 
 # Vacuum nofity on complete
@@ -45,13 +45,15 @@
     to: 'returning to dock'
   action:
     - service: notify.mobile_app_mi_9t
-      data:
+      data_template:
         title: 'Finished cleaning'
+        message: 'It took me {{ sensor.vacuum_cleaning_time }} minutes'
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
     - service: notify.mobile_app_redmi_note_7
-      data:
+      data_template:
         title: 'Finished cleaning'
+        message: 'It took me {{ sensor.vacuum_cleaning_time }} minutes'
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
