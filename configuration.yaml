@@ -72,7 +72,7 @@ ssdp:
 ##################################################
 #                  INTEGRATIONS                  #
 ##################################################
-# Allows you to control the state of your Xiaomi Mi Robot Vacuum.
+# Allows you to control your Xiaomi Mi Robot Vacuum.
 vacuum:
   - platform: xiaomi_miio
     host: !secret vacuum_host
@@ -102,7 +102,7 @@ jewish_calendar:
 glances:
 
 # Connect to your Google Calendars and generate binary sensors.
-# TODO: integrate the calendar
+# TODO: integrate the calendar again
 #google:
 #  client_id: !secret gcalendar_id
 #  client_secret: !secret gcalendar_client_secret

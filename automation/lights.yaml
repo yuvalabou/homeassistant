@@ -101,14 +101,17 @@
         - condition: state
           entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
           state: 'off'
+        - condition: state
+          entity_id: input_boolean.night_light_override
+          state: 'on'
   action:
     - service: light.turn_on
       data:
         entity_id: light.bedroom1
         kelvin: 3600
         brightness_pct: 2
-# Turn on the timer after no movement detected
-- alias: 'Turn on the lights timer'
+# Start the lights timer after no movement detected
+- alias: 'Start the lights timer'
   id: 2c73b4e0-34cc-4cfd-984e-159f321faa64
   trigger:
     platform: state
@@ -123,10 +126,14 @@
         - condition: state
           entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
           state: 'off'
+        - condition: state
+          entity_id: input_boolean.night_light_override
+          state: 'on'
   action:
     - service: timer.start
       data:
         entity_id: timer.motion_lights_night
+# Turn off the lights when the timer ends
 - alias: 'Turn off lights when the timer is finished'
   id: 395fbb3d-01ec-477e-a5dc-aab76acef310
   trigger:
