@@ -57,7 +57,7 @@ Inside the automations folder you will find all the automations that I use and s
 
 - Vacuum - Notify for cleaning completed
 <img src=
-    "https://github.com/yuvalabou/HomeAssistant-Config/tree/master/www/assets/vac_complete.jpg"
+    "https://github.com/yuvalabou/HomeAssistant-Config/tree/master/www/assets/vac_completed.jpg"
     width=200>
 
 ## Official Addons
