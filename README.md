@@ -1,45 +1,38 @@
-<h2 align="center">
-    Home Assistant Configuration &amp; documentation for my Smart Home.
+<h2 align =
+    "center">
+      🏡 Home Assistant Configuration &amp; documentation for my Smart Home.
 </h2>
-<p align="center">
+
+<p align =
+    "center">
     Hi, My name is Yuval Aboulafia.
 </p>
-<p align="center">
-    Don't forget to :star: my repo!
-</p>
 
-<p align="center">
-    <a href="https://www.buymeacoffee.com/HMa8m26"
+<p align =
+    "center">
+    Don't forget to ⭐️ my repo!
+</p>
+    <p align =
+        "center">
+    <a href =
+        "https://www.buymeacoffee.com/HMa8m26"
         target="_blank">
             <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
             alt="Buy Me A Coffee"
-            style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" >
-    </a>
+            style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
 </p>
 
-## Stats
+-----
 
-| Entities | Sensors | Binary Sensors | Automations | Scripts |
-|:--------:|:-------:|:--------------:|:-----------:|:-------:|
-|359       |214      |29              |49           |25       |
+## Statistics
 
-### Devices
+| Entities | Sensors | Binary Sensors | Switches | Automations | Scripts |
+|:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
+|359       |214      |29              |          |49           |25       |
 
-| Vacuum | YEELIGHT (YLDP06YL) |
-|:------:|:-------------------:|
-|1       |3                    |
+-----
 
-### Automations
-
-Inside the automations folder you will find all the automations that I use and some good practices in setting them up.
-
-[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)
-
-## Addons
-
-TBD
-
-### Lovelace
+## Lovelace
 
 | Lovelace Mode | Resources | Views |
 |:-------------:|:---------:|:-----:|
@@ -47,7 +40,44 @@ TBD
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
-------
+### Devices
+
+| Roborock S50 | YEELIGHT (YLDP06YL) |
+|:------------:|:-------------------:|
+|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|
+|1             |3                    |
+
+-----
+
+### [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)
+
+Inside the automations folder you will find all the automations that I use and some good practices in setting them up.
+
+#### Examples
+
+- Vacuum - Notify for cleaning completed
+<img src=
+    "https://github.com/yuvalabou/HomeAssistant-Config/tree/master/www/assets/vac_complete.jpg"
+    width=200>
+
+## Official Addons
+
+<img src =
+    "https://esphome.io/_static/logo-text.svg"
+    width=200
+    >
+
+### [ESPHOME](https://esphome.io/index.html)
+
+ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configuration files and control them remotely through Home Automation systems.
+
+[ESPHome configurations folder](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/esphome)
+
+| Multisensors | Devices |
+|:------------:|:-------:|
+|2             |         |
+
+-----
 
 ## HACS custom components
 
@@ -57,8 +87,20 @@ Hacs is Home Assistant Community Store
 
 ### components
 
-TBD
+- [Anniversaries](https://github.com/pinkywafer/Anniversaries)
 
 ### lovelace enhancements
 
-TBD
+- [Custom Header](https://maykar.github.io/custom-header/#intro/intro)
+- [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
+
+## License
+
+<img src =
+    "https://unlicense.org/pd-icon.png"
+    align="right">
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
