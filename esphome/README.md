@@ -1,2 +1,3 @@
-ESPHOME devices
-https://esphome.io/index.html
+# ESPHOME devices
+
+<https://esphome.io/index.html>

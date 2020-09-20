@@ -28,7 +28,7 @@
 
 | Entities | Sensors | Binary Sensors | Switches | Automations | Scripts |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|359       |214      |29              |          |49           |25       |
+|381       |230      |32              |          |52           |24       |
 
 -----
 
@@ -64,8 +64,7 @@ Inside the automations folder you will find all the automations that I use and s
 
 <img src =
     "https://esphome.io/_static/logo-text.svg"
-    width=200
-    >
+    width=200>
 
 ### [ESPHOME](https://esphome.io/index.html)
 
@@ -92,7 +91,17 @@ Hacs is Home Assistant Community Store
 ### lovelace enhancements
 
 - [Custom Header](https://maykar.github.io/custom-header/#intro/intro)
+- [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
+- [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
+- [Weather Card](https://github.com/bramkragten/weather-card)
+- [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
+- [Bar Card](https://github.com/custom-cards/bar-card)
+- [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
+- [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
+- [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
+- [Battery State Card](https://github.com/maxwroc/battery-state-card)
 
 ## License
 
