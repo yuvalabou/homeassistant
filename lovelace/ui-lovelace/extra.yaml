@@ -4,6 +4,7 @@
 id: extra_stuff
 title: 'Extra Stuff'
 icon: mdi:information-outline
+background: 'var(--background-image)'
 cards:
   - type: entities
     entities:

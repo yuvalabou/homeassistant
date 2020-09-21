@@ -8,6 +8,12 @@ set_noctis:
     service: frontend.set_theme
     data:
       name: noctis
+set_aurora_frost:
+  alias: 'Set Aurora Frost'
+  sequence:
+    service: frontend.set_theme
+    data:
+      name: aurora_frost
 set_synthwave:
   alias: 'Set Synthwave'
   sequence:

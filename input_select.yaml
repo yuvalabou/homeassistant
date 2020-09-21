@@ -6,6 +6,7 @@ theme_list:
   name: 'Set Theme'
   icon: mdi:monitor-dashboard
   options:
+    - Aurora Frost
     - Noctis
     - Synthwave
 

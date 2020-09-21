@@ -99,11 +99,8 @@
           entity_id: binary_sensor.night
           state: 'on'
         - condition: state
-          entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+          entity_id: light.bedroom1
           state: 'off'
-        - condition: state
-          entity_id: input_boolean.night_light_override
-          state: 'on'
   action:
     - service: light.turn_on
       data:
@@ -123,9 +120,6 @@
         - condition: state
           entity_id: binary_sensor.night
           state: 'on'
-        - condition: state
-          entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-          state: 'off'
         - condition: state
           entity_id: input_boolean.night_light_override
           state: 'on'

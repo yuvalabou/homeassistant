@@ -1,5 +1,6 @@
 ###
 # VACUUM
+###
 # Xiaomi vacuum sensors
 - platform: template
   sensors:
@@ -8,7 +9,7 @@
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
       icon_template: >-
-        {% set status =  states('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
+        {% set status =  state_attr('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
         {% if status == 'Charging' %}
           mdi:battery-charging
         {% elif status == 'Cleaning' %}
@@ -25,8 +26,31 @@
     vacuum_fan_speed:
       friendly_name: 'Fan Speed'
       value_template: >-
-        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}
-      icon_template: mdi:fan
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% if speed == 38 %}
+          Silent
+        {% elif speed == 60 %}
+          Normal
+        {% elif speed == 75 %}
+          Turbo
+        {% elif speed == 100 %}
+          Max
+        {% else %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% if speed == 38 %}
+          mdi:fan-speed-1
+        {% elif speed == 60 %}
+          mdi:fan-speed-2
+        {% elif speed == 75 %}
+          mdi:fan-speed-3
+        {% elif speed == 100 %}
+          mdi:weather-tornado
+        {% else %}
+          mdi:alert-circle
+        {% endif %}
     vacuum_battery:
       friendly_name: 'Vacuum Battery'
       value_template: >-

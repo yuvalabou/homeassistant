@@ -5,9 +5,8 @@
   sensors:
     is_fast_day:
       friendly_name: 'צום'
-      entity_id: sensor.jewish_calendar_holiday
       value_template: >-
-        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == '5' }}
+        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == 5 }}
       icon_template: >-
         {% if is_state('binary_sensor.is_fast_day', 'on') %}
           mdi:food-off

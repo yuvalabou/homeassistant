@@ -33,6 +33,10 @@ binary_sensor.rpi2:
 # Lights
 light.living_room_lights:
   icon: mdi:lightbulb-group
+light.bedroom1:
+  friendly_name: 'Bedroom1'
+light.bedroom2:
+  friendly_name: 'Bedroom2'
 
 # Time Tracking
 sensor.track_tv_usage:

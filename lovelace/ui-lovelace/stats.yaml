@@ -4,6 +4,7 @@
 id: statistics
 title: 'Statistics'
 icon: mdi:chart-areaspline
+background: 'var(--background-image)'
 cards:
 #  - type: entities
 #    entities:
@@ -31,7 +32,7 @@ cards:
       labels: true
       labels_secondary: false
       points: false
-    line_width: 3
+    line_width: 2
     color_thresholds: !include ../graph_card_temperature_thresholds.yaml
 
   - type: custom:mini-graph-card

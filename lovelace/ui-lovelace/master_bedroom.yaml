@@ -4,6 +4,7 @@
 id: master_bedroom
 title: 'Master Bedroom'
 icon: mdi:bed-king-outline
+background: 'var(--background-image)'
 cards:
 #      - type: custom:banner-card
 #       heading: "\U0001F6BF Ensuite"
@@ -138,3 +139,7 @@ cards:
               - "#00ff00" # green
       - entity: sensor.redmi_note_7_next_alarm
         name: 'Alarm'
+
+  - type: media-control
+    entity: media_player.mibox3
+    name: "Mi-Box 3"

@@ -4,6 +4,7 @@
 id: utilities
 title: 'System Monitor'
 icon: mdi:server
+background: 'var(--background-image)'
 cards:
   - type: entities
     title: 'Internet'
@@ -165,8 +166,10 @@ cards:
               action: url
               url_path: 'http://10.0.0.6/admin/index.php'
           - sensor.pihole_status
-          - sensor.pi_hole_ads_percentage_blocked_today
-          - sensor.pi_hole_domains_blocked
+          - entity: sensor.pi_hole_ads_percentage_blocked_today
+            name: "Percentage Blocked Today"
+          - entity: sensor.pi_hole_domains_blocked
+            name: "Domains Blocked"
           - type: custom:hui-element
             card_type: custom:mini-graph-card
             entities:
@@ -180,10 +183,14 @@ cards:
               legend: false
             line_width: 2
             hours_to_show: 72
-          - sensor.pi_hole_dns_queries_cached
-          - sensor.pi_hole_dns_unique_domains
-          - sensor.pi_hole_dns_unique_clients
-          - sensor.pi_hole_seen_clients
+          - entity: sensor.pi_hole_dns_queries_cached
+            name: "Cached"
+          - entity: sensor.pi_hole_dns_unique_domains
+            name: "Unique Domains"
+          - entity: sensor.pi_hole_dns_unique_clients
+            name: "Unique Clients"
+          - entity: sensor.pi_hole_seen_clients
+            name: "Seen Clients"
 
   - type: entities
     entities:

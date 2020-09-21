@@ -3,6 +3,7 @@
 ####################################################
 id: overview
 title: 'Overview'
+background: 'var(--background-image)'
 cards:
   - type: horizontal-stack
     cards:

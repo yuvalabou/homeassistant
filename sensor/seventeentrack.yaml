@@ -4,7 +4,6 @@
 # https://www.home-assistant.io/integrations/seventeentrack/
 #
 # ###
-
 - platform: seventeentrack
   username: !secret 17track_user
   password: !secret 17track_passwd

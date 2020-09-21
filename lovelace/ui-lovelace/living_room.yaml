@@ -4,6 +4,7 @@
 id: living_room
 title: 'Living Room'
 icon: mdi:sofa
+background: 'var(--background-image)'
 cards:
 #      - type: vertical-stack
 #        cards:
@@ -167,7 +168,7 @@ cards:
           It took {{ states('sensor.vacuum_cleaning_time') }} minutes to clean {{ states('sensor.vacuum_cleaned_area') }} meters.
       - type: custom:hui-element
         card_type: glance
-        columns: 3
+        columns: 2
         entities:
           - entity: sensor.vacuum_fan_speed
             name: Mode

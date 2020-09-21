@@ -5,9 +5,3 @@ devices:
   10.0.0.47:
     name: Master Bedroom
     model: color2
-  10.0.0.20:
-    name: Bedroom1
-    model: color2
-  10.0.0.15:
-    name: Bedroom2
-    model: color2

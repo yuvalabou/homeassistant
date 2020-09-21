@@ -4,7 +4,10 @@
 ###
 custom_header:
   compact_mode: true
-  background: var(--primary-background-color);
+  background: 'var(--background-image)'
+  button_text:
+    options: >-
+      {{ time }} - {{states('sensor.outside_temps') }}°
 
 ####################################################
 #                     CONFIG VIEWS                 #

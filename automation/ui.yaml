@@ -10,11 +10,11 @@
   action:
     - service: frontend.set_theme
       data:
-        name: noctis
+        name: aurora_frost
     - service: input_select.select_option
       data:
         entity_id: input_select.theme_list
-        option: Noctis
+        option: Aurora Frost
 # Select theme manually
 - alias: 'Select theme'
   id: 653bfb33-82f2-4b2d-9c9c-cb4e1087f8df
@@ -22,9 +22,11 @@
     platform: state
     entity_id: input_select.theme_list
   action:
-    - service_template: >-
+    - service: >-
         {% if trigger.to_state.state == 'Noctis' %}
           script.set_noctis
+        {% elif trigger.to_state.state == 'Aurora Frost' %}
+          script.set_aurora_frost
         {% elif trigger.to_state.state == 'Synthwave' %}
           script.set_synthwave
         {% endif %}

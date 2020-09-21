@@ -4,6 +4,7 @@
 id: work_room
 title: 'Home Office'
 icon: mdi:desk
+background: 'var(--background-image)'
 cards:
 #      - type: entities
 #        show_header_toggle: false

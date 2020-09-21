@@ -26,14 +26,10 @@
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
-        data:
-          image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
     - service: notify.mobile_app_redmi_note_7
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
-        data:
-          image: "https://media.giphy.com/media/ZRyjsr80Za9k4/source.gif"
 
 # Vacuum nofity on complete
 - alias: 'Vacuum - Notify on complete'
@@ -133,7 +129,7 @@
     platform: state
     entity_id: input_select.vacuum_fan_speed_list
   action:
-    - service_template: >-
+    - service: >-
         {% if trigger.to_state.state == 'Silent' %}
           script.vacuum_set_silent
         {% elif trigger.to_state.state == 'Standard' %}
@@ -143,3 +139,20 @@
         {% elif trigger.to_state.state == 'Max' %}
           script.vacuum_set_max
         {% endif %}
+
+####
+# Shabat and Chag automations
+###
+- alias: 'Vacuum - clean after morning kiddush'
+  id: 04c72c58-1815-491d-9c75-d1fcac2c3ab5
+  trigger:
+    platform: time
+    at: '11:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    - service: vacuum.start
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
