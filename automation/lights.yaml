@@ -122,7 +122,7 @@
           state: 'on'
         - condition: state
           entity_id: input_boolean.night_light_override
-          state: 'on'
+          state: 'off'
   action:
     - service: timer.start
       data:
