@@ -57,13 +57,14 @@ Inside the automations folder you will find all the automations that I use and s
 
 - Vacuum - Notify for cleaning completed
 <img src=
-    "https://github.com/yuvalabou/HomeAssistant-Config/blob/master/www/assets/vac_completed.jpg"
+    "https://raw.githubusercontent.com/yuvalabou/HomeAssistant-Config/master/www/assets/vac_completed.jpg"
     width=200>
 
 ## Official Addons
 
 <img src =
     "https://esphome.io/_static/logo-text.svg"
+    align="right"
     width=200>
 
 ### [ESPHOME](https://esphome.io/index.html)
@@ -75,6 +76,15 @@ ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configu
 | Multisensors | Devices |
 |:------------:|:-------:|
 |2             |         |
+
+<img src =
+    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/samba/icon.png"
+    align = "right"
+    width=40>
+
+### [Samba](https://github.com/home-assistant/hassio-addons/tree/master/samba)
+
+This Add-on allows you to enable file sharing across different operating systems over a network.
 
 -----
 
