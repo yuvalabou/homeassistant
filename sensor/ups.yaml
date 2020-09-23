@@ -1,0 +1,21 @@
+###
+# UPS Data from EATON E5 650i
+#
+# Using the NUT Addon
+# https://github.com/hassio-addons/addon-nut
+#
+###
+- platform: nut
+  name: "EATON E5 650i"
+  host: a0d7b954-nut
+  username: !secret ups_user
+  password: !secret ups_passwd
+  resources:
+    - battery.charge
+    - battery.runtime
+    - ups.load
+    - ups.status.display
+    - input.voltage
+    - output.frequency
+    - output.voltage
+    - output.voltage.nominal

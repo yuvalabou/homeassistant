@@ -51,29 +51,29 @@ cards:
   - type: entities
     title: 'Printer'
     entities:
-      - sensor.mfc_j4410dw_status
+      - sensor.brother_mfc_j4410dw
       - binary_sensor.printer
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:bar-card
-            name: 'Cyan'
+      - type: custom:bar-card
+        entity_row: true
+        positions:
+          indicator: 'off'
+          icon: 'off'
+        columns: 4
+        height: '150px'
+        entities:
+          - name: 'Cyan'
             color: "cyan"
             direction: up
-            height: 100px
             entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
-          - type: custom:bar-card
-            name: 'Magenta'
+          - name: 'Magenta'
             color: "magenta"
             direction: up
             entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
-          - type: custom:bar-card
-            name: 'Yellow'
+          - name: 'Yellow'
             color: "yellow"
             direction: up
             entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
-          - type: custom:bar-card
-            name: 'Black'
+          - name: 'Black'
             color: "black"
             direction: up
             entity: sensor.brother_mfc_j4410dw_black_ink_cartridge

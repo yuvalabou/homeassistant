@@ -79,30 +79,6 @@ cards:
         card_type: picture-entity
         image: 'https://repository-images.githubusercontent.com/12888993/0f9eb780-655b-11e9-85cb-0d3956096fe5'
         entity: sensor.current_version
-#          - type: custom:hui-element
-#            card_type: horizontal-stack
-#            cards:
-#              - type: gauge
-#                name: CPU Used
-#                entity: sensor.glances_cpu_used
-#                severity:
-#                  green: 0
-#                  yellow: 45
-#                  red: 85
-#              - type: gauge
-#                name: CPU Temp
-#                entity: sensor.glances_cpu_temp
-#                severity:
-#                  green: 0
-#                  yellow: 60
-#                  red: 80
-#              - type: gauge
-#                name: RAM Used
-#                entity: sensor.glances_ram_used_percent
-#                severity:
-#                  green: 0
-#                  yellow: 50
-#                  red: 75
       - entity: sensor.uptime_friendly
       - entity: script.server_restart
         icon: mdi:restart
@@ -116,6 +92,36 @@ cards:
             name: 'Database'
         show:
           fill: fade
+          points: false
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture-entity
+        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+        entity: sensor.e5_650i_status
+      - type: custom:battery-state-card
+        entities:
+          - entity: sensor.e5_650i_battery_charge
+            name: 'Battery Charge'
+      - type: custom:bar-card
+        entity: sensor.e5_650i_load
+        name: 'Load'
+        animation:
+          state: 'on'
+          speed: 2
+        positions:
+          indicator: 'off'
+      - type: custom:mini-graph-card
+        entities:
+          - entity: sensor.e5_650i_output_voltage
+            name: 'Output Voltage'
+          - entity: sensor.e5_650i_input_voltage
+            name: 'Input Voltage'
+          - entity: sensor.e5_650i_nominal_output_voltage
+            name: 'Nominal Output Voltage'
+            color: '#72BC1D'
+        show:
           points: false
 
   - type: entities
