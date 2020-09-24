@@ -4,11 +4,6 @@
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
 !.gitignore
-!*.md
-!www/community
-!www/assets
-!www/font_awesome_icons
-!custom_components
 !esphome/*.yaml
 
 # Ignore folders.
@@ -20,9 +15,7 @@
 tts
 deps
 glances
-www/floor_plan
-www/graph
-www/community
+www
 custom_components
 themes
 
@@ -33,12 +26,9 @@ themes
 *.txt
 *.log
 *.token
-adb_commands.md
-google_calendars.yaml
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml
 secrets.yaml
-anniversaries.yaml
 known_devices.yaml
 esphome/secrets.yaml
