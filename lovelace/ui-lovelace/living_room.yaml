@@ -171,7 +171,7 @@ cards:
         columns: 2
         entities:
           - entity: sensor.vacuum_fan_speed
-            name: Mode
+            name: 'Mode'
             tap_action:
               action: call-service
               service: input_select.select_next
@@ -183,7 +183,7 @@ cards:
         card_type: custom:fold-entity-row
         head:
           type: section
-          label: Consumables
+          label: 'Consumables'
         open: false
         entities:
           - entity: sensor.vacuum_cleanmainbrush
