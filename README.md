@@ -26,9 +26,9 @@
 
 ## Statistics
 
-| Entities | Sensors | Binary Sensors | Switches | Automations | Scripts |
+| Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | Switches | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|352       |215      |32              |          |37           |25       |
+|363       |226      |32              |6         |37           |25       |
 
 -----
 

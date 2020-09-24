@@ -15,6 +15,7 @@ custom_header:
 title: 'Aboulafia Home'
 views:
   - !include lovelace/ui-lovelace/overview.yaml
+#  - !include lovelace/ui-lovelace/floorplan.yaml
   - !include lovelace/ui-lovelace/living_room.yaml
   - !include lovelace/ui-lovelace/master_bedroom.yaml
 #  - !include lovelace/ui-lovelace/bedroom.yaml
