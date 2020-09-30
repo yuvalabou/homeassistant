@@ -1,0 +1,6 @@
+- platform: template
+  sensors:
+    netflix_on:
+      friendly_name: 'Netflix on'
+      value_template: >-
+        {{ state_attr('media_player.mibox3', 'app_name') == 'Netflix' }}

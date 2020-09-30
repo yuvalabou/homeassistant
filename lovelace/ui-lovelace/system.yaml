@@ -34,12 +34,6 @@ cards:
       - entity: sensor.myip
         name: 'External IP'
 
-  - type: entities
-    title: 'Set Theme'
-    show_header_toggle: false
-    entities:
-      - input_select.theme_list
-
   - type: glance
     title: 'Component Count'
     columns: 4
@@ -93,6 +87,27 @@ cards:
         show:
           fill: fade
           points: false
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - entity: script.reload_themes
+            icon: mdi:reload
+          - entity: script.reload_lovelace_resources
+            icon: mdi:reload
+          - entity: script.reload_automations
+            icon: mdi:reload
+          - entity: script.reload_scenes
+            icon: mdi:reload
+          - entity: script.reload_groups
+            icon: mdi:reload
+          - entity: script.reload_scripts
+            icon: mdi:reload
+          - entity: script.reload_input_boolean
+            icon: mdi:reload
+          - entity: script.reload_input_select
+            icon: mdi:reload
+          - entity: script.reload_timers
+            icon: mdi:reload
 
   - type: entities
     entities:
@@ -241,27 +256,6 @@ cards:
               - color: '#FF0F00'
                 from: 91
                 to: 100
-
-  - type: entities
-    entities:
-      - entity: script.reload_themes
-        icon: mdi:reload
-      - entity: script.reload_lovelace_resources
-        icon: mdi:reload
-      - entity: script.reload_automations
-        icon: mdi:reload
-      - entity: script.reload_scenes
-        icon: mdi:reload
-      - entity: script.reload_groups
-        icon: mdi:reload
-      - entity: script.reload_scripts
-        icon: mdi:reload
-      - entity: script.reload_input_boolean
-        icon: mdi:reload
-      - entity: script.reload_input_select
-        icon: mdi:reload
-      - entity: script.reload_timers
-        icon: mdi:reload
 
   - type: entities
     show_header_toggle: false

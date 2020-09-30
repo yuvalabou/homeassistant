@@ -1,0 +1,7 @@
+# Switches
+
+## Climate
+
+## Control
+
+## Lights

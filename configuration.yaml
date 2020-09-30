@@ -107,18 +107,13 @@ glances:
 #  client_id: !secret gcalendar_id
 #  client_secret: !secret gcalendar_client_secret
 
-# Allows you to control your Yeelight Wifi bulbs with Home Assistant.
-yeelight: !include yeelight.yaml
-
 # Allows you to retrieve statistics and interact with a Pi-hole system.
 pi_hole:
   host: !secret nanopi_neo2
   api_key: !secret pi_hole_key
 
 # Integrates Sensibo Air Conditioning controller into Home Assistant.
-climate:
-  - platform: sensibo
-    api_key: !secret sensibo
+climate: !include climate.yaml
 
 # Proxmox VE is an open-source server virtualization environment. Allows you to poll various data from your instance.
 proxmoxve:
@@ -183,17 +178,17 @@ system_health:
 ##################################################
 #                     DOMAINS                    #
 ##################################################
-group: !include group.yaml
 automation: !include_dir_merge_list automation
-sensor: !include_dir_merge_list sensor
 binary_sensor: !include_dir_merge_list binary_sensor
-utility_meter: !include utility_meter.yaml
-timer: !include timer.yaml
-switch: !include switch.yaml
-light: !include light.yaml
+group: !include group.yaml
 input_boolean: !include input_boolean.yaml
 #input_number: !include input_number.yaml
 input_select: !include input_select.yaml
 #input_text: !include input_text.yaml
+light: !include light.yaml
 script: !include_dir_merge_named script
+sensor: !include_dir_merge_list sensor
 #shell_command: !include shell_command.yaml
+switch: !include_dir_merge_list switch
+timer: !include timer.yaml
+utility_meter: !include utility_meter.yaml

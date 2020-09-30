@@ -28,7 +28,7 @@
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | Switches | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|363       |226      |32              |6         |37           |25       |
+|386       |258      |34              |7         |29           |22       |
 
 -----
 
@@ -42,10 +42,10 @@
 
 ### Devices
 
-| Roborock S50 | YEELIGHT (YLDP06YL) |
-|:------------:|:-------------------:|
-|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|
-|1             |3                    |
+| Roborock S50 | YEELIGHT (YLDP06YL) | Sensibo Sky |
+|:------------:|:-------------------:|:-----------:|
+|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>
+|1             |3                    |2            |
 
 -----
 
@@ -57,7 +57,7 @@ Inside the automations folder you will find all the automations that I use and s
 
 - Vacuum - Notify for cleaning completed
 <img src=
-    "https://raw.githubusercontent.com/yuvalabou/HomeAssistant-Config/master/www/assets/vac_completed.jpg"
+    "https://raw.githubusercontent.com/yuvalabou/HomeAssistant-Config/master/config_examples/vac_completed.jpg"
     width=200>
 
 ## Official Addons
@@ -73,9 +73,9 @@ ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configu
 
 [ESPHome configurations folder](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/esphome)
 
-| Multisensors | Devices |
-|:------------:|:-------:|
-|2             |         |
+| Multisensors |
+|:------------:|
+|2             |
 
 <img src =
     "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/samba/icon.png"
@@ -86,6 +86,18 @@ ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configu
 
 This Add-on allows you to enable file sharing across different operating systems over a network.
 
+### [Terminal & SSH](https://github.com/home-assistant/hassio-addons/tree/master/ssh)
+
+Allow logging in remotely to Home Assistant using SSH or just the web terminal with Ingress.
+
+### [MariaDB](https://github.com/home-assistant/hassio-addons/tree/master/mariadb)
+
+MariaDB SQL database for Home Assistant.
+
+### [Network UPS Tools](https://github.com/hassio-addons/addon-nut)
+
+A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) devices connected to your Home Assistant machine.
+
 -----
 
 ## HACS custom components
@@ -94,11 +106,11 @@ Hacs is Home Assistant Community Store
 
 <https://hacs.xyz/>
 
-### components
+### Components
 
 - [Anniversaries](https://github.com/pinkywafer/Anniversaries)
 
-### lovelace enhancements
+### Lovelace-UI Enhancements
 
 - [Custom Header](https://maykar.github.io/custom-header/#intro/intro)
 - [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)

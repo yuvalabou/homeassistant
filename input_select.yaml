@@ -1,15 +1,6 @@
 ###################################################
 #                   INPUT SELECT                  #
 ###################################################
-# Set theme
-theme_list:
-  name: 'Set Theme'
-  icon: mdi:monitor-dashboard
-  options:
-    - Aurora Frost
-    - Noctis
-    - Synthwave
-
 # Vacumm
 # Set fan speed
 vacuum_fan_speed_list:

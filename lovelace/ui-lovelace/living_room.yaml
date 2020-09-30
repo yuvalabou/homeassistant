@@ -86,6 +86,10 @@ cards:
     sensors:
       - entity: sensor.living_room_temperature
         name: 'Temperature'
+  - type: entities
+    entities:
+      - switch.living_room_ac_switch
+      - climate.living_room_thermostat
 
   - type: entities
     show_header_toggle: false

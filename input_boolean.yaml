@@ -6,11 +6,6 @@ cleaned_today:
   name: 'Cleaned today'
   icon: mdi:broom
 
-# Boiler
-#boiler_today:
-#  name: 'Boiler today'
-#  icon: mdi:coolant-temperature
-
 # Movement detection
 shabat_mode:
   name: 'מצב שבת'

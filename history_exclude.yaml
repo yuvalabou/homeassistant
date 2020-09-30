@@ -4,7 +4,7 @@ exclude:
     - binary_sensor.night
     - sensor.uptime_friendly
     - sensor.dnsip
-    - sensor.accuweather_wind_speed
+    - sensor.openweathermap_wind_speed
     - sensor.random_number
     - binary_sensor.random_boolean
     - sensor.season
@@ -31,8 +31,6 @@ exclude:
     - sensor.jewish_calendar_alot_hashachar
     - sensor.jewish_calendar_daf_yomi
     - sensor.jewish_calendar_date
-    - sensor.jewish_calendar_day_of_the_omer
-    - sensor.jewish_calendar_holiday
     - sensor.jewish_calendar_latest_time_for_shma_gr_a
     - sensor.jewish_calendar_latest_time_for_shma_mg_a
     - sensor.jewish_calendar_latest_time_for_tefilla_gr_a

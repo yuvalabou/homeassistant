@@ -1,0 +1,21 @@
+############
+# CLIMATE
+############
+
+# Sensibo
+- platform: sensibo
+  api_key: !secret sensibo
+
+- platform: generic_thermostat
+  name: 'Living Room Thermostat'
+  heater: switch.living_room_ac_switch
+  ac_mode: true
+  target_sensor: sensor.living_room_temperature
+  min_temp: 22
+  max_temp: 26
+  target_temp: 25
+  away_temp: 30
+  min_cycle_duration:
+    minutes: 10
+  keep_alive:
+    minutes: 30

@@ -1,25 +1,6 @@
 ##############################################
 #                UTILITY METER               #
 ##############################################
-### Aplliances
-#shabat_plate_total_energy_usage_daily:
-#  source: sensor.estimated_shabat_plate_electricity_consumption
-#  cycle: daily
-#shabat_plate_total_energy_usage_monthly:
-#  source: sensor.estimated_shabat_plate_electricity_consumption
-#  cycle: monthly
-
-### Boiler
-#boiler_total_energy_usage_daily:
-#  source: sensor.boiler_power_consumption
-#  cycle: daily
-#boiler_total_energy_usage_weekly:
-#  source: sensor.boiler_power_consumption
-#  cycle: weekly
-#boiler_total_energy_usage_monthly:
-#  source: sensor.boiler_power_consumption
-#  cycle: monthly
-
 ###
 # Climate
 ###

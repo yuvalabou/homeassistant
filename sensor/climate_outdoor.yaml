@@ -8,21 +8,21 @@
       friendly_name: 'Outside Temperature'
       unit_of_measurement: '°C'
       value_template: >-
-        {{ state_attr('weather.home', 'temperature') | round }}
+        {{ state_attr('weather.openweathermap', 'temperature') | round }}
       icon_template: mdi:thermometer
 
 # Wind sensors
 - platform: template
   sensors:
-    accuweather_wind_speed:
+    openweathermap_wind_speed:
       friendly_name: 'Wind speed'
       value_template: >-
-        {{ state_attr('weather.home', 'wind_speed') | round }}
+        {{ state_attr('weather.openweathermap', 'wind_speed') | round }}
       icon_template: mdi:weather-windy
     wind_scale_friendly:
       friendly_name: 'Wind Scale'
       icon_template: >-
-        {% set speed = (states('sensor.accuweather_wind_speed') | float(-1) * 3600 / 1000) %}
+        {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
         {% if speed >= 75 %}
           mdi:weather-tornado
         {% elif speed >= 39 %}
@@ -33,7 +33,7 @@
           mdi:cloud-question
         {% endif %}
       value_template: >-
-        {% set speed = (states('sensor.accuweather_wind_speed') | float(-1) * 3600 / 1000) %}
+        {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
         {% if speed >= 118 %}
           Hurricane force
         {% elif speed >= 103 %}
@@ -70,7 +70,7 @@
     uv_index_friendly:
       friendly_name: 'UV index'
       value_template: >-
-        {% set index = (states('sensor.home_uv_index')) | int %}
+        {% set index = (states('sensor.current_uv_index')) | int %}
         {% if index >= 11 %}
           Dangerous
         {% elif index >= 8 %}
@@ -87,7 +87,7 @@
           unknown
         {% endif %}
       icon_template: >-
-        {% set index = (states('sensor.home_uv_index')) | int %}
+        {% set index = (states('sensor.current_uv_index')) | int %}
         {% if index >= 11 %}
           mdi:close-octagon
         {% elif index >= 8 %}

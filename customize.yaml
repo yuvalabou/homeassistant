@@ -11,9 +11,6 @@ person.tohar:
 binary_sensor.yuval_laptop:
   device_class: connectivity
   icon: mdi:laptop
-#binary_sensor.mibox_3:
-#  device_class: connectivity
-#  icon: mdi:monitor
 binary_sensor.tv:
   device_class: connectivity
   icon: mdi:television-classic
@@ -37,6 +34,8 @@ light.bedroom1:
   friendly_name: 'Bedroom1'
 light.bedroom2:
   friendly_name: 'Bedroom2'
+light.master_bedroom:
+  friendly_name: 'Master Bedroom'
 
 # Time Tracking
 sensor.track_tv_usage:
@@ -51,15 +50,6 @@ sensor.pihole_status:
   icon: mdi:pi-hole
 
 # Utility meter
-#sensor.shabat_plate_total_energy_usage_daily:
-#  friendly_name: 'Shabat-Plate Daily electriciy usage'
-#  unit_of_measurement: kWh
-#  icon: mdi:counter
-#sensor.shabat_plate_total_energy_usage_monthly:
-#  friendly_name: 'Shabat-Plate Monthly electriciy usage'
-#  unit_of_measurement: kWh
-#  icon: mdi:counter
-
 sensor.total_ac_energy_usage_daily:
   friendly_name: 'Daily Total AC Power'
   unit_of_measurement: kWh

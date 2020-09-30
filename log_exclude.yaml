@@ -12,13 +12,11 @@ exclude:
     - sensor.track_steam_playtime_formatted
     - binary_sensor.steam_game_on
 
-    - sensor.accuweather_wind_speed
-    - sensor.home_uv_index
+    - sensor.openweathermap_wind_speed
     - sensor.season
 
     - sensor.jewish_calendar_alot_hashachar
     - sensor.jewish_calendar_daf_yomi
-    - sensor.jewish_calendar_holiday
     - sensor.jewish_calendar_latest_time_for_shma_gr_a
     - sensor.jewish_calendar_latest_time_for_shma_mg_a
     - sensor.jewish_calendar_latest_time_for_tefilla_gr_a

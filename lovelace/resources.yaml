@@ -33,3 +33,7 @@
   type: module
 - url: /hacsfiles/battery-state-card/battery-state-card.js
   type: module
+- url: /hacsfiles/lovelace-card-preloader/lovelace-card-preloader.js
+  type: js
+- url: /hacsfiles/air-visual-card/air-visual-card.js
+  type: js
