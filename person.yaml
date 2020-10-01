@@ -1,6 +1,11 @@
-##############################################
-#                   PERSONS                  #
-##############################################
+#######################################
+#               PERSONS               #
+#######################################
+###
+# Define persons
+# https://www.home-assistant.io/integrations/person/
+###
+
 - name: 'Yuval'
   id: yuval
   device_trackers:

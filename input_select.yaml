@@ -1,6 +1,11 @@
-###################################################
-#                   INPUT SELECT                  #
-###################################################
+############################################
+#               INPUT SELECT               #
+############################################
+###
+# Define input-select
+# https://www.home-assistant.io/integrations/input_select/
+###
+
 # Vacumm
 # Set fan speed
 vacuum_fan_speed_list:
@@ -12,7 +17,7 @@ vacuum_fan_speed_list:
     - Turbo
     - Max
 
-# Shabat light-off time
+# Shabat lights-off time
 shabat_lights_off_time:
   name: 'Shabat turn off light time'
   icon: mdi:clock

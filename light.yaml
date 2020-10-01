@@ -1,41 +1,41 @@
 ############################################
 #                  LIGHTS                  #
 ############################################
+###
+# Define lights
+# https://www.home-assistant.io/integrations/light/
+###
+
 # Create light groups
+# https://www.home-assistant.io/integrations/light.group/
 - platform: group
   name: 'All lights'
   entities:
     - light.master_bedroom
     - light.bedroom1
     - light.bedroom2
-
 - platform: group
   name: 'Living room lights'
   entities:
     - light.bedroom1
     - light.bedroom2
-
 - platform: group
   name: 'Dining lights'
   entities:
     - light.bedroom1
     - light.bedroom2
-
 - platform: group
   name: 'Ceiling lights'
   entities:
     - light.master_bedroom
     - light.bedroom1
     - light.bedroom2
-
 - platform: group
   name: 'Public lights'
   entities:
     - light.bedroom1
     - light.bedroom2
-
 - platform: group
   name: 'Room lights'
   entities:
     - light.master_bedroom
-

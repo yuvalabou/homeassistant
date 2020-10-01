@@ -1,20 +1,14 @@
 #####################################
 #               ZONES               #
 #####################################
+###
+# Define zones
+# https://www.home-assistant.io/integrations/zone/
+###
+
+# Home
 - name: 'Home'
   latitude: !secret home_lat
   longitude: !secret home_lon
   radius: 50
   icon: mdi:home
-
-#- name: Yuval's Work
-#  latitude: !secret yuval_work_lat
-#  longitude: !secret yuval_work_lon
-#  radius: 500
-#  icon: mdi:briefcase
-#
-#- name: Tohar's Work
-#  latitude: !secret tohar_work_lat
-#  longitude: !secret tohar_work_lon
-#  radius: 500
-#  icon: mdi:briefcase

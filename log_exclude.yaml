@@ -44,7 +44,6 @@ exclude:
     - sensor.count_climates
 
   domains:
-    - automation
     - updater
     - sun
     - script

@@ -1,11 +1,16 @@
-############
-# CLIMATE
-############
+#######################################
+#               CLIMATE               #
+#######################################
+###
+# Define climate
+# https://www.home-assistant.io/integrations/climate/
+###
 
-# Sensibo
+# Sensibo devices
 - platform: sensibo
   api_key: !secret sensibo
 
+# Living room Thermostat
 - platform: generic_thermostat
   name: 'Living Room Thermostat'
   heater: switch.living_room_ac_switch

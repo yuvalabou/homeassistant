@@ -1,6 +1,11 @@
-####################################################
-#               PRESENCE DETECTION                 #
-####################################################
+##############################################
+#               DEVICE TRACKER               #
+##############################################
+###
+# Define presence detection
+# https://www.home-assistant.io/integrations/device_tracker/
+###
+
 # Presence detection using Ping
 - platform: ping
   hosts:

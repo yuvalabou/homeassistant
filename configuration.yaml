@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 062020            #
+#            Yuval Aboulafia - 102020            #
 ##################################################
 
 ##################################################
@@ -51,9 +51,6 @@ person: !include person.yaml
 
 # Presence detection and tracking.
 device_tracker: !include device_tracker.yaml
-
-# Allow you to specify certain regions on earth.
-zone: !include zone.yaml
 
 ##################################################
 #                   DISCOVERY                    #
@@ -112,7 +109,7 @@ pi_hole:
   host: !secret nanopi_neo2
   api_key: !secret pi_hole_key
 
-# Integrates Sensibo Air Conditioning controller into Home Assistant.
+# The Climate integration allows you to control and monitor HVAC devices and thermostats..
 climate: !include climate.yaml
 
 # Proxmox VE is an open-source server virtualization environment. Allows you to poll various data from your instance.
@@ -192,3 +189,4 @@ sensor: !include_dir_merge_list sensor
 switch: !include_dir_merge_list switch
 timer: !include timer.yaml
 utility_meter: !include utility_meter.yaml
+zone: !include zone.yaml

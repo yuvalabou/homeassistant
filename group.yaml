@@ -1,6 +1,11 @@
 ######################################
 #               GROUPS               #
 ######################################
+###
+# Define groups
+# https://www.home-assistant.io/integrations/group/
+###
+
 # Combine all Person entities to a Group
 person:
   name: 'Person'

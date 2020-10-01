@@ -1,6 +1,11 @@
-###################################################
-#                  CUSTOMIZATIONS                 #
-###################################################
+##############################################
+#               CUSTOMIZATIONS               #
+##############################################
+###
+# Customize entities
+# https://www.home-assistant.io/docs/configuration/customizing-devices/
+###
+
 #  Persons
 person.yuval:
   entity_picture: "/local/assets/yuval.jpg"

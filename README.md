@@ -1,6 +1,11 @@
+[![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.115.3%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
+
 <h2 align =
     "center">
-      🏡 Home Assistant Configuration &amp; documentation for my Smart Home.
+      🏡 <a href="https://www.home-assistant.io">Home Assistant</a> Configuration &amp; documentation for my Smart Home.
 </h2>
 
 <p align =
@@ -10,7 +15,7 @@
 
 <p align =
     "center">
-    Don't forget to ⭐️ my repo!
+    Please ⭐ this repo if you find it useful.
 </p>
     <p align =
         "center">
@@ -26,7 +31,7 @@
 
 ## Statistics
 
-| Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | Switches | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
+| Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
 |386       |258      |34              |7         |29           |22       |
 
@@ -56,16 +61,19 @@ Inside the automations folder you will find all the automations that I use and s
 #### Examples
 
 - Vacuum - Notify for cleaning completed
+
 <img src=
     "https://raw.githubusercontent.com/yuvalabou/HomeAssistant-Config/master/config_examples/vac_completed.jpg"
     width=200>
+
+-
 
 ## Official Addons
 
 <img src =
     "https://esphome.io/_static/logo-text.svg"
     align="right"
-    width=200>
+    width=150>
 
 ### [ESPHOME](https://esphome.io/index.html)
 
@@ -80,19 +88,34 @@ ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configu
 <img src =
     "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/samba/icon.png"
     align = "right"
-    width=40>
+    width=50>
 
 ### [Samba](https://github.com/home-assistant/hassio-addons/tree/master/samba)
 
 This Add-on allows you to enable file sharing across different operating systems over a network.
 
+<img src =
+    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/ssh/logo.png"
+    align = "right"
+    width=150>
+
 ### [Terminal & SSH](https://github.com/home-assistant/hassio-addons/tree/master/ssh)
 
 Allow logging in remotely to Home Assistant using SSH or just the web terminal with Ingress.
 
+<img src =
+    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/mariadb/logo.png"
+    align = "right"
+    width=150>
+
 ### [MariaDB](https://github.com/home-assistant/hassio-addons/tree/master/mariadb)
 
 MariaDB SQL database for Home Assistant.
+
+<img src =
+    "https://github.com/hassio-addons/addon-nut/blob/master/nut/icon.png?raw=true"
+    align = "right"
+    width=50>
 
 ### [Network UPS Tools](https://github.com/hassio-addons/addon-nut)
 
@@ -102,9 +125,15 @@ A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) de
 
 ## HACS custom components
 
-Hacs is Home Assistant Community Store
+<img src =
+    "https://avatars2.githubusercontent.com/u/56713226?s=200&v=4"
+    align = "right"
+    width=50>
 
-<https://hacs.xyz/>
+[HACS](https://github.com/hacs/integration) is Home Assistant Community Store
+
+- [Official site](https://hacs.xyz/) - For installation instructions
+- [Releases](https://github.com/hacs/integration/releases)
 
 ### Components
 
@@ -124,6 +153,8 @@ Hacs is Home Assistant Community Store
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
 - [Battery State Card](https://github.com/maxwroc/battery-state-card)
+
+-----
 
 ## License
 

@@ -1,8 +1,15 @@
 ######################################
 #               TIMERS               #
 ######################################
+###
+# Define timers
+# https://www.home-assistant.io/integrations/timer/
+###
+
+# Timer for night lights
 motion_lights_night:
   duration: '00:01:00'
 
+# Timer for controlling The heating plate in 'Chag'
 #chag_eve_plate:
 #  duration: '03:00:00'

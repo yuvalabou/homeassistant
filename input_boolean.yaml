@@ -1,6 +1,11 @@
-####################################################
-#                  INPUT BOOLEANS                  #
-####################################################
+#############################################
+#               INPUT BOOLEAN               #
+#############################################
+###
+# Define input-boolean
+# https://www.home-assistant.io/integrations/input_select/
+###
+
 # Vacuum
 cleaned_today:
   name: 'Cleaned today'
@@ -11,6 +16,7 @@ shabat_mode:
   name: 'מצב שבת'
   icon: mdi:candle
 
+# Night light override
 night_light_override:
   name: 'Night Light Override'
   icon: mdi:shield-half-full
