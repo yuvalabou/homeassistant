@@ -16,7 +16,8 @@ tts
 deps
 glances
 www
-custom_components
+custom_components/anniversaries
+custom_components/citymind_water_meter
 themes
 
 # Ignore files
