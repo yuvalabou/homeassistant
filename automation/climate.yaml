@@ -14,7 +14,21 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id: climate.slvn
+        entity_id: climate.living_room_thermostat
+
+####
+# Shabat climate
+###
+- alias: 'Turn on Living room AC on shabbat enter'
+  id: eb10652e-6276-4c18-b063-d14fc7c2d2cb
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      to: 'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.living_room_thermostat
 
 - alias: 'Turn off Living-Room AC at Shabbat night'
   id: c7396673-d257-4267-a72f-060ee4d43603
@@ -29,7 +43,21 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id: climate.slvn
+        entity_id: climate.living_room_thermostat
+
+- alias: 'Turn on Living room AC on shabbat morning'
+  id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
+  trigger:
+    - platform: time
+      at: '08:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state:  'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.living_room_thermostat
 
 - alias: 'Turn off Living room AC on shabbat noon'
   id: f570b89f-8ce5-4b09-9230-1acc55c54528
@@ -43,4 +71,18 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id: climate.slvn
+        entity_id: climate.living_room_thermostat
+
+- alias: 'Turn on Living room AC on shabbat afternoon'
+  id: 3425fdc2-cc4a-4280-935a-77174d328c71
+  trigger:
+    - platform: time
+      at: '15:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state:  'on'
+  action:
+    - service: climate.turn_on
+      data:
+        entity_id: climate.living_room_thermostat
