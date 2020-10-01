@@ -177,6 +177,7 @@ system_health:
 ##################################################
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list binary_sensor
+camera: !include camera.yaml
 group: !include group.yaml
 input_boolean: !include input_boolean.yaml
 #input_number: !include input_number.yaml

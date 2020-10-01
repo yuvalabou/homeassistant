@@ -1,0 +1,21 @@
+######################################
+#               CAMERA               #
+######################################
+###
+# Define camera
+# https://www.home-assistant.io/integrations/camera/
+###
+
+# Vacuum map camera using @PiotrMachowski awesome custom integration
+# https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor
+- platform: xiaomi_cloud_map_extractor
+  name: 'Vacuum map'
+  host: !secret vacuum_host
+  token: !secret vacuum_token
+  username: !secret xiaomi_cloud_username
+  password: !secret xiaomi_cloud_password
+  country: "sg"
+  draw:
+    - charger
+    - path
+    - vacuum_position

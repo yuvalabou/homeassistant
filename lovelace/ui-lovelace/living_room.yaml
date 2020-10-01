@@ -110,12 +110,12 @@ cards:
     entities:
       - type: custom:hui-element
         card_type: picture-elements
-        image: "https://vacuumshop.com.au/wp-content/uploads/2020/03/Xiaomi-Mi-Robot-Vacuum-Cleaner.jpg"
+        camera_image: camera.vacuum_map
         elements:
           - type: state-label
             entity: vacuum.xiaomi_vacuum_cleaner
             style:
-              top: 20%
+              top: 15%
               left: 50%
               font-weight: "bold"
               font-size: 200%
@@ -128,7 +128,7 @@ cards:
               service_data:
                 entity_id: vacuum.xiaomi_vacuum_cleaner
             style:
-              top: 75%
+              top: 90%
               left: 80%
               color: '#4284F4'
           - type: icon
@@ -139,7 +139,7 @@ cards:
               service_data:
                 entity_id: vacuum.xiaomi_vacuum_cleaner
             style:
-              top: 75%
+              top: 90%
               left: 60%
               color: '#4284F4'
           - type: icon
@@ -150,7 +150,7 @@ cards:
               service_data:
                 entity_id: vacuum.xiaomi_vacuum_cleaner
             style:
-              top: 75%
+              top: 90%
               left: 40%
               color: '#4284F4'
           - type: icon
@@ -161,7 +161,7 @@ cards:
               service_data:
                 entity_id: vacuum.xiaomi_vacuum_cleaner
             style:
-              top: 75%
+              top: 90%
               left: 20%
               color: '#4284F4'
       - type: custom:hui-element

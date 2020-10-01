@@ -18,6 +18,7 @@ glances
 www
 custom_components/anniversaries
 custom_components/citymind_water_meter
+custom_components/xiaomi_cloud_map_extractor
 themes
 
 # Ignore files

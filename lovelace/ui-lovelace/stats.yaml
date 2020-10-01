@@ -137,8 +137,6 @@ cards:
         hours_to_show: 168
         group_by: date
         entities:
-          - entity: sensor.track_tv_usage_formatted
-            unit: hours
           - entity: sensor.track_netflix_usage_formatted
             unit: hours
         color_thresholds:
