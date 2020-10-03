@@ -47,6 +47,10 @@ cards:
             card_type: glance
             entities:
               - entity: sensor.uv_index_friendly
+      - type: custom:hui-element
+        card_type: markdown
+        content: >-
+          {{ states.sensor.israel_weather_forecast.attributes.entries[0].summary }}
       - type: custom:air-visual-card
         city: 'Petah-Tikva'
         air_pollution_level: sensor.u_s_air_pollution_level

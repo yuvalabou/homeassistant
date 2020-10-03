@@ -19,6 +19,7 @@ www
 custom_components/anniversaries
 custom_components/citymind_water_meter
 custom_components/xiaomi_cloud_map_extractor
+custom_components/feedparser
 themes
 
 # Ignore files
@@ -28,6 +29,7 @@ themes
 *.txt
 *.log
 *.token
+*.pickle
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml
