@@ -67,3 +67,7 @@ sensor.total_ac_energy_usage_monthly:
   friendly_name: 'Monthly Total AC Power'
   unit_of_measurement: kWh
   icon: mdi:counter
+
+# Mold indicator
+sensor.bathroom_mold_indicator:
+  icon: mdi:water-percent-alert

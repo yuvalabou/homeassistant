@@ -44,3 +44,4 @@ cards:
           - binary_sensor.bathroom_motion
           - entity: sensor.bathroom_humidity_range
             name: 'Humidity'
+      - sensor.bathroom_mold_indicator
