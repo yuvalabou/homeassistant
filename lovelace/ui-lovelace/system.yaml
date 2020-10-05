@@ -96,8 +96,6 @@ cards:
             icon: mdi:reload
           - entity: script.reload_automations
             icon: mdi:reload
-          - entity: script.reload_scenes
-            icon: mdi:reload
           - entity: script.reload_groups
             icon: mdi:reload
           - entity: script.reload_scripts
@@ -270,8 +268,3 @@ cards:
           - binary_sensor.bathroom
       - switch.restart_living_room
       - switch.restart_bathroom
-#          - switch.restart_master_bedroom
-#          - type: divider
-#          - switch.restart_shabat_plate
-#          - switch.restart_safe
-#          - switch.restart_car_remote

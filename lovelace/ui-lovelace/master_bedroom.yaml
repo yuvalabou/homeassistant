@@ -6,37 +6,6 @@ title: 'Master Bedroom'
 icon: mdi:bed-king-outline
 background: 'var(--background-image)'
 cards:
-#      - type: custom:banner-card
-#       heading: "\U0001F6BF Ensuite"
-#        background: "#8FCEDA"
-#        row_size: 3
-#        entities:
-#          - sensor.ensuite_temperature
-#          - sensor.ensuite_humidity
-#          - switch.ensuite_light
-#          - switch.boiler
-#          - switch.ensuite_heater
-#          - entity: sensor.ensuite_occupied
-#            #size:
-#            map_state:
-#              'on': mdi:emoticon-poop
-#              'off': mdi:human-male-female
-#          - entity: binary_sensor.ensuite_door
-#            #size:
-#            map_state:
-#              'on': mdi:door-open
-#              'off': mdi:door-closed
-#          - entity: binary_sensor.ensuite_window
-#            #size:
-#            map_state:
-#              'on': mdi:window-open
-#              'off': mdi:window-closed
-#          - entity: binary_sensor.ensuite_toilet_paper_left
-#            #size:
-#            map_state:
-#              'on': mdi:paper-roll
-#              'off': mdi:sync-alert
-
   - type: entities
     show_header_toggle: false
     entities:
@@ -73,13 +42,6 @@ cards:
               points: false
               labels: false
               legend: false
-#          - type: custom:hui-element
-#            card_type: glance
-#            entities:
-#              - binary_sensor.master_bedroom_motion
-#              - entity: sensor.master_bedroom_humidity_range
-#                name: 'Humidity'
-#          - switch.shabat_select
 
   - type: custom:simple-thermostat
     entity: climate.shynh
@@ -90,25 +52,6 @@ cards:
 
   - type: light
     entity: light.master_bedroom
-
-#      - type: conditional
-#        conditions:
-#          - entity: person.yuval
-#            state: 'home'
-#        card:
-#          type: custom:restriction-card
-#          restrictions:
-#            pin:
-#              code:
-#          duration: 30
-#          card:
-#            type: glance
-#            title: Safe
-#            entities:
-#              - switch.unlock_safe
-#              - binary_sensor.safe_state
-#              - sensor.safe_last_opened
-#              - binary_sensor.safe_status
 
   - type: entities
     entities:

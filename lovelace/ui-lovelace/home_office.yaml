@@ -6,48 +6,6 @@ title: 'Home Office'
 icon: mdi:desk
 background: 'var(--background-image)'
 cards:
-#      - type: entities
-#        show_header_toggle: false
-#        entities:
-#          - type: custom:hui-element
-#            card_type: horizontal-stack
-#            cards:
-#              - type: custom:mini-graph-card
-#                entities:
-#                  - entity: sensor.work_bedroom_temperature
-#                    name: 'Temperature'
-#                    show_points: false
-#                font_size: 80
-#                color_thresholds: !include ../graph_card_temperature_thresholds.yaml
-#                show:
-#                  fill: fade
-#                  points: false
-#                  labels: true
-#                  labels_secondary: false
-#                  legend: false
-#              - type: custom:mini-graph-card
-#                entities:
-#                  - entity: sensor.work_bedroom_humidity
-#                    name: 'Humidity'
-#                font_size: 80
-#                lower_bound: 0
-#                upper_bound: 100
-#                show:
-#                  fill: fade
-#                  points: false
-#                  labels: false
-#                  legend: false
-#          - type: custom:hui-element
-#            card_type: glance
-#            entities:
-#              - binary_sensor.work_bedroom_motion
-#              - entity: sensor.work_bedroom_humidity_range
-#                name: 'Humidity'
-#          - switch.shabat_select
-
-#      - type: light
-#        entity: light.home_office
-
   - type: entities
     title: 'Printer'
     entities:

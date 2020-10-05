@@ -6,33 +6,6 @@ title: 'Living Room'
 icon: mdi:sofa
 background: 'var(--background-image)'
 cards:
-#      - type: vertical-stack
-#        cards:
-#          - type: custom:banner-card
-#            heading: "\U0001F373 Kitchen"
-#            background: "#FCF2EA"
-#            row_size: 2
-#            entities:
-#              - entity: sensor.kitchen_occupied
-#                map_state:
-#                  'on': mdi:run
-#                  'off': mdi:walk
-#              - entity: sensor.sink_full # add "sink full" sensor using ultrasonic sensor
-#                map_state:
-#                  'on': mdi:tray-full # example
-#                  'off': mdi:silverware-clean # example
-#              - entity: switch.above_sink_light
-#          - type: conditional
-#            conditions:
-#              - entity: binary_sensor.shabat_plate_connection
-#                state: 'on'
-#            card:
-#              type: entities
-#              show_header_toggle: false
-#              title: 'פלטה'
-#              entities:
-#                - switch.shabat_plate
-
   - type: entities
     show_header_toggle: false
     entities:

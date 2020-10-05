@@ -116,14 +116,3 @@ cards:
           state: 'unavailable'
       exclude:
         - entity_id: '*lights'
-
-#      - type: "custom:atomic-calendar"
-#        title: "Calendar"
-#        enableModeChange: true
-#        defaultMode: 1
-#        showColors: true
-#        maxDaysToShow: 7
-#        showLocation: true
-#        showProgressBar: true
-#        entities:
-#          - entity: calendar.family_calendar

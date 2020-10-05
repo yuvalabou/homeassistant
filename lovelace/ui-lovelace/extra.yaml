@@ -36,6 +36,3 @@ cards:
     entities:
       - entity: sensor.birthday_yuval
       - entity: sensor.birthday_tohar
-#          - entity: sensor.anniversary_harel_nissim_birthday
-#          - entity: sensor.anniversary_rotem_david_birthday
-#          - entity: sensor.anniversary_marriage_anniversary
