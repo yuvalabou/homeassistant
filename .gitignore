@@ -14,8 +14,6 @@
 .vscode
 tts
 deps
-glances
-www/graph
 www/assets
 www/floor_plan
 www/community

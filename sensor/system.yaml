@@ -1,3 +1,6 @@
+###
+# System
+###
 # Uptime sensor
 - platform: uptime
   name: 'Time Online'

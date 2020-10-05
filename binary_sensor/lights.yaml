@@ -1,7 +1,7 @@
 ###
 # Lights
 ###
-# Template Sensors to show which lights are on
+# Return True when the light is on
 - platform: template
   sensors:
     master_bedroom_light_is_on:

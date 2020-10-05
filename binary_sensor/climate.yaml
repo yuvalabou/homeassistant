@@ -1,6 +1,7 @@
 ###
 # Climate
 ###
+# Return True when AC unit is on
 - platform: template
   sensors:
     living_room_ac_is_on:
@@ -31,14 +32,3 @@
         {% else %}
           mdi:hvac-off
         {% endif %}
-
-- platform: threshold
-  name: 'Master bedroom temperature threshold'
-  entity_id: sensor.master_bedroom_sensibo_temperature
-  lower: 21
-  upper: 25
-- platform: threshold
-  name: 'Living room temperature threshold'
-  entity_id: sensor.living_room_temperature
-  lower: 21
-  upper: 25

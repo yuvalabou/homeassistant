@@ -1,3 +1,7 @@
+###
+# Netflix
+###
+# Return True when Netflix is playing
 - platform: template
   sensors:
     netflix_on:

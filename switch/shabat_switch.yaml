@@ -1,4 +1,6 @@
-# CONTROL
+###
+# Shabat switch
+###
 - platform: template
   switches:
     shabat_mode:

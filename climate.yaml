@@ -19,8 +19,7 @@
   min_temp: 22
   max_temp: 26
   target_temp: 25
-  away_temp: 30
   min_cycle_duration:
-    minutes: 10
+    minutes: 5
   keep_alive:
     minutes: 30

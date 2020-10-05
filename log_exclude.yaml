@@ -6,6 +6,7 @@ exclude:
     - sensor.dnsip
     - binary_sensor.random_boolean
     - sensor.random_number
+    - media_player.mibox3
 
     - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime

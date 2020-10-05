@@ -1,11 +1,10 @@
 ###
 # Lights
 ###
-
 # Shabat and Chag lighting
 shabat_chag_lighting_sequence:
   alias: 'shabat and chag lighting sequence'
-#  description: TODO:
+  description: 'Sequence that notify when Shabat is here'
   sequence:
     - service: light.turn_on
       data:
@@ -16,7 +15,7 @@ shabat_chag_lighting_sequence:
       entity_id: script.shabat_chag_lighting
 shabat_chag_lighting:
   alias: 'shabat and chag lighting'
-#  description: TODO:
+  description: 'Sequence that adjust the lights to Shabat eve'
   sequence:
     - service: light.turn_on
       data:
@@ -33,7 +32,7 @@ shabat_chag_lighting:
 
 shabat_chag_end_lighting_sequence:
   alias: 'shabat and chag lighting sequence'
-#  description: TODO:
+  description: 'Sequence that notify when Shabat ends and adjust lighting accordingly'
   sequence:
     - service: light.turn_on
       data:

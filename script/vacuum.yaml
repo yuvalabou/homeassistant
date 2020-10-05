@@ -2,7 +2,7 @@
 # Scripts to control Xiaomi Vacuum
 ###
 
-# Set fan speed for the Vacuum
+# Set Vacuum fan speed
 vacuum_set_silent:
   alias: 'Set Silent'
   icon: mdi:fan

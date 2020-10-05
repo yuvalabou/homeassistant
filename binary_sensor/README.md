@@ -6,8 +6,7 @@ Here is a summery of the sensors and their functionality
 
 ## Climate
 
-- [Template](https://www.home-assistant.io/integrations/binary_sensor.template/) binary sensor to test if an AC unit is currently on
-- [Threshold](https://www.home-assistant.io/integrations/threshold/) sensor to configure desired temperature thresholds
+[Template](https://www.home-assistant.io/integrations/binary_sensor.template/) binary sensor to test if an AC unit is currently on
 
 ## Jewish Calendar
 

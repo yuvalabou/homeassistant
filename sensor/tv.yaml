@@ -1,4 +1,6 @@
+###
 # TV tracking
+###
 - platform: history_stats
   name: 'Track TV usage'
   entity_id: binary_sensor.tv

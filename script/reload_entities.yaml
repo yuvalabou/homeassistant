@@ -1,41 +1,36 @@
 ###
-# Scripts to reload entities
+# Reload all the things
 ###
 
-# Reload All the things!
-reload_themes:
-  alias: 'Reload themes'
-  sequence:
-    - service: frontend.reload_themes
 reload_automations:
-  alias: 'Reload automations'
+  alias: 'Reload Automations'
   sequence:
     - service: automation.reload
 reload_groups:
-  alias: 'Reload groups'
+  alias: 'Reload Groups'
   sequence:
     - service: group.reload
-reload_scripts:
-  alias: 'Reload scripts'
-  sequence:
-    - service: script.reload
-reload_scenes:
-  alias: 'Reload scenes'
-  sequence:
-    - service: scene.reload
 reload_input_boolean:
-  alias: 'Reload input booleans'
+  alias: 'Reload Input Booleans'
   sequence:
     - service: input_boolean.reload
 reload_input_select:
-  alias: 'Reload input selects'
+  alias: 'Reload Input Selects'
   sequence:
     - service: input_select.reload
+reload_lovelace_resources:
+  alias: 'Reload Lovelace Resources'
+  sequence:
+    - service: lovelace.reload_resources
+reload_scripts:
+  alias: 'Reload Scripts'
+  sequence:
+    - service: script.reload
+reload_themes:
+  alias: 'Reload Themes'
+  sequence:
+    - service: frontend.reload_themes
 reload_timers:
   alias: 'Reload Timers'
   sequence:
     - service: timer.reload
-reload_lovelace_resources:
-  alias: 'Reload lovelace resources'
-  sequence:
-    - service: lovelace.reload_resources

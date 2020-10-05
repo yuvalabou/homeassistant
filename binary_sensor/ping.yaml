@@ -1,7 +1,7 @@
 ###
 # Ping
 ###
-# Binary sensor for checking if a device is online
+# Used for checking if a device is online
 - platform: ping
   host: !secret vacuum_host
   name: 'Vacuum'

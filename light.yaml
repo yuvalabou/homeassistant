@@ -15,8 +15,9 @@
     - light.bedroom1
     - light.bedroom2
 - platform: group
-  name: 'Living room lights'
+  name: 'Ceiling lights'
   entities:
+    - light.master_bedroom
     - light.bedroom1
     - light.bedroom2
 - platform: group
@@ -25,9 +26,8 @@
     - light.bedroom1
     - light.bedroom2
 - platform: group
-  name: 'Ceiling lights'
+  name: 'Living room lights'
   entities:
-    - light.master_bedroom
     - light.bedroom1
     - light.bedroom2
 - platform: group
