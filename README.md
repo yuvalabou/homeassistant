@@ -33,7 +33,7 @@
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|386       |258      |34              |7         |29           |22       |
+|391       |259      |34              |7         |33           |22       |
 
 -----
 
@@ -41,7 +41,7 @@
 
 | Lovelace Mode | Resources | Views |
 |:-------------:|:---------:|:-----:|
-|YAML           |14         |8      |
+|YAML           |16         |8      |
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 

@@ -2,6 +2,13 @@
 #               LOVELACE-UI               #
 ###########################################
 ###
+# Preload cards
+# https://github.com/gadgetchnnel/lovelace-card-preloader
+###
+preload_cards:
+  - picture-entity
+
+###
 # Define custom header
 # https://maykar.github.io/custom-header/#intro/intro
 ###
