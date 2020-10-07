@@ -4,7 +4,6 @@ exclude:
     - binary_sensor.night
     - sensor.uptime_friendly
     - sensor.dnsip
-    - sensor.openweathermap_wind_speed
     - sensor.random_number
     - binary_sensor.random_boolean
     - sensor.season

@@ -14,11 +14,6 @@
 # Wind sensors
 - platform: template
   sensors:
-    openweathermap_wind_speed:
-      friendly_name: 'Wind speed'
-      value_template: >-
-        {{ state_attr('weather.openweathermap', 'wind_speed') | round }}
-      icon_template: mdi:weather-windy
     wind_scale_friendly:
       friendly_name: 'Wind Scale'
       icon_template: >-

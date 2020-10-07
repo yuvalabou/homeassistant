@@ -21,6 +21,7 @@ custom_components/anniversaries
 custom_components/citymind_water_meter
 custom_components/xiaomi_cloud_map_extractor
 custom_components/feedparser
+__pycache__
 
 # Ignore files
 *.db
