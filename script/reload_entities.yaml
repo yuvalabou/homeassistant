@@ -6,14 +6,30 @@ reload_automations:
   alias: 'Reload Automations'
   sequence:
     - service: automation.reload
+reload_cli_sensors:
+  alias: 'Reload CLI sensors'
+  sequence:
+    - service: command_line.reload
+reload_thermostats:
+  alias: 'Reload Thermostats (Generic)'
+  sequence:
+    - service: generic_thermostat.reload
 reload_groups:
   alias: 'Reload Groups'
   sequence:
     - service: group.reload
+reload_history_stats:
+  alias: 'Reload History Stats sensors'
+  sequence:
+    - service: history_stats.reload
 reload_input_boolean:
   alias: 'Reload Input Booleans'
   sequence:
     - service: input_boolean.reload
+reload_input_datetime:
+  alias: 'Reload Input Datetimes'
+  sequence:
+    - service: input_datetime.reload
 reload_input_select:
   alias: 'Reload Input Selects'
   sequence:
@@ -22,6 +38,14 @@ reload_lovelace_resources:
   alias: 'Reload Lovelace Resources'
   sequence:
     - service: lovelace.reload_resources
+reload_persons:
+  alias: 'Reload Persons'
+  sequence:
+    - service: person.reload
+reload_ping_sensors:
+  alias: 'Reload Ping sensors'
+  sequence:
+    - service: ping.reload
 reload_scripts:
   alias: 'Reload Scripts'
   sequence:
@@ -34,3 +58,7 @@ reload_timers:
   alias: 'Reload Timers'
   sequence:
     - service: timer.reload
+reload_templates:
+  alias: 'Reload Templates'
+  sequence:
+    - service: template.reload

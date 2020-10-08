@@ -1,0 +1,5 @@
+###
+# DNS IP
+###
+
+- platform: dnsip

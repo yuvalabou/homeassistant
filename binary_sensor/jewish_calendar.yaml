@@ -15,23 +15,24 @@
         {% endif %}
 
 # Shabat notification trigger
+# FIXME: These sensors have hardcoded timezone offset. 
 - platform: template
   sensors:
     shabat_notification_10m:
       friendly_name: 'Shabat 10 min Notification Trigger'
       value_template: >-
-        {% set now = strptime(states('sensor.time'), '%H:%M') %}
-        {% set now_min = now.hour * 60 + now.minute %}
-        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
-        {% set then_min = then.hour * 60 + then.minute %}
-        {% set timediff = then_min - now_min %}
-        {{ 0 <= timediff <= 10 }}
+        {{
+          as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) |
+          timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+          float + (10*60) - (10800) ) |
+          timestamp_custom("%H:%M:%S")
+        }}
     shabat_notification_trigger_30m:
       friendly_name: 'Shabat Half hour Notification Trigger'
       value_template: >-
-        {% set now = strptime(states('sensor.time'), '%H:%M') %}
-        {% set now_min = now.hour * 60 + now.minute %}
-        {% set then = strptime(states('sensor.upcoming_candle_lighting_formatted'), '%H:%M') %}
-        {% set then_min = then.hour * 60 + then.minute %}
-        {% set timediff = then_min - now_min %}
-        {{ 0 <= timediff <= 30 }}
+        {{
+          as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) |
+          timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+          float + (30*60) - (10800) ) |
+          timestamp_custom("%H:%M:%S")
+        }}

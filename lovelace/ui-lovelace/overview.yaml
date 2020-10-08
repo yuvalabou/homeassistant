@@ -82,14 +82,16 @@ cards:
         name: 'הדלקת נרות'
         format: relative
         entities:
-          - entity: sensor.upcoming_candle_lighting_formatted
+          - entity: sensor.jewish_calendar_upcoming_candle_lighting
+            format: time
             name: false
       - entity: sensor.jewish_calendar_upcoming_havdalah
         type: custom:multiple-entity-row
         name: 'הבדלה'
         format: relative
         entities:
-          - entity: sensor.upcoming_havdalah_formatted
+          - entity: sensor.jewish_calendar_upcoming_havdalah
+            format: time
             name: false
       - type: divider
       - entity: sensor.jewish_calendar_daf_yomi

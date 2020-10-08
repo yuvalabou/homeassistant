@@ -178,33 +178,20 @@ cards:
     show:
       fill: fade
 
-# Boiler
-#      - type: custom:mini-graph-card
-#        name: 'Boiler Power Consumption'
-#        unit: kW
-#        hours_to_show: 750
-#        line_width: 1
-#        entities:
-#          - entity: sensor.boiler_total_energy_usage_daily
-#            name: 'Daily'
-#            color: "#04FC04"
-#            show_state: true
-#            show_points: false
-#          - entity: sensor.boiler_total_energy_usage_weekly
-#            name: 'Weekly'
-#            color: "yellow"
-#            show_state: false
-#            show_points: false
-#          - entity: sensor.boiler_total_energy_usage_monthly
-#            name: 'Monthly'
-#            color: "red"
-#            show_state: false
-#            show_points: false
-#        show:
-#          fill: fade
-#
-#      - type: entities
-#        title: 'Appliances'
-#        show_header_toggle: false
-#        entities:
-#          - sensor.shabat_plate_total_energy_usage_daily
+  - type: custom:mini-graph-card
+    name: 'Water Consumption'
+    unit: 'm³'
+    icon: mdi:water-pump
+    hours_to_show: 168
+    group_by: date
+    line_width: 1
+    upper_bound: ~0.4
+    entities:
+      - entity: sensor.water_meter_9926387_today_s_consumption
+        name: 'Today'
+        color: "#04FC04"
+#        show_state: false
+        show_points: false
+    show:
+      graph: bar
+      fill: fade

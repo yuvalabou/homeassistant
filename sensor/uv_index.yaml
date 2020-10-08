@@ -1,0 +1,40 @@
+###
+# Friendly UV Index Sensor
+###
+
+- platform: template
+  sensors:
+    uv_index_friendly:
+      friendly_name: 'UV index'
+      value_template: >-
+        {% set index = (states('sensor.current_uv_index')) | int %}
+        {% if index >= 11 %}
+          Dangerous
+        {% elif index >= 8 %}
+          High risk
+        {% elif index >= 6 %}
+          Sunburn
+        {% elif index >= 3 %}
+          Sunglasses
+        {% elif index >= 1 %}
+          No risk
+        {% elif index >= 0 %}
+          No UV radiation
+        {% elif index < 0 %}
+          unknown
+        {% endif %}
+      icon_template: >-
+        {% set index = (states('sensor.current_uv_index')) | int %}
+        {% if index >= 11 %}
+          mdi:close-octagon
+        {% elif index >= 8 %}
+          mdi:alert
+        {% elif index >= 6 %}
+          mdi:shield-sun
+        {% elif index >= 3 %}
+          mdi:sunglasses
+        {% elif index >= 0 %}
+          mdi:check-bold
+        {% elif index < 0 %}
+          mdi:eye
+        {% endif %}

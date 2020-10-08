@@ -1,5 +1,5 @@
 ###
-# System
+# Uptime
 ###
 # Uptime sensor
 - platform: uptime
@@ -52,9 +52,3 @@
         {% else %}
           unknown
         {% endif %}
-
-# The version sensor platform that can display the current Home Assistant versions
-- platform: version
-
-# External IP address
-- platform: dnsip

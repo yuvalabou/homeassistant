@@ -57,8 +57,6 @@ device_tracker: !include device_tracker.yaml
 ##################################################
 # Discover some devices automatically.
 discovery:
-  ignore:
-    - yeelight
 
 # Discover some devices automatically.
 zeroconf:

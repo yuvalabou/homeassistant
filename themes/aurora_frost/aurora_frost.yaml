@@ -102,7 +102,7 @@ aurora_frost:
   # CodeMirror editor
   codemirror-keyword: '#042D40'
   codemirror-operator: '#042D40'
-#  codemirror-variable:
+  codemirror-variable: '#042D40'
 #  codemirror-variable-2:
 #  codemirror-variable-3:
   codemirror-builtin: '#042D40'

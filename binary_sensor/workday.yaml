@@ -1,0 +1,14 @@
+###
+# Workday sensor
+###
+
+- platform: workday
+  country: IL
+  workdays:
+    - sun
+    - mon
+    - tue
+    - wed
+    - thu
+  excludes:
+    - holiday

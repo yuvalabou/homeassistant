@@ -1,6 +1,6 @@
 ###
-# Random
-###
 # Random Number
+###
+
 - platform: random
-  name: Random Number
+  name: 'Random Number'

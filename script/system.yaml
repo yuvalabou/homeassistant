@@ -1,6 +1,10 @@
 ###
 # Server control
 ###
+reload_core_config:
+  alias: 'Reload HomeAssistant core config'
+  sequence:
+    - service: homeassistant.reload_core_config
 homeassistant_restart:
   alias: 'Restart Home Assistant'
   sequence:
