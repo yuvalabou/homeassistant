@@ -77,7 +77,7 @@
   id: 3425fdc2-cc4a-4280-935a-77174d328c71
   trigger:
     - platform: time
-      at: '15:00:00'
+      at: '14:00:00'
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect

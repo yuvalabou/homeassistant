@@ -1,6 +1,7 @@
 ###
 # Jewish calendar
 ###
+# Return True if it is fast today - but not at kippur as it is a holiday
 - platform: template
   sensors:
     is_fast_day:
@@ -15,7 +16,7 @@
         {% endif %}
 
 # Shabat notification trigger
-# FIXME: These sensors have hardcoded timezone offset. 
+# FIXME: These sensors have hardcoded timezone offset.
 - platform: template
   sensors:
     shabat_notification_10m:
