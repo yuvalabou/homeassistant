@@ -133,9 +133,12 @@ A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) de
 - [Official site](https://hacs.xyz/) - For installation instructions
 - [Releases](https://github.com/hacs/integration/releases)
 
-### Components
+### Integrations
 
 - [Anniversaries](https://github.com/pinkywafer/Anniversaries)
+- [Read my meter](https://github.com/maorcc/citymind_water_meter)
+- [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+- [FeedParser](https://github.com/custom-components/feedparser)
 
 ### Lovelace-UI Enhancements
 
