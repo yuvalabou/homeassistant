@@ -78,16 +78,6 @@ speedtestdotnet:
 
 # Allows the user to define date and time values.
 input_datetime:
-  both_date_and_time:
-    name: Input with both date and time
-    has_date: true
-    has_time: true
-  only_date:
-    name: Input with only date
-    has_date: true
-  only_time:
-    name: Input with only time
-    has_time: true
 
 # Displays a variety of information related to the Jewish Calendar as a variety of sensors.
 jewish_calendar:
