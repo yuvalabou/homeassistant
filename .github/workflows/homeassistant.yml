@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        HA_VERSION: [STABLE, RC, DEV]
+        HA_VERSION: [STABLE, RC]
       max-parallel: 3
     steps:
       - uses: actions/checkout@v2
