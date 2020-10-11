@@ -15,20 +15,35 @@ jobs:
         continue-on-error: true
         with:
           config_file: .github/yamllint-config.yml
-  build:
+  homeassistant_stable:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        HA_VERSION: [STABLE, RC]
-      max-parallel: 3
     steps:
       - uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: |
           cp -R .github/.stubs/secrets_dummy.yaml secrets.yaml
-      - name: Home Assistant Configuration Check
-        uses: ludeeus/action-ha-config-check@master
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:stable"
         with:
-          version: matrix.HA_VERSION
-          config_path: .
+          args: |
+            python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: python -m homeassistant --config  ./ --script check_config --info all
+  homeassistant_rc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy stub files into configuration folder
+        run: |
+          cp -R .github/.stubs/secrets_dummy.yaml secrets.yaml
+      - name: Home Assistant Version
+        uses: "docker://homeassistant/home-assistant:stable"
+        with:
+          args: |
+            python -m homeassistant --version
+      - name: Home Assistant Check
+        uses: "docker://homeassistant/home-assistant:beta"
+        with:
+          args: python -m homeassistant --config  ./ --script check_config --info all
