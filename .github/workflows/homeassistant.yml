@@ -27,9 +27,6 @@ jobs:
       - name: Copy stub files into configuration folder
         run: |
           cp -R .github/.stubs/secrets_dummy.yaml secrets.yaml
-          cp -R 0d25726f0c18_sample.json 0d25726f0c18.json
-          sudo touch fullchain.pem
-          sudo touch privkey.pem
       - uses: actions/checkout@v2
       - name: Home Assistant Configuration Check
         uses: ludeeus/action-ha-config-check@master
