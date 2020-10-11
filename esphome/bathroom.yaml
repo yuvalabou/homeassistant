@@ -65,16 +65,11 @@ sensor:
     name: "${upper_devicename} Dew Point"
     lambda: |-
       return (243.5 * (log(id(${template_id}_humidity).state/100) + ((17.67 * id(${template_id}_temperature).state) /
-      (243.5 + id(${template_id}_temperature).state))) / (17.67 - log(id(${template_id}_humidity).state/100) -
-      ((17.67 * id(${template_id}_temperature).state) / (243.5 + id(${template_id}_temperature).state))));
+      (243.5 + id(${template_id}_temperature).state))) /
+      (17.67 - log(id(${template_id}_humidity).state/100) - ((17.67 * id(${template_id}_temperature).state) /
+      (243.5 + id(${template_id}_temperature).state))));
     unit_of_measurement: '°C'
     icon: mdi:water
-#  - platform: wifi_signal
-#    name: ${upper_devicename} WiFi reception
-#    update_interval: 60s
-#  - platform: adc
-#    pin: VCC
-#    name: "${devicename} VCC voltage"
 
 text_sensor:
   - platform: template

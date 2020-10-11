@@ -3,16 +3,16 @@
 #######################################
 ###
 # Define persons
-# https://www.home-assistant.io/integrations/person/
+# https://www.home-assistant.io/integrations/person
 ###
 
 - name: 'Yuval'
   id: yuval
   device_trackers:
-    - device_tracker.yuval_mi9t #ping
-#    - device_tracker.mi_9t #mobile app
+    - device_tracker.yuval_mi9t
+#    - device_tracker.mi_9t
 - name: 'Tohar'
   id: tohar
   device_trackers:
-    - device_tracker.tohar_mi7 #ping
-#    - device_tracker.redmi_note_7 #mobile app
+    - device_tracker.tohar_mi7
+#    - device_tracker.redmi_note_7

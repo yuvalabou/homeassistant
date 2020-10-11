@@ -3,7 +3,7 @@
 ######################################
 ###
 # Define timers
-# https://www.home-assistant.io/integrations/timer/
+# https://www.home-assistant.io/integrations/timer
 ###
 
 # Timer for night lights

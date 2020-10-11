@@ -3,7 +3,7 @@
 ######################################
 ###
 # Define cameras
-# https://www.home-assistant.io/integrations/camera/
+# https://www.home-assistant.io/integrations/camera
 ###
 
 # Vacuum map camera using @PiotrMachowski awesome custom integration
