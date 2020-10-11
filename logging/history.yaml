@@ -1,3 +1,6 @@
+###
+# History settings
+###
 exclude:
   entities:
     - binary_sensor.day
@@ -22,7 +25,6 @@ exclude:
     - sensor.count_zones
     - sensor.count_input_booleans
     - sensor.count_input_selects
-    - sensor.count_input_datetimes
     - sensor.count_timers
     - sensor.count_lights
     - sensor.count_climates

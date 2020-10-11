@@ -117,24 +117,13 @@ proxmoxve:
 #                    LOG COMPONENTS              #
 ##################################################
 # Enables support for tracking state changes over time.
-history: !include history_exclude.yaml
+history: !include logging/history.yaml
 
 # View events in a logbook
-logbook: !include log_exclude.yaml
+logbook: !include logging/logbook.yaml
 
 # Stores details in a database, which then are handled by the history integration.
-recorder:
-  db_url: !secret mariadb_address
-  purge_keep_days: 30
-  exclude:
-    entities:
-      - sensor.time
-      - sensor.time_date
-      - sensor.date
-      - sensor.date_time
-    domains:
-      - sun
-      - weather
+recorder: !include logging/recorder.yaml
 
 # Set the default level for the logger.
 logger:
