@@ -1,0 +1,23 @@
+name: "Home Assistant"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        HA_VERSION: [STABLE, RC, DEV]
+      max-parallel: 3
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Home Assistant Configuration Check
+      uses: ludeeus/action-ha-config-check@master
+      with:
+        version: matrix.HA_VERSION
+        config_path: .
