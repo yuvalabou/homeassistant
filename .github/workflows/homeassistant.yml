@@ -11,7 +11,7 @@ jobs:
       - name: Getting your configuration from GitHub
         uses: actions/checkout@v1
       - name: Prepare secrets
-        command: |
+        run: |
           cp -R ./.stubs/secrets_dummy.yaml ./config/secrets.yaml
       - name: Running YAMLlint
         uses: ibiqlik/action-yamllint@v1
