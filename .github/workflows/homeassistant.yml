@@ -5,6 +5,16 @@ on:
   pull_request:
 
 jobs:
+  yamllint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Getting your configuration from GitHub
+        uses: actions/checkout@v1
+      - name: Running YAMLlint
+        uses: ibiqlik/action-yamllint@v1
+        continue-on-error: true
+        with:
+          config_file: .github/yamllint-config.yml
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -12,10 +22,8 @@ jobs:
       matrix:
         HA_VERSION: [STABLE, RC, DEV]
       max-parallel: 3
-
     steps:
     - uses: actions/checkout@v2
-
     - name: Home Assistant Configuration Check
       uses: ludeeus/action-ha-config-check@master
       with:
