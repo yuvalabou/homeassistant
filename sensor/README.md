@@ -1,6 +1,10 @@
-# Sensors
+# [Sensors](https://www.home-assistant.io/integrations/sensor)
 
 Here is a summery of the sensors and their functionality
+
+_Sensors are gathering information about states and conditions.
+
+_Home Assistant currently supports a wide range of sensors. They are able to display information which are provides by Home Assistant directly, are gathered from web services, and, of course, physical devices._
 
 ## Climate Indoor
 

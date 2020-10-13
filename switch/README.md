@@ -1,6 +1,8 @@
-# Switches
+# [Switches](https://www.home-assistant.io/integrations/switch)
 
 Here is a summery of the custom switches and their functionality
+
+_Keeps track which switches are in your environment, their state and allows you to control them._
 
 ## Climate
 

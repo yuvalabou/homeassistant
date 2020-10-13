@@ -1,7 +1,6 @@
-# Automations
+# [Automations](https://www.home-assistant.io/integrations/automation)
 
-This is My automations folder,
-It is separeted to multiple files and each one is responsible for one type of automation.
+Here is a summery of the Automations and their functionality
 
 ## Good Practices
 
