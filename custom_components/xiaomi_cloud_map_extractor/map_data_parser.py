@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Dict, Optional
 
 from .const import *
 from .image_handler import ImageHandler
@@ -19,7 +19,7 @@ class MapDataParser:
     NO_MOPPING_AREAS = 12
     OBSTACLES = 13
     DIGEST = 1024
-    MM = 50.0
+    MM = 50
     SIZE = 1024
 
     @staticmethod
@@ -42,8 +42,10 @@ class MapDataParser:
             if block_type == MapDataParser.CHARGER:
                 map_data.charger = MapDataParser.parse_charger(block_start_position, raw)
             elif block_type == MapDataParser.IMAGE:
-                map_data.image = MapDataParser.parse_image(block_data_length, block_header_length, data, header, colors,
-                                                           image_config)
+                image, rooms = MapDataParser.parse_image(block_data_length, block_header_length, data, header, colors,
+                                                         image_config)
+                map_data.image = image
+                map_data.rooms = rooms
             elif block_type == MapDataParser.ROBOT_POSITION:
                 map_data.vacuum_position = MapDataParser.parse_vacuum_position(block_data_length, data)
             elif block_type == MapDataParser.PATH:
@@ -91,14 +93,19 @@ class MapDataParser:
                 < MINIMAL_IMAGE_HEIGHT:
             image_config[CONF_TRIM][CONF_TOP] = 0
             image_config[CONF_TRIM][CONF_BOTTOM] = 0
-        image = ImageHandler.parse(data, image_width, image_height, colors, image_config)
+        image, rooms = ImageHandler.parse(data, image_width, image_height, colors, image_config)
+        for number, room in rooms.items():
+            rooms[number] = Zone((room[0] + image_left) * MapDataParser.MM,
+                                 (room[1] + image_top) * MapDataParser.MM,
+                                 (room[2] + image_left) * MapDataParser.MM,
+                                 (room[3] + image_top) * MapDataParser.MM)
         return ImageData(image_size,
                          image_top,
                          image_left,
                          image_height,
                          image_width,
                          image_config,
-                         image)
+                         image), rooms
 
     @staticmethod
     def parse_goto_target(data):
@@ -234,27 +241,29 @@ class MapDataParser:
 
 class MapData:
     def __init__(self):
+        self.blocks = None
         self.charger: Optional[Point] = None
-        self.image: Optional[ImageData] = None
-        self.vacuum_position: Optional[Point] = None
-        self.path: Optional[List[Point]] = None
-        self.goto_path: Optional[List[Point]] = None
-        self.predicted_path: Optional[List[Point]] = None
-        self.zones: Optional[List[Area]] = None
         self.goto: Optional[List[Point]] = None
-        self.walls: Optional[List[Wall]] = None
+        self.goto_path: Optional[List[Point]] = None
+        self.image: Optional[ImageData] = None
         self.no_go_areas: Optional[List[Area]] = None
         self.no_mopping_areas: Optional[List[Area]] = None
         self.obstacles = None
-        self.blocks = None
+        self.path: Optional[List[Point]] = None
+        self.predicted_path: Optional[List[Point]] = None
+        self.rooms: Optional[Dict[int, Zone]] = None
+        self.vacuum_position: Optional[Point] = None
+        self.walls: Optional[List[Wall]] = None
+        self.zones: Optional[List[Zone]] = None
+        self.map_name: Optional[str] = None
 
     def calibration(self):
         calibration_points = []
         for point in [Point(25500, 25500), Point(26500, 25500), Point(26500, 26500)]:
             img_point = point.to_img(self.image.dimensions)
             calibration_points.append({
-                ATTR_VACUUM: {ATTR_X: point.x, ATTR_Y: point.y},
-                ATTR_MAP: {ATTR_X: int(img_point.x), ATTR_Y: int(img_point.y)}
+                "vacuum": {"x": point.x, "y": point.y},
+                "map": {"x": int(img_point.x), "y": int(img_point.y)}
             })
         return calibration_points
 

@@ -16,7 +16,6 @@ tts
 deps
 www/assets
 www/floor_plan
-www/community
 __pycache__
 
 # Ignore files
