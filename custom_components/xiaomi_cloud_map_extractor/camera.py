@@ -23,6 +23,11 @@ DEFAULT_TRIMS = {
     CONF_BOTTOM: 0
 }
 
+DEFAULT_SIZES = {
+    CONF_SIZE_VACUUM_RADIUS: 4,
+    CONF_SIZE_CHARGER_RADIUS: 4
+}
+
 COLOR_SCHEMA = vol.Or(
     vol.All(vol.Length(min=3, max=3), vol.ExactSequence((cv.byte, cv.byte, cv.byte)), vol.Coerce(tuple)),
     vol.All(vol.Length(min=4, max=4), vol.ExactSequence((cv.byte, cv.byte, cv.byte, cv.byte)), vol.Coerce(tuple))
@@ -46,8 +51,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
             cv.positive_int: COLOR_SCHEMA
         }),
         vol.Optional(CONF_DRAW, default=[]): vol.All(cv.ensure_list, [vol.In(CONF_AVAILABLE_DRAWABLES)]),
-        vol.Optional(CONF_MAP_TRANSFORM, default={CONF_SCALE: 1, CONF_ROTATE: 0, CONF_TRIM: DEFAULT_TRIMS}): vol.Schema(
-            {
+        vol.Optional(CONF_MAP_TRANSFORM, default={CONF_SCALE: 1, CONF_ROTATE: 0, CONF_TRIM: DEFAULT_TRIMS}):
+            vol.Schema({
                 vol.Optional(CONF_SCALE, default=1): vol.All(vol.Coerce(float), vol.Range(min=0)),
                 vol.Optional(CONF_ROTATE, default=0): vol.In([0, 90, 180, 270]),
                 vol.Optional(CONF_TRIM, default=DEFAULT_TRIMS): vol.Schema({
@@ -57,7 +62,20 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
                     vol.Optional(CONF_BOTTOM, default=0): PERCENT_SCHEMA
                 }),
             }),
-        vol.Optional(CONF_ATTRIBUTES, default=[]): vol.All(cv.ensure_list, [vol.In(CONF_AVAILABLE_ATTRIBUTES)])
+        vol.Optional(CONF_ATTRIBUTES, default=[]): vol.All(cv.ensure_list, [vol.In(CONF_AVAILABLE_ATTRIBUTES)]),
+        vol.Optional(CONF_TEXTS, default=[]):
+            vol.All(cv.ensure_list, [vol.Schema({
+                vol.Required(CONF_TEXT): cv.string,
+                vol.Required(CONF_X): vol.Coerce(float),
+                vol.Required(CONF_Y): vol.Coerce(float),
+                vol.Optional(CONF_COLOR, default=(0, 0, 0)): COLOR_SCHEMA,
+                vol.Optional(CONF_FONT, default=""): cv.string,
+                vol.Optional(CONF_FONT_SIZE, default=0): cv.positive_int
+            })]),
+        vol.Optional(CONF_SIZES, default=DEFAULT_SIZES): vol.Schema({
+            vol.Optional(CONF_SIZE_VACUUM_RADIUS, default=4): vol.All(vol.Coerce(float), vol.Range(min=0)),
+            vol.Optional(CONF_SIZE_CHARGER_RADIUS, default=4): vol.All(vol.Coerce(float), vol.Range(min=0))
+        })
     })
 
 
@@ -75,18 +93,21 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     for room, color in room_colors.items():
         colors[f"{COLOR_ROOM_PREFIX}{room}"] = color
     drawables = config[CONF_DRAW]
+    sizes = config[CONF_SIZES]
+    texts = config[CONF_TEXTS]
     if "all" in drawables:
         drawables = CONF_AVAILABLE_DRAWABLES[1:]
     attributes = config[CONF_ATTRIBUTES]
     async_add_entities([VacuumCamera(hass, host, token, username, password, country, name, should_poll, image_config,
-                                     colors, drawables, attributes)])
+                                     colors, drawables, sizes, texts, attributes)])
 
 
 class VacuumCamera(Camera):
     def __init__(self, hass, host, token, username, password, country, name, should_poll, image_config, colors,
-                 drawables, attributes):
+                 drawables, sizes, texts, attributes):
         super().__init__()
         self.hass = hass
+        self.content_type = CONTENT_TYPE
         self._vacuum = miio.Vacuum(host, token)
         self._connector = XiaomiCloudConnector(username, password, country)
         self._name = name
@@ -94,6 +115,8 @@ class VacuumCamera(Camera):
         self._image_config = image_config
         self._colors = colors
         self._drawables = drawables
+        self._sizes = sizes
+        self._texts = texts
         self._attributes = attributes
         self._image = None
         self._map_data = None
@@ -132,6 +155,7 @@ class VacuumCamera(Camera):
                 ATTRIBUTE_ROOM_NUMBERS: list(self._map_data.rooms.keys()),
                 ATTRIBUTE_ROOMS: self._map_data.rooms,
                 ATTRIBUTE_VACUUM_POSITION: self._map_data.vacuum_position,
+                ATTRIBUTE_VACUUM_ROOM: self._map_data.vacuum_room,
                 ATTRIBUTE_WALLS: self._map_data.walls,
                 ATTRIBUTE_ZONES: self._map_data.zones
             }.items():
@@ -159,7 +183,8 @@ class VacuumCamera(Camera):
             finally:
                 counter = counter - 1
         if self._logged and map_name != "retry":
-            self._map_data = self._connector.get_map(map_name, self._colors, self._drawables, self._image_config)
+            self._map_data = self._connector.get_map(map_name, self._colors, self._drawables, self._texts, self._sizes,
+                                                     self._image_config)
             if self._map_data is not None:
                 img_byte_arr = io.BytesIO()
                 self._map_data.image.data.save(img_byte_arr, format='PNG')

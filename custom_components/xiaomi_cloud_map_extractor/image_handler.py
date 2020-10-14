@@ -1,4 +1,5 @@
-from PIL import Image, ImageDraw
+from typing import Callable
+from PIL import Image, ImageDraw, ImageFont
 from .const import *
 
 
@@ -58,7 +59,7 @@ class ImageHandler:
         trim_bottom = int(image_config[CONF_TRIM][CONF_BOTTOM] * height / 100)
         trimmed_height = height - trim_top - trim_bottom
         trimmed_width = width - trim_left - trim_right
-        image = Image.new('RGB', (trimmed_width, trimmed_height))
+        image = Image.new('RGBA', (trimmed_width, trimmed_height))
         pixels = image.load()
         for img_y in range(trimmed_height):
             for img_x in range(trimmed_width):
@@ -95,6 +96,15 @@ class ImageHandler:
         if image_config["scale"] != 1:
             image = image.resize((int(trimmed_width * scale), int(trimmed_height * scale)), resample=Image.NEAREST)
         return image, rooms
+
+    @staticmethod
+    def get_room_at_pixel(raw_data: bytes, width, x, y):
+        room_number = None
+        pixel_type = raw_data[x + width * y]
+        if pixel_type not in [ImageHandler.MAP_INSIDE, ImageHandler.MAP_SCAN]:
+            if pixel_type & 0x07 == 7:
+                room_number = (pixel_type & 0xFF) >> 3
+        return room_number
 
     @staticmethod
     def draw_path(image, path, colors):
@@ -135,14 +145,14 @@ class ImageHandler:
                                     ImageHandler.__get_color__(COLOR_ZONES_OUTLINE, colors))
 
     @staticmethod
-    def draw_charger(image, charger, colors):
+    def draw_charger(image, charger, radius, colors):
         color = ImageHandler.__get_color__(COLOR_CHARGER, colors)
-        ImageHandler.__draw_circle__(image, charger, 4, color, color)
+        ImageHandler.__draw_circle__(image, charger, radius, color, color)
 
     @staticmethod
-    def draw_vacuum_position(image, vacuum_position, colors):
+    def draw_vacuum_position(image, vacuum_position, radius, colors):
         color = ImageHandler.__get_color__(COLOR_ROBO, colors)
-        ImageHandler.__draw_circle__(image, vacuum_position, 4, color, color)
+        ImageHandler.__draw_circle__(image, vacuum_position, radius, color, color)
 
     @staticmethod
     def rotate(image):
@@ -154,30 +164,57 @@ class ImageHandler:
             image.data = image.data.transpose(Image.ROTATE_270)
 
     @staticmethod
+    def draw_texts(image, texts):
+        for text_config in texts:
+            x = text_config[CONF_X] * image.dimensions.width / 100 * image.dimensions.scale
+            y = text_config[CONF_Y] * image.dimensions.height / 100 * image.dimensions.scale
+            ImageHandler.__draw_text__(image, text_config[CONF_TEXT], x, y, text_config[CONF_COLOR],
+                                       text_config[CONF_FONT], text_config[CONF_FONT_SIZE])
+
+    @staticmethod
     def __draw_circle__(image, center, r, outline, fill):
-        point = center.to_img(image.dimensions)
-        draw = ImageDraw.Draw(image.data, 'RGBA')
-        coords = [point.x - r, point.y - r, point.x + r, point.y + r]
-        draw.ellipse(coords, outline=outline, fill=fill)
+        def draw_func(draw: ImageDraw):
+            point = center.to_img(image.dimensions)
+            coords = [point.x - r, point.y - r, point.x + r, point.y + r]
+            draw.ellipse(coords, outline=outline, fill=fill)
+
+        ImageHandler.__draw_on_new_layer__(image, draw_func)
 
     @staticmethod
     def __draw_areas__(image, areas, fill, outline):
         if len(areas) == 0:
             return
-        draw = ImageDraw.Draw(image.data, 'RGBA')
-        for area in areas:
-            draw.polygon(area.to_img(image.dimensions).as_list(), fill, outline)
+
+        def draw_func(draw: ImageDraw):
+            for area in areas:
+                draw.polygon(area.to_img(image.dimensions).as_list(), fill, outline)
+
+        ImageHandler.__draw_on_new_layer__(image, draw_func)
 
     @staticmethod
     def __draw_path__(image, path, color):
         if len(path.path) < 2:
             return
-        draw = ImageDraw.Draw(image.data, 'RGBA')
-        s = path.path[0].to_img(image.dimensions)
-        for point in path.path[1:]:
-            e = point.to_img(image.dimensions)
-            draw.line([s.x, s.y, e.x, e.y], fill=color)
-            s = e
+
+        def draw_func(draw: ImageDraw):
+            s = path.path[0].to_img(image.dimensions)
+            for point in path.path[1:]:
+                e = point.to_img(image.dimensions)
+                draw.line([s.x, s.y, e.x, e.y], fill=color)
+                s = e
+
+        ImageHandler.__draw_on_new_layer__(image, draw_func)
+
+    @staticmethod
+    def __draw_text__(image, text, x, y, color, font_file=None, font_size=None):
+        def draw_func(draw: ImageDraw):
+            font = ImageFont.load_default()
+            if font_file != "" and font_size > 0:
+                font = ImageFont.truetype(font_file, font_size)
+            w, h = draw.textsize(text, font)
+            draw.text((x - w / 2, y - h / 2), text, font=font, fill=color)
+
+        ImageHandler.__draw_on_new_layer__(image, draw_func)
 
     @staticmethod
     def __get_color__(name, colors, default_name=None):
@@ -186,3 +223,10 @@ class ImageHandler:
         if default_name is None:
             return ImageHandler.COLORS[name]
         return ImageHandler.COLORS[default_name]
+
+    @staticmethod
+    def __draw_on_new_layer__(image, draw_function: Callable):
+        layer = Image.new("RGBA", image.data.size, (255, 255, 255, 0))
+        draw = ImageDraw.Draw(layer, "RGBA")
+        draw_function(draw)
+        image.data = Image.alpha_composite(image.data, layer)

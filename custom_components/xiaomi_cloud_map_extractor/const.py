@@ -2,21 +2,31 @@ CONF_ATTRIBUTES = "attributes"
 CONF_AUTO_UPDATE = "auto_update"
 CONF_AVAILABLE_COUNTRIES = ["ru", "us", "tw", "sg", "cn", "de"]
 CONF_BOTTOM = "bottom"
+CONF_COLOR = "color"
 CONF_COLORS = "colors"
 CONF_COUNTRY = "country"
 CONF_DRAW = "draw"
+CONF_FONT = "font"
+CONF_FONT_SIZE = "font_size"
 CONF_LEFT = "left"
 CONF_MAP_TRANSFORM = "map_transformation"
 CONF_RIGHT = "right"
 CONF_ROOM_COLORS = "room_colors"
 CONF_ROTATE = "rotate"
 CONF_SCALE = "scale"
+CONF_SIZES = "sizes"
+CONF_SIZE_CHARGER_RADIUS = "charger_radius"
+CONF_SIZE_VACUUM_RADIUS = "vacuum_radius"
+CONF_TEXT = "text"
+CONF_TEXTS = "texts"
 CONF_TOP = "top"
 CONF_TRIM = "trim"
+CONF_X = "x"
+CONF_Y = "y"
 
 MINIMAL_IMAGE_WIDTH = 20
 MINIMAL_IMAGE_HEIGHT = 20
-
+CONTENT_TYPE = "image/png"
 DEFAULT_NAME = "Xiaomi Cloud Map Extractor"
 
 ATTRIBUTE_CALIBRATION = "calibration_points"
@@ -33,13 +43,15 @@ ATTRIBUTE_PATH = "path"
 ATTRIBUTE_ROOM_NUMBERS = "room_numbers"
 ATTRIBUTE_ROOMS = "rooms"
 ATTRIBUTE_VACUUM_POSITION = "vacuum_position"
+ATTRIBUTE_VACUUM_ROOM = "vacuum_room"
 ATTRIBUTE_WALLS = "walls"
 ATTRIBUTE_ZONES = "zones"
 
 CONF_AVAILABLE_ATTRIBUTES = [ATTRIBUTE_CALIBRATION, ATTRIBUTE_CHARGER, ATTRIBUTE_GOTO, ATTRIBUTE_GOTO_PATH,
                              ATTRIBUTE_GOTO_PREDICTED_PATH, ATTRIBUTE_IMAGE, ATTRIBUTE_MAP_NAME, ATTRIBUTE_NO_GO_AREAS,
                              ATTRIBUTE_NO_MOPPING_AREAS, ATTRIBUTE_OBSTACLES, ATTRIBUTE_PATH, ATTRIBUTE_ROOM_NUMBERS,
-                             ATTRIBUTE_ROOMS, ATTRIBUTE_VACUUM_POSITION, ATTRIBUTE_WALLS, ATTRIBUTE_ZONES]
+                             ATTRIBUTE_ROOMS, ATTRIBUTE_VACUUM_POSITION, ATTRIBUTE_VACUUM_ROOM, ATTRIBUTE_WALLS,
+                             ATTRIBUTE_ZONES]
 
 ATTR_A = "a"
 ATTR_ANGLE = "angle"
