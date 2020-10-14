@@ -9,7 +9,7 @@
 # Vacuum map camera using @PiotrMachowski awesome custom integration
 # https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor
 - platform: xiaomi_cloud_map_extractor
-  name: 'Vacuum map'
+  name: "Vacuum map"
   host: !secret vacuum_host
   token: !secret vacuum_token
   username: !secret xiaomi_cloud_username
@@ -20,3 +20,4 @@
     - charger
     - path
     - vacuum_position
+  room_colors: true

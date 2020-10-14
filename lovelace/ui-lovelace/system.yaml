@@ -90,21 +90,36 @@ cards:
       - type: custom:hui-element
         card_type: entities
         entities:
-          - entity: script.reload_themes
-            icon: mdi:reload
-          - entity: script.reload_lovelace_resources
-            icon: mdi:reload
           - entity: script.reload_automations
+            icon: mdi:reload
+          - entity: script.reload_cli_sensors
+            icon: mdi:reload
+          - entity: script.reload_thermostats
             icon: mdi:reload
           - entity: script.reload_groups
             icon: mdi:reload
-          - entity: script.reload_scripts
+          - entity: script.reload_history_stats
             icon: mdi:reload
           - entity: script.reload_input_boolean
             icon: mdi:reload
+          - entity: script.reload_input_datetime
+            icon: mdi:reload
           - entity: script.reload_input_select
             icon: mdi:reload
+          - entity: script.reload_persons
+            icon: mdi:reload
+          - entity: script.reload_ping_sensors
+            icon: mdi:reload
+          - entity: script.reload_scripts
+            icon: mdi:reload
           - entity: script.reload_timers
+            icon: mdi:reload
+          - entity: script.reload_templates
+            icon: mdi:reload
+          - type: divider
+          - entity: script.reload_lovelace_resources
+            icon: mdi:reload
+          - entity: script.reload_themes
             icon: mdi:reload
 
   - type: entities
