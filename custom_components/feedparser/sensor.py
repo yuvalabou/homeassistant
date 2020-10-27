@@ -7,16 +7,18 @@ https://github.com/custom-components/sensor.feedparser
 Following spec from https://validator.w3.org/feed/docs/rss2.html
 """
 import asyncio
-import re
-import feedparser
 import logging
-import voluptuous as vol
+import re
 from datetime import timedelta
-from dateutil import parser
-from homeassistant.helpers.entity import Entity
+
 import homeassistant.helpers.config_validation as cv
-from homeassistant.components.sensor import (PLATFORM_SCHEMA)
-from homeassistant.const import (CONF_NAME)
+import voluptuous as vol
+from dateutil import parser
+from homeassistant.components.sensor import PLATFORM_SCHEMA
+from homeassistant.const import CONF_NAME
+from homeassistant.helpers.entity import Entity
+
+import feedparser
 
 __version__ = '0.1.1'
 _LOGGER = logging.getLogger(__name__)
