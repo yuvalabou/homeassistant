@@ -8,11 +8,11 @@
                 "data": {
                     "name": "Vlastný názov",
                     "date": "Prvý deň (yyyy-mm-dd) alebo (mm-dd) ak je rok neznámy",
-                    "one_time": "One Time Event (Non-recurring)",
+                    "one_time": "Jednorázový sviatok (bez opakovania)",
                     "show_half_anniversary": "Zobraziť atribúty polroka",
                     "date_format": "Formát dátumu (pozri http://strftime.org/)",
-                    "unit_of_measurement": "Text for unit_of_measurement",
-                    "id_prefix": "Entity_id Prefix"
+                    "unit_of_measurement": "Text pre jednotku",
+                    "id_prefix": "Predpoba entity"
                 }
             },
             "icons": {
@@ -23,13 +23,11 @@
                     "icon_today": "Ikona ked je výročie dnes",
                     "days_as_soon": "Počet dní, ktoré zostavajú do výročia",
                     "icon_soon": "Ikona pri príležitosti výročia"
-                    
-                    
                 }
             }
         },
         "error": {
-            "invalid_date": "Dátum je nesprávny.  Prosím vložte správny dátum vo formáte 'YYYY-MM-DD' alebo 'MM-DD'"
+            "invalid_date": "Dátum je nesprávny. Prosím vložte správny dátum vo formáte 'YYYY-MM-DD' alebo 'MM-DD'"
         }
     },
     "options": {
@@ -40,10 +38,10 @@
                 "data": {
                     "name": "Vlastný názov",
                     "date": "Prvý deň (yyyy-mm-dd) alebo (mm-dd) ak je rok neznámy",
-                    "one_time": "One Time Event (Non-recurring)",
+                    "one_time": "Jednorázový sviatok (bez opakovania)",
                     "show_half_anniversary": "Zobraziť atribúty polroka",
                     "date_format": "Formát dátumu (pozri http://strftime.org/)",
-                    "unit_of_measurement": "Text for unit_of_measurement"
+                    "unit_of_measurement": "Text pre jednotku"
                 }
             },
             "icons": {
@@ -54,13 +52,11 @@
                     "icon_today": "Ikona ked je výročie dnes",
                     "days_as_soon": "Počet dní, ktoré zostavajú do výročia",
                     "icon_soon": "Ikona pri príležitosti výročia"
-                    
-                    
                 }
             }
         },
         "error": {
-            "invalid_date": "Dátum je nesprávny.  Prosím vložte správny dátum vo formáte 'YYYY-MM-DD' alebo 'MM-DD'"
+            "invalid_date": "Dátum je nesprávny. Prosím vložte správny dátum vo formáte 'YYYY-MM-DD' alebo 'MM-DD'"
         }
     }
 }
