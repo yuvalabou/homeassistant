@@ -73,10 +73,12 @@ class MapDataParser:
                 block_pairs = MapDataParser.get_int16(header, 0x08)
                 map_data.blocks = MapDataParser.get_bytes(data, 0, block_pairs)
             block_start_position = block_start_position + block_data_length + (header[2] & 0xFF)
-        MapDataParser.draw_elements(colors, drawables, texts, sizes, map_data)
-        if len(map_data.rooms) > 0:
-            map_data.vacuum_room = MapDataParser.get_current_vacuum_room(img_start, raw, map_data.vacuum_position)
-        ImageHandler.rotate(map_data.image)
+        if not map_data.image.is_empty:
+            MapDataParser.draw_elements(colors, drawables, texts, sizes, map_data)
+            if len(map_data.rooms) > 0:
+                map_data.vacuum_room = MapDataParser.get_current_vacuum_room(img_start, raw, map_data.vacuum_position)
+            ImageHandler.rotate(map_data.image)
+            ImageHandler.draw_texts(map_data.image, texts)
         return map_data
 
     @staticmethod
@@ -234,7 +236,6 @@ class MapDataParser:
             ImageHandler.draw_zones(map_data.image, map_data.zones, colors)
         if DRAWABLE_ZONES in drawables and map_data.zones is not None:
             ImageHandler.draw_zones(map_data.image, map_data.zones, colors)
-        ImageHandler.draw_texts(map_data.image, texts)
 
     @staticmethod
     def get_bytes(data: bytes, start_index: int, size: int):
@@ -281,7 +282,7 @@ class MapData:
     def calibration(self):
         calibration_points = []
         for point in [Point(25500, 25500), Point(26500, 25500), Point(26500, 26500)]:
-            img_point = point.to_img(self.image.dimensions)
+            img_point = point.to_img(self.image.dimensions).rotated(self.image.dimensions)
             calibration_points.append({
                 "vacuum": {"x": point.x, "y": point.y},
                 "map": {"x": int(img_point.x), "y": int(img_point.y)}
@@ -318,6 +319,22 @@ class Point:
         y = image_dimensions.height - y - 1
         return Point(x * image_dimensions.scale, y * image_dimensions.scale)
 
+    def rotated(self, image_dimensions):
+        alpha = image_dimensions.rotation
+        w = int(image_dimensions.width * image_dimensions.scale)
+        h = int(image_dimensions.height * image_dimensions.scale)
+        x = self.x
+        y = self.y
+        while alpha > 0:
+            tmp = y
+            y = w - x
+            x = tmp
+            tmp = h
+            h = w
+            w = tmp
+            alpha = alpha - 90
+        return Point(x, y)
+
 
 class ImageDimensions:
     def __init__(self, top, left, height, width, scale, rotation):
@@ -344,6 +361,7 @@ class ImageData:
                                           width - trim_left - trim_right,
                                           scale,
                                           rotation)
+        self.is_empty = height == 0 or width == 0
         self.data = data
 
     def as_dict(self):
