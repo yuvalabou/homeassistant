@@ -22,7 +22,7 @@ aurora_frost:
   primary-color: 'var(--accent-color)'
 
   # Main Colors
-  app-header-background-color: '#344b52'
+  app-header-background-color: 'var(--background-color)'
   accent-color: '#10D1E2'
   accent-medium-color: 'var(--accent-color)'
 

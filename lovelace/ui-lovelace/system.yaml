@@ -146,9 +146,6 @@ cards:
             name: 'Output Voltage'
           - entity: sensor.e5_650i_input_voltage
             name: 'Input Voltage'
-          - entity: sensor.e5_650i_nominal_output_voltage
-            name: 'Nominal Output Voltage'
-            color: '#72BC1D'
         show:
           points: false
 
@@ -189,7 +186,6 @@ cards:
               - color: '#FF0F00'
                 from: 91
                 to: 100
-
       - type: custom:hui-element
         card_type: entities
         entities:

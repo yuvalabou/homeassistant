@@ -5,11 +5,7 @@
 - platform: template
   sensors:
     steam_game_on:
-      friendly_name: 'Is Steam Playing?'
+      friendly_name: 'Steam Playing'
       icon_template: mdi:steam
       value_template: >-
-        {% if is_state('sensor.steam_game', 'None') %}
-          False
-        {% else %}
-          True
-        {% endif %}
+        {{ not is_state('sensor.steam_game', 'None') }}

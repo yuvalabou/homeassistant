@@ -5,6 +5,7 @@
   api_key: !secret steam_api
   accounts:
     - 76561198173612681
+
 - platform: template
   sensors:
     steam_game:

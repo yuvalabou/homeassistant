@@ -2,22 +2,26 @@
 
 Here is a summery of the Automations and their functionality
 
-## Good Practices
-
-### Unique ID for every automation
-
-_When setting automations it is good to set up a unique ID for each one, ths way you can change the alias of the automation without breaking your automations._
-
------
-
 ## Climate
+
+Automations for climate control
 
 ## Lights
 
-## Notify
+Automations for lightings
+
+## Notify mold
+
+Notify us when mold is developing in the bathroom
+
+## Notify Shabat
+
+Automations to notify before Shabbat enters
 
 ## Shabat Lighting
 
-## Shabat
+Automations to control the lighting for Shabbat
 
 ## Vacuum
+
+Robot Vacuum automations

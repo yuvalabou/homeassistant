@@ -11,8 +11,6 @@
   type: module
 - url: /hacsfiles/banner-card/banner-card.js
   type: module
-- url: /hacsfiles/custom-header/custom-header.js
-  type: module
 - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
   type: module
 - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
@@ -29,8 +27,6 @@
   type: module
 - url: /hacsfiles/battery-state-card/battery-state-card.js
   type: module
-- url: /hacsfiles/lovelace-card-preloader/lovelace-card-preloader.js
-  type: js
 - url: /hacsfiles/air-visual-card/air-visual-card.js
   type: js
 - url: /hacsfiles/compass-card/compass-card.js

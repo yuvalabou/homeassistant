@@ -57,11 +57,7 @@ device_tracker: !include device_tracker.yaml
 ##################################################
 # Discover some devices automatically.
 discovery:
-
-# Discover some devices automatically.
 zeroconf:
-
-# Discover some devices automatically.
 ssdp:
 
 ##################################################
@@ -75,9 +71,6 @@ vacuum:
 
 # Uses the Speedtest.net web service to measure network bandwidth performance.
 speedtestdotnet:
-
-# Allows the user to define date and time values.
-input_datetime:
 
 # Displays a variety of information related to the Jewish Calendar as a variety of sensors.
 jewish_calendar:
@@ -111,7 +104,6 @@ proxmoxve:
       - node: pve
         vms:
           - 100
-          - 101
 
 ##################################################
 #                    LOG COMPONENTS              #
@@ -157,10 +149,12 @@ binary_sensor: !include_dir_merge_list binary_sensor
 camera: !include camera.yaml
 group: !include group.yaml
 input_boolean: !include input_boolean.yaml
+input_datetime:
 #input_number: !include input_number.yaml
 input_select: !include input_select.yaml
 #input_text: !include input_text.yaml
 light: !include light.yaml
+scene: !include_dir_merge_list scene
 script: !include_dir_merge_named script
 sensor: !include_dir_merge_list sensor
 #shell_command: !include shell_command.yaml

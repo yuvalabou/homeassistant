@@ -22,7 +22,7 @@
       icon_template: mdi:timetable
 
 - platform: history_stats
-  name: 'Track Netflix'
+  name: 'Track Netflix watch time'
   entity_id: binary_sensor.netflix_on
   state: 'on'
   type: time
@@ -32,11 +32,31 @@
     {{ now() }}
 - platform: template
   sensors:
-    track_netflix_usage_formatted:
+    track_netflix_watchtime_formatted:
       friendly_name: 'Formatted Netflix usage'
       value_template: >-
         {% set hours = states('sensor.track_netflix') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}
         {% set hours = (hours - (hours % 1)) | int %}
         {{ '%02i.%02i'%(hours, minutes) }}
-      icon_template: mdi:timetable
+      icon_template: mdi:netflix
+
+- platform: history_stats
+  name: 'Track YouTube watch time'
+  entity_id: binary_sensor.youtube_on
+  state: 'on'
+  type: time
+  start: >-
+    {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
+  end: >-
+    {{ now() }}
+- platform: template
+  sensors:
+    track_youtube_watchtime_formatted:
+      friendly_name: 'Formatted YouTube usage'
+      value_template: >-
+        {% set hours = states('sensor.track_youtube') | float %}
+        {% set minutes = ((hours % 1) * 60) | int %}
+        {% set hours = (hours - (hours % 1)) | int %}
+        {{ '%02i.%02i'%(hours, minutes) }}
+      icon_template: mdi:youtube

@@ -33,10 +33,11 @@ cards:
             entities:
               - entity: sensor.master_bedroom_sensibo_humidity
                 name: 'Humidity'
+                color: '#74A4F4'
             font_size: 80
             lower_bound: 0
             upper_bound: 100
-            points_per_hour: 6
+            points_per_hour: 12
             show:
               fill: fade
               points: false

@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.116.2%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![CI](https://img.shields.io/github/workflow/status/yuvalabou/HomeAssistant-Config/Home%20Assistant?label=GitHub%20CI&style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/actions)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
@@ -30,7 +30,7 @@
 
 ## [GitHub CI](https://github.com/yuvalabou/HomeAssistant-Config/blob/master/.github/workflows/homeassistant.yml)
 
-Every push or pull request is checked with [GitHub actions](https://github.com/yuvalabou/HomeAssistant-Config/actions?query=workflow%3A%22Home+Assistant%22), Ensuring proper YAML formatting and configuration pass against current and RC versions of Home Assistant.
+Every push or PR is checked with [GitHub actions](https://github.com/yuvalabou/HomeAssistant-Config/actions?query=workflow%3A%22Home+Assistant%22), Ensuring proper YAML formatting and configuration pass against current and RC versions of Home Assistant.
 I did it mainly as a good practice and learning experience as I obviously can check it localy.
 You may benefit from the script if you want to implement it yourself, But it's also guarantee that whatever you copy from this repo, Will work!
 
@@ -40,7 +40,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|400       |263      |32              |7         |33           |29       |
+|408       |268      |32              |7         |34           |29       |
 
 -----
 
@@ -48,7 +48,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Lovelace Mode | Resources | Views |
 |:-------------:|:---------:|:-----:|
-|YAML           |16         |8      |
+|YAML           |17         |8      |
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
@@ -60,18 +60,6 @@ You may benefit from the script if you want to implement it yourself, But it's a
 |1             |3                    |2            |
 
 -----
-
-### [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)
-
-Inside the automations folder you will find all the automations that I use and some good practices in setting them up.
-
-#### Examples
-
-- Vacuum - Notify for cleaning completed
-
-<img src=
-    "https://raw.githubusercontent.com/yuvalabou/HomeAssistant-Config/master/config_examples/vac_completed.jpg"
-    width=200>
 
 ## Official Addons
 
@@ -143,34 +131,20 @@ A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) de
 ### Integrations
 
 - [Anniversaries](https://github.com/pinkywafer/Anniversaries)
+- [FeedParser](https://github.com/custom-components/feedparser)
 - [Read my meter](https://github.com/maorcc/citymind_water_meter)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
-- [FeedParser](https://github.com/custom-components/feedparser)
 
 ### Lovelace-UI Enhancements
 
-- [Custom Header](https://maykar.github.io/custom-header/#intro/intro)
-- [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
-- [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
-- [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
-- [Weather Card](https://github.com/bramkragten/weather-card)
-- [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
-- [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
-- [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
-- [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
 - [Battery State Card](https://github.com/maxwroc/battery-state-card)
-
------
-
-## License
-
-<img src =
-    "https://unlicense.org/pd-icon.png"
-    align="right">
-
-Anyone is free to copy, modify, publish, use, compile, sell, or
-distribute this software, either in source code form or as a compiled
-binary, for any purpose, commercial or non-commercial, and by any
-means.
+- [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
+- [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
+- [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
+- [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
+- [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
+- [Weather Card](https://github.com/bramkragten/weather-card)

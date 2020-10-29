@@ -1,0 +1,19 @@
+###
+# Shabat eve scene
+###
+# TODO: needs testing
+- name: "Shabat eve"
+  icon: mdi:candle
+  entities:
+    light.room_lights:
+      state: 'off'
+    light.living_room_lights:
+      state: 'on'
+      brightness_pct: 90
+      kelvin: 3200
+    light.importent_lights:
+      state: 'on'
+      brightness_pct: 70
+      kelvin: 4000
+    switch.shabat_mode:
+      state: 'on'

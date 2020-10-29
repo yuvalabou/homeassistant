@@ -2,27 +2,10 @@
 #               LOVELACE-UI               #
 ###########################################
 ###
-# Preload cards
-# https://github.com/gadgetchnnel/lovelace-card-preloader
-###
-preload_cards:
-  - picture-entity
-
-###
-# Define custom header
-# https://maykar.github.io/custom-header/#intro/intro
-###
-custom_header:
-  compact_mode: true
-  background: 'var(--background-image)'
-  button_text:
-    options: >-
-      {{ time }} - {{ states('sensor.outside_temps') }}°
-
-###
 # Define views
 # https://www.home-assistant.io/lovelace
 ###
+
 title: 'Aboulafia Home'
 views:
   - !include lovelace/ui-lovelace/overview.yaml

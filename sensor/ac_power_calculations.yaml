@@ -1,5 +1,5 @@
 ###
-# Power calculations
+# AC power calculations
 ###
 
 # AC
@@ -10,7 +10,7 @@
       unit_of_measurement: 'kW'
       value_template: >-
         {% if is_state('binary_sensor.living_room_ac_is_on', 'on') and
-              is_state('climate.slvn', 'cool') %}
+              is_state('climate.slvn', 'heat_cool') %}
           2.04
         {% elif is_state('binary_sensor.living_room_ac_is_on', 'on') and
                 is_state('climate.slvn', 'heat') %}%}

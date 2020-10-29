@@ -7,11 +7,7 @@
     living_room_ac_is_on:
       friendly_name: 'Living Room AC'
       value_template: >-
-        {% if is_state('climate.slvn', 'off') %}
-          False
-        {% else %}
-          True
-        {% endif %}
+        {{ not is_state('climate.slvn', 'off') }}
       icon_template: >-
         {% if is_state('binary_sensor.living_room_ac_is_on', 'on') %}
           mdi:hvac
@@ -21,11 +17,7 @@
     master_bedroom_ac_is_on:
       friendly_name: 'Master Bedroom AC'
       value_template: >-
-        {% if is_state('climate.shynh', 'off') %}
-          False
-        {% else %}
-          True
-        {% endif %}
+        {{ not is_state('climate.shynh', 'off') }}
       icon_template: >-
         {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') %}
           mdi:hvac

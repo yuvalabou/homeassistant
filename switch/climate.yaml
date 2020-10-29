@@ -6,12 +6,7 @@
     living_room_ac_switch:
       friendly_name: "Living Room AC"
       value_template: >-
-        {{
-          is_state('climate.slvn', 'cool')
-          or is_state('climate.slvn', 'heat')
-          or is_state('climate.slvn', 'dry')
-          or is_state('climate.slvn', 'fan_only')
-        }}
+        {{ not is_state('climate.slvn', 'off') }}
       turn_on:
         service: climate.set_hvac_mode
         data:

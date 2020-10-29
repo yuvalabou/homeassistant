@@ -1,0 +1,20 @@
+###
+# Mold alerts
+###
+- alias: 'Mold alert'
+  id: bed08b9e-78e4-4610-8220-be3e6193c288
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bathroom_mold_indicator
+    above: 65
+    for:
+      minutes: 5
+  action:
+    - service: notify.mobile_app_mi_9t
+      data:
+        title: 'עובש במקלחת'
+        message: 'כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש.'
+    - service: notify.mobile_app_redmi_note_7
+      data:
+        title: 'עובש במקלחת'
+        message: 'כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש.'
