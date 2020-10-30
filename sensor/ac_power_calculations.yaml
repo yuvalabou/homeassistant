@@ -16,7 +16,7 @@
               is_state('climate.slvn', 'cool') %}
           2.04
         {% elif is_state('binary_sensor.living_room_ac_is_on', 'on') and
-                is_state('climate.slvn', 'heat') %}%}
+                is_state('climate.slvn', 'heat') %}
           2.317
         {% else %}
           0
