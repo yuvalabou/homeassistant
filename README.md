@@ -88,7 +88,7 @@ ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configu
 This Add-on allows you to enable file sharing across different operating systems over a network.
 
 <img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/ssh/logo.png"
+    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/mariadb/logo.png"
     align = "right"
     width=150>
 
