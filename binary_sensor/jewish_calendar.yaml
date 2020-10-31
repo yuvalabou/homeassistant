@@ -14,6 +14,12 @@
         {% else %}
           mdi:food
         {% endif %}
+# Return True if it is omer day today
+- platform: template
+  sensors:
+    is_omer:
+      value_template: >-
+        {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
 
 # Shabat notification trigger
 # FIXME: These sensors have hardcoded timezone offset.

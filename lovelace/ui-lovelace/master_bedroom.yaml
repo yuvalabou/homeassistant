@@ -83,7 +83,3 @@ cards:
               - "#00ff00"
       - entity: sensor.redmi_note_7_next_alarm
         name: 'Alarm'
-
-  - type: media-control
-    entity: media_player.mibox3
-    name: "Mi-Box 3"

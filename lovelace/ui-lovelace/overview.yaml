@@ -71,9 +71,20 @@ cards:
       - entity: sensor.jewish_calendar_date
         name: 'תאריך'
       - entity: binary_sensor.is_fast_day
-        name: 'צום'
+        type: conditional
+        conditions:
+          - entity: binary_sensor.is_fast_day
+            state: 'on'
+        row:
+          entity: binary_sensor.is_fast_day
       - entity: sensor.jewish_calendar_day_of_the_omer
-        name: 'ספירת העומר'
+        type: conditional
+        conditions:
+          - entity: binary_sensor.is_omer
+            state: 'on'
+        row:
+          entity: sensor.jewish_calendar_day_of_the_omer
+          name: 'ספירת העומר'
       - type: divider
       - entity: sensor.jewish_calendar_parshat_hashavua
         name: 'פרשת השבוע'
