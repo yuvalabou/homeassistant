@@ -21,8 +21,10 @@ vacuum_fan_speed_list:
 shabat_lights_off_time:
   name: 'Shabat turn off light time'
   icon: mdi:clock
-  initial: '22:00'
+  initial: '21:00'
   options:
+    - '20:30'
+    - '20:45'
     - '21:00'
     - '21:15'
     - '21:30'

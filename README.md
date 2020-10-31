@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![CI](https://img.shields.io/github/workflow/status/yuvalabou/HomeAssistant-Config/Home%20Assistant?label=GitHub%20CI&style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/actions)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
@@ -89,15 +89,6 @@ This Add-on allows you to enable file sharing across different operating systems
 
 <img src =
     "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/ssh/logo.png"
-    align = "right"
-    width=150>
-
-### [Terminal & SSH](https://github.com/home-assistant/hassio-addons/tree/master/ssh)
-
-Allow logging in remotely to Home Assistant using SSH or just the web terminal with Ingress.
-
-<img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/mariadb/logo.png"
     align = "right"
     width=150>
 

@@ -13,10 +13,7 @@ homeassistant:
   # Location required to calculate the time the sun rises and sets.
   latitude: !secret home_lat
   longitude: !secret home_lon
-  # Impacts weather/sunrise data (altitude above sea level in meters).
   elevation: !secret elevation
-  # metric for Metric, imperial for Imperial.
-  unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Asia/Jerusalem
   # Customizing entities.
@@ -69,15 +66,9 @@ vacuum:
     host: !secret vacuum_host
     token: !secret vacuum_token
 
-# Uses the Speedtest.net web service to measure network bandwidth performance.
-speedtestdotnet:
-
 # Displays a variety of information related to the Jewish Calendar as a variety of sensors.
 jewish_calendar:
   language: hebrew
-
-# Allows you to monitor the system information provided by the Glances API.
-glances:
 
 # Connect to your Google Calendars and generate binary sensors.
 # TODO: integrate the calendar again
@@ -90,9 +81,6 @@ pi_hole:
   host: !secret nanopi_neo2
   api_key: !secret pi_hole_key
 
-# The Climate integration allows you to control and monitor HVAC devices and thermostats..
-climate: !include climate.yaml
-
 # Proxmox VE is an open-source server virtualization environment. Allows you to poll various data from your instance.
 proxmoxve:
   - host: !secret server
@@ -104,6 +92,28 @@ proxmoxve:
       - node: pve
         vms:
           - 100
+
+automation: !include_dir_merge_list automation
+binary_sensor: !include_dir_merge_list binary_sensor
+camera: !include camera.yaml
+climate: !include climate.yaml
+glances:
+group: !include group.yaml
+input_boolean: !include input_boolean.yaml
+input_datetime:
+input_select: !include input_select.yaml
+light: !include light.yaml
+scene: !include_dir_merge_list scene
+script: !include_dir_merge_named script
+sensor: !include_dir_merge_list sensor
+speedtestdotnet:
+sun:
+switch: !include_dir_merge_list switch
+system_health:
+timer: !include timer.yaml
+updater:
+utility_meter: !include sensor/utility_meter.yaml
+zone: !include zone.yaml
 
 ##################################################
 #                    LOG COMPONENTS              #
@@ -124,41 +134,3 @@ logger:
 # Stores information about all logged errors and warnings in Home Assistant.
 system_log:
   max_entries: 150
-
-##################################################
-#                     COMPONENTS                 #
-##################################################
-# Checks daily for new releases.
-updater:
-  reporting: false
-
-# Track the sun.
-sun:
-
-# System health.
-system_health:
-
-# Python scripts that are exposed as services in Home Assistant.
-#python_script:
-
-##################################################
-#                     DOMAINS                    #
-##################################################
-automation: !include_dir_merge_list automation
-binary_sensor: !include_dir_merge_list binary_sensor
-camera: !include camera.yaml
-group: !include group.yaml
-input_boolean: !include input_boolean.yaml
-input_datetime:
-#input_number: !include input_number.yaml
-input_select: !include input_select.yaml
-#input_text: !include input_text.yaml
-light: !include light.yaml
-scene: !include_dir_merge_list scene
-script: !include_dir_merge_named script
-sensor: !include_dir_merge_list sensor
-#shell_command: !include shell_command.yaml
-switch: !include_dir_merge_list switch
-timer: !include timer.yaml
-utility_meter: !include utility_meter.yaml
-zone: !include zone.yaml
