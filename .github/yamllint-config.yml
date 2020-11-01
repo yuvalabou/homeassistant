@@ -1,18 +1,22 @@
 ---
 #####
-# Used to configure yamlling so it skips some checks
+# Used to configure yamllint so it skips some checks
 # But also some files too
 #####
 extends: default
 
 rules:
-  line-length: disable
+  line-length:
+    max: 80
+    allow-non-breakable-words: true
   comments-indentation: disable
   document-start: disable
-  indentation: disable
+  indentation:
+    spaces: consistent
 
 ignore: |
   lovelace-ui.yaml
   custom_components/
   .git
   themes/
+  www/
