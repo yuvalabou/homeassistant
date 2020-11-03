@@ -10,7 +10,7 @@
 # https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor
 - platform: xiaomi_cloud_map_extractor
   name: "Vacuum map"
-  host: !secret vacuum_host
+  host: !secret vacuum
   token: !secret vacuum_token
   username: !secret xiaomi_cloud_username
   password: !secret xiaomi_cloud_password

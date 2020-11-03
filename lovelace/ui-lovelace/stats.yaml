@@ -28,7 +28,7 @@ cards:
       labels_secondary: false
       points: false
     line_width: 2
-    color_thresholds: !include ../graph_card_temperature_thresholds.yaml
+    color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
 
   - type: custom:mini-graph-card
     name: 'Motion last 3 Hours'
@@ -46,9 +46,6 @@ cards:
       - entity: binary_sensor.bathroom_motion
         show_points: false
         color: "#C4BAB0"
-#          - entity: binary_sensor.master_bedroom_motion
-#            show_points: false
-#            color: "#A886F7"
       - entity: binary_sensor.day
         show_points: false
         show_legend: false

@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 102020            #
+#            Yuval Aboulafia - 112020            #
 ##################################################
 
 ##################################################
@@ -8,9 +8,7 @@
 ##################################################
 # Home Assistant core settings.
 homeassistant:
-  # Name of the location where Home Assistant is running.
   name: Home
-  # Location required to calculate the time the sun rises and sets.
   latitude: !secret home_lat
   longitude: !secret home_lon
   elevation: !secret elevation
@@ -19,7 +17,7 @@ homeassistant:
   # Customizing entities.
   customize: !include customize.yaml
 
-# Allows Home Assistant mobile app to easily integrate with Home Assistant.
+# Integrates Home Assistant mobile app.
 mobile_app:
 
 ##################################################
@@ -27,12 +25,10 @@ mobile_app:
 ##################################################
 # Enables the frontend.
 frontend:
-  themes: !include_dir_merge_named themes
-
-# Enables custom UI Settings.
+  themes: !include_dir_merge_named lovelace/themes
 lovelace:
   mode: yaml
-  resources: !include lovelace/resources.yaml
+  resources: !include lovelace/resources/resources.yaml
 
 # Enables configuration UI.
 config:
@@ -43,11 +39,11 @@ map:
 ##################################################
 #                     PERSONS                    #
 ##################################################
-# Allows connecting device tracker entities to one or more person entities.
-person: !include person.yaml
+# Connecting device tracker entities to one or more person entities.
+person: !include integrations/person.yaml
 
 # Presence detection and tracking.
-device_tracker: !include device_tracker.yaml
+device_tracker: !include integrations/device_tracker.yaml
 
 ##################################################
 #                   DISCOVERY                    #
@@ -63,74 +59,45 @@ ssdp:
 # Allows you to control your Xiaomi Mi Robot Vacuum.
 vacuum:
   - platform: xiaomi_miio
-    host: !secret vacuum_host
+    host: !secret vacuum
     token: !secret vacuum_token
 
-# Displays a variety of information related to the Jewish Calendar as a variety of sensors.
+# Displays a variety of information related to the Jewish Calendar.
 jewish_calendar:
   language: hebrew
 
-# Connect to your Google Calendars and generate binary sensors.
-# TODO: integrate the calendar again
-#google:
-#  client_id: !secret gcalendar_id
-#  client_secret: !secret gcalendar_client_secret
-
-# Allows you to retrieve statistics and interact with a Pi-hole system.
+# Retrieve statistics and interact with a Pi-hole instance.
 pi_hole:
   host: !secret nanopi_neo2
   api_key: !secret pi_hole_key
 
-# Proxmox VE is an open-source server virtualization environment. Allows you to poll various data from your instance.
-proxmoxve:
-  - host: !secret server
-    username: !secret proxmox_user
-    password: !secret proxmox_passwd
-    verify_ssl: false
-    realm: pve
-    nodes:
-      - node: pve
-        vms:
-          - 100
-
 automation: !include_dir_merge_list automation
-binary_sensor: !include_dir_merge_list binary_sensor
-camera: !include camera.yaml
-climate: !include climate.yaml
+binary_sensor: !include_dir_merge_list integrations/binary_sensor
+camera: !include integrations/camera.yaml
+climate: !include integrations/climate.yaml
 glances:
-group: !include group.yaml
-input_boolean: !include input_boolean.yaml
+group: !include integrations/group.yaml
+input_boolean: !include integrations/input_boolean.yaml
 input_datetime:
-input_select: !include input_select.yaml
-light: !include light.yaml
+input_select: !include integrations/input_select.yaml
+light: !include integrations/light.yaml
 scene: !include_dir_merge_list scene
-script: !include_dir_merge_named script
-sensor: !include_dir_merge_list sensor
+script: !include_dir_merge_named integrations/script
+sensor: !include_dir_merge_list integrations/sensor
 speedtestdotnet:
 sun:
-switch: !include_dir_merge_list switch
+switch: !include_dir_merge_list integrations/switch
 system_health:
-timer: !include timer.yaml
+timer: !include integrations/timer.yaml
 updater:
-utility_meter: !include sensor/utility_meter.yaml
-zone: !include zone.yaml
+utility_meter: !include integrations/sensor/utility_meter.yaml
+zone: !include integrations/zone.yaml
 
 ##################################################
 #                    LOG COMPONENTS              #
 ##################################################
-# Enables support for tracking state changes over time.
 history: !include logging/history.yaml
-
-# View events in a logbook
 logbook: !include logging/logbook.yaml
-
-# Stores details in a database, which then are handled by the history integration.
 recorder: !include logging/recorder.yaml
-
-# Set the default level for the logger.
 logger:
-  default: warning
-
-# Stores information about all logged errors and warnings in Home Assistant.
 system_log:
-  max_entries: 150

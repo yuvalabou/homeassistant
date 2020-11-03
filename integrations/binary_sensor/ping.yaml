@@ -3,7 +3,7 @@
 ###
 # Used for checking if a device is online
 - platform: ping
-  host: !secret vacuum_host
+  host: !secret vacuum
   name: 'Vacuum'
   count: 5
   scan_interval: 300

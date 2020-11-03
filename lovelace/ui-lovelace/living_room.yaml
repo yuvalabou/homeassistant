@@ -21,7 +21,7 @@ cards:
                 color: "white"
                 show_fill: false
             font_size: 80
-            color_thresholds: !include ../graph_card_temperature_thresholds.yaml
+            color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
             points_per_hour: 6
             show:
               fill: fade
