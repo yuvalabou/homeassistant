@@ -6,29 +6,23 @@
   host: !secret vacuum
   name: 'Vacuum'
   count: 5
-  scan_interval: 300
 - platform: ping
   host: !secret laptop
   name: 'Laptop'
   count: 2
-  scan_interval: 300
 - platform: ping
   host: !secret nanopi_neo2
   name: 'NanoPi-NEO2'
   count: 2
-  scan_interval: 300
 - platform: ping
   host: !secret tv
   name: 'TV'
   count: 2
-  scan_interval: 300
 - platform: ping
   host: !secret printer
   name: 'Printer'
   count: 2
-  scan_interval: 300
 - platform: ping
   host: !secret rpi2
   name: 'Raspberry-Pi2'
   count: 2
-  scan_interval: 300
