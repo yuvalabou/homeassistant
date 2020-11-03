@@ -6,7 +6,7 @@ _Keeps track which switches are in your environment, their state and allows you 
 
 ## Climate
 
-[Template](https://www.home-assistant.io/integrations/switch.template/) switch to create a "on/off" switch for the living rooom AC unit
+[Template](https://www.home-assistant.io/integrations/switch.template/) switch to create a "on/off" switch for the living room AC unit
 
 ## Lights
 
@@ -14,4 +14,4 @@ _Keeps track which switches are in your environment, their state and allows you 
 
 ## Shabat switch
 
-[Template](https://www.home-assistant.io/integrations/switch.template/) switch to create a "on/off" switch for Shabat mode to disable all human triggered sensors
+[Template](https://www.home-assistant.io/integrations/switch.template/) to create a "on/off" switch for Shabat mode that disable all human triggered sensors

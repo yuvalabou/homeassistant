@@ -19,8 +19,10 @@
   entity_id: binary_sensor.steam_game_on
   state: 'on'
   type: time
-  start: '{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}'
-  end: '{{ now() }}'
+  start: >-
+    {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
+  end: >-
+    {{ now() }}
 - platform: template
   sensors:
     track_steam_playtime_formatted:

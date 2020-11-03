@@ -4,6 +4,7 @@
 - platform: template
   switches:
     living_room_ac_switch:
+      unique_id: 6e4a372c-03d0-484b-b754-0ef18bf9f223
       friendly_name: "Living Room AC"
       value_template: >-
         {{ not is_state('climate.slvn', 'off') }}
