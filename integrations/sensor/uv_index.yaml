@@ -38,3 +38,19 @@
         {% elif index < 0 %}
           mdi:eye
         {% endif %}
+      attribute_templates:
+        color: >-
+          {% set index = (states('sensor.current_uv_index')) | int %}
+          {% if index >= 11 %}
+            #E90E69
+          {% elif index >= 8 %}
+            #F90F10
+          {% elif index >= 6 %}
+            #FBA404
+          {% elif index >= 3 %}
+            #FCFB05
+          {% elif index >= 0 %}
+            #B8EC13
+          {% elif index < 0 %}
+            None
+          {% endif %}

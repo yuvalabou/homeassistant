@@ -6,10 +6,16 @@
     redmi_note_7_next_alarm_formatted:
       friendly_name: 'Tohar next Alarm'
       value_template: >-
-        {{ as_timestamp(states('sensor.redmi_note_7_next_alarm')) | timestamp_custom('%H:%M') }}
+        {{
+          as_timestamp(states('sensor.redmi_note_7_next_alarm')) |
+          timestamp_custom('%H:%M')
+        }}
       icon_template: mdi:alarm
     mi_9t_next_alarm_formatted:
       friendly_name: 'Yuval next Alarm'
       value_template: >-
-        {{ as_timestamp(states('sensor.mi_9t_next_alarm')) | timestamp_custom('%H:%M') }}
+        {{
+          as_timestamp(states('sensor.mi_9t_next_alarm')) |
+          timestamp_custom('%H:%M')
+        }}
       icon_template: mdi:alarm

@@ -36,5 +36,9 @@
       friendly_name: 'Total AC power consumption'
       unit_of_measurement: 'kW'
       value_template: >-
-        {{ (states('sensor.living_room_ac_power_consumption') | float) + (states('sensor.master_bedroom_ac_power_consumption') | float) }}
+        {{
+          (states('sensor.living_room_ac_power_consumption') | float)
+          +
+          (states('sensor.master_bedroom_ac_power_consumption') | float)
+        }}
       icon_template: mdi:flash
