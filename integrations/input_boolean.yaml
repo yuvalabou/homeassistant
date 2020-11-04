@@ -6,17 +6,25 @@
 # https://www.home-assistant.io/integrations/input_boolean
 ###
 
+###
 # Vacuum
+###
+# Cleaned today
 cleaned_today:
-  name: 'Cleaned today'
+  name: "Cleaned today"
   icon: mdi:broom
+
+# Disable automatic cleaning
+disable_auto_clean:
+  name: "Disable automatic cleaning"
+  icon: mdi:shield-half-full
 
 # Movement detection
 shabat_mode:
-  name: 'מצב שבת'
+  name: "מצב שבת"
   icon: mdi:candle
 
 # Night light override
 night_light_override:
-  name: 'Night Light Override'
+  name: "Night light override"
   icon: mdi:shield-half-full

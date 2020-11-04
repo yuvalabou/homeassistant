@@ -1,8 +1,8 @@
 ###
 # Vacuum
 ###
-# Vacuum waits until everybody leave to start cleaning
-- alias: 'Vacuum - Wait until everybody leave to start cleaning'
+# Vacuum will start cleaning when everybody leave
+- alias: "Vacuum - Wait until everybody leave to start cleaning"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
     platform: state
@@ -18,6 +18,9 @@
     - condition: state
       entity_id: input_boolean.cleaned_today
       state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_auto_clean
+      state: 'off'
   action:
     - service: vacuum.start
       data:
@@ -32,7 +35,7 @@
         message: "The house was empty - So I started cleaning."
 
 # Vacuum nofity on complete
-- alias: 'Vacuum - Notify on complete'
+- alias: "Vacuum - Notify on complete"
   id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
   trigger:
     platform: state
@@ -54,7 +57,7 @@
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
 # Vacuum return to dock if in error state more then 1 hr
-- alias: 'Return to dock if error for 1 hr'
+- alias: "Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state
@@ -68,13 +71,13 @@
         entity_id: vacuum.xiaomi_vacuum_cleaner
     - service: notify.mobile_app_mi_9t
       data:
-        title: 'Returning to Dock'
+        title: "Returning to Dock"
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
     - service: notify.mobile_app_redmi_note_7
       data:
-        title: 'Returning to Dock'
+        title: "Returning to Dock"
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
@@ -105,7 +108,7 @@
         entity_id: input_boolean.cleaned_today
 
 # Vacuum - Intelligent Mode
-- alias: 'Intelligent Turbo mode'
+- alias: "Intelligent Turbo mode"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
     platform: state
@@ -113,7 +116,7 @@
     to: 'not_home'
   action:
     - service: script.vacuum_set_turbo
-- alias: 'Intelligent Quiet mode'
+- alias: "Intelligent Quiet mode"
   id: f4000e26-b404-4d74-93a0-85b9900a7278
   trigger:
     platform: state
@@ -123,7 +126,7 @@
     - service: script.vacuum_set_silent
 
 # Vacuum - Set mode
-- alias: 'Vacuum - Set mode'
+- alias: "Vacuum - Set mode"
   id: 339c44db-f51b-4174-b396-18e69213b4e7
   trigger:
     platform: state
@@ -139,65 +142,3 @@
         {% elif trigger.to_state.state == 'Max' %}
           script.vacuum_set_max
         {% endif %}
-
-####
-# Shabat and Chag automations
-###
-- alias: 'Vacuum - clean after morning kiddush'
-  id: 04c72c58-1815-491d-9c75-d1fcac2c3ab5
-  trigger:
-    platform: time
-    at: '11:00:00'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
-  action:
-    - service: vacuum.start
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-
-# Precoution from turning on the vacuum by the kids
-- alias: 'Vacuum - prevent manual cleaning on shabat'
-  id: dd081698-79b9-4e3b-8b94-15809bcce967
-  trigger:
-    platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
-    to: 'cleaning'
-  condition:
-    - condition: or
-      conditions:
-        - condition: time
-          before: '10:59:00'
-        - condition: time
-          after: '11:01:00'
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
-  action:
-    - delay: 2
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-    - delay: 2
-    - service: vacuum.return_to_base
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
-
-- alias: 'Vacuum - prevent stop cleaning on shabat'
-  id: 48375897-57c4-4e4e-afa5-42dc31e8f3a6
-  trigger:
-    platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
-    to: 'paused'
-  condition:
-    - condition: time
-      after: '11:00:00'
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
-  action:
-    - delay: 2
-    - service: vacuum.start
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
