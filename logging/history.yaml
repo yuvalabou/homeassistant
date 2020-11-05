@@ -3,51 +3,14 @@
 ###
 exclude:
   entities:
-    - binary_sensor.day
-    - binary_sensor.night
     - sensor.uptime_friendly
     - sensor.dnsip
-    - sensor.random_number
-    - binary_sensor.random_boolean
     - sensor.season
-
     - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime
     - sensor.track_steam_playtime_formatted
-
-    - sensor.count_entities
-    - sensor.count_automations
-    - sensor.count_scripts
-    - sensor.count_device_trackers
-    - sensor.count_binary_sensors
-    - sensor.count_sensors
-    - sensor.count_switches
-    - sensor.count_zones
-    - sensor.count_input_booleans
-    - sensor.count_input_selects
-    - sensor.count_timers
-    - sensor.count_lights
-    - sensor.count_climates
-
-    - sensor.jewish_calendar_alot_hashachar
-    - sensor.jewish_calendar_daf_yomi
-    - sensor.jewish_calendar_date
-    - sensor.jewish_calendar_latest_time_for_shma_gr_a
-    - sensor.jewish_calendar_latest_time_for_shma_mg_a
-    - sensor.jewish_calendar_latest_time_for_tefilla_gr_a
-    - sensor.jewish_calendar_latest_time_for_tefilla_mg_a
-    - sensor.jewish_calendar_mincha_gedola
-    - sensor.jewish_calendar_mincha_ketana
-    - sensor.jewish_calendar_parshat_hashavua
-    - sensor.jewish_calendar_plag_hamincha
-    - sensor.jewish_calendar_shkia
-    - sensor.jewish_calendar_t_set_hakochavim
-    - sensor.jewish_calendar_talit_and_tefillin
-    - sensor.jewish_calendar_upcoming_candle_lighting
-    - sensor.jewish_calendar_upcoming_havdalah
-    - sensor.jewish_calendar_upcoming_shabbat_candle_lighting
-    - sensor.jewish_calendar_upcoming_shabbat_havdalah
-
+  entity_globs:
+    - sensor.jewish_calendar_*
   domains:
     - automation
     - updater

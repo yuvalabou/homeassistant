@@ -2,13 +2,17 @@
 # Recorder settings
 ###
 db_url: !secret mariadb_address
-purge_keep_days: 30
+purge_keep_days: 7
+commit_interval: 1 # to be changed later to 0
 exclude:
   entities:
     - sensor.time
-    - sensor.time_date
     - sensor.date
     - sensor.date_time
+    - sensor.season
+  entity_globs:
+    - sensor.count_*
   domains:
     - sun
     - weather
+    - updater
