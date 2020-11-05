@@ -14,9 +14,12 @@ exclude:
     - sensor.track_steam_playtime_formatted
     - binary_sensor.steam_game_on
     - sensor.season
+    - sensor.israel_weather_forecast
+    - sensor.local_ip
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*
+    - sensor.count_*
   domains:
     - updater
     - sun

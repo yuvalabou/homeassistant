@@ -10,8 +10,11 @@ exclude:
     - sensor.date
     - sensor.date_time
     - sensor.season
+    - sensor.israel_weather_forecast
+    - sensor.local_ip
   entity_globs:
     - sensor.count_*
+    - sensor.seventeentrack_*
   domains:
     - sun
     - weather

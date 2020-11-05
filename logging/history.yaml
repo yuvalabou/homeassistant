@@ -9,9 +9,13 @@ exclude:
     - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime
     - sensor.track_steam_playtime_formatted
+    - sensor.israel_weather_forecast
+    - sensor.local_ip
   entity_globs:
     - sensor.jewish_calendar_*
+    - sensor.count_*
   domains:
+    - camera
     - automation
     - updater
     - sun
