@@ -6,9 +6,9 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.bathroom_mold_indicator
-    above: 65
+    above: 80
     for:
-      minutes: 5
+      minutes: 10
   action:
     - service: notify.mobile_app_mi_9t
       data:

@@ -79,6 +79,7 @@ glances:
 group: !include integrations/group.yaml
 input_boolean: !include integrations/input_boolean.yaml
 input_datetime:
+input_number: !include integrations/input_number.yaml
 input_select: !include integrations/input_select.yaml
 light: !include integrations/light.yaml
 scene: !include_dir_merge_list scene

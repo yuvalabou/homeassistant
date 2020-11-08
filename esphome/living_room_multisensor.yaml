@@ -70,6 +70,11 @@ sensor:
       (243.5 + id(${template_id}_temperature).state))));
     unit_of_measurement: '°C'
     icon: mdi:water
+  - platform: bh1750
+    name: "${upper_devicename} Illuminance"
+    address: 0x23
+    measurement_time: 69
+    update_interval: 60s
 
 text_sensor:
   - platform: template

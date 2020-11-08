@@ -21,6 +21,7 @@ cards:
         show_points: false
         color: "white"
         show_fill: false
+      - !include ../resources/graph_card_day_num.yaml
     show:
       fill: fade
       state: false
@@ -46,12 +47,7 @@ cards:
       - entity: binary_sensor.bathroom_motion
         show_points: false
         color: "#C4BAB0"
-      - entity: binary_sensor.day
-        show_points: false
-        show_legend: false
-        show_line: false
-        show_state: false
-        color: white
+      - !include ../resources/graph_card_day_bool.yaml
     state_map:
       - value: "off"
         label: 'Clear'
@@ -75,12 +71,7 @@ cards:
       - entity: binary_sensor.master_bedroom_light_is_on
         show_points: false
         color: "#A886F7"
-      - entity: binary_sensor.day
-        show_points: false
-        show_legend: false
-        show_line: false
-        show_state: false
-        color: white
+      - !include ../resources/graph_card_day_bool.yaml
     state_map:
       - value: "off"
         label: 'כבוי'
@@ -89,6 +80,24 @@ cards:
     show:
       fill: fade
       labels: false
+
+  - type: custom:mini-graph-card
+    name: 'Illumination'
+    entities:
+      - entity: sensor.living_room_illuminance
+        show_points: false
+        color: "#7FB1CF"
+      - entity: sensor.bathroom_illuminance
+        show_points: false
+        color: "#C4BAB0"
+      - !include ../resources/graph_card_day_num.yaml
+    show:
+      fill: fade
+      state: false
+      labels: true
+      labels_secondary: false
+      points: false
+    line_width: 2
 
   - type: custom:mini-graph-card
     name: 'AC'
@@ -105,12 +114,7 @@ cards:
       - entity: binary_sensor.master_bedroom_ac_is_on
         show_points: false
         color: "#A886F7"
-      - entity: binary_sensor.day
-        show_points: false
-        show_legend: false
-        show_line: false
-        show_state: false
-        color: white
+      - !include ../resources/graph_card_day_bool.yaml
     state_map:
       - value: "off"
         label: 'כבוי'
@@ -125,11 +129,11 @@ cards:
       - entity: binary_sensor.tv
       - type: custom:hui-element
         card_type: custom:mini-graph-card
-        name: 'Netflix'
+        name: 'TV'
         hours_to_show: 168
         group_by: date
         entities:
-          - entity: sensor.track_netflix_watchtime_formatted
+          - entity: sensor.track_tv_watchtime_formatted
             unit: hours
         color_thresholds:
           - value: 1

@@ -17,6 +17,7 @@ cards:
               - entity: sensor.bathroom_temperature
                 name: 'Temperature'
                 show_points: false
+              - !include ../resources/graph_card_day_num.yaml
             font_size: 80
             color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
             points_per_hour: 6
@@ -31,6 +32,7 @@ cards:
               - entity: sensor.bathroom_humidity
                 name: 'Humidity'
                 color: '#74A4F4'
+              - !include ../resources/graph_card_day_num.yaml
             font_size: 80
             lower_bound: 0
             upper_bound: 100
@@ -45,4 +47,5 @@ cards:
           - binary_sensor.bathroom_motion
           - entity: sensor.bathroom_humidity_range
             name: 'Humidity'
+          - sensor.bathroom_illuminance
       - sensor.bathroom_mold_indicator
