@@ -24,7 +24,7 @@
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state:  'on'
+      state: 'on'
   action:
     service: climate.turn_off
     data:
@@ -38,7 +38,7 @@
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state:  'on'
+      state: 'on'
   action:
     service: climate.turn_on
     data:
@@ -52,7 +52,7 @@
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state:  'on'
+      state: 'on'
   action:
     service: climate.turn_off
     data:
@@ -66,7 +66,7 @@
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state:  'on'
+      state: 'on'
   action:
     service: climate.turn_on
     data:
