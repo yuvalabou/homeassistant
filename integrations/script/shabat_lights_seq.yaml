@@ -3,8 +3,8 @@
 ###
 # Shabat and Chag lighting
 shabat_chag_lighting_sequence:
-  alias: 'shabat and chag lighting sequence'
-  description: 'Sequence that notify when Shabat is here'
+  alias: "shabat and chag lighting sequence"
+  description: "Sequence that notify when Shabat enters"
   sequence:
     - service: light.turn_on
       data:
@@ -19,8 +19,8 @@ shabat_chag_lighting_sequence:
       entity_id: scene.shabat_eve
 
 shabat_chag_end_lighting_sequence:
-  alias: 'shabat and chag lighting sequence'
-  description: 'Sequence that notify when Shabat ends and adjust lighting accordingly'
+  alias: "shabat and chag lighting sequence"
+  description: "Sequence that notify when Shabat ends"
   sequence:
     - service: light.turn_on
       data:

@@ -1,0 +1,17 @@
+####
+# Climate
+###
+
+- alias: "Turn off Living-Room AC at night"
+  id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
+  trigger:
+    platform: time
+    at: '22:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state:  'off'
+  action:
+    service: climate.turn_off
+    data:
+      entity_id: climate.living_room_thermostat

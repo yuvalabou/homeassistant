@@ -1,6 +1,7 @@
 ####
 # Shabat and Chag vacuum automations
 ###
+
 - alias: "Vacuum - clean after morning kiddush"
   id: 04c72c58-1815-491d-9c75-d1fcac2c3ab5
   trigger:
@@ -11,9 +12,9 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'
   action:
-    - service: vacuum.start
-      data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+    service: vacuum.start
+    data:
+      entity_id: vacuum.xiaomi_vacuum_cleaner
 
 # Precoution from turning on the vacuum by the kids
 - alias: "Vacuum - prevent manual cleaning on shabat"

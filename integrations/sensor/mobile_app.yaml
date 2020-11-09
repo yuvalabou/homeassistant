@@ -12,7 +12,9 @@
       friendly_name: 'Tohar next Alarm'
       value_template: >-
         {{
-          ((as_timestamp(states('sensor.redmi_note_7_next_alarm')) | int) + ( 15*60 )) |
+          ((as_timestamp(
+            states('sensor.redmi_note_7_next_alarm')
+          ) | int) + ( 15*60 )) |
           timestamp_custom('%H:%M')
         }}
       icon_template: mdi:alarm
@@ -20,7 +22,9 @@
       friendly_name: 'Yuval next Alarm'
       value_template: >-
         {{
-          ((as_timestamp(states('sensor.mi_9t_next_alarm')) | int) + ( 15*60 )) |
+          ((as_timestamp(
+            states('sensor.mi_9t_next_alarm')
+          ) | int) + ( 15*60 )) |
           timestamp_custom('%H:%M')
         }}
       icon_template: mdi:alarm

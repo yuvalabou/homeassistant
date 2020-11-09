@@ -1,6 +1,7 @@
 ###
 # Vacuum
 ###
+
 # Vacuum will start cleaning when everybody leave
 - alias: "Vacuum - Wait until everybody leave to start cleaning"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
@@ -91,9 +92,9 @@
     to: 'cleaning'
     for: '00:10:00'
   action:
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.cleaned_today
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.cleaned_today
 
 # Reset daily cleaning counter
 - alias: "Vacuum - Reset 'cleaned today'"
@@ -103,9 +104,9 @@
     platform: time
     at: '00:00:00'
   action:
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.cleaned_today
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.cleaned_today
 
 # Vacuum - Intelligent Mode
 - alias: "Intelligent Turbo mode"
@@ -115,7 +116,7 @@
     entity_id: group.person
     to: 'not_home'
   action:
-    - service: script.vacuum_set_turbo
+    service: script.vacuum_set_turbo
 - alias: "Intelligent Quiet mode"
   id: f4000e26-b404-4d74-93a0-85b9900a7278
   trigger:
@@ -123,7 +124,7 @@
     entity_id: group.person
     to: 'home'
   action:
-    - service: script.vacuum_set_silent
+    service: script.vacuum_set_silent
 
 # Vacuum - Set mode
 - alias: "Vacuum - Set mode"
@@ -132,13 +133,13 @@
     platform: state
     entity_id: input_select.vacuum_fan_speed_list
   action:
-    - service: >-
-        {% if trigger.to_state.state == 'Silent' %}
-          script.vacuum_set_silent
-        {% elif trigger.to_state.state == 'Standard' %}
-          script.vacuum_set_standard
-        {% elif trigger.to_state.state == 'Turbo' %}
-          script.vacuum_set_turbo
-        {% elif trigger.to_state.state == 'Max' %}
-          script.vacuum_set_max
-        {% endif %}
+    service: >-
+      {% if trigger.to_state.state == 'Silent' %}
+        script.vacuum_set_silent
+      {% elif trigger.to_state.state == 'Standard' %}
+        script.vacuum_set_standard
+      {% elif trigger.to_state.state == 'Turbo' %}
+        script.vacuum_set_turbo
+      {% elif trigger.to_state.state == 'Max' %}
+        script.vacuum_set_max
+      {% endif %}

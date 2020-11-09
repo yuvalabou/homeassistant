@@ -92,7 +92,12 @@
       friendly_name: 'Last cleaned'
       icon_template: mdi:timetable
       value_template: >-
-        {{ as_timestamp(state_attr('vacuum.xiaomi_vacuum_cleaner', 'clean_stop')) | timestamp_custom("%A, %H:%M", true) }}
+        {{
+          as_timestamp(
+            state_attr('vacuum.xiaomi_vacuum_cleaner', 'clean_stop')
+          ) |
+          timestamp_custom("%A, %H:%M", true)
+        }}
     vacuum_sensordirtyleft:
       friendly_name: 'Clean sensor'
       icon_template: mdi:broom

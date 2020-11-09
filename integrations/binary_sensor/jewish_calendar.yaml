@@ -30,7 +30,9 @@
       friendly_name: 'Shabat 10 min Notification Trigger'
       value_template: >-
         {{
-          as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) |
+          as_timestamp(
+            states('sensor.jewish_calendar_upcoming_candle_lighting')
+          ) |
           timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
           float + (10*60) - (7200) ) |
           timestamp_custom("%H:%M:%S")
@@ -39,7 +41,9 @@
       friendly_name: 'Shabat Half hour Notification Trigger'
       value_template: >-
         {{
-          as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting')) |
+          as_timestamp(
+            states('sensor.jewish_calendar_upcoming_candle_lighting')
+          ) |
           timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
           float + (30*60) - (7200) ) |
           timestamp_custom("%H:%M:%S")

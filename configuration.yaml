@@ -12,7 +12,8 @@ homeassistant:
   latitude: !secret home_lat
   longitude: !secret home_lon
   elevation: !secret elevation
-  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  # Pick yours from here:
+  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Asia/Jerusalem
   # Customizing entities.
   customize: !include customize.yaml
