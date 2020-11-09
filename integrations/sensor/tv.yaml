@@ -12,7 +12,7 @@
     {{ now() }}
 - platform: template
   sensors:
-    track_tv_usage_formatted:
+    track_tv_watchtime_formatted:
       friendly_name: 'Formatted TV usage'
       value_template: >-
         {% set hours = states('sensor.track_tv_usage') | float %}

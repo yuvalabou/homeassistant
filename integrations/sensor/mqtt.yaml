@@ -1,0 +1,6 @@
+###
+# MQTT
+###
+# Used for testing purposes
+- platform: mqtt
+  state_topic: "homeassistant/laptop/program"

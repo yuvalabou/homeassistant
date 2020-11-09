@@ -1,0 +1,7 @@
+entity: input_number.day
+show_points: false
+show_legend: false
+show_line: false
+show_state: false
+color: white
+y_axis: secondary

@@ -20,6 +20,7 @@ cards:
               - entity: sensor.living_room_climate_set_temp
                 color: "white"
                 show_fill: false
+              - !include ../resources/graph_card_day_num.yaml
             font_size: 80
             color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
             points_per_hour: 6
@@ -34,6 +35,7 @@ cards:
               - entity: sensor.living_room_humidity
                 name: 'Humidity'
                 color: '#74A4F4'
+              - !include ../resources/graph_card_day_num.yaml
             font_size: 80
             lower_bound: 0
             upper_bound: 100
@@ -48,6 +50,7 @@ cards:
           - binary_sensor.living_room_motion
           - entity: sensor.living_room_humidity_range
             name: 'Humidity'
+          - sensor.living_room_illuminance
 
   - type: custom:simple-thermostat
     entity: climate.living_room_thermostat
