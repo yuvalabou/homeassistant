@@ -8,7 +8,7 @@
 ##################################################
 # Home Assistant core settings.
 homeassistant:
-  name: Home
+  name: Aboulafia
   latitude: !secret home_lat
   longitude: !secret home_lon
   elevation: !secret elevation

@@ -1,7 +1,8 @@
 ###
 # Recorder settings
 ###
-db_url: !secret mariadb_address
+
+#db_url: !secret mariadb_address
 purge_keep_days: 7
 commit_interval: 1 # to be changed later to 0
 exclude:

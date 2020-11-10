@@ -15,7 +15,6 @@ rules:
     spaces: consistent
 
 ignore: |
-  lovelace-ui.yaml
   custom_components/
   .git
   themes/

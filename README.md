@@ -139,3 +139,5 @@ A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) de
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Weather Card](https://github.com/bramkragten/weather-card)
+
+You can join us on [Discord!](https://discord.gg/ayZ3Kkg)
