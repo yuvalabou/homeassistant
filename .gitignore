@@ -4,7 +4,6 @@
 # You can whitelist files/folders with !, these will not be ignored.
 !*.yaml
 !.gitignore
-!esphome/*.yaml
 
 # Ignore folders.
 .storage
@@ -14,8 +13,8 @@
 .vscode
 tts
 deps
-www/assets
-www/floor_plan
+assets/
+floor_plan/
 __pycache__
 
 # Ignore files
@@ -31,4 +30,3 @@ __pycache__
 ip_bans.yaml
 secrets.yaml
 known_devices.yaml
-esphome/secrets.yaml
