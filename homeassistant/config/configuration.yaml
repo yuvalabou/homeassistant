@@ -49,7 +49,7 @@ device_tracker: !include integrations/device_tracker.yaml
 ##################################################
 #                   DISCOVERY                    #
 ##################################################
-# Discover some devices automatically.
+
 discovery:
 zeroconf:
 ssdp:
@@ -57,20 +57,6 @@ ssdp:
 ##################################################
 #                  INTEGRATIONS                  #
 ##################################################
-# Allows you to control your Xiaomi Mi Robot Vacuum.
-vacuum:
-  - platform: xiaomi_miio
-    host: !secret vacuum
-    token: !secret vacuum_token
-
-# Displays a variety of information related to the Jewish Calendar.
-jewish_calendar:
-  language: hebrew
-
-# Retrieve statistics and interact with a Pi-hole instance.
-pi_hole:
-  host: !secret nanopi_neo2
-  api_key: !secret pi_hole_key
 
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list integrations/binary_sensor
@@ -78,11 +64,18 @@ camera: !include integrations/camera.yaml
 climate: !include integrations/climate.yaml
 glances:
 group: !include integrations/group.yaml
+hacs:
+  token: !secret hacs
 input_boolean: !include integrations/input_boolean.yaml
 input_datetime:
 input_number: !include integrations/input_number.yaml
 input_select: !include integrations/input_select.yaml
+jewish_calendar:
+  language: hebrew
 light: !include integrations/light.yaml
+pi_hole:
+  host: !secret nanopi_neo2
+  api_key: !secret pi_hole_key
 scene: !include_dir_merge_list scene
 script: !include_dir_merge_named integrations/script
 sensor: !include_dir_merge_list integrations/sensor
@@ -93,6 +86,10 @@ system_health:
 timer: !include integrations/timer.yaml
 updater:
 utility_meter: !include integrations/sensor/utility_meter.yaml
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret vacuum
+    token: !secret vacuum_token
 zone: !include integrations/zone.yaml
 
 ##################################################
