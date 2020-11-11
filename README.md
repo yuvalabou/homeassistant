@@ -61,52 +61,6 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 -----
 
-## Official Addons
-
-<img src =
-    "https://esphome.io/_static/logo-text.svg"
-    align="right"
-    width=150>
-
-### [ESPHOME](https://esphome.io/index.html)
-
-ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configuration files and control them remotely through Home Automation systems.
-
-[ESPHome configurations folder](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/esphome)
-
-| Multisensors |
-|:------------:|
-|2             |
-
-<img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/samba/icon.png"
-    align = "right"
-    width=50>
-
-### [Samba](https://github.com/home-assistant/hassio-addons/tree/master/samba)
-
-This Add-on allows you to enable file sharing across different operating systems over a network.
-
-<img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/mariadb/logo.png"
-    align = "right"
-    width=150>
-
-### [MariaDB](https://github.com/home-assistant/hassio-addons/tree/master/mariadb)
-
-MariaDB SQL database for Home Assistant.
-
-<img src =
-    "https://github.com/hassio-addons/addon-nut/blob/master/nut/icon.png?raw=true"
-    align = "right"
-    width=50>
-
-### [Network UPS Tools](https://github.com/hassio-addons/addon-nut)
-
-A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) devices connected to your Home Assistant machine.
-
------
-
 ## HACS custom components
 
 <img src =
