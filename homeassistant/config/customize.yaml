@@ -33,11 +33,11 @@ binary_sensor.rpi2:
   icon: mdi:raspberry-pi
 
 # Lights
-light.bedroom1:
-  friendly_name: 'Bedroom1'
-light.bedroom2:
-  friendly_name: 'Bedroom2'
-light.master_bedroom:
+light.yeelight_color_living_room_1:
+  friendly_name: 'Living room'
+light.yeelight_color_living_room_2:
+  friendly_name: 'Living room'
+light.yeelight_color_master_bedroom:
   friendly_name: 'Master Bedroom'
 
 # Time Tracking

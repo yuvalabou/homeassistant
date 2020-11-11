@@ -64,8 +64,6 @@ camera: !include integrations/camera.yaml
 climate: !include integrations/climate.yaml
 glances:
 group: !include integrations/group.yaml
-hacs:
-  token: !secret hacs
 input_boolean: !include integrations/input_boolean.yaml
 input_datetime:
 input_number: !include integrations/input_number.yaml

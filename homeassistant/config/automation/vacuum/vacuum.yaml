@@ -26,7 +26,7 @@
     - service: vacuum.start
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: notify.mobile_app_mi_9t
+    - service: notify.mobile_app_yuval
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
@@ -44,7 +44,7 @@
     from: 'cleaning'
     to: 'returning'
   action:
-    - service: notify.mobile_app_mi_9t
+    - service: notify.mobile_app_yuval
       data:
         title: "Finished cleaning"
         message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
@@ -70,7 +70,7 @@
     - service: vacuum.return_to_base
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: notify.mobile_app_mi_9t
+    - service: notify.mobile_app_yuval
       data:
         title: "Returning to Dock"
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"

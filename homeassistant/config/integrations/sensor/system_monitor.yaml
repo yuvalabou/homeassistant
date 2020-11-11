@@ -1,0 +1,22 @@
+###
+# System Monitor
+###
+
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /home
+    - type: memory_free
+    - type: load_5m
+    - type: network_in
+      arg: eth0
+    - type: network_out
+      arg: eth0
+    - type: memory_use_percent
+    - type: processor_use
+    - type: processor_temperature
+    - type: throughput_network_in
+      arg: eth0
+    - type: throughput_network_out
+      arg: eth0
+    - type: last_boot

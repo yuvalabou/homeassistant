@@ -77,6 +77,30 @@ cards:
       - entity: script.homeassistant_restart
         icon: mdi:restart
       - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: gauge
+            name: 'CPU Use'
+            entity: sensor.processor_use_percent
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            name: 'CPU Temp'
+            entity: sensor.processor_temperature
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            name: 'RAM Use'
+            entity: sensor.memory_use_percent
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+      - type: custom:hui-element
         card_type: custom:mini-graph-card
         icon: mdi:database
         entities:
@@ -105,32 +129,32 @@ cards:
           - script.reload_lovelace_resources
           - script.reload_themes
 
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture-entity
-        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
-        entity: sensor.e5_650i_status
-      - type: custom:battery-state-card
-        entities:
-          - entity: sensor.e5_650i_battery_charge
-            name: 'Battery Charge'
-      - type: custom:bar-card
-        entity: sensor.e5_650i_load
-        name: 'Load'
-        animation:
-          state: 'on'
-          speed: 2
-        positions:
-          indicator: 'off'
-      - type: custom:mini-graph-card
-        entities:
-          - entity: sensor.e5_650i_output_voltage
-            name: 'Output Voltage'
-          - entity: sensor.e5_650i_input_voltage
-            name: 'Input Voltage'
-        show:
-          points: false
+#  - type: entities
+#    entities:
+#      - type: custom:hui-element
+#        card_type: picture-entity
+#        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+#        entity: sensor.e5_650i_status
+#      - type: custom:battery-state-card
+#        entities:
+#          - entity: sensor.e5_650i_battery_charge
+#            name: 'Battery Charge'
+#      - type: custom:bar-card
+#        entity: sensor.e5_650i_load
+#        name: 'Load'
+#        animation:
+#          state: 'on'
+#          speed: 2
+#        positions:
+#          indicator: 'off'
+#      - type: custom:mini-graph-card
+#        entities:
+#          - entity: sensor.e5_650i_output_voltage
+#            name: 'Output Voltage'
+#          - entity: sensor.e5_650i_input_voltage
+#            name: 'Input Voltage'
+#        show:
+#          points: false
 
   - type: entities
     entities:
@@ -142,28 +166,28 @@ cards:
         cards:
           - type: gauge
             name: 'CPU Use'
-            entity: sensor.glances_cpu_used
+            entity: sensor.npn2_cpu_used
             severity:
               green: 0
               yellow: 45
               red: 85
           - type: gauge
             name: 'CPU Temp'
-            entity: sensor.glances_cpu_thermal_1_temp
+            entity: sensor.npn2_cpu_thermal_1_temp
             severity:
               green: 0
               yellow: 60
               red: 80
           - type: gauge
             name: 'RAM Use'
-            entity: sensor.glances_ram_used_percent
+            entity: sensor.npn2_ram_used_percent
             severity:
               green: 0
               yellow: 50
               red: 75
       - type: custom:bar-card
         entities:
-          - entity: sensor.glances_used_percent
+          - entity: sensor.npn2_used_percent
             name: 'SD Storage'
             severity:
               - color: '#FF0F00'
@@ -215,34 +239,34 @@ cards:
         cards:
           - type: gauge
             name: 'CPU Use'
-            entity: sensor.glances_rpi2_cpu_used
+            entity: sensor.rpi2_cpu_used
             severity:
               green: 0
               yellow: 45
               red: 85
           - type: gauge
             name: 'CPU Temp'
-            entity: sensor.glances_rpi2_cpu_thermal_1_temp
+            entity: sensor.rpi2_cpu_thermal_1_temp
             severity:
               green: 0
               yellow: 60
               red: 80
           - type: gauge
             name: 'RAM Use'
-            entity: sensor.glances_rpi2_ram_used_percent
+            entity: sensor.rpi2_ram_used_percent
             severity:
               green: 0
               yellow: 50
               red: 75
       - type: custom:bar-card
         entities:
-          - entity: sensor.glances_rpi2_mnt_used_percent
+          - entity: sensor.rpi2_mnt_used_percent
             name: 'External HDD'
             severity:
               - color: '#FF0F00'
                 from: 91
                 to: 100
-          - entity: sensor.glances_rpi2_used_percent
+          - entity: sensor.rpi2_used_percent
             name: 'SD Storage'
             severity:
               - color: '#FF0F00'

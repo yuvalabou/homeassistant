@@ -13,9 +13,9 @@ cards:
             card_type: picture-entity
             image: '/local/assets/yuval.jpg'
             entity: person.yuval
-          - entity: sensor.mi_9t_geocoded_location
+          - entity: sensor.yuval_geocoded_location
             name: 'Location'
-          - entity: sensor.mi_9t_battery_level
+          - entity: sensor.yuval_battery_level
             name: 'Phone Battery'
       - type: entities
         entities:

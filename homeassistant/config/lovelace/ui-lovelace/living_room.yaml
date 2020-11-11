@@ -76,9 +76,9 @@ cards:
         card_type: horizontal-stack
         cards:
           - type: light
-            entity: light.bedroom1
+            entity: light.yeelight_color_living_room_1
           - type: light
-            entity: light.bedroom2
+            entity: light.yeelight_color_living_room_2
       - switch.night_light_override
 
   - type: entities

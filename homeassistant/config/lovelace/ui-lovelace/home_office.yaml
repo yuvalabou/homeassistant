@@ -9,7 +9,7 @@ cards:
   - type: entities
     title: 'Printer'
     entities:
-      - sensor.brother_mfc_j4410dw
+      - sensor.mfc_j4410dw_status
       - binary_sensor.printer
       - type: custom:bar-card
         entity_row: true
@@ -22,19 +22,19 @@ cards:
           - name: 'Cyan'
             color: "cyan"
             direction: up
-            entity: sensor.brother_mfc_j4410dw_cyan_ink_cartridge
+            entity: sensor.mfc_j4410dw_cyan_ink_remaining
           - name: 'Magenta'
             color: "magenta"
             direction: up
-            entity: sensor.brother_mfc_j4410dw_magenta_ink_cartridge
+            entity: sensor.mfc_j4410dw_magenta_ink_remaining
           - name: 'Yellow'
             color: "yellow"
             direction: up
-            entity: sensor.brother_mfc_j4410dw_yellow_ink_cartridge
+            entity: sensor.mfc_j4410dw_yellow_ink_remaining
           - name: 'Black'
             color: "black"
             direction: up
-            entity: sensor.brother_mfc_j4410dw_black_ink_cartridge
+            entity: sensor.mfc_j4410dw_black_ink_remaining
 
   - type: entities
     entities:

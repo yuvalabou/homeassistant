@@ -54,7 +54,7 @@ cards:
       _names: false
 
   - type: light
-    entity: light.master_bedroom
+    entity: light.yeelight_color_master_bedroom
 
   - type: entities
     entities:

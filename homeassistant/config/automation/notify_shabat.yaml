@@ -13,7 +13,7 @@
       weekday:
         - fri
   action:
-    service: notify.mobile_app_mi_9t
+    service: notify.mobile_app_yuval
     data:
       title: "שבת שלום!"
       message: "זכרת להכין מיחם, חציל וסלטים אחרים?"
@@ -29,7 +29,7 @@
       weekday:
         - fri
   action:
-    - service: notify.mobile_app_mi_9t
+    - service: notify.mobile_app_yuval
       data:
         title: "שבת שלום!"
         message: "שבת נכנסת בעוד 10 דקות."

@@ -20,7 +20,7 @@
   action:
     service: light.turn_on
     data:
-      entity_id: light.master_bedroom
+      entity_id: light.yeelight_color_master_bedroom
       kelvin: 3000
       brightness_pct: 60
       transition: 600
