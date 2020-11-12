@@ -1,0 +1,25 @@
+###
+# Vacuum
+###
+
+- platform: template
+  switches:
+    disable_auto_clean:
+      unique_id: 7d366746-7ecf-4203-9aec-22096da6513d
+      friendly_name: "Disable automatic cleaning"
+      value_template: >-
+        {{ states('input_boolean.disable_auto_clean') }}
+      turn_on:
+        service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.disable_auto_clean
+      turn_off:
+        service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.disable_auto_clean
+      icon_template: >-
+        {% if is_state('switch.disable_auto_clean', 'on') %}
+          mdi:shield
+        {% else %}
+          mdi:shield-off
+        {% endif %}

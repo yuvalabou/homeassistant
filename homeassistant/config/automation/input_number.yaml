@@ -1,0 +1,26 @@
+###
+# Input number helpers
+###
+
+# Helpers for the graph card
+- alias: "Set Day"
+  id: 0c58609c-12f7-488c-babf-4ad320824591
+  trigger:
+    platform: sun
+    event: sunrise
+  action:
+    service: input_number.set_value
+    data:
+      entity_id: input_number.day
+      value: 1
+
+- alias: "Set Night"
+  id: abfc3f6f-5c1a-434c-9484-4e7adb320b37
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: input_number.set_value
+    data:
+      entity_id: input_number.day
+      value: 0

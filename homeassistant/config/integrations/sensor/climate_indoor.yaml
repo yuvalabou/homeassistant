@@ -1,0 +1,33 @@
+###
+# Indoor Climate
+###
+
+- platform: template
+  sensors:
+    master_bedroom_sensibo_humidity:
+      friendly_name: "Master Bedroom Humidity"
+      unit_of_measurement: '%'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'current_humidity') }}
+      icon_template: mdi:water-percent
+    master_bedroom_sensibo_temperature:
+      friendly_name: "Master Bedroom temperature"
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'current_temperature') }}
+      icon_template: mdi:thermometer
+
+- platform: template
+  sensors:
+    living_room_climate_set_temp:
+      friendly_name: "Living Room Set Temperature"
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.slvn', 'temperature') }}
+      icon_template: mdi:home-thermometer-outline
+    master_bedroom_climate_set_temp:
+      friendly_name: "Master Bedroom Set Temperature"
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('climate.shynh', 'temperature') }}
+      icon_template: mdi:home-thermometer-outline

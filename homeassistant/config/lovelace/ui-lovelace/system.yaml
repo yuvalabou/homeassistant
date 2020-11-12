@@ -1,0 +1,296 @@
+####################################################
+#                     UTILITIES                    #
+####################################################
+id: utilities
+title: "System Monitor"
+icon: mdi:server
+background: 'var(--background-image)'
+cards:
+  - type: entities
+    title: "Internet"
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            icon: mdi:download-network
+            entities:
+              - entity: sensor.speedtest_download
+                name: "Download"
+            points_per_hour: 1
+            show:
+              points: false
+              fill: fade
+          - type: custom:mini-graph-card
+            icon: mdi:upload-network
+            entities:
+              - entity: sensor.speedtest_upload
+                name: "Upload"
+            points-per_hour: 1
+            show:
+              fill: fade
+              points: false
+      - type: divider
+      - entity: sensor.myip
+        name: "External IP"
+
+  - type: glance
+    title: "Component Count"
+    columns: 4
+    entities:
+      - entity: sensor.count_entities
+        name: "Entities"
+      - entity: sensor.count_lights
+        name: "Lights"
+      - entity: sensor.count_sensors
+        name: "Sensors"
+      - entity: sensor.count_binary_sensors
+        name: "Binary Sensors"
+      - entity: sensor.count_automations
+        name: "Automations"
+      - entity: sensor.count_scripts
+        name: "Scripts"
+      - entity: sensor.count_zones
+        name: "Zones"
+      - entity: sensor.count_device_trackers
+        name: "Device Trackers"
+      - entity: sensor.count_switches
+        name: "Switches"
+      - entity: sensor.count_input_booleans
+        name: "Input Booleans"
+      - entity: sensor.count_input_selects
+        name: "Input Select"
+      - entity: sensor.count_input_datetimes
+        name: "Input Date Times"
+      - entity: sensor.count_timers
+        name: "Timers"
+      - entity: sensor.count_climates
+        name: "Climate"
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture-entity
+        image: 'https://repository-images.githubusercontent.com/12888993/0f9eb780-655b-11e9-85cb-0d3956096fe5'
+        entity: sensor.current_version
+      - entity: sensor.uptime_friendly
+      - entity: script.homeassistant_restart
+        icon: mdi:restart
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: gauge
+            name: "CPU Use"
+            entity: sensor.processor_use_percent
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            name: "CPU Temp"
+            entity: sensor.processor_temperature
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            name: "RAM Use"
+            entity: sensor.memory_use_percent
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.disk_use_percent
+            name: "SD Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+#      - type: custom:hui-element
+#        card_type: custom:mini-graph-card
+#        icon: mdi:database
+#        entities:
+#          - entity: sensor.db_size
+#            name: 'Database'
+#        show:
+#          fill: fade
+#          points: false
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - script.reload_automations
+          - script.reload_cli_sensors
+          - script.reload_thermostats
+          - script.reload_groups
+          - script.reload_history_stats
+          - script.reload_input_boolean
+          - script.reload_input_datetime
+          - script.reload_input_select
+          - script.reload_persons
+          - script.reload_ping_sensors
+          - script.reload_scripts
+          - script.reload_timers
+          - script.reload_templates
+          - type: divider
+          - script.reload_lovelace_resources
+          - script.reload_themes
+
+#  - type: entities
+#    entities:
+#      - type: custom:hui-element
+#        card_type: picture-entity
+#        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+#        entity: sensor.e5_650i_status
+#      - type: custom:battery-state-card
+#        entities:
+#          - entity: sensor.e5_650i_battery_charge
+#            name: 'Battery Charge'
+#      - type: custom:bar-card
+#        entity: sensor.e5_650i_load
+#        name: 'Load'
+#        animation:
+#          state: 'on'
+#          speed: 2
+#        positions:
+#          indicator: 'off'
+#      - type: custom:mini-graph-card
+#        entities:
+#          - entity: sensor.e5_650i_output_voltage
+#            name: 'Output Voltage'
+#          - entity: sensor.e5_650i_input_voltage
+#            name: 'Input Voltage'
+#        show:
+#          points: false
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: gauge
+            name: "CPU Use"
+            entity: sensor.npn2_cpu_used
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            name: "CPU Temp"
+            entity: sensor.npn2_cpu_thermal_1_temp
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            name: "RAM Use"
+            entity: sensor.npn2_ram_used_percent
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.npn2_used_percent
+            name: "SD Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
+            tap_action:
+              action: url
+              url_path: 'http://10.0.0.6/admin/index.php'
+          - sensor.pihole_status
+          - entity: sensor.pi_hole_ads_percentage_blocked_today
+            name: "Percentage Blocked Today"
+          - entity: sensor.pi_hole_domains_blocked
+            name: "Domains Blocked"
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            entities:
+              - entity: sensor.pi_hole_ads_blocked_today
+                color: '#FF0F00'
+              - entity: sensor.pi_hole_dns_queries_today
+              - entity: sensor.pi_hole_dns_queries_forwarded
+                color: '#4DFF00'
+            show:
+              points: false
+              legend: false
+            line_width: 2
+            hours_to_show: 72
+          - entity: sensor.pi_hole_dns_queries_cached
+            name: "Cached"
+          - entity: sensor.pi_hole_dns_unique_domains
+            name: "Unique Domains"
+          - entity: sensor.pi_hole_dns_unique_clients
+            name: "Unique Clients"
+          - entity: sensor.pi_hole_seen_clients
+            name: "Seen Clients"
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://new-desk.com/wp-content/uploads/2019/09/RPi-Logo-Landscape-Reg-SCREEN.png'
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: gauge
+            name: "CPU Use"
+            entity: sensor.rpi2_cpu_used
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            name: "CPU Temp"
+            entity: sensor.rpi2_cpu_thermal_1_temp
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            name: "RAM Use"
+            entity: sensor.rpi2_ram_used_percent
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.rpi2_mnt_used_percent
+            name: "External HDD"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+          - entity: sensor.rpi2_used_percent
+            name: "SD Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://brands.home-assistant.io/esphome/logo.png'
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - binary_sensor.living_room
+          - binary_sensor.bathroom
+      - switch.restart_living_room
+      - switch.restart_bathroom

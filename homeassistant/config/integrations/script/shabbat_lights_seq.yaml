@@ -1,0 +1,35 @@
+###
+# Shabbat lights sequence
+###
+
+shabbat_chag_lighting_sequence:
+  alias: "Shabbat and Chag lighting sequence"
+  description: "Sequence that notify when Shabbat enters"
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Random Loop
+    - delay: '00:00:03'
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Stop
+    - service: scene.turn_on
+      entity_id: scene.shabbat_eve
+
+shabbat_chag_end_lighting_sequence:
+  alias: "Shabbat and Chag lighting sequence"
+  description: "Sequence that notify when Shabbat ends"
+  sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Random Loop
+    - delay: '00:00:03'
+    - service: light.turn_on
+      data:
+        entity_id: light.public_lights
+        effect: Stop
+    - service: scene.turn_on
+      entity_id: scene.shabbat_end

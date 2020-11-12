@@ -1,0 +1,183 @@
+####################################################
+#                     LIVING ROOM                  #
+####################################################
+id: living_room
+title: "Living Room"
+icon: mdi:sofa
+background: 'var(--background-image)'
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_temperature
+                name: "Temperature"
+                show_points: false
+              - entity: sensor.living_room_climate_set_temp
+                color: 'white'
+                show_fill: false
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 12
+            show:
+              fill: fade
+              points: false
+              labels: false
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - binary_sensor.living_room_motion
+          - entity: sensor.living_room_humidity_range
+            name: "Humidity"
+          - sensor.living_room_illuminance
+
+  - type: custom:simple-thermostat
+    entity: climate.living_room_thermostat
+    step_size: 1
+    name: false
+    control:
+      hvac:
+        'off':
+          name: 'off'
+    hide:
+      temperature: true
+    sensors:
+      - entity: sensor.living_room_temperature
+        name: "Temperature"
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.living_room_lights
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.yeelight_color_living_room_1
+          - type: light
+            entity: light.yeelight_color_living_room_2
+      - switch.night_light_override
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture-elements
+        camera_image: camera.vacuum_map
+        elements:
+          - type: state-label
+            entity: vacuum.xiaomi_vacuum_cleaner
+            style:
+              top: 15%
+              left: 50%
+              font-weight: 'bold'
+              font-size: 200%
+              color: '#212121'
+          - type: icon
+            icon: mdi:bell-ring
+            tap_action:
+              action: call-service
+              service: vacuum.locate
+              service_data:
+                entity_id: vacuum.xiaomi_vacuum_cleaner
+            style:
+              top: 90%
+              left: 80%
+              color: '#4284F4'
+          - type: icon
+            icon: mdi:home
+            tap_action:
+              action: call-service
+              service: vacuum.return_to_base
+              service_data:
+                entity_id: vacuum.xiaomi_vacuum_cleaner
+            style:
+              top: 90%
+              left: 60%
+              color: '#4284F4'
+          - type: icon
+            icon: mdi:play
+            tap_action:
+              action: call-service
+              service: vacuum.start
+              service_data:
+                entity_id: vacuum.xiaomi_vacuum_cleaner
+            style:
+              top: 90%
+              left: 40%
+              color: '#4284F4'
+          - type: icon
+            icon: mdi:pause
+            tap_action:
+              action: call-service
+              service: vacuum.pause
+              service_data:
+                entity_id: vacuum.xiaomi_vacuum_cleaner
+            style:
+              top: 90%
+              left: 20%
+              color: '#4284F4'
+      - type: custom:hui-element
+        card_type: markdown
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        content: |
+          Last cleaned at {{ states('sensor.vacuum_last_cleaned') }}
+          It took {{ states('sensor.vacuum_time_cleaned') }} minutes to clean {{ states('sensor.vacuum_area_cleaned') }} meters.
+      - type: custom:hui-element
+        card_type: glance
+        columns: 2
+        entities:
+          - entity: sensor.vacuum_fan_speed
+            name: "Mode"
+            tap_action:
+              action: call-service
+              service: input_select.select_next
+              service_data:
+                entity_id: input_select.vacuum_fan_speed_list
+          - entity: sensor.vacuum_battery
+            name: Battery
+      - type: custom:hui-element
+        card_type: custom:fold-entity-row
+        head:
+          type: section
+          label: "Consumables"
+        open: false
+        entities:
+          - entity: sensor.vacuum_clean_main_brush
+            hold_action:
+              action: call-service
+              service: script.vacuum_reset_main_brush
+          - entity: sensor.vacuum_cleansidebrush
+            hold_action:
+              action: call-service
+              service: script.vacuum_reset_side_brush
+          - entity: sensor.vacuum_clean_filter
+            hold_action:
+              action: call-service
+              service: script.vacuum_reset_filter
+          - entity: sensor.vacuum_clean_cliff_sensors
+            hold_action:
+              action: call-service
+              service: script.vacuum_reset_sensor

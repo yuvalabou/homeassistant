@@ -1,0 +1,7 @@
+###
+# Shabbat
+###
+
+shabbat_mode:
+  name: "מצב שבת"
+  icon: mdi:candle

@@ -1,0 +1,26 @@
+###
+# Climate switches
+###
+
+- platform: template
+  switches:
+    living_room_ac_switch:
+      unique_id: 6e4a372c-03d0-484b-b754-0ef18bf9f223
+      friendly_name: "Living Room AC"
+      value_template: >-
+        {{ not is_state('climate.slvn', 'off') }}
+      turn_on:
+        service: climate.set_hvac_mode
+        data:
+          entity_id: climate.slvn
+          hvac_mode: cool
+      turn_off:
+        service: climate.turn_off
+        data:
+          entity_id: climate.slvn
+      icon_template: >-
+        {% if is_state('switch.living_room_ac_switch', 'on') %}
+          mdi:hvac
+        {% else %}
+          mdi:hvac-off
+        {% endif %}

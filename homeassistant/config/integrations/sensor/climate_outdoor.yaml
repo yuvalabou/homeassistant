@@ -1,0 +1,59 @@
+###
+# WEATHER
+###
+
+- platform: template
+  sensors:
+    outside_temps:
+      friendly_name: "Outside Temperature"
+      unit_of_measurement: '°C'
+      value_template: >-
+        {{ state_attr('weather.openweathermap', 'temperature') | round }}
+      icon_template: mdi:thermometer
+
+- platform: template
+  sensors:
+    wind_scale_friendly:
+      friendly_name: "Wind Scale"
+      icon_template: >-
+        {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
+        {% if speed >= 75 %}
+          mdi:weather-tornado
+        {% elif speed >= 39 %}
+          mdi:weather-windy
+        {% elif speed >= 0 %}
+          mdi:airballoon
+        {% else %}
+          mdi:cloud-question
+        {% endif %}
+      value_template: >-
+        {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
+        {% if speed >= 118 %}
+          Hurricane force
+        {% elif speed >= 103 %}
+          Violent storm
+        {% elif speed >= 89 %}
+          Storm
+        {% elif speed >= 75 %}
+          Strong gale
+        {% elif speed >= 62 %}
+          Fresh gale
+        {% elif speed >= 50 %}
+          High wind
+        {% elif speed >= 39 %}
+          Strong breeze
+        {% elif speed >= 29 %}
+          Fresh breeze
+        {% elif speed >= 20 %}
+          Moderate breeze
+        {% elif speed >= 12 %}
+          Gentle breeze
+        {% elif speed >= 6 %}
+          Light breeze
+        {% elif speed >= 1 %}
+          Light air
+        {% elif speed >= 0 %}
+          Calm
+        {% elif speed < 0 %}
+          unknown
+        {% endif %}

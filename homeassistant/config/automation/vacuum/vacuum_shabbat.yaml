@@ -1,0 +1,62 @@
+####
+# Shabbat and Chag vacuum automations
+###
+
+- alias: "Vacuum - clean after morning kiddush"
+  id: 04c72c58-1815-491d-9c75-d1fcac2c3ab5
+  trigger:
+    platform: time
+    at: '11:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    service: vacuum.start
+    data:
+      entity_id: vacuum.xiaomi_vacuum_cleaner
+
+# The two next automations are precoutions from turning on or stopping the vacuum by the kids
+- alias: "Vacuum - prevent manual cleaning on shabbat"
+  id: dd081698-79b9-4e3b-8b94-15809bcce967
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'cleaning'
+  condition:
+    - condition: or
+      conditions:
+        - condition: time
+          before: '10:59:00'
+        - condition: time
+          after: '11:01:00'
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    - delay: 1
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - delay: 1
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+
+- alias: "Vacuum - prevent stop cleaning on shabat"
+  id: 48375897-57c4-4e4e-afa5-42dc31e8f3a6
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'paused'
+  condition:
+    - condition: time
+      after: '11:00:00'
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    - delay: 1
+    - service: vacuum.start
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner

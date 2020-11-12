@@ -1,0 +1,15 @@
+##############################################
+#               DEVICE TRACKER               #
+##############################################
+###
+# Define presence detection
+# https://www.home-assistant.io/integrations/device_tracker
+###
+
+# Presence detection using Ping
+- platform: ping
+  hosts:
+    yuval_ping: 10.0.0.2
+    tohar_ping: 10.0.0.14
+  count: 2
+  scan_interval: 300

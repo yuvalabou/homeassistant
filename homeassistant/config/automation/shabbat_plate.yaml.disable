@@ -1,0 +1,111 @@
+# Turn-off in Shabbat at 11:00am
+
+# Precoution for Shabbat after Chag
+- alias: "Shabbat Enter operation"
+  id: 175ea9fb-d7b6-419f-992d-a7cea43a7420
+  trigger:
+    platform: sun
+    event: sunset
+  condition:
+    - condition: time
+      weekday:
+        - fri
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Shabbat operation"
+  id: 48acb771-25fe-4629-9ce7-77dfc35adeab
+  trigger:
+    platform: time
+    at: '11:30:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Start Chag timer"
+  id: f6711174-7249-43d3-a70a-e1a9fa147ffe
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'on'
+  condition:
+    - condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+  action:
+    - service: timer.start
+      data:
+        entity_id: timer.chag_eve_plate
+    - service: switch.turn_on
+      data:
+        entity_id: switch.shabbat_plate
+
+- alias: "Turn-off plate on chag eve"
+  id: ab698dfc-9a41-4f15-bf63-cd95eaf95ee2
+  trigger:
+    platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.chag_eve_plate
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Chag operation"
+  id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
+  trigger:
+    platform: time
+    at: '08:00:00'
+  condition:
+    - condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Seuda-Shlishit"
+  id: eec856fd-3958-4296-984a-c62458c75c97
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-03:30:00'
+  condition:
+    - condition: time
+      weekday:
+        - sat
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Shabbat/Chag ends"
+  id: 0cb6679a-5286-419e-95be-fe5c2850a247
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'off'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate

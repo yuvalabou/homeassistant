@@ -1,0 +1,99 @@
+##################################################
+#     Home Assistant Main Configuration File     #
+#            Yuval Aboulafia - 112020            #
+##################################################
+
+##################################################
+#                      CORE                      #
+##################################################
+# Home Assistant core settings.
+homeassistant:
+  name: Aboulafia
+  latitude: !secret home_lat
+  longitude: !secret home_lon
+  elevation: !secret elevation
+  # Pick yours from here:
+  # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Asia/Jerusalem
+  # Customizing entities.
+  customize: !include customize.yaml
+
+# Integrates Home Assistant mobile app.
+mobile_app:
+
+##################################################
+#                       GUI                      #
+##################################################
+# Enables the frontend.
+frontend:
+  themes: !include_dir_merge_named lovelace/themes
+lovelace:
+  mode: yaml
+  resources: !include lovelace/resources/resources.yaml
+
+# Enables configuration UI.
+config:
+
+# Enables a map showing the location of tracked devices.
+map:
+
+##################################################
+#                     PERSONS                    #
+##################################################
+# Connecting device tracker entities to one or more person entities.
+person: !include integrations/person.yaml
+
+# Presence detection and tracking.
+device_tracker: !include integrations/device_tracker.yaml
+
+##################################################
+#                   DISCOVERY                    #
+##################################################
+
+discovery:
+zeroconf:
+ssdp:
+
+##################################################
+#                  INTEGRATIONS                  #
+##################################################
+
+automation: !include_dir_merge_list automation
+binary_sensor: !include_dir_merge_list integrations/binary_sensor
+camera: !include integrations/camera.yaml
+climate: !include_dir_merge_list integrations/climate
+group: !include integrations/group.yaml
+input_boolean: !include_dir_merge_named integrations/input_boolean
+input_datetime:
+input_number: !include integrations/input_number.yaml
+input_select: !include_dir_merge_named integrations/input_select
+jewish_calendar:
+  language: hebrew
+light: !include integrations/light.yaml
+pi_hole:
+  host: !secret nanopi_neo2
+  api_key: !secret pi_hole_key
+scene: !include_dir_merge_list scene
+script: !include_dir_merge_named integrations/script
+sensor: !include_dir_merge_list integrations/sensor
+speedtestdotnet:
+sun:
+switch: !include_dir_merge_list integrations/switch
+system_health:
+timer: !include integrations/timer.yaml
+updater:
+utility_meter: !include integrations/sensor/utility_meter.yaml
+vacuum:
+  - platform: xiaomi_miio
+    host: !secret vacuum
+    token: !secret vacuum_token
+zone: !include integrations/zone.yaml
+
+##################################################
+#                    LOG COMPONENTS              #
+##################################################
+history: !include logging/history.yaml
+logbook: !include logging/logbook.yaml
+recorder: !include logging/recorder.yaml
+logger:
+system_log:

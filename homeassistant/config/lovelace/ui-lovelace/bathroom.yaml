@@ -1,0 +1,51 @@
+####################################################
+#                      BATHROOM                    #
+####################################################
+id: bathroom
+title: "Bathroom"
+icon: mdi:shower
+background: 'var(--background-image)'
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.bathroom_temperature
+                name: "Temperature"
+                show_points: false
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.bathroom_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 12
+            show:
+              fill: fade
+              points: false
+              labels: false
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - binary_sensor.bathroom_motion
+          - entity: sensor.bathroom_humidity_range
+            name: "Humidity"
+          - sensor.bathroom_illuminance
+      - sensor.bathroom_mold_indicator

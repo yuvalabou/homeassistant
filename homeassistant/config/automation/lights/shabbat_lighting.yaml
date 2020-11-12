@@ -1,0 +1,85 @@
+###
+# Shabbat lighting
+###
+
+- alias: "Shabbat and Chag Lighting"
+  id: 66aff0fc-7022-4577-9d72-2f35104ca746
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+  action:
+    service: script.shabbat_chag_lighting_sequence
+
+- alias: "Shabbat and Chag Lighting off"
+  id: 84dba792-958c-432e-bfb4-db8266bb3f0a
+  trigger:
+    platform: template
+    value_template: >-
+      {{
+        states('sensor.time') == states('input_select.shabat_lights_off_time')
+      }}
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.public_lights
+      transition: 300
+
+- alias: "Shabbat Morning lighting"
+  id: 3ac9405a-dde0-41f2-850b-413cb15a708d
+  trigger:
+    platform: time
+    at: '08:00:00'
+  condition: # TODO: add condition based on light amount
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.public_lights
+      transition: 120
+      brightness_pct: 70
+
+- alias: "Shabbat Morning Dining lighting"
+  id: d2980177-8560-43f1-9fc4-26afd6406e73
+  trigger:
+    platform: time
+    at: '09:30:00'
+  condition: # TODO: add condition based on light amount
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.dining_lights
+      transition: 60
+      brightness_pct: 100
+
+- alias: "Shabbat and Chag end lighting"
+  id: 92ec94d8-89b9-4417-9c03-5711d20e5d32
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'off'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+  action:
+    service: script.shabbat_chag_end_lighting_sequence

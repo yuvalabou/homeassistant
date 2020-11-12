@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![CI](https://img.shields.io/github/workflow/status/yuvalabou/HomeAssistant-Config/Home%20Assistant?label=GitHub%20CI&style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/actions)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
@@ -40,7 +40,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|404       |268      |31              |7         |34           |27       |
+|391       |254      |28              |9         |34           |27       |
 
 -----
 
@@ -58,52 +58,6 @@ You may benefit from the script if you want to implement it yourself, But it's a
 |:------------:|:-------------------:|:-----------:|
 |<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>
 |1             |3                    |2            |
-
------
-
-## Official Addons
-
-<img src =
-    "https://esphome.io/_static/logo-text.svg"
-    align="right"
-    width=150>
-
-### [ESPHOME](https://esphome.io/index.html)
-
-ESPHome is a system to control your ESP8266/ESP32 by simple yet powerful configuration files and control them remotely through Home Automation systems.
-
-[ESPHome configurations folder](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/esphome)
-
-| Multisensors |
-|:------------:|
-|2             |
-
-<img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/samba/icon.png"
-    align = "right"
-    width=50>
-
-### [Samba](https://github.com/home-assistant/hassio-addons/tree/master/samba)
-
-This Add-on allows you to enable file sharing across different operating systems over a network.
-
-<img src =
-    "https://raw.githubusercontent.com/home-assistant/hassio-addons/master/mariadb/logo.png"
-    align = "right"
-    width=150>
-
-### [MariaDB](https://github.com/home-assistant/hassio-addons/tree/master/mariadb)
-
-MariaDB SQL database for Home Assistant.
-
-<img src =
-    "https://github.com/hassio-addons/addon-nut/blob/master/nut/icon.png?raw=true"
-    align = "right"
-    width=50>
-
-### [Network UPS Tools](https://github.com/hassio-addons/addon-nut)
-
-A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) devices connected to your Home Assistant machine.
 
 -----
 
@@ -139,3 +93,5 @@ A Network UPS Tools daemon to allow you to easily manage battery backup (UPS) de
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Weather Card](https://github.com/bramkragten/weather-card)
+
+You can join us on [Discord!](https://discord.gg/ayZ3Kkg)

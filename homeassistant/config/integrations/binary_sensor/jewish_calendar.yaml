@@ -1,0 +1,49 @@
+###
+# Jewish calendar
+###
+# Return True if it is fast today - not 'True' at kippur as it is a holiday
+- platform: template
+  sensors:
+    is_fast_day:
+      friendly_name: "צום"
+      value_template: >-
+        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == 5 }}
+      icon_template: >-
+        {% if is_state('binary_sensor.is_fast_day', 'on') %}
+          mdi:food-off
+        {% else %}
+          mdi:food
+        {% endif %}
+- platform: template
+  sensors:
+    is_omer:
+      value_template: >-
+        {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
+
+# Shabbat notification trigger
+# FIXME: These sensors have hardcoded timezone offset.
+# 10800s for +3hrs offset, 7200s for +2hrs offset.
+- platform: template
+  sensors:
+    shabbat_notification_10m:
+      friendly_name: "Shabbat 10 min Notification Trigger"
+      value_template: >-
+        {{
+          as_timestamp(
+            states('sensor.jewish_calendar_upcoming_candle_lighting')
+          ) |
+          timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+          float + (10*60) - (7200) ) |
+          timestamp_custom("%H:%M:%S")
+        }}
+    shabbat_notification_trigger_30m:
+      friendly_name: "Shabbat Half hour Notification Trigger"
+      value_template: >-
+        {{
+          as_timestamp(
+            states('sensor.jewish_calendar_upcoming_candle_lighting')
+          ) |
+          timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+          float + (30*60) - (7200) ) |
+          timestamp_custom("%H:%M:%S")
+        }}

@@ -1,0 +1,140 @@
+###
+# Vacuum
+###
+
+- alias: "Vacuum - Wait until everybody leave to start cleaning"
+  id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  condition:
+    - condition: time
+      after: '07:00:00'
+      before: '20:00:00'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.cleaned_today
+      state: 'off'
+    - condition: state
+      entity_id: input_boolean.disable_auto_clean
+      state: 'off'
+  action:
+    - service: vacuum.start
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: notify.mobile_app_yuval
+      data:
+        title: "Cleaning started"
+        message: "The house was empty - So I started cleaning."
+    - service: notify.mobile_app_tohar
+      data:
+        title: "Cleaning started"
+        message: "The house was empty - So I started cleaning."
+
+# Vacuum nofity on complete
+- alias: "Vacuum - Notify on complete"
+  id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    from: 'cleaning'
+    to: 'returning'
+  action:
+    - service: notify.mobile_app_yuval
+      data:
+        title: "Finished cleaning"
+        message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
+        data:
+          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+    - service: notify.mobile_app_tohar
+      data:
+        title: "Finished cleaning"
+        message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
+        data:
+          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+
+- alias: "Return to dock if error for 1 hr"
+  id: c70477c9-66c0-43db-9036-570aa6bfcb09
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    from: 'cleaning'
+    to: 'error'
+    for: '01:00:00'
+  action:
+    - service: vacuum.return_to_base
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: notify.mobile_app_yuval
+      data:
+        title: "Returning to Dock"
+        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
+        data:
+          image: "https://memegenerator.net/img/images/400x/8230737.jpg"
+    - service: notify.mobile_app_tohar
+      data:
+        title: "Returning to Dock"
+        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
+        data:
+          image: "https://memegenerator.net/img/images/400x/8230737.jpg"
+
+- alias: "Vacuum - Set to 'cleaned today'"
+  id: 8d53ce02-066c-4a51-a369-3e13d1220cee
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    to: 'cleaning'
+    for: '00:10:00'
+  action:
+    service: input_boolean.turn_on
+    data:
+      entity_id: input_boolean.cleaned_today
+
+- alias: "Vacuum - Reset 'cleaned today'"
+  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
+  initial_state: on
+  trigger:
+    platform: time
+    at: '00:00:00'
+  action:
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.cleaned_today
+
+- alias: "Intelligent Turbo mode"
+  id: c8258c50-16dd-4b3d-b743-7a806bdb1018
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  action:
+    service: script.vacuum_set_turbo
+
+- alias: "Intelligent Quiet mode"
+  id: f4000e26-b404-4d74-93a0-85b9900a7278
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'home'
+  action:
+    service: script.vacuum_set_silent
+
+- alias: "Vacuum - Set mode"
+  id: 339c44db-f51b-4174-b396-18e69213b4e7
+  trigger:
+    platform: state
+    entity_id: input_select.vacuum_fan_speed_list
+  action:
+    service: >-
+      {% if trigger.to_state.state == 'Silent' %}
+        script.vacuum_set_silent
+      {% elif trigger.to_state.state == 'Standard' %}
+        script.vacuum_set_standard
+      {% elif trigger.to_state.state == 'Turbo' %}
+        script.vacuum_set_turbo
+      {% elif trigger.to_state.state == 'Max' %}
+        script.vacuum_set_max
+      {% endif %}

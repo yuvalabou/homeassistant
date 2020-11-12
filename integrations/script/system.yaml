@@ -1,8 +1,0 @@
-###
-# Server control
-###
-
-homeassistant_restart:
-  alias: 'Restart Home Assistant'
-  sequence:
-    - service: homeassistant.restart

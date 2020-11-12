@@ -1,0 +1,75 @@
+##############################################
+#               CUSTOMIZATIONS               #
+##############################################
+###
+# Customize entities
+# https://www.home-assistant.io/docs/configuration/customizing-devices
+###
+
+#  Persons
+person.yuval:
+  entity_picture: "/local/assets/yuval.jpg"
+person.tohar:
+  entity_picture: "/local/assets/tohar.jpg"
+
+#  Devices
+binary_sensor.yuval_laptop:
+  device_class: connectivity
+  icon: mdi:laptop
+binary_sensor.tv:
+  device_class: connectivity
+  icon: mdi:television-classic
+binary_sensor.printer:
+  device_class: connectivity
+  icon: mdi:printer
+binary_sensor.vacuum:
+  device_class: connectivity
+  icon: mdi:robot-vacuum
+binary_sensor.nanopi_neo2:
+  device_class: connectivity
+  icon: mdi:raspberry-pi
+binary_sensor.rpi2:
+  device_class: connectivity
+  icon: mdi:raspberry-pi
+
+# Lights
+light.yeelight_color_living_room_1:
+  friendly_name: 'Living room'
+light.yeelight_color_living_room_2:
+  friendly_name: 'Living room'
+light.yeelight_color_master_bedroom:
+  friendly_name: 'Master Bedroom'
+
+# Time Tracking
+sensor.track_tv_usage:
+  icon: mdi:chart-timeline-variant
+#sensor.track_netflix_watch_time:
+#  icon: mdi:netflix
+#sensor.track_youtube_watch_time:
+#  icon: mdi:youtube
+sensor.track_steam_playtime:
+  icon: mdi:steam
+
+# Sensors
+sensor.myip:
+  icon: mdi:ip-network
+sensor.pihole_status:
+  icon: mdi:pi-hole
+
+# Utility meter
+sensor.total_ac_energy_usage_daily:
+  friendly_name: 'Daily Total AC Power'
+  unit_of_measurement: kWh
+  icon: mdi:counter
+sensor.total_ac_energy_usage_weekly:
+  friendly_name: 'Weekly Total AC Power'
+  unit_of_measurement: kWh
+  icon: mdi:counter
+sensor.total_ac_energy_usage_monthly:
+  friendly_name: 'Monthly Total AC Power'
+  unit_of_measurement: kWh
+  icon: mdi:counter
+
+# Mold indicator
+sensor.bathroom_mold_indicator:
+  icon: mdi:water-percent-alert

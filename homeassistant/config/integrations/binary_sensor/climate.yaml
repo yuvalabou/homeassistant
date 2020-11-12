@@ -1,0 +1,26 @@
+###
+# Climate
+###
+# Return True when AC unit is on
+- platform: template
+  sensors:
+    living_room_ac_is_on:
+      friendly_name: "Living Room AC"
+      value_template: >-
+        {{ not is_state('climate.slvn', 'off') }}
+      icon_template: >-
+        {% if is_state('binary_sensor.living_room_ac_is_on', 'on') %}
+          mdi:hvac
+        {% else %}
+          mdi:hvac-off
+        {% endif %}
+    master_bedroom_ac_is_on:
+      friendly_name: "Master Bedroom AC"
+      value_template: >-
+        {{ not is_state('climate.shynh', 'off') }}
+      icon_template: >-
+        {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') %}
+          mdi:hvac
+        {% else %}
+          mdi:hvac-off
+        {% endif %}
