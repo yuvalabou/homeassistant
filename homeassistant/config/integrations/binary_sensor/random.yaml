@@ -1,6 +1,6 @@
 ###
-# Random
+# Random boolean
 ###
-# Random Boolean
+
 - platform: random
-  name: 'Random Boolean'
+  name: "Random Boolean"

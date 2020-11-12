@@ -2,7 +2,7 @@
 #                     MASTER BEDROOM               #
 ####################################################
 id: master_bedroom
-title: 'Master Bedroom'
+title: "Master Bedroom"
 icon: mdi:bed-king-outline
 background: 'var(--background-image)'
 cards:
@@ -15,10 +15,10 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.master_bedroom_sensibo_temperature
-                name: 'Temperature'
+                name: "Temperature"
                 show_points: false
               - entity: sensor.master_bedroom_climate_set_temp
-                color: "white"
+                color: 'white'
                 show_fill: false
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -33,7 +33,7 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.master_bedroom_sensibo_humidity
-                name: 'Humidity'
+                name: "Humidity"
                 color: '#74A4F4'
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -61,27 +61,27 @@ cards:
       - type: custom:battery-state-card
         entities:
           - entity: sensor.mi_9t_battery_level
-            name: 'Yuval battery'
+            name: "Yuval battery"
             charging_state:
               entity_id: sensor.mi_9t_battery_state
               state: 'charging'
             color_gradient:
-              - "#ff0000"
-              - "#ffff00"
-              - "#00ff00"
+              - '#ff0000'
+              - '#ffff00'
+              - '#00ff00'
       - entity: sensor.mi_9t_next_alarm
-        name: 'Alarm'
+        name: "Alarm"
       - type: divider
       - type: custom:battery-state-card
         entities:
           - entity: sensor.redmi_note_7_battery_level
-            name: 'Tohar battery'
+            name: "Tohar battery"
             charging_state:
               entity_id: sensor.redmi_note_7_battery_state
               state: 'charging'
             color_gradient:
-              - "#ff0000"
-              - "#ffff00"
-              - "#00ff00"
+              - '#ff0000'
+              - '#ffff00'
+              - '#00ff00'
       - entity: sensor.redmi_note_7_next_alarm
-        name: 'Alarm'
+        name: "Alarm"

@@ -1,13 +1,15 @@
 ###
 # Lights
 ###
-# Return True when the light is on
+
 - platform: template
   sensors:
     master_bedroom_light_is_on:
-      friendly_name: 'Master Bedroom Light'
+      friendly_name: "Master Bedroom Light"
       value_template: >-
-        {{ is_state('light.yeelight_color_master_bedroom', 'on') }}
+        {{
+          is_state('light.yeelight_color_master_bedroom', 'on')
+        }}
       icon_template: >-
         {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
           mdi:lightbulb
@@ -15,9 +17,11 @@
           mdi:lightbulb-off
         {% endif %}
     living_room_light_is_on:
-      friendly_name: 'Living Room Lights'
+      friendly_name: "Living Room Lights"
       value_template: >-
-        {{ is_state('light.living_room_lights', 'on') }}
+        {{
+          is_state('light.living_room_lights', 'on')
+        }}
       icon_template: >-
         {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
           mdi:lightbulb-group

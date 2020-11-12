@@ -1,8 +1,9 @@
 ###
 # TV tracking
 ###
+
 - platform: history_stats
-  name: 'Track TV usage'
+  name: "Track TV usage"
   entity_id: binary_sensor.tv
   state: 'on'
   type: time
@@ -13,7 +14,7 @@
 - platform: template
   sensors:
     track_tv_watchtime_formatted:
-      friendly_name: 'Formatted TV usage'
+      friendly_name: "Formatted TV usage"
       value_template: >-
         {% set hours = states('sensor.track_tv_usage') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}
@@ -22,7 +23,7 @@
       icon_template: mdi:timetable
 
 - platform: history_stats
-  name: 'Track Netflix watch time'
+  name: "Track Netflix watch time"
   entity_id: binary_sensor.netflix_on
   state: 'on'
   type: time
@@ -33,7 +34,7 @@
 - platform: template
   sensors:
     track_netflix_watchtime_formatted:
-      friendly_name: 'Formatted Netflix usage'
+      friendly_name: "Formatted Netflix time"
       value_template: >-
         {% set hours = states('sensor.track_netflix') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}
@@ -42,7 +43,7 @@
       icon_template: mdi:netflix
 
 - platform: history_stats
-  name: 'Track YouTube watch time'
+  name: "Track YouTube watch time"
   entity_id: binary_sensor.youtube_on
   state: 'on'
   type: time
@@ -53,7 +54,7 @@
 - platform: template
   sensors:
     track_youtube_watchtime_formatted:
-      friendly_name: 'Formatted YouTube usage'
+      friendly_name: "Formatted YouTube usage"
       value_template: >-
         {% set hours = states('sensor.track_youtube') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}

@@ -1,11 +1,11 @@
 ###
 # Steam
 ###
-# Return True if someone is playing a game on steam
+
 - platform: template
   sensors:
     steam_game_on:
-      friendly_name: 'Steam Playing'
+      friendly_name: "Steam Playing"
       icon_template: mdi:steam
       value_template: >-
         {{ not is_state('sensor.steam_game', 'None') }}

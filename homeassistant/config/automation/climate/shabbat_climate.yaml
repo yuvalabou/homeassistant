@@ -1,5 +1,5 @@
 ####
-# Shabat climate
+# Shabbat climate
 ###
 
 - alias: "Turn on Living room AC on shabbat enter"
@@ -8,6 +8,10 @@
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
   action:
     service: climate.turn_on
     data:
@@ -30,12 +34,15 @@
     data:
       entity_id: climate.living_room_thermostat
 
-- alias: "Turn on Living room AC on shabbat morning"
+- alias: "Turn on Living room AC at shabbat morning"
   id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
   trigger:
     platform: time
     at: '08:00:00'
   condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'
@@ -44,7 +51,7 @@
     data:
       entity_id: climate.living_room_thermostat
 
-- alias: "Turn off Living room AC on shabbat noon"
+- alias: "Turn off Living room AC at shabbat noon"
   id: f570b89f-8ce5-4b09-9230-1acc55c54528
   trigger:
     platform: time
@@ -58,12 +65,15 @@
     data:
       entity_id: climate.living_room_thermostat
 
-- alias: "Turn on Living room AC on shabbat afternoon"
+- alias: "Turn on Living room AC at shabbat afternoon"
   id: 3425fdc2-cc4a-4280-935a-77174d328c71
   trigger:
     platform: time
     at: '14:00:00'
   condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'

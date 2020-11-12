@@ -1,6 +1,7 @@
 ###
 # Workday sensor
 ###
+
 - platform: workday
   country: IL
   workdays:

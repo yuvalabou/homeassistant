@@ -1,14 +1,14 @@
 ###
 # Uptime
 ###
-# Uptime sensor
+
 - platform: uptime
-  name: 'Time Online'
+  name: "Time Online"
   unit_of_measurement: hours
 - platform: template
   sensors:
     uptime_friendly:
-      friendly_name: 'Home Assistant Uptime'
+      friendly_name: "Home Assistant Uptime"
       icon_template: mdi:home-assistant
       value_template: >-
         {% set uptime = states('sensor.time_online') | float(-1) %}

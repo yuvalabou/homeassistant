@@ -9,33 +9,33 @@
 # Create light groups
 # https://www.home-assistant.io/integrations/light.group
 - platform: group
-  name: 'All lights'
+  name: "All lights"
   entities:
     - light.yeelight_color_master_bedroom
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
 - platform: group
-  name: 'Ceiling lights'
+  name: "Ceiling lights"
   entities:
     - light.yeelight_color_master_bedroom
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
 - platform: group
-  name: 'Dining lights'
+  name: "Dining lights"
   entities:
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
 - platform: group
-  name: 'Living room lights'
+  name: "Living room lights"
   entities:
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
 - platform: group
-  name: 'Public lights'
+  name: "Public lights"
   entities:
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
 - platform: group
-  name: 'Room lights'
+  name: "Room lights"
   entities:
     - light.yeelight_color_master_bedroom

@@ -2,7 +2,7 @@
 #                      BATHROOM                    #
 ####################################################
 id: bathroom
-title: 'Bathroom'
+title: "Bathroom"
 icon: mdi:shower
 background: 'var(--background-image)'
 cards:
@@ -15,7 +15,7 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.bathroom_temperature
-                name: 'Temperature'
+                name: "Temperature"
                 show_points: false
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -30,7 +30,7 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.bathroom_humidity
-                name: 'Humidity'
+                name: "Humidity"
                 color: '#74A4F4'
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -46,6 +46,6 @@ cards:
         entities:
           - binary_sensor.bathroom_motion
           - entity: sensor.bathroom_humidity_range
-            name: 'Humidity'
+            name: "Humidity"
           - sensor.bathroom_illuminance
       - sensor.bathroom_mold_indicator

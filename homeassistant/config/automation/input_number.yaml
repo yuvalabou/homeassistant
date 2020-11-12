@@ -13,6 +13,7 @@
     data:
       entity_id: input_number.day
       value: 1
+
 - alias: "Set Night"
   id: abfc3f6f-5c1a-434c-9484-4e7adb320b37
   trigger:

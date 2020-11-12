@@ -3,82 +3,82 @@
 ###
 
 reload_automations:
-  alias: 'Reload Automations'
+  alias: "Reload Automations"
   icon: mdi:restart
   sequence:
     - service: automation.reload
 reload_cli_sensors:
-  alias: 'Reload CLI sensors'
+  alias: "Reload CLI sensors"
   icon: mdi:restart
   sequence:
     - service: command_line.reload
 reload_core_config:
-  alias: 'Reload Home Assistant core configurations'
+  alias: Reload Home Assistant core configurations
   icon: mdi:restart
   sequence:
     - service: homeassistant.reload_core_config
 reload_thermostats:
-  alias: 'Reload Thermostats (Generic)'
+  alias: "Reload Thermostats (Generic)"
   icon: mdi:restart
   sequence:
     - service: generic_thermostat.reload
 reload_groups:
-  alias: 'Reload Groups'
+  alias: "Reload Groups"
   icon: mdi:restart
   sequence:
     - service: group.reload
 reload_history_stats:
-  alias: 'Reload History Stats sensors'
+  alias: "Reload History Stats sensors"
   icon: mdi:restart
   sequence:
     - service: history_stats.reload
 reload_input_boolean:
-  alias: 'Reload Input Booleans'
+  alias: "Reload Input Booleans"
   icon: mdi:restart
   sequence:
     - service: input_boolean.reload
 reload_input_datetime:
-  alias: 'Reload Input Datetimes'
+  alias: "Reload Input Datetimes"
   icon: mdi:restart
   sequence:
     - service: input_datetime.reload
 reload_input_select:
-  alias: 'Reload Input Selects'
+  alias: "Reload Input Selects"
   icon: mdi:restart
   sequence:
     - service: input_select.reload
 reload_lovelace_resources:
-  alias: 'Reload Lovelace Resources'
+  alias: "Reload Lovelace Resources"
   icon: mdi:restart
   sequence:
     - service: lovelace.reload_resources
 reload_persons:
-  alias: 'Reload Persons'
+  alias: "Reload Persons"
   icon: mdi:restart
   sequence:
     - service: person.reload
 reload_ping_sensors:
-  alias: 'Reload Ping sensors'
+  alias: "Reload Ping sensors"
   icon: mdi:restart
   sequence:
     - service: ping.reload
 reload_scripts:
-  alias: 'Reload Scripts'
+  alias: "Reload Scripts"
   icon: mdi:restart
   sequence:
     - service: script.reload
 reload_themes:
-  alias: 'Reload Themes'
+  alias: "Reload Themes"
   icon: mdi:restart
   sequence:
     - service: frontend.reload_themes
 reload_timers:
-  alias: 'Reload Timers'
+  alias: "Reload Timers"
   icon: mdi:restart
   sequence:
     - service: timer.reload
 reload_templates:
-  alias: 'Reload Templates'
+  alias: "Reload Templates"
   icon: mdi:restart
   sequence:
     - service: template.reload

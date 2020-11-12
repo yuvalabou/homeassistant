@@ -8,7 +8,7 @@
 
 # Combine all Person entities to a Group
 person:
-  name: 'Person'
+  name: "Person"
   entities:
     - person.yuval
     - person.tohar

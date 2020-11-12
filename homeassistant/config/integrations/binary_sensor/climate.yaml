@@ -5,7 +5,7 @@
 - platform: template
   sensors:
     living_room_ac_is_on:
-      friendly_name: 'Living Room AC'
+      friendly_name: "Living Room AC"
       value_template: >-
         {{ not is_state('climate.slvn', 'off') }}
       icon_template: >-
@@ -15,7 +15,7 @@
           mdi:hvac-off
         {% endif %}
     master_bedroom_ac_is_on:
-      friendly_name: 'Master Bedroom AC'
+      friendly_name: "Master Bedroom AC"
       value_template: >-
         {{ not is_state('climate.shynh', 'off') }}
       icon_template: >-

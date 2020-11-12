@@ -2,7 +2,7 @@
 #                     MAIN VIEW                    #
 ####################################################
 id: overview
-title: 'Overview'
+title: "Overview"
 background: 'var(--background-image)'
 cards:
   - type: horizontal-stack
@@ -14,9 +14,9 @@ cards:
             image: '/local/assets/yuval.jpg'
             entity: person.yuval
           - entity: sensor.yuval_geocoded_location
-            name: 'Location'
+            name: "Location"
           - entity: sensor.yuval_battery_level
-            name: 'Phone Battery'
+            name: "Phone Battery"
       - type: entities
         entities:
           - type: custom:hui-element
@@ -24,9 +24,9 @@ cards:
             image: '/local/assets/tohar.jpg'
             entity: person.tohar
           - entity: sensor.redmi_note_7_geocoded_location
-            name: 'Location'
+            name: "Location"
           - entity: sensor.redmi_note_7_battery_level
-            name: 'Phone Battery'
+            name: "Phone Battery"
 
   - type: entities
     entities:
@@ -65,11 +65,11 @@ cards:
     entity: sensor.total_ac_power_consumption
 
   - type: entities
-    title: 'זמני היום'
+    title: "זמני היום"
     show_header_toggle: false
     entities:
       - entity: sensor.jewish_calendar_date
-        name: 'תאריך'
+        name: "תאריך"
       - entity: binary_sensor.is_fast_day
         type: conditional
         conditions:
@@ -84,13 +84,13 @@ cards:
             state: 'on'
         row:
           entity: sensor.jewish_calendar_day_of_the_omer
-          name: 'ספירת העומר'
+          name: "ספירת העומר"
       - type: divider
       - entity: sensor.jewish_calendar_parshat_hashavua
-        name: 'פרשת השבוע'
+        name: "פרשת השבוע"
       - entity: sensor.jewish_calendar_upcoming_candle_lighting
         type: custom:multiple-entity-row
-        name: 'הדלקת נרות'
+        name: "הדלקת נרות"
         format: relative
         entities:
           - entity: sensor.jewish_calendar_upcoming_candle_lighting
@@ -98,7 +98,7 @@ cards:
             name: false
       - entity: sensor.jewish_calendar_upcoming_havdalah
         type: custom:multiple-entity-row
-        name: 'הבדלה'
+        name: "הבדלה"
         format: relative
         entities:
           - entity: sensor.jewish_calendar_upcoming_havdalah
@@ -106,10 +106,10 @@ cards:
             name: false
       - type: divider
       - entity: sensor.jewish_calendar_daf_yomi
-        name: 'דף יומי'
+        name: "דף יומי"
 
   - type: entities
-    title: 'תאורת שבת'
+    title: "תאורת שבת"
     show_header_toggle: false
     entities:
       - switch.shabat_mode
@@ -122,7 +122,7 @@ cards:
   - type: custom:auto-entities
     card:
       type: entities
-      title: 'Active Lights'
+      title: "Active Lights"
       show_header_toggle: false
     show_empty: false
     filter:

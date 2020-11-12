@@ -1,11 +1,11 @@
 ###
-# VACUUM
+# Vacuum
 ###
-# Xiaomi vacuum sensors
+
 - platform: template
   sensors:
     vacuum_status:
-      friendly_name: 'Status'
+      friendly_name: "Status"
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
       icon_template: >-
@@ -24,7 +24,7 @@
           mdi:help-circle
         {% endif %}
     vacuum_fan_speed:
-      friendly_name: 'Fan Speed'
+      friendly_name: "Fan Speed"
       value_template: >-
         {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
         {% if speed == 38 %}
@@ -52,44 +52,26 @@
           mdi:alert-circle
         {% endif %}
     vacuum_battery:
-      friendly_name: 'Vacuum Battery'
+      friendly_name: "Vacuum Battery"
       icon_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}
       unit_of_measurement: '%'
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}
-    vacuum_cleaned_area:
-      friendly_name: 'Area of Last Cycle'
+    vacuum_area_cleaned:
+      friendly_name: "Area of Last Cycle"
       icon_template: mdi:ruler
       unit_of_measurement: 'm²'
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaned_area') }}
-    vacuum_cleanfilter:
-      friendly_name: 'Replace filter'
-      icon_template: mdi:screwdriver
-      unit_of_measurement: 'hours'
-      value_template: >-
-        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
-    vacuum_cleaning_time:
-      friendly_name: 'Time of Last Cycle'
+    vacuum_time_cleaned:
+      friendly_name: "Time of Last Cycle"
       icon_template: mdi:timer
       unit_of_measurement: 'minutes'
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}
-    vacuum_cleanmainbrush:
-      friendly_name: 'Replace main brush'
-      icon_template: mdi:screwdriver
-      unit_of_measurement: 'hours'
-      value_template: >-
-        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
-    vacuum_cleansidebrush:
-      friendly_name: 'Replace side brush'
-      icon_template: mdi:screwdriver
-      unit_of_measurement: 'hours'
-      value_template: >-
-        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}
     vacuum_last_cleaned:
-      friendly_name: 'Last cleaned'
+      friendly_name: "Last cleaned"
       icon_template: mdi:timetable
       value_template: >-
         {{
@@ -98,9 +80,27 @@
           ) |
           timestamp_custom("%A, %H:%M", true)
         }}
-    vacuum_sensordirtyleft:
-      friendly_name: 'Clean sensor'
+    vacuum_clean_cliff_sensors:
+      friendly_name: "Clean sensor"
       icon_template: mdi:broom
       unit_of_measurement: 'hours'
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}
+    vacuum_clean_filter:
+      friendly_name: "Replace filter"
+      icon_template: mdi:screwdriver
+      unit_of_measurement: 'hours'
+      value_template: >-
+        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
+    vacuum_clean_main_brush:
+      friendly_name: "Replace main brush"
+      icon_template: mdi:screwdriver
+      unit_of_measurement: 'hours'
+      value_template: >-
+        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
+    vacuum_clean_side_brush:
+      friendly_name: "Replace side brush"
+      icon_template: mdi:screwdriver
+      unit_of_measurement: 'hours'
+      value_template: >-
+        {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}

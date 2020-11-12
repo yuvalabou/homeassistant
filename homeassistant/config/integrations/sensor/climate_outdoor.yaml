@@ -1,21 +1,20 @@
 ###
 # WEATHER
 ###
-# Outside temps
+
 - platform: template
   sensors:
     outside_temps:
-      friendly_name: 'Outside Temperature'
+      friendly_name: "Outside Temperature"
       unit_of_measurement: '°C'
       value_template: >-
         {{ state_attr('weather.openweathermap', 'temperature') | round }}
       icon_template: mdi:thermometer
 
-# Wind sensors
 - platform: template
   sensors:
     wind_scale_friendly:
-      friendly_name: 'Wind Scale'
+      friendly_name: "Wind Scale"
       icon_template: >-
         {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
         {% if speed >= 75 %}

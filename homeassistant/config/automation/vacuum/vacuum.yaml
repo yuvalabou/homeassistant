@@ -2,7 +2,6 @@
 # Vacuum
 ###
 
-# Vacuum will start cleaning when everybody leave
 - alias: "Vacuum - Wait until everybody leave to start cleaning"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
@@ -57,7 +56,6 @@
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
-# Vacuum return to dock if in error state more then 1 hr
 - alias: "Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
@@ -83,7 +81,6 @@
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
 
-# Set vacuum input_boolean to 'on' even if turned-on manually for minimal cleaning time
 - alias: "Vacuum - Set to 'cleaned today'"
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
@@ -96,7 +93,6 @@
     data:
       entity_id: input_boolean.cleaned_today
 
-# Reset daily cleaning counter
 - alias: "Vacuum - Reset 'cleaned today'"
   id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
   initial_state: on
@@ -108,7 +104,6 @@
     data:
       entity_id: input_boolean.cleaned_today
 
-# Vacuum - Intelligent Mode
 - alias: "Intelligent Turbo mode"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
@@ -117,6 +112,7 @@
     to: 'not_home'
   action:
     service: script.vacuum_set_turbo
+
 - alias: "Intelligent Quiet mode"
   id: f4000e26-b404-4d74-93a0-85b9900a7278
   trigger:
@@ -126,7 +122,6 @@
   action:
     service: script.vacuum_set_silent
 
-# Vacuum - Set mode
 - alias: "Vacuum - Set mode"
   id: 339c44db-f51b-4174-b396-18e69213b4e7
   trigger:

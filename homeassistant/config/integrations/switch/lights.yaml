@@ -1,11 +1,12 @@
 ###
-# Lights
+# Light switches
 ###
+
 - platform: template
   switches:
     night_light_override:
       unique_id: 4e9a2793-1a7b-4b16-aa84-1958b6264791
-      friendly_name: 'Night Light Override'
+      friendly_name: "Night Light Override"
       value_template: >-
         {{ states('input_boolean.night_light_override') }}
       turn_on:

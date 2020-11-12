@@ -2,12 +2,12 @@
 #                    Home Office                   #
 ####################################################
 id: work_room
-title: 'Home Office'
+title: "Home Office"
 icon: mdi:desk
 background: 'var(--background-image)'
 cards:
   - type: entities
-    title: 'Printer'
+    title: "Printer"
     entities:
       - sensor.mfc_j4410dw_status
       - binary_sensor.printer
@@ -19,20 +19,20 @@ cards:
         columns: 4
         height: '150px'
         entities:
-          - name: 'Cyan'
-            color: "cyan"
+          - name: "Cyan"
+            color: 'cyan'
             direction: up
             entity: sensor.mfc_j4410dw_cyan_ink_remaining
-          - name: 'Magenta'
-            color: "magenta"
+          - name: "Magenta"
+            color: 'magenta'
             direction: up
             entity: sensor.mfc_j4410dw_magenta_ink_remaining
-          - name: 'Yellow'
-            color: "yellow"
+          - name: "Yellow"
+            color: 'yellow'
             direction: up
             entity: sensor.mfc_j4410dw_yellow_ink_remaining
-          - name: 'Black'
-            color: "black"
+          - name: "Black"
+            color: 'black'
             direction: up
             entity: sensor.mfc_j4410dw_black_ink_remaining
 
@@ -45,7 +45,7 @@ cards:
         entities:
           - entity: sensor.track_steam_playtime_formatted
             unit: hours
-            name: 'Steam playtime'
+            name: "Steam playtime"
         show:
           graph: bar
           labels: false
@@ -53,8 +53,8 @@ cards:
         group_by: date
         color_thresholds:
           - value: 1
-            color: "#29A797"
+            color: '#29A797'
           - value: 2
-            color: "#F19631"
+            color: '#F19631'
           - value: 3
-            color: "#D2212A"
+            color: '#D2212A'

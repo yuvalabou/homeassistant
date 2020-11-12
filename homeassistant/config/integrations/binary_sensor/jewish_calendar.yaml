@@ -5,29 +5,32 @@
 - platform: template
   sensors:
     is_fast_day:
-      friendly_name: 'צום'
+      friendly_name: "צום"
       value_template: >-
-        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == 5 }}
+        {{
+          state_attr('sensor.jewish_calendar_holiday', 'type_id') == 5
+        }}
       icon_template: >-
         {% if is_state('binary_sensor.is_fast_day', 'on') %}
           mdi:food-off
         {% else %}
           mdi:food
         {% endif %}
-# Return True if it is omer day today
 - platform: template
   sensors:
     is_omer:
       value_template: >-
-        {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
+        {{
+          (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0
+        }}
 
-# Shabat notification trigger
+# Shabbat notification trigger
 # FIXME: These sensors have hardcoded timezone offset.
 # 10800s for +3hrs offset, 7200s for +2hrs offset.
 - platform: template
   sensors:
-    shabat_notification_10m:
-      friendly_name: 'Shabat 10 min Notification Trigger'
+    shabbat_notification_10m:
+      friendly_name: "Shabbat 10 min Notification Trigger"
       value_template: >-
         {{
           as_timestamp(
@@ -37,8 +40,8 @@
           float + (10*60) - (7200) ) |
           timestamp_custom("%H:%M:%S")
         }}
-    shabat_notification_trigger_30m:
-      friendly_name: 'Shabat Half hour Notification Trigger'
+    shabbat_notification_trigger_30m:
+      friendly_name: "Shabbat Half hour Notification Trigger"
       value_template: >-
         {{
           as_timestamp(

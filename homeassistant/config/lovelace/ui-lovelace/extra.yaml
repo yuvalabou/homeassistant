@@ -2,7 +2,7 @@
 #                    EXTRA STUFF                   #
 ####################################################
 id: extra_stuff
-title: 'Extra Stuff'
+title: "Extra Stuff"
 icon: mdi:information-outline
 background: 'var(--background-image)'
 cards:
@@ -15,15 +15,15 @@ cards:
         card_type: glance
         entities:
           - entity: sensor.seventeentrack_packages_not_found
-            name: 'Not-Found'
+            name: "Not-Found"
           - entity: sensor.seventeentrack_packages_in_transit
-            name: 'In-Transit'
+            name: "In-Transit"
           - entity: sensor.seventeentrack_packages_ready_to_be_picked_up
-            name: 'Ready to be Picked-Up'
+            name: "Ready to be Picked-Up"
       - type: custom:auto-entities
         card:
           type: entities
-          title: 'Package List'
+          title: "Package List"
           show_header_toggle: false
         filter:
           include:
@@ -31,7 +31,7 @@ cards:
 
   - type: custom:banner-card
     heading: "\U0001F382 Birthdays"
-    background: "#E64B51"
+    background: '#E64B51'
     row_size: 2
     entities:
       - entity: sensor.birthday_yuval

@@ -6,12 +6,12 @@
 # https://www.home-assistant.io/integrations/person
 ###
 
-- name: 'Yuval'
+- name: "Yuval"
   id: yuval
   device_trackers:
     - device_tracker.yuval_mi9t
 #    - device_tracker.mi_9t
-- name: 'Tohar'
+- name: "Tohar"
   id: tohar
   device_trackers:
     - device_tracker.tohar_mi7

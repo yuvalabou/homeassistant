@@ -1,5 +1,5 @@
 ####
-# Shabat and Chag vacuum automations
+# Shabbat and Chag vacuum automations
 ###
 
 - alias: "Vacuum - clean after morning kiddush"
@@ -16,8 +16,8 @@
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
 
-# Precoution from turning on the vacuum by the kids
-- alias: "Vacuum - prevent manual cleaning on shabat"
+# The two next automations are precoutions from turning on or stopping the vacuum by the kids
+- alias: "Vacuum - prevent manual cleaning on shabbat"
   id: dd081698-79b9-4e3b-8b94-15809bcce967
   trigger:
     platform: state

@@ -11,7 +11,7 @@
     for:
       minutes: 10
   action:
-    - service: notify.mobile_app_mi_9t
+    - service: notify.mobile_app_yuval
       data:
         title: "עובש במקלחת"
         message: "כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש."

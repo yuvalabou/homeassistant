@@ -1,8 +1,9 @@
 ###
-# Shabat eve scene
+# Shabbat eve scene
 ###
+
 # TODO: needs testing
-- name: "Shabat eve"
+- name: "Shabbat eve"
   icon: mdi:candle
   entities:
     light.room_lights:
@@ -15,5 +16,5 @@
       state: 'on'
       brightness_pct: 70
       kelvin: 4000
-    switch.shabat_mode:
+    switch.shabbat_mode:
       state: 'on'

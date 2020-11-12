@@ -2,7 +2,7 @@
 #                     LIVING ROOM                  #
 ####################################################
 id: living_room
-title: 'Living Room'
+title: "Living Room"
 icon: mdi:sofa
 background: 'var(--background-image)'
 cards:
@@ -15,10 +15,10 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.living_room_temperature
-                name: 'Temperature'
+                name: "Temperature"
                 show_points: false
               - entity: sensor.living_room_climate_set_temp
-                color: "white"
+                color: 'white'
                 show_fill: false
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -33,7 +33,7 @@ cards:
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.living_room_humidity
-                name: 'Humidity'
+                name: "Humidity"
                 color: '#74A4F4'
               - !include ../resources/graph_card_day_num.yaml
             font_size: 80
@@ -49,7 +49,7 @@ cards:
         entities:
           - binary_sensor.living_room_motion
           - entity: sensor.living_room_humidity_range
-            name: 'Humidity'
+            name: "Humidity"
           - sensor.living_room_illuminance
 
   - type: custom:simple-thermostat
@@ -64,7 +64,7 @@ cards:
       temperature: true
     sensors:
       - entity: sensor.living_room_temperature
-        name: 'Temperature'
+        name: "Temperature"
 
   - type: entities
     show_header_toggle: false
@@ -92,7 +92,7 @@ cards:
             style:
               top: 15%
               left: 50%
-              font-weight: "bold"
+              font-weight: 'bold'
               font-size: 200%
               color: '#212121'
           - type: icon
@@ -144,13 +144,13 @@ cards:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         content: |
           Last cleaned at {{ states('sensor.vacuum_last_cleaned') }}
-          It took {{ states('sensor.vacuum_cleaning_time') }} minutes to clean {{ states('sensor.vacuum_cleaned_area') }} meters.
+          It took {{ states('sensor.vacuum_time_cleaned') }} minutes to clean {{ states('sensor.vacuum_area_cleaned') }} meters.
       - type: custom:hui-element
         card_type: glance
         columns: 2
         entities:
           - entity: sensor.vacuum_fan_speed
-            name: 'Mode'
+            name: "Mode"
             tap_action:
               action: call-service
               service: input_select.select_next
@@ -162,10 +162,10 @@ cards:
         card_type: custom:fold-entity-row
         head:
           type: section
-          label: 'Consumables'
+          label: "Consumables"
         open: false
         entities:
-          - entity: sensor.vacuum_cleanmainbrush
+          - entity: sensor.vacuum_clean_main_brush
             hold_action:
               action: call-service
               service: script.vacuum_reset_main_brush
@@ -173,11 +173,11 @@ cards:
             hold_action:
               action: call-service
               service: script.vacuum_reset_side_brush
-          - entity: sensor.vacuum_cleanfilter
+          - entity: sensor.vacuum_clean_filter
             hold_action:
               action: call-service
               service: script.vacuum_reset_filter
-          - entity: sensor.vacuum_sensordirtyleft
+          - entity: sensor.vacuum_clean_cliff_sensors
             hold_action:
               action: call-service
               service: script.vacuum_reset_sensor

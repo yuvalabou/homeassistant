@@ -1,6 +1,7 @@
 ###
 # Steam
 ###
+
 - platform: steam_online
   api_key: !secret steam_api
   accounts:
@@ -9,13 +10,13 @@
 - platform: template
   sensors:
     steam_game:
-      friendly_name: 'Steam Game'
+      friendly_name: "Steam Game"
       value_template: >-
         {{ state_attr('sensor.steam_76561198173612681', 'game') }}
       icon_template: mdi:gamepad-square-outline
 
 - platform: history_stats
-  name: 'Track Steam playtime'
+  name: "Track Steam playtime"
   entity_id: binary_sensor.steam_game_on
   state: 'on'
   type: time
@@ -26,7 +27,7 @@
 - platform: template
   sensors:
     track_steam_playtime_formatted:
-      friendly_name: 'Formatted Steam playtime'
+      friendly_name: "Formatted Steam playtime"
       value_template: >-
         {% set hours = states('sensor.track_steam_playtime') | float %}
         {% set minutes = ((hours % 1) * 60) | int %}

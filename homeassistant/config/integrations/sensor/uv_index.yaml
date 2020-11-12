@@ -1,11 +1,11 @@
 ###
-# Friendly UV Index Sensor
+# UV Index
 ###
 
 - platform: template
   sensors:
     uv_index_friendly:
-      friendly_name: 'UV index'
+      friendly_name: "UV index"
       value_template: >-
         {% set index = (states('sensor.current_uv_index')) | int %}
         {% if index >= 11 %}

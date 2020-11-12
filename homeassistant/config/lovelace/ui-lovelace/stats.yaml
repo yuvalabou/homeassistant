@@ -2,12 +2,12 @@
 #                     Statistics                   #
 ####################################################
 id: statistics
-title: 'Statistics'
+title: "Statistics"
 icon: mdi:chart-areaspline
 background: 'var(--background-image)'
 cards:
   - type: custom:mini-graph-card
-    name: 'Temperature'
+    name: "Temperature"
     hours_to_show: 84
     entities:
       - entity: sensor.living_room_temperature
@@ -17,9 +17,9 @@ cards:
       - entity: sensor.bathroom_temperature
         show_points: false
       - entity: sensor.outside_temps
-        name: 'Outside'
+        name: "Outside"
         show_points: false
-        color: "white"
+        color: 'white'
         show_fill: false
       - !include ../resources/graph_card_day_num.yaml
     show:
@@ -32,7 +32,7 @@ cards:
     color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
 
   - type: custom:mini-graph-card
-    name: 'Motion last 3 Hours'
+    name: "Motion last 3 Hours"
     icon: mdi:motion-sensor
     hours_to_show: 3
     points_per_hour: 60
@@ -43,21 +43,21 @@ cards:
     entities:
       - entity: binary_sensor.living_room_motion
         show_points: false
-        color: "#7FB1CF"
+        color: '#7FB1CF'
       - entity: binary_sensor.bathroom_motion
         show_points: false
-        color: "#C4BAB0"
+        color: '#C4BAB0'
       - !include ../resources/graph_card_day_bool.yaml
     state_map:
-      - value: "off"
-        label: 'Clear'
-      - value: "on"
-        label: 'Detected'
+      - value: 'off'
+        label: "Clear"
+      - value: 'on'
+        label: "Detected"
     show:
       fill: fade
 
   - type: custom:mini-graph-card
-    name: 'Lights'
+    name: "Lights"
     icon: mdi:lightbulb-on
     points_per_hour: 60
     hours_to_show: 12
@@ -67,29 +67,29 @@ cards:
     entities:
       - entity: binary_sensor.living_room_light_is_on
         show_points: false
-        color: "#7FB1CF"
+        color: '#7FB1CF'
       - entity: binary_sensor.master_bedroom_light_is_on
         show_points: false
-        color: "#A886F7"
+        color: '#A886F7'
       - !include ../resources/graph_card_day_bool.yaml
     state_map:
-      - value: "off"
-        label: 'כבוי'
-      - value: "on"
-        label: 'דולק'
+      - value: 'off'
+        label: "כבוי"
+      - value: 'on'
+        label: "דולק"
     show:
       fill: fade
       labels: false
 
   - type: custom:mini-graph-card
-    name: 'Illumination'
+    name: "Illumination"
     entities:
       - entity: sensor.living_room_illuminance
         show_points: false
-        color: "#7FB1CF"
+        color: '#7FB1CF'
       - entity: sensor.bathroom_illuminance
         show_points: false
-        color: "#C4BAB0"
+        color: '#C4BAB0'
       - !include ../resources/graph_card_day_num.yaml
     show:
       fill: fade
@@ -100,7 +100,7 @@ cards:
     line_width: 2
 
   - type: custom:mini-graph-card
-    name: 'AC'
+    name: "AC"
     icon: mdi:air-conditioner
     points_per_hour: 60
     hours_to_show: 12
@@ -110,16 +110,16 @@ cards:
     entities:
       - entity: binary_sensor.living_room_ac_is_on
         show_points: false
-        color: "#7FB1CF"
+        color: '#7FB1CF'
       - entity: binary_sensor.master_bedroom_ac_is_on
         show_points: false
-        color: "#A886F7"
+        color: '#A886F7'
       - !include ../resources/graph_card_day_bool.yaml
     state_map:
-      - value: "off"
-        label: 'כבוי'
-      - value: "on"
-        label: 'דולק'
+      - value: 'off'
+        label: "כבוי"
+      - value: 'on'
+        label: "דולק"
     show:
       fill: fade
       labels: false
@@ -129,7 +129,7 @@ cards:
       - entity: binary_sensor.tv
       - type: custom:hui-element
         card_type: custom:mini-graph-card
-        name: 'TV'
+        name: "TV"
         hours_to_show: 168
         group_by: date
         entities:
@@ -137,41 +137,41 @@ cards:
             unit: hours
         color_thresholds:
           - value: 1
-            color: "#29A797"
+            color: '#29A797'
           - value: 2
-            color: "#F19631"
+            color: '#F19631'
           - value: 3
-            color: "#D2212A"
+            color: '#D2212A'
         show:
           graph: bar
           labels: false
 
   - type: custom:mini-graph-card
-    name: 'AC Power Consumption'
+    name: "AC Power Consumption"
     unit: 'kW'
     hours_to_show: 750
     line_width: 1
     entities:
       - entity: sensor.total_ac_energy_usage_daily
-        name: 'Daily'
-        color: "#04FC04"
+        name: "Daily"
+        color: '#04FC04'
         show_state: true
         show_points: false
       - entity: sensor.total_ac_energy_usage_weekly
-        name: 'Weekly'
-        color: "yellow"
+        name: "Weekly"
+        color: 'yellow'
         show_state: false
         show_points: false
       - entity: sensor.total_ac_energy_usage_monthly
-        name: 'Monthly'
-        color: "red"
+        name: "Monthly"
+        color: 'red'
         show_state: false
         show_points: false
     show:
       fill: fade
 
   - type: custom:mini-graph-card
-    name: 'Water Consumption'
+    name: "Water Consumption"
     unit: 'm³'
     icon: mdi:water-pump
     hours_to_show: 750
@@ -180,11 +180,11 @@ cards:
     upper_bound: ~0.4
     entities:
       - entity: sensor.water_meter_9926387_monthly_consumption
-        name: 'Monthly consumption'
+        name: "Monthly consumption"
         show_graph: false
       - entity: sensor.water_meter_9926387_today_s_consumption
-        name: 'Today'
-        color: "#04FC04"
+        name: "Today"
+        color: '#04FC04'
         show_points: false
     show:
       graph: bar

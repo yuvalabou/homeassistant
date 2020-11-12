@@ -2,12 +2,12 @@
 #                     UTILITIES                    #
 ####################################################
 id: utilities
-title: 'System Monitor'
+title: "System Monitor"
 icon: mdi:server
 background: 'var(--background-image)'
 cards:
   - type: entities
-    title: 'Internet'
+    title: "Internet"
     entities:
       - type: custom:hui-element
         card_type: horizontal-stack
@@ -16,7 +16,7 @@ cards:
             icon: mdi:download-network
             entities:
               - entity: sensor.speedtest_download
-                name: 'Download'
+                name: "Download"
             points_per_hour: 1
             show:
               points: false
@@ -25,47 +25,47 @@ cards:
             icon: mdi:upload-network
             entities:
               - entity: sensor.speedtest_upload
-                name: 'Upload'
+                name: "Upload"
             points-per_hour: 1
             show:
               fill: fade
               points: false
       - type: divider
       - entity: sensor.myip
-        name: 'External IP'
+        name: "External IP"
 
   - type: glance
-    title: 'Component Count'
+    title: "Component Count"
     columns: 4
     entities:
       - entity: sensor.count_entities
-        name: 'Entities'
+        name: "Entities"
       - entity: sensor.count_lights
-        name: 'Lights'
+        name: "Lights"
       - entity: sensor.count_sensors
-        name: 'Sensors'
+        name: "Sensors"
       - entity: sensor.count_binary_sensors
-        name: 'Binary Sensors'
+        name: "Binary Sensors"
       - entity: sensor.count_automations
-        name: 'Automations'
+        name: "Automations"
       - entity: sensor.count_scripts
-        name: 'Scripts'
+        name: "Scripts"
       - entity: sensor.count_zones
-        name: 'Zones'
+        name: "Zones"
       - entity: sensor.count_device_trackers
-        name: 'Device Trackers'
+        name: "Device Trackers"
       - entity: sensor.count_switches
-        name: 'Switches'
+        name: "Switches"
       - entity: sensor.count_input_booleans
-        name: 'Input Booleans'
+        name: "Input Booleans"
       - entity: sensor.count_input_selects
-        name: 'Input Select'
+        name: "Input Select"
       - entity: sensor.count_input_datetimes
-        name: 'Input Date Times'
+        name: "Input Date Times"
       - entity: sensor.count_timers
-        name: 'Timers'
+        name: "Timers"
       - entity: sensor.count_climates
-        name: 'Climate'
+        name: "Climate"
 
   - type: entities
     entities:
@@ -80,35 +80,35 @@ cards:
         card_type: horizontal-stack
         cards:
           - type: gauge
-            name: 'CPU Use'
+            name: "CPU Use"
             entity: sensor.processor_use_percent
             severity:
               green: 0
               yellow: 45
               red: 85
           - type: gauge
-            name: 'CPU Temp'
+            name: "CPU Temp"
             entity: sensor.processor_temperature
             severity:
               green: 0
               yellow: 60
               red: 80
           - type: gauge
-            name: 'RAM Use'
+            name: "RAM Use"
             entity: sensor.memory_use_percent
             severity:
               green: 0
               yellow: 50
               red: 75
-      - type: custom:hui-element
-        card_type: custom:mini-graph-card
-        icon: mdi:database
-        entities:
-          - entity: sensor.db_size
-            name: 'Database'
-        show:
-          fill: fade
-          points: false
+#      - type: custom:hui-element
+#        card_type: custom:mini-graph-card
+#        icon: mdi:database
+#        entities:
+#          - entity: sensor.db_size
+#            name: 'Database'
+#        show:
+#          fill: fade
+#          points: false
       - type: custom:hui-element
         card_type: entities
         entities:
@@ -165,21 +165,21 @@ cards:
         card_type: horizontal-stack
         cards:
           - type: gauge
-            name: 'CPU Use'
+            name: "CPU Use"
             entity: sensor.npn2_cpu_used
             severity:
               green: 0
               yellow: 45
               red: 85
           - type: gauge
-            name: 'CPU Temp'
+            name: "CPU Temp"
             entity: sensor.npn2_cpu_thermal_1_temp
             severity:
               green: 0
               yellow: 60
               red: 80
           - type: gauge
-            name: 'RAM Use'
+            name: "RAM Use"
             entity: sensor.npn2_ram_used_percent
             severity:
               green: 0
@@ -188,7 +188,7 @@ cards:
       - type: custom:bar-card
         entities:
           - entity: sensor.npn2_used_percent
-            name: 'SD Storage'
+            name: "SD Storage"
             severity:
               - color: '#FF0F00'
                 from: 91
@@ -211,10 +211,10 @@ cards:
             card_type: custom:mini-graph-card
             entities:
               - entity: sensor.pi_hole_ads_blocked_today
-                color: "#FF0F00"
+                color: '#FF0F00'
               - entity: sensor.pi_hole_dns_queries_today
               - entity: sensor.pi_hole_dns_queries_forwarded
-                color: "#4DFF00"
+                color: '#4DFF00'
             show:
               points: false
               legend: false
@@ -238,21 +238,21 @@ cards:
         card_type: horizontal-stack
         cards:
           - type: gauge
-            name: 'CPU Use'
+            name: "CPU Use"
             entity: sensor.rpi2_cpu_used
             severity:
               green: 0
               yellow: 45
               red: 85
           - type: gauge
-            name: 'CPU Temp'
+            name: "CPU Temp"
             entity: sensor.rpi2_cpu_thermal_1_temp
             severity:
               green: 0
               yellow: 60
               red: 80
           - type: gauge
-            name: 'RAM Use'
+            name: "RAM Use"
             entity: sensor.rpi2_ram_used_percent
             severity:
               green: 0
@@ -261,13 +261,13 @@ cards:
       - type: custom:bar-card
         entities:
           - entity: sensor.rpi2_mnt_used_percent
-            name: 'External HDD'
+            name: "External HDD"
             severity:
               - color: '#FF0F00'
                 from: 91
                 to: 100
           - entity: sensor.rpi2_used_percent
-            name: 'SD Storage'
+            name: "SD Storage"
             severity:
               - color: '#FF0F00'
                 from: 91

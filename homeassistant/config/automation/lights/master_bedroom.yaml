@@ -2,21 +2,18 @@
 # MASTER BEDROOM
 ###
 
-# Light-up master bedroom the morning
 - alias: "Turn on the master-bedroom lights in a workday morning"
   id: cb2d8573-74f4-440c-9b2e-23057b5e492c
   trigger:
     platform: time
     at: '06:45:00'
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.workday_sensor
-          state: 'on'
-        - condition: state
-          entity_id: group.person
-          state: 'home'
+    - condition: state
+      entity_id: binary_sensor.workday_sensor
+      state: 'on'
+    - condition: state
+      entity_id: group.person
+      state: 'home'
   action:
     service: light.turn_on
     data:
