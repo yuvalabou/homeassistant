@@ -62,7 +62,6 @@ automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list integrations/binary_sensor
 camera: !include integrations/camera.yaml
 climate: !include_dir_merge_list integrations/climate
-glances:
 group: !include integrations/group.yaml
 input_boolean: !include_dir_merge_named integrations/input_boolean
 input_datetime:

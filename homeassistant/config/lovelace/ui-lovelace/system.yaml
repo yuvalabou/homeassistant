@@ -100,6 +100,14 @@ cards:
               green: 0
               yellow: 50
               red: 75
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.disk_use_percent
+            name: "SD Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
 #      - type: custom:hui-element
 #        card_type: custom:mini-graph-card
 #        icon: mdi:database

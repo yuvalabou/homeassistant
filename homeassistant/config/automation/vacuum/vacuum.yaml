@@ -29,7 +29,7 @@
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
-    - service: notify.mobile_app_redmi_note_7
+    - service: notify.mobile_app_tohar
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
@@ -49,7 +49,7 @@
         message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
-    - service: notify.mobile_app_redmi_note_7
+    - service: notify.mobile_app_tohar
       data:
         title: "Finished cleaning"
         message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
@@ -74,7 +74,7 @@
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
-    - service: notify.mobile_app_redmi_note_7
+    - service: notify.mobile_app_tohar
       data:
         title: "Returning to Dock"
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"

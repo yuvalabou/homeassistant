@@ -8,12 +8,12 @@
 # you can change the value below to the correct offset of your device
 - platform: template
   sensors:
-    redmi_note_7_next_alarm_formatted:
+    tohar_next_alarm_formatted:
       friendly_name: 'Tohar next Alarm'
       value_template: >-
         {{
           ((as_timestamp(
-            states('sensor.redmi_note_7_next_alarm')
+            states('sensor.tohar_next_alarm')
           ) | int) + ( 15*60 )) |
           timestamp_custom('%H:%M')
         }}

@@ -23,9 +23,9 @@ cards:
             card_type: picture-entity
             image: '/local/assets/tohar.jpg'
             entity: person.tohar
-          - entity: sensor.redmi_note_7_geocoded_location
+          - entity: sensor.tohar_geocoded_location
             name: "Location"
-          - entity: sensor.redmi_note_7_battery_level
+          - entity: sensor.tohar_battery_level
             name: "Phone Battery"
 
   - type: entities
@@ -112,12 +112,14 @@ cards:
     title: "תאורת שבת"
     show_header_toggle: false
     entities:
-      - switch.shabat_mode
-      - input_select.shabat_lights_off_time
+      - switch.shabbat_mode
+      - input_select.shabbat_lights_off_time
 
   - type: entities
+    show_header_toggle: false
     entities:
       - switch.night_light_override
+      - switch.disable_auto_clean
 
   - type: custom:auto-entities
     card:

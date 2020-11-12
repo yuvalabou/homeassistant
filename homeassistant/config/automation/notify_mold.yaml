@@ -15,7 +15,7 @@
       data:
         title: "עובש במקלחת"
         message: "כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש."
-    - service: notify.mobile_app_redmi_note_7
+    - service: notify.mobile_app_tohar
       data:
         title: "עובש במקלחת"
         message: "כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש."

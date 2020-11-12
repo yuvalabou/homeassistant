@@ -33,7 +33,7 @@
       data:
         title: "שבת שלום!"
         message: "שבת נכנסת בעוד 10 דקות."
-    - service: notify.mobile_app_redmi_note_7
+    - service: notify.mobile_app_tohar
       data:
         title: "שבת שלום!"
         message: "שבת נכנסת בעוד 10 דקות."
