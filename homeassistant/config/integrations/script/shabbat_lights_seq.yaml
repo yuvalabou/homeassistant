@@ -4,7 +4,7 @@
 
 shabbat_chag_lighting_sequence:
   alias: "Shabbat and Chag lighting sequence"
-  description: "Sequence that notify when Shabat enters"
+  description: "Sequence that notify when Shabbat enters"
   sequence:
     - service: light.turn_on
       data:
@@ -20,7 +20,7 @@ shabbat_chag_lighting_sequence:
 
 shabbat_chag_end_lighting_sequence:
   alias: "Shabbat and Chag lighting sequence"
-  description: "Sequence that notify when Shabat ends"
+  description: "Sequence that notify when Shabbat ends"
   sequence:
     - service: light.turn_on
       data:
