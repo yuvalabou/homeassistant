@@ -28,11 +28,3 @@ cards:
         filter:
           include:
             - entity_id: 'sensor.seventeentrack_package_*'
-
-  - type: custom:banner-card
-    heading: "\U0001F382 Birthdays"
-    background: '#E64B51'
-    row_size: 2
-    entities:
-      - entity: sensor.birthday_yuval
-      - entity: sensor.birthday_tohar

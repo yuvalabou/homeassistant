@@ -9,8 +9,6 @@
   type: module
 - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
-- url: /hacsfiles/banner-card/banner-card.js
-  type: module
 - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
   type: module
 - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
