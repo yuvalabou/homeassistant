@@ -1,18 +1,19 @@
 """The Anniversaries Integration"""
 import logging
-
 from homeassistant import config_entries
 from homeassistant.helpers import discovery
+
 from integrationhelper.const import CC_STARTUP_VERSION
 
+
 from .const import (
-    CONF_DATE_TEMPLATE,
     CONF_SENSORS,
-    CONFIG_SCHEMA,
+    CONF_DATE_TEMPLATE,
     DOMAIN,
     ISSUE_URL,
     PLATFORM,
     VERSION,
+    CONFIG_SCHEMA,
 )
 
 #MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)

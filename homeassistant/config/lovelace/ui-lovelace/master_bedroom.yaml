@@ -58,30 +58,16 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:battery-state-card
-        entities:
-          - entity: sensor.yuval_battery_level
-            name: "Yuval battery"
-            charging_state:
-              entity_id: sensor.yuval_battery_state
-              state: 'charging'
-            color_gradient:
-              - '#ff0000'
-              - '#ffff00'
-              - '#00ff00'
+      - type: custom:battery-entity-row
+        entity: sensor.yuval_battery_level
+        name: "Yuval battery"
+        charging: true
       - entity: sensor.yuval_next_alarm
         name: "Alarm"
       - type: divider
-      - type: custom:battery-state-card
-        entities:
-          - entity: sensor.tohar_battery_level
-            name: "Tohar battery"
-            charging_state:
-              entity_id: sensor.tohar_battery_state
-              state: 'charging'
-            color_gradient:
-              - '#ff0000'
-              - '#ffff00'
-              - '#00ff00'
+      - type: custom:battery-entity-row
+        entity: sensor.tohar_battery_level
+        name: "Tohar battery"
+        charging: true
       - entity: sensor.tohar_next_alarm
         name: "Alarm"
