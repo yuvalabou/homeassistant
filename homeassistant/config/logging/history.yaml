@@ -14,6 +14,7 @@ exclude:
   entity_globs:
     - sensor.jewish_calendar_*
     - sensor.count_*
+    - sensor.mfc_*
   domains:
     - camera
     - automation

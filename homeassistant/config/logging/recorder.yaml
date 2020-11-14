@@ -16,6 +16,7 @@ exclude:
   entity_globs:
     - sensor.count_*
     - sensor.seventeentrack_*
+    - sensor.mfc_*
   domains:
     - sun
     - weather

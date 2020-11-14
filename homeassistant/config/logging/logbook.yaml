@@ -20,6 +20,7 @@ exclude:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*
     - sensor.count_*
+    - sensor.mfc_*
   domains:
     - updater
     - sun
