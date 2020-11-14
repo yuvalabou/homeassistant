@@ -10,9 +10,7 @@
   id: yuval
   device_trackers:
     - device_tracker.yuval_ping
-    - device_tracker.yuval
 - name: "Tohar"
   id: tohar
   device_trackers:
     - device_tracker.tohar_ping
-    - device_tracker.tohar
