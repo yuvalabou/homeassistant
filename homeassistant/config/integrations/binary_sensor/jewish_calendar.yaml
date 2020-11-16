@@ -1,7 +1,7 @@
 ###
 # Jewish calendar
 ###
-# Return True if it is fast today - not 'True' at kippur as it is a holiday
+
 - platform: template
   sensors:
     is_fast_day:
@@ -14,13 +14,11 @@
         {% else %}
           mdi:food
         {% endif %}
-- platform: template
-  sensors:
     is_omer:
       value_template: >-
         {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
 
-# Shabbat notification trigger
+# Shabbat notification triggers
 # FIXME: These sensors have hardcoded timezone offset.
 # 10800s for +3hrs offset, 7200s for +2hrs offset.
 - platform: template

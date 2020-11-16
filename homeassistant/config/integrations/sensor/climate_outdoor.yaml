@@ -1,5 +1,5 @@
 ###
-# WEATHER
+# Weather
 ###
 
 - platform: template
@@ -10,9 +10,6 @@
       value_template: >-
         {{ state_attr('weather.openweathermap', 'temperature') | round }}
       icon_template: mdi:thermometer
-
-- platform: template
-  sensors:
     wind_scale_friendly:
       friendly_name: "Wind Scale"
       icon_template: >-
