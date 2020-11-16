@@ -96,4 +96,5 @@ history: !include logging/history.yaml
 logbook: !include logging/logbook.yaml
 recorder: !include logging/recorder.yaml
 logger:
+  default: warning
 system_log:
