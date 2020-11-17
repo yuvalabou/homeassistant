@@ -15,6 +15,7 @@ exclude:
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.mfc_*
+    - sensor.skin_type_*
   domains:
     - camera
     - automation

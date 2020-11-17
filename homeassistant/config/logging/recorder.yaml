@@ -17,6 +17,7 @@ exclude:
     - sensor.count_*
     - sensor.seventeentrack_*
     - sensor.mfc_*
+    - sensor.skin_type_*
   domains:
     - sun
     - weather
