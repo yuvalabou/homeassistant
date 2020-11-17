@@ -13,8 +13,8 @@ cards:
             card_type: picture-entity
             image: '/local/assets/yuval.jpg'
             entity: person.yuval
-          - entity: sensor.yuval_geocoded_location
-            name: "Location"
+#          - entity: sensor.yuval_geocoded_location
+#            name: "Location"
           - entity: sensor.yuval_battery_level
             name: "Phone Battery"
       - type: entities
@@ -23,8 +23,8 @@ cards:
             card_type: picture-entity
             image: '/local/assets/tohar.jpg'
             entity: person.tohar
-          - entity: sensor.tohar_geocoded_location
-            name: "Location"
+#          - entity: sensor.tohar_geocoded_location
+#            name: "Location"
           - entity: sensor.tohar_battery_level
             name: "Phone Battery"
 

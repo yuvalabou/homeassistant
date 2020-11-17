@@ -47,10 +47,12 @@ cards:
       - type: custom:hui-element
         card_type: glance
         entities:
-          - binary_sensor.living_room_motion
+          - entity: binary_sensor.living_room_motion
+            name: "Motion"
           - entity: sensor.living_room_humidity_range
             name: "Humidity"
-          - sensor.living_room_illuminance
+          - entity: sensor.living_room_illuminance
+            name: "Light"
 
   - type: custom:simple-thermostat
     entity: climate.living_room_thermostat

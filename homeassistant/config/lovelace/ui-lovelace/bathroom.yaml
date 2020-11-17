@@ -44,8 +44,10 @@ cards:
       - type: custom:hui-element
         card_type: glance
         entities:
-          - binary_sensor.bathroom_motion
+          - entity: binary_sensor.bathroom_motion
+            name: "Motion"
           - entity: sensor.bathroom_humidity_range
             name: "Humidity"
-          - sensor.bathroom_illuminance
+          - entity: sensor.bathroom_illuminance
+            name: "Light"
       - sensor.bathroom_mold_indicator

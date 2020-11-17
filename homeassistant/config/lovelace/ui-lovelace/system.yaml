@@ -40,12 +40,14 @@ cards:
     entities:
       - entity: sensor.count_entities
         name: "Entities"
-      - entity: sensor.count_lights
-        name: "Lights"
       - entity: sensor.count_sensors
         name: "Sensors"
       - entity: sensor.count_binary_sensors
         name: "Binary Sensors"
+      - entity: sensor.count_switches
+        name: "Switches"
+      - entity: sensor.count_lights
+        name: "Lights"
       - entity: sensor.count_automations
         name: "Automations"
       - entity: sensor.count_scripts
@@ -54,8 +56,6 @@ cards:
         name: "Zones"
       - entity: sensor.count_device_trackers
         name: "Device Trackers"
-      - entity: sensor.count_switches
-        name: "Switches"
       - entity: sensor.count_input_booleans
         name: "Input Booleans"
       - entity: sensor.count_input_selects

@@ -36,10 +36,10 @@ aurora_frost:
   material-background-color: 'var(--light-primary-color)'
 
   # Card
-  card-background-color: 'var(--ha-card-background)'
-  ha-card-background: 'rgba(214,204,213,0.2)'
-  ha-card-box-shadow: "3px 3px 13px -6px rgba(17,35,52,1)"
-  ha-card-border-radius: "10px"
+  card-background-color: 'rgba(180,230,255,1)'
+  ha-card-background: 'rgba(180,230,255,0.2)'
+  ha-card-box-shadow: "3px 3px 30px -5px rgba(17,35,52,1)"
+  ha-card-border-radius: "20px"
   border-color: 'none'
 
   # Icons

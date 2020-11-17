@@ -83,6 +83,7 @@ cards:
 
   - type: custom:mini-graph-card
     name: "Illumination"
+    points_per_hour: 6
     entities:
       - entity: sensor.living_room_illuminance
         show_points: false
