@@ -1,10 +1,6 @@
 ###########################################
 #               LOVELACE-UI               #
 ###########################################
-###
-# Define views
-# https://www.home-assistant.io/lovelace
-###
 
 title: 'Aboulafia Home'
 views:

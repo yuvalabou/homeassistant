@@ -4,10 +4,8 @@
 id: utilities
 title: "System Monitor"
 icon: mdi:server
-background: 'var(--background-image)'
 cards:
   - type: entities
-    title: "Internet"
     entities:
       - type: custom:hui-element
         card_type: horizontal-stack
@@ -30,12 +28,11 @@ cards:
             show:
               fill: fade
               points: false
-      - type: divider
       - entity: sensor.myip
-        name: "External IP"
+        name: "DNS IP"
 
   - type: glance
-    title: "Component Count"
+    title: "Components"
     columns: 4
     entities:
       - entity: sensor.count_entities
@@ -50,20 +47,38 @@ cards:
         name: "Lights"
       - entity: sensor.count_automations
         name: "Automations"
+        tap_action:
+          action: call-service
+          service: script.reload_automations
       - entity: sensor.count_scripts
         name: "Scripts"
+        tap_action:
+          action: call-service
+          service: script.reload
       - entity: sensor.count_zones
         name: "Zones"
       - entity: sensor.count_device_trackers
         name: "Device Trackers"
       - entity: sensor.count_input_booleans
         name: "Input Booleans"
+        tap_action:
+          action: call-service
+          service: script.reload_input_boolean
       - entity: sensor.count_input_selects
         name: "Input Select"
+        tap_action:
+          action: call-service
+          service: script.reload_input_select
       - entity: sensor.count_input_datetimes
         name: "Input Date Times"
+        tap_action:
+          action: call-service
+          service: script.reload_input_datetime
       - entity: sensor.count_timers
         name: "Timers"
+        tap_action:
+          action: call-service
+          service: script.reload_timers
       - entity: sensor.count_climates
         name: "Climate"
 
@@ -120,20 +135,13 @@ cards:
       - type: custom:hui-element
         card_type: entities
         entities:
-          - script.reload_automations
           - script.reload_cli_sensors
           - script.reload_thermostats
           - script.reload_groups
           - script.reload_history_stats
-          - script.reload_input_boolean
-          - script.reload_input_datetime
-          - script.reload_input_select
           - script.reload_persons
           - script.reload_ping_sensors
-          - script.reload_scripts
-          - script.reload_timers
           - script.reload_templates
-          - type: divider
           - script.reload_lovelace_resources
           - script.reload_themes
 

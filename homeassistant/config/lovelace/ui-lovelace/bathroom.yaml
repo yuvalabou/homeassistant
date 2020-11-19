@@ -4,7 +4,6 @@
 id: bathroom
 title: "Bathroom"
 icon: mdi:shower
-background: 'var(--background-image)'
 cards:
   - type: entities
     show_header_toggle: false

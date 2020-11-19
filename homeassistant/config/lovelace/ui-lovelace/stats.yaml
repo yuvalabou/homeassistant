@@ -4,7 +4,6 @@
 id: statistics
 title: "Statistics"
 icon: mdi:chart-areaspline
-background: 'var(--background-image)'
 cards:
   - type: custom:mini-graph-card
     name: "Temperature"
@@ -138,7 +137,7 @@ cards:
             unit: hours
         color_thresholds:
           - value: 1
-            color: '#29A797'
+            color: '#74A4F4'
           - value: 2
             color: '#F19631'
           - value: 3
@@ -185,8 +184,8 @@ cards:
         show_graph: false
       - entity: sensor.water_meter_9926387_today_s_consumption
         name: "Today"
-        color: '#04FC04'
-        show_points: false
+        color: '#74A4F4'
+#        show_points: false
     show:
       graph: bar
       fill: fade

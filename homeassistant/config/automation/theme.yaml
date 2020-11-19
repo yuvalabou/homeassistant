@@ -1,0 +1,13 @@
+###
+# Themes
+###
+
+- alias: "Set theme on startup"
+  id: 02d59ad7-1808-47d3-ac77-c43efadca232
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: frontend.set_theme
+    data:
+      name: navy

@@ -4,7 +4,6 @@
 id: living_room
 title: "Living Room"
 icon: mdi:sofa
-background: 'var(--background-image)'
 cards:
   - type: entities
     show_header_toggle: false
@@ -171,7 +170,7 @@ cards:
             hold_action:
               action: call-service
               service: script.vacuum_reset_main_brush
-          - entity: sensor.vacuum_cleansidebrush
+          - entity: sensor.vacuum_clean_side_brush
             hold_action:
               action: call-service
               service: script.vacuum_reset_side_brush

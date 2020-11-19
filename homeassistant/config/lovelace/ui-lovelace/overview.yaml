@@ -3,7 +3,6 @@
 ####################################################
 id: overview
 title: "Overview"
-background: 'var(--background-image)'
 cards:
   - type: horizontal-stack
     cards:
@@ -56,7 +55,7 @@ cards:
             entity: sensor.openweathermap_wind_bearing
             secondary_entity: sensor.openweathermap_wind_speed
       - type: custom:air-visual-card
-        city: 'Petah-Tikva'
+        hide_title: true
         air_pollution_level: sensor.u_s_air_pollution_level
         air_quality_index: sensor.u_s_air_quality_index
         main_pollutant: sensor.u_s_main_pollutant
