@@ -7,14 +7,14 @@
 ###
 - platform: nut
   name: "EATON E5 650i"
-  host: a0d7b954-nut
+  host: 10.0.0.22
   username: !secret ups_user
   password: !secret ups_passwd
   resources:
     - battery.charge
     - battery.runtime
     - ups.load
-    - ups.status.display
+    - ups.status
     - input.voltage
     - output.frequency
     - output.voltage

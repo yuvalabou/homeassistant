@@ -1,0 +1,31 @@
+###
+# UPS
+###
+
+- alias: "Notify on power loss"
+  id: 151f5012-4ee2-4372-926c-81746b3e7f76
+  trigger:
+    platform: state
+    entity_id: sensor.ups_status
+    to: 'On Battery'
+  action:
+    - service: notify.mobile_app_yuval
+      data:
+        message: "EMERGENCY POWER ONLY"
+    - service: notify.mobile_app_tohar
+      data:
+        message: "EMERGENCY POWER ONLY"
+
+- alias: "Notify on power restored"
+  id: e266b1c6-943a-4f9d-8f6d-567342f66d10
+  trigger:
+    platform: state
+    entity_id: sensor.ups_status
+    to: 'Online'
+  action:
+    - service: notify.mobile_app_yuval
+      data:
+        message: "POWER RESTORED, ALL SYSTEMS ONLINE"
+    - service: notify.mobile_app_tohar
+      data:
+        message: "POWER RESTORED, ALL SYSTEMS ONLINE"

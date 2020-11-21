@@ -1,0 +1,16 @@
+###
+# (General) Automations
+###
+
+- alias: "Dismiss new devices notification"
+  id: b8636af7-33fd-4c28-9518-71fa36c5bb9f
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.config_entry_discovery
+      to: notifying
+    - platform: homeassistant
+      event: start
+  action:
+    service: persistent_notification.dismiss
+    data:
+      notification_id: config_entry_discovery

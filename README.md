@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.117.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.118.2%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![CI](https://img.shields.io/github/workflow/status/yuvalabou/HomeAssistant-Config/Home%20Assistant?label=GitHub%20CI&style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/actions)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
@@ -40,15 +40,15 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|391       |254      |28              |9         |34           |27       |
+|400       |259      |28              |11         |38           |27       |
 
 -----
 
 ## Lovelace
 
-| Lovelace Mode | Resources | Views |
-|:-------------:|:---------:|:-----:|
-|YAML           |15         |8      |
+| Lovelace Mode | Dashboards | Resources | Views |
+|:-------------:|:----------:|:---------:|:-----:|
+|YAML           |1           |13         |8      |
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
@@ -77,7 +77,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 - [Anniversaries](https://github.com/pinkywafer/Anniversaries)
 - [FeedParser](https://github.com/custom-components/feedparser)
-- [Read my meter](https://github.com/maorcc/citymind_water_meter)
+- [City-mind Water Meter](https://github.com/maorcc/citymind_water_meter)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
 ### Lovelace-UI Enhancements
@@ -85,7 +85,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 - [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
-- [Battery State Card](https://github.com/maxwroc/battery-state-card)
+- [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)

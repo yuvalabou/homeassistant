@@ -46,7 +46,7 @@
     - service: notify.mobile_app_yuval
       data:
         title: "Finished cleaning"
-        message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
+        message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
     - service: notify.mobile_app_tohar

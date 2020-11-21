@@ -2,7 +2,6 @@
 # Shabbat end scene
 ###
 
-# TODO: needs testing
 - name: "Shabbat end"
   icon: mdi:candle
   entities:

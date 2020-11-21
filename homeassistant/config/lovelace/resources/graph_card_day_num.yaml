@@ -1,4 +1,4 @@
-entity: input_number.day
+entity: sensor.tod_day
 show_points: false
 show_legend: false
 show_line: false
