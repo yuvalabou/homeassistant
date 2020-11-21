@@ -40,7 +40,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|400       |259      |28              |11         |38           |27       |
+|390       |256      |28              |9         |36           |27       |
 
 -----
 
