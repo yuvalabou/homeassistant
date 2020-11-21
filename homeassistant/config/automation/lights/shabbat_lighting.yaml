@@ -21,7 +21,7 @@
     platform: template
     value_template: >-
       {{
-        states('sensor.time') == states('input_select.shabat_lights_off_time')
+        states('sensor.time') == states('input_select.shabbat_lights_off_time')
       }}
   condition:
     - condition: state
