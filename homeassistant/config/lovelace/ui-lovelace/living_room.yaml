@@ -54,7 +54,7 @@ cards:
             name: "Light"
 
   - type: custom:simple-thermostat
-    entity: climate.living_room_thermostat
+    entity: climate.living_room_heat_thermostat
     step_size: 1
     name: false
     control:

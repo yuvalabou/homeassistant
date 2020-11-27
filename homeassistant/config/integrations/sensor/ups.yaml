@@ -15,6 +15,7 @@
     - battery.runtime
     - ups.load
     - ups.status
+    - ups.status.display
     - input.voltage
     - output.frequency
     - output.voltage

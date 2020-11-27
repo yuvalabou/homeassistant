@@ -3,13 +3,24 @@
 ###
 
 - platform: generic_thermostat
-  name: 'Living Room Thermostat'
+  name: 'Living Room Cool Thermostat'
   heater: switch.living_room_ac_switch
   ac_mode: true
   target_sensor: sensor.living_room_temperature
   min_temp: 22
   max_temp: 26
   target_temp: 25
+  min_cycle_duration:
+    minutes: 5
+  keep_alive:
+    minutes: 30
+- platform: generic_thermostat
+  name: 'Living Room Heat Thermostat'
+  heater: switch.living_room_heat_switch
+  target_sensor: sensor.living_room_temperature
+  min_temp: 20
+  max_temp: 26
+  target_temp: 29
   min_cycle_duration:
     minutes: 5
   keep_alive:
