@@ -13,3 +13,5 @@ services:
       - /home/homeassistant/homeassistant/homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
+    dns:
+      - 10.0.0.6
