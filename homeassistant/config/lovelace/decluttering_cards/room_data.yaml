@@ -1,0 +1,49 @@
+room_data:
+  card:
+    type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.[[room]]_temperature
+                name: "Temperature"
+                show_points: false
+              - entity: sensor.[[room]]_climate_set_temp
+                color: 'white'
+                show_fill: false
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.[[room]]_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../resources/graph_card_day_num.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 12
+            show:
+              fill: fade
+              points: false
+              labels: false
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - entity: binary_sensor.[[room]]_motion
+            name: "Motion"
+          - entity: sensor.[[room]]_humidity_range
+            name: "Humidity"
+          - entity: sensor.[[room]]_illuminance
+            name: "Light"

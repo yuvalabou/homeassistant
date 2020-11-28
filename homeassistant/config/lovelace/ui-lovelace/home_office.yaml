@@ -5,6 +5,11 @@ id: work_room
 title: "Home Office"
 icon: mdi:desk
 cards:
+#  - type: custom:decluttering-card
+#    template: room_data
+#    variables:
+#      - room: home_office
+
   - type: entities
     title: "Printer"
     entities:

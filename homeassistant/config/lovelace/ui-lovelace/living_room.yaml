@@ -5,53 +5,10 @@ id: living_room
 title: "Living Room"
 icon: mdi:sofa
 cards:
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.living_room_temperature
-                name: "Temperature"
-                show_points: false
-              - entity: sensor.living_room_climate_set_temp
-                color: 'white'
-                show_fill: false
-              - !include ../resources/graph_card_day_num.yaml
-            font_size: 80
-            color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
-            points_per_hour: 6
-            show:
-              fill: fade
-              points: false
-              labels: true
-              labels_secondary: false
-              legend: false
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.living_room_humidity
-                name: "Humidity"
-                color: '#74A4F4'
-              - !include ../resources/graph_card_day_num.yaml
-            font_size: 80
-            lower_bound: 0
-            upper_bound: 100
-            points_per_hour: 12
-            show:
-              fill: fade
-              points: false
-              labels: false
-      - type: custom:hui-element
-        card_type: glance
-        entities:
-          - entity: binary_sensor.living_room_motion
-            name: "Motion"
-          - entity: sensor.living_room_humidity_range
-            name: "Humidity"
-          - entity: sensor.living_room_illuminance
-            name: "Light"
+  - type: custom:decluttering-card
+    template: room_data
+    variables:
+      - room: living_room
 
   - type: custom:simple-thermostat
     entity: climate.living_room_heat_thermostat

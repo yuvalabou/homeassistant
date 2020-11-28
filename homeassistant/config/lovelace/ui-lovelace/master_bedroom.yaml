@@ -5,6 +5,11 @@ id: master_bedroom
 title: "Master Bedroom"
 icon: mdi:bed-king-outline
 cards:
+#  - type: custom:decluttering-card
+#    template: room_data
+#    variables:
+#      - room: master_bedroom
+
   - type: entities
     show_header_toggle: false
     entities:

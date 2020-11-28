@@ -2,6 +2,9 @@
 #               LOVELACE-UI               #
 ###########################################
 
+decluttering_templates:
+  !include_dir_merge_named lovelace/decluttering_cards
+
 title: 'Aboulafia Home'
 views:
   - !include lovelace/ui-lovelace/overview.yaml
