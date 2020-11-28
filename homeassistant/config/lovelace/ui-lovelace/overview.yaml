@@ -38,7 +38,9 @@ cards:
       - type: custom:hui-element
         card_type: markdown
         content: >-
-          {{ states.sensor.israel_weather_forecast.attributes.entries[0].summary }}
+          {{
+            states.sensor.israel_weather_forecast.attributes.entries[0].summary
+          }}
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:
@@ -52,8 +54,10 @@ cards:
               - entity: sensor.uv_index_friendly
           - type: custom:hui-element
             card_type: custom:compass-card
-            entity: sensor.openweathermap_wind_bearing
-            secondary_entity: sensor.openweathermap_wind_speed
+            indicator_sensors:
+              - sensor: sensor.openweathermap_wind_bearing
+            value_sensors:
+              - sensor: sensor.openweathermap_wind_speed
       - type: custom:air-visual-card
         hide_title: true
         air_pollution_level: sensor.u_s_air_pollution_level
