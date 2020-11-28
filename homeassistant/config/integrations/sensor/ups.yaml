@@ -1,13 +1,9 @@
 ###
-# UPS Data from EATON E5 650i
-#
-# Using the NUT Addon
-# https://github.com/hassio-addons/addon-nut
-#
+# EATON E5 650i
 ###
 - platform: nut
   name: "EATON E5 650i"
-  host: 10.0.0.22
+  host: !secret rpi2
   username: !secret ups_user
   password: !secret ups_passwd
   resources:
