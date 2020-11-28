@@ -25,7 +25,7 @@
           mdi:hvac-off
         {% endif %}
     living_room_heat_switch:
-      unique_id: 6e4a372c-03d0-484b-b754-0ef18bf9f223
+      unique_id: 4187cf90-5fed-43c2-a36b-7a0011a9b5e6
       friendly_name: "Living Room Heat"
       value_template: >-
         {{ not is_state('climate.slvn', 'off') }}
