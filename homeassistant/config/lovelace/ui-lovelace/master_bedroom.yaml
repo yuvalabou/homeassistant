@@ -6,7 +6,7 @@ title: "Master Bedroom"
 icon: mdi:bed-king-outline
 cards:
 #  - type: custom:decluttering-card
-#    template: room_data
+#    template: multisensor_card
 #    variables:
 #      - room: master_bedroom
 

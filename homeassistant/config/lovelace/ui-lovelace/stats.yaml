@@ -185,7 +185,6 @@ cards:
       - entity: sensor.water_meter_9926387_today_s_consumption
         name: "Today"
         color: '#74A4F4'
-#        show_points: false
     show:
       graph: bar
       fill: fade

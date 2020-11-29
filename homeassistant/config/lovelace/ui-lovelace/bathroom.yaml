@@ -6,7 +6,7 @@ title: "Bathroom"
 icon: mdi:shower
 cards:
   - type: custom:decluttering-card
-    template: room_data
+    template: multisensor_card
     variables:
       - room: bathroom
 

@@ -1,4 +1,8 @@
-room_data:
+###
+# Card for my Multisensors
+###
+
+multisensor_card:
   card:
     type: entities
     show_header_toggle: false

@@ -91,30 +91,12 @@ cards:
       - entity: sensor.uptime_friendly
       - entity: script.homeassistant_restart
         icon: mdi:restart
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: gauge
-            name: "CPU Use"
-            entity: sensor.processor_use_percent
-            severity:
-              green: 0
-              yellow: 45
-              red: 85
-          - type: gauge
-            name: "CPU Temp"
-            entity: sensor.processor_temperature
-            severity:
-              green: 0
-              yellow: 60
-              red: 80
-          - type: gauge
-            name: "RAM Use"
-            entity: sensor.memory_use_percent
-            severity:
-              green: 0
-              yellow: 50
-              red: 75
+      - type: custom:decluttering-card
+        template: multisensor_card
+        variables:
+          - cpu_usage: processor_use_percent
+          - cpu_temps: processor_temperature
+          - ram_usage: memory_use_percent
       - type: custom:bar-card
         entities:
           - entity: sensor.disk_use_percent
@@ -170,30 +152,12 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: gauge
-            name: "CPU Use"
-            entity: sensor.npn2_cpu_used
-            severity:
-              green: 0
-              yellow: 45
-              red: 85
-          - type: gauge
-            name: "CPU Temp"
-            entity: sensor.npn2_cpu_thermal_1_temp
-            severity:
-              green: 0
-              yellow: 60
-              red: 80
-          - type: gauge
-            name: "RAM Use"
-            entity: sensor.npn2_ram_used_percent
-            severity:
-              green: 0
-              yellow: 50
-              red: 75
+      - type: custom:decluttering-card
+        template: multisensor_card
+        variables:
+          - cpu_usage: npn2_cpu_used
+          - cpu_temps: npn2_cpu_thermal_1_temp
+          - ram_usage: npn2_ram_used_percent
       - type: custom:bar-card
         entities:
           - entity: sensor.npn2_used_percent
@@ -243,30 +207,12 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://new-desk.com/wp-content/uploads/2019/09/RPi-Logo-Landscape-Reg-SCREEN.png'
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: gauge
-            name: "CPU Use"
-            entity: sensor.rpi2_cpu_used
-            severity:
-              green: 0
-              yellow: 45
-              red: 85
-          - type: gauge
-            name: "CPU Temp"
-            entity: sensor.rpi2_cpu_thermal_1_temp
-            severity:
-              green: 0
-              yellow: 60
-              red: 80
-          - type: gauge
-            name: "RAM Use"
-            entity: sensor.rpi2_ram_used_percent
-            severity:
-              green: 0
-              yellow: 50
-              red: 75
+      - type: custom:decluttering-card
+        template: multisensor_card
+        variables:
+          - cpu_usage: rpi2_cpu_used
+          - cpu_temps: rpi2_cpu_thermal_1_temp
+          - ram_usage: rpi2_ram_used_percent
       - type: custom:bar-card
         entities:
           - entity: sensor.rpi2_mnt_used_percent
