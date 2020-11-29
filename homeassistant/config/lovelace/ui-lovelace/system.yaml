@@ -92,7 +92,7 @@ cards:
       - entity: script.homeassistant_restart
         icon: mdi:restart
       - type: custom:decluttering-card
-        template: multisensor_card
+        template: system_monitor
         variables:
           - cpu_usage: processor_use_percent
           - cpu_temps: processor_temperature
@@ -105,15 +105,15 @@ cards:
               - color: '#FF0F00'
                 from: 91
                 to: 100
-#      - type: custom:hui-element
-#        card_type: custom:mini-graph-card
-#        icon: mdi:database
-#        entities:
-#          - entity: sensor.db_size
-#            name: 'Database'
-#        show:
-#          fill: fade
-#          points: false
+      - type: custom:hui-element
+        card_type: custom:mini-graph-card
+        icon: mdi:database
+        entities:
+          - entity: sensor.db_size
+            name: 'Database'
+        show:
+          fill: fade
+          points: false
       - type: custom:hui-element
         card_type: entities
         entities:
@@ -153,7 +153,7 @@ cards:
         card_type: picture
         image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
       - type: custom:decluttering-card
-        template: multisensor_card
+        template: system_monitor
         variables:
           - cpu_usage: npn2_cpu_used
           - cpu_temps: npn2_cpu_thermal_1_temp
@@ -208,7 +208,7 @@ cards:
         card_type: picture
         image: 'https://new-desk.com/wp-content/uploads/2019/09/RPi-Logo-Landscape-Reg-SCREEN.png'
       - type: custom:decluttering-card
-        template: multisensor_card
+        template: system_monitor
         variables:
           - cpu_usage: rpi2_cpu_used
           - cpu_temps: rpi2_cpu_thermal_1_temp

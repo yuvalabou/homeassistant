@@ -2,6 +2,7 @@
 # Workday sensor
 ###
 
+# DISABLED UNTIL FIXED
 - platform: workday
   country: IL
   workdays:
