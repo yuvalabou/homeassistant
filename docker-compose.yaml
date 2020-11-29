@@ -15,3 +15,19 @@ services:
     network_mode: host
     dns:
       - 10.0.0.6
+
+  mariadb:
+    restart: always
+    hostname: mariadb
+    container_name: mariadb
+    image: mariadb:latest
+    network_mode: "bridge"
+    ports:
+      - "3306:3306"
+    environment:
+      - TZ=Asia/Jerusalem
+      - MYSQL_DATABASE=HADB
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - /home/homeassistant/mariadb/config:/etc/mysql/conf.d
+      - /home/homeassistant/mariadb/data:/var/lib/mysql
