@@ -14,20 +14,22 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     network_mode: host
     dns:
-      - 10.0.0.6
+      - ${PIHOLE}
 
-  mariadb:
+  postgres:
     restart: always
-    hostname: mariadb
-    container_name: mariadb
-    image: mariadb:latest
-    network_mode: "bridge"
+    hostname: postgres
+    container_name: postgres
+    image: postgres:latest
+    network_mode: host
     ports:
-      - "3306:3306"
+      - 35432:5432
     environment:
-      - TZ=Asia/Jerusalem
-      - MYSQL_DATABASE=HADB
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+        PUID: ${LOCAL_USER}
+        PGID: ${LOCAL_USER}
+        TZ: "Asia/Jerusalem"
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: HADB
     volumes:
-      - /home/homeassistant/mariadb/config:/etc/mysql/conf.d
-      - /home/homeassistant/mariadb/data:/var/lib/mysql
+        - /home/homeassistant/postgres/data:/var/lib/postgresql/data

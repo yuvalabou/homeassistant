@@ -25,6 +25,7 @@ __pycache__
 *.log
 *.token
 *.pickle
+.env
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml

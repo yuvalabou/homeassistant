@@ -1,0 +1,11 @@
+###
+# SQL
+###
+
+- platform: sql
+  db_url: !secret postgres_addr
+  queries:
+    - name: DB size
+      query: "SELECT (pg_database_size('HADB')/1024/1024) as db_size;"
+      column: "db_size"
+      unit_of_measurement: MB
