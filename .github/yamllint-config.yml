@@ -17,5 +17,6 @@ rules:
 ignore: |
   custom_components/
   .git
+  .github
   themes/
   www/
