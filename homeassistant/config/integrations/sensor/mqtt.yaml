@@ -1,0 +1,8 @@
+###
+# MQTT
+###
+
+- platform: mqtt
+  state_topic: "homeassistant/iws"
+  name: "IWS Daily"
+  icon: mdi:rss
