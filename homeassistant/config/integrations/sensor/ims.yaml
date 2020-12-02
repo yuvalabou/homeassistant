@@ -1,0 +1,9 @@
+###
+# IMS
+###
+
+- platform: mqtt
+  state_topic: "homeassistant/ims"
+  json_attributes_topic: "homeassistant/ims/attrs"
+  name: "IMS Daily"
+  icon: mdi:weather-partly-cloudy

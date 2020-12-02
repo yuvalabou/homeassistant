@@ -1,7 +1,6 @@
 """Get daily forecast from IWS"""
 import html
 import json
-import ssl
 from datetime import datetime as dt
 
 import feedparser
@@ -9,16 +8,14 @@ from paho.mqtt import client as mqtt
 
 RSS = "https://ims.gov.il/sites/default/files/ims_data/rss/forecast_country/rssForecastCountry_he.xml"
 BROKER = "10.0.0.6"
+FEED = feedparser.parse(RSS)
 
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code " + str(rc))
     pass
 
 
 def on_publish(client, userdata, result):
-    print("Published")
-    print(json_attrs)
     pass
 
 
@@ -28,22 +25,17 @@ client.on_publish = on_publish
 
 client.connect(BROKER)
 
-if hasattr(ssl, "_create_unverified_context"):
-    ssl._create_default_https_context = ssl._create_unverified_context
 
-FEED = feedparser.parse(RSS)
-
-
-def get_time() -> object:
-    """Get sensor state"""
+def state() -> str:
+    """Get sensor state."""
     for item in FEED.entries:
         last_updated = dt.strptime(item.guid, "%a, %d %b %Y %H:%M:%S GMT")
 
-        return last_updated
+        return str(last_updated)
 
 
-def get_link() -> str:
-    """Get link"""
+def link() -> str:
+    """Get link."""
     link = FEED.feed.link
 
     return link
@@ -62,6 +54,7 @@ values = [
 
 
 def short_term_forecast() -> str:
+    """Get short term forecast."""
     for item in FEED.entries:
         desc = html.escape(item.description)
 
@@ -83,14 +76,12 @@ def short_term_forecast() -> str:
 
         desc = "".join([i for i in desc if not i.isdigit()])
 
-        sep2 = "תחזית לימים הקרובים"
-        short_term = desc.split(sep2, 1)[0]
-
-        short_term = short_term.strip()
+        short_term = desc.strip()
         return short_term
 
 
 def long_term_forecast() -> str:
+    """Get long term forecast."""
     for item in FEED.entries:
         desc = html.escape(item.description)
 
@@ -114,16 +105,16 @@ def long_term_forecast() -> str:
         return long_term
 
 
-json_attrs = json.dumps(
+attrs = json.dumps(
     {
         "short_term": short_term_forecast(),
         "long_term": long_term_forecast(),
-        "link": get_link(),
+        "link": link(),
     },
     ensure_ascii=False,
     indent=4,
     sort_keys=True,
 )
 
-client.publish("homeassistant/iws", get_time())
-client.publish("homeassistant/iws/attrs", json_attrs)
+client.publish("homeassistant/ims", state())
+client.publish("homeassistant/ims/attrs", attrs)
