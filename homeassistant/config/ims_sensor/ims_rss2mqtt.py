@@ -2,6 +2,7 @@
 import html
 import json
 from datetime import datetime as dt
+from time import sleep
 
 import feedparser
 from paho.mqtt import client as mqtt
@@ -118,3 +119,5 @@ attrs = json.dumps(
 
 client.publish("homeassistant/ims", state())
 client.publish("homeassistant/ims/attrs", attrs)
+sleep(5)
+client.disconnect()
