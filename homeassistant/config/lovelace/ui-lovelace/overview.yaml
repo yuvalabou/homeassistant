@@ -116,6 +116,7 @@ cards:
     show_header_toggle: false
     entities:
       - switch.shabbat_mode
+      - switch.shabbat_plate
       - input_select.shabbat_lights_off_time
 
   - type: entities
