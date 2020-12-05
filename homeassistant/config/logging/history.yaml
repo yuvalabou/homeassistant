@@ -1,6 +1,7 @@
 ###
 # History settings
 ###
+
 exclude:
   entities:
     - sensor.uptime_friendly
@@ -11,10 +12,12 @@ exclude:
     - sensor.track_steam_playtime_formatted
     - sensor.israel_weather_forecast
     - sensor.local_ip
+    - sensor.ims_daily
   entity_globs:
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.mfc_*
+    - sensor.brother_mfc_*
     - sensor.skin_type_*
   domains:
     - camera

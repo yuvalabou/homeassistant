@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.118.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-0.118.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![CI](https://img.shields.io/github/workflow/status/yuvalabou/HomeAssistant-Config/Home%20Assistant?label=GitHub%20CI&style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/actions)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
@@ -40,7 +40,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|363       |231      |26              |9         |36           |27       |
+|386       |241      |28              |12        |43           |27       |
 
 -----
 
@@ -48,16 +48,16 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Lovelace Mode | Dashboards | Resources | Views |
 |:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |13         |8      |
+|YAML           |1           |14         |8      |
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
 ### Devices
 
-| Roborock S50 | YEELIGHT (YLDP06YL) | Sensibo Sky |
-|:------------:|:-------------------:|:-----------:|
-|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>
-|1             |3                    |2            |
+| Roborock S50 | YEELIGHT (YLDP06YL) | Sensibo Sky | Tuya |
+|:------------:|:-------------------:|:-----------:|:----:|
+|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|
+|1             |3                    |2            |2     |
 
 -----
 
@@ -66,7 +66,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 <img src =
     "https://avatars2.githubusercontent.com/u/56713226?s=200&v=4"
     align = "right"
-    width=50>
+    width=90>
 
 [HACS](https://github.com/hacs/integration) is Home Assistant Community Store
 
@@ -75,9 +75,9 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 ### Integrations
 
-- [Anniversaries](https://github.com/pinkywafer/Anniversaries)
-- [FeedParser](https://github.com/custom-components/feedparser)
 - [City-mind Water Meter](https://github.com/maorcc/citymind_water_meter)
+- [FeedParser](https://github.com/custom-components/feedparser)
+- [Pyscript](https://github.com/custom-components/pyscript)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
 ### Lovelace-UI Enhancements

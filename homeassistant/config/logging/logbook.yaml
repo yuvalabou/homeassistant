@@ -1,6 +1,7 @@
 ###
 # Logbook settings
 ###
+
 exclude:
   entities:
     - binary_sensor.day
@@ -21,6 +22,7 @@ exclude:
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.mfc_*
+    - sensor.brother_mfc_*
     - sensor.skin_type_*
   domains:
     - updater

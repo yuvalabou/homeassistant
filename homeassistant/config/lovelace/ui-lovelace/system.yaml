@@ -15,7 +15,6 @@ cards:
             entities:
               - entity: sensor.speedtest_download
                 name: "Download"
-            points_per_hour: 1
             show:
               points: false
               fill: fade
@@ -24,7 +23,6 @@ cards:
             entities:
               - entity: sensor.speedtest_upload
                 name: "Upload"
-            points-per_hour: 1
             show:
               fill: fade
               points: false

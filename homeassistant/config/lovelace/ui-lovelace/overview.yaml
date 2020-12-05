@@ -124,6 +124,7 @@ cards:
     entities:
       - switch.night_light_override
       - switch.disable_auto_clean
+      - switch.kettle
 
   - type: custom:auto-entities
     card:
