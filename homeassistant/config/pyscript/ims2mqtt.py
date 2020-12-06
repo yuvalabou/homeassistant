@@ -112,6 +112,7 @@ attrs = json.dumps(
         "short_term": short_term_forecast(),
         "long_term": long_term_forecast(),
         "link": link(),
+        "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
     },
     ensure_ascii=False,
     indent=2,
