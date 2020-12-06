@@ -97,4 +97,6 @@ logbook: !include logging/logbook.yaml
 recorder: !include logging/recorder.yaml
 logger:
   default: warning
+  logs:
+    custom_components.pyscript.file: info
 system_log:
