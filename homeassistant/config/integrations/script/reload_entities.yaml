@@ -13,7 +13,7 @@ reload_cli_sensors:
   sequence:
     - service: command_line.reload
 reload_core_config:
-  alias: Reload Home Assistant core configurations
+  alias: "Reload Home Assistant core configurations"
   icon: mdi:restart
   sequence:
     - service: homeassistant.reload_core_config
@@ -28,7 +28,7 @@ reload_groups:
   sequence:
     - service: group.reload
 reload_history_stats:
-  alias: "Reload History Stats sensors"
+  alias: "Reload History-stats sensors"
   icon: mdi:restart
   sequence:
     - service: history_stats.reload
@@ -62,6 +62,11 @@ reload_ping_sensors:
   icon: mdi:restart
   sequence:
     - service: ping.reload
+reload_pyscript:
+  alias: "Reload Pyscript"
+  icon: mdi:restart
+  sequence:
+    - service: pyscript.reload
 reload_scripts:
   alias: "Reload Scripts"
   icon: mdi:restart

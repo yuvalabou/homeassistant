@@ -121,6 +121,7 @@ cards:
           - script.reload_history_stats
           - script.reload_persons
           - script.reload_ping_sensors
+          - script.reload_pyscript
           - script.reload_templates
           - script.reload_lovelace_resources
           - script.reload_themes
