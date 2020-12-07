@@ -38,7 +38,7 @@
   trigger:
     platform: time
     at: '08:00:00'
-  condition: # TODO: add condition based on light amount
+  condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'
@@ -57,7 +57,7 @@
   trigger:
     platform: time
     at: '09:30:00'
-  condition: # TODO: add condition based on light amount
+  condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'

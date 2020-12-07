@@ -1,0 +1,9 @@
+###
+# Notifications
+###
+
+- name: 'Family'
+  platform: group
+  services:
+    - service: mobile_app_yuval
+    - service: mobile_app_tohar

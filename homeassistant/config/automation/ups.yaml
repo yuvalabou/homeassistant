@@ -9,10 +9,7 @@
     entity_id: sensor.ups_status
     to: 'On Battery'
   action:
-    - service: notify.mobile_app_yuval
-      data:
-        message: "EMERGENCY POWER ONLY"
-    - service: notify.mobile_app_tohar
+    - service: notify.family
       data:
         message: "EMERGENCY POWER ONLY"
 
@@ -23,9 +20,6 @@
     entity_id: sensor.ups_status
     to: 'Online'
   action:
-    - service: notify.mobile_app_yuval
-      data:
-        message: "POWER RESTORED, ALL SYSTEMS ONLINE"
-    - service: notify.mobile_app_tohar
+    - service: notify.family
       data:
         message: "POWER RESTORED, ALL SYSTEMS ONLINE"

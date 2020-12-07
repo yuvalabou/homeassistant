@@ -70,6 +70,7 @@ input_select: !include_dir_merge_named integrations/input_select
 jewish_calendar:
   language: hebrew
 light: !include integrations/light.yaml
+notify: !include integrations/notify.yaml
 pi_hole:
   host: !secret nanopi_neo2
   api_key: !secret pi_hole_key

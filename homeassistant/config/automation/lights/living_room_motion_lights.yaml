@@ -9,14 +9,12 @@
     entity_id: binary_sensor.living_room_motion
     to: 'on'
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.night
-          state: 'on'
-        - condition: state
-          entity_id: light.yeelight_color_living_room_2
-          state: 'off'
+    - condition: state
+      entity_id: binary_sensor.night
+      state: 'on'
+    - condition: state
+      entity_id: light.yeelight_color_living_room_2
+      state: 'off'
   action:
     service: light.turn_on
     data:
@@ -26,19 +24,18 @@
 
 - alias: "Start the lights timer"
   id: 2c73b4e0-34cc-4cfd-984e-159f321faa64
+  mode: restart
   trigger:
     platform: state
     entity_id: binary_sensor.living_room_motion
     to: 'off'
   condition:
-    - condition: and
-      conditions:
-        - condition: state
-          entity_id: binary_sensor.night
-          state: 'on'
-        - condition: state
-          entity_id: input_boolean.night_light_override
-          state: 'off'
+    - condition: state
+      entity_id: binary_sensor.night
+      state: 'on'
+    - condition: state
+      entity_id: input_boolean.night_light_override
+      state: 'off'
   action:
     service: timer.start
     data:

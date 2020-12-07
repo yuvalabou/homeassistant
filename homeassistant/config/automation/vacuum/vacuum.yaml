@@ -13,9 +13,6 @@
       after: '07:00:00'
       before: '20:00:00'
     - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - condition: state
       entity_id: input_boolean.cleaned_today
       state: 'off'
     - condition: state
@@ -25,11 +22,7 @@
     - service: vacuum.start
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: notify.mobile_app_yuval
-      data:
-        title: "Cleaning started"
-        message: "The house was empty - So I started cleaning."
-    - service: notify.mobile_app_tohar
+    - service: notify.family
       data:
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
@@ -43,16 +36,10 @@
     from: 'cleaning'
     to: 'returning'
   action:
-    - service: notify.mobile_app_yuval
+    - service: notify.family
       data:
         title: "Finished cleaning"
         message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
-        data:
-          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
-    - service: notify.mobile_app_tohar
-      data:
-        title: "Finished cleaning"
-        message: "It took me {{ states('sensor.vacuum_cleaning_time') }} minutes"
         data:
           image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
@@ -68,13 +55,7 @@
     - service: vacuum.return_to_base
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
-    - service: notify.mobile_app_yuval
-      data:
-        title: "Returning to Dock"
-        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
-        data:
-          image: "https://memegenerator.net/img/images/400x/8230737.jpg"
-    - service: notify.mobile_app_tohar
+    - service: notify.family
       data:
         title: "Returning to Dock"
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
