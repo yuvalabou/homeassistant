@@ -1,8 +1,5 @@
-#####################################
-#               ZONES               #
-#####################################
 ###
-# Define zones
+# Defines zones
 # https://www.home-assistant.io/integrations/zone
 ###
 

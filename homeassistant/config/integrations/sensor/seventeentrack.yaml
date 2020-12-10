@@ -1,7 +1,6 @@
 ###
 # 17Track
 ###
-
 - platform: seventeentrack
   username: !secret 17track_user
   password: !secret 17track_passwd

@@ -1,7 +1,6 @@
 ###
 # Time of Day sensor
 ###
-
 - platform: tod
   name: "Night"
   after: sunset

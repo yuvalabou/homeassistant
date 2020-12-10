@@ -1,9 +1,8 @@
 ###
 # Living room generic thermostat
 ###
-
 - platform: generic_thermostat
-  name: 'Living Room Cool Thermostat'
+  name: "Living Room Cool Thermostat"
   heater: switch.living_room_ac_switch
   ac_mode: true
   target_sensor: sensor.living_room_temperature
@@ -14,8 +13,9 @@
     minutes: 5
   keep_alive:
     minutes: 30
+
 - platform: generic_thermostat
-  name: 'Living Room Heat Thermostat'
+  name: "Living Room Heat Thermostat"
   heater: switch.living_room_heat_switch
   target_sensor: sensor.living_room_temperature
   min_temp: 20

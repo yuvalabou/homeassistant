@@ -1,5 +1,5 @@
 ###
-# Climate
+# Climate devices Binary-sensors
 ###
 # Return True when AC unit is on
 - platform: template

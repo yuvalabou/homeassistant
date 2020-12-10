@@ -1,7 +1,6 @@
 ###
 # Ping
 ###
-
 - platform: ping
   host: !secret vacuum
   name: "Vacuum"

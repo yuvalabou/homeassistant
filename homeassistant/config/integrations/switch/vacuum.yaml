@@ -1,7 +1,6 @@
 ###
 # Vacuum
 ###
-
 - platform: template
   switches:
     disable_auto_clean:

@@ -7,81 +7,97 @@ reload_automations:
   icon: mdi:restart
   sequence:
     - service: automation.reload
+
 reload_cli_sensors:
   alias: "Reload CLI sensors"
   icon: mdi:restart
   sequence:
     - service: command_line.reload
+
 reload_core_config:
   alias: "Reload Home Assistant core configurations"
   icon: mdi:restart
   sequence:
     - service: homeassistant.reload_core_config
+
 reload_thermostats:
   alias: "Reload Thermostats (Generic)"
   icon: mdi:restart
   sequence:
     - service: generic_thermostat.reload
+
 reload_groups:
   alias: "Reload Groups"
   icon: mdi:restart
   sequence:
     - service: group.reload
+
 reload_history_stats:
   alias: "Reload History-stats sensors"
   icon: mdi:restart
   sequence:
     - service: history_stats.reload
+
 reload_input_boolean:
   alias: "Reload Input Booleans"
   icon: mdi:restart
   sequence:
     - service: input_boolean.reload
+
 reload_input_datetime:
   alias: "Reload Input Datetimes"
   icon: mdi:restart
   sequence:
     - service: input_datetime.reload
+
 reload_input_select:
   alias: "Reload Input Selects"
   icon: mdi:restart
   sequence:
     - service: input_select.reload
+
 reload_lovelace_resources:
   alias: "Reload Lovelace Resources"
   icon: mdi:restart
   sequence:
     - service: lovelace.reload_resources
+
 reload_persons:
   alias: "Reload Persons"
   icon: mdi:restart
   sequence:
     - service: person.reload
+
 reload_ping_sensors:
   alias: "Reload Ping sensors"
   icon: mdi:restart
   sequence:
     - service: ping.reload
+
 reload_pyscript:
   alias: "Reload Pyscript"
   icon: mdi:restart
   sequence:
     - service: pyscript.reload
+
 reload_scripts:
   alias: "Reload Scripts"
   icon: mdi:restart
   sequence:
     - service: script.reload
+
 reload_themes:
   alias: "Reload Themes"
   icon: mdi:restart
   sequence:
     - service: frontend.reload_themes
+
 reload_timers:
   alias: "Reload Timers"
   icon: mdi:restart
   sequence:
     - service: timer.reload
+
 reload_templates:
   alias: "Reload Templates"
   icon: mdi:restart

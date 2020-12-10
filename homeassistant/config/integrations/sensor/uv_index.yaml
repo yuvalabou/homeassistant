@@ -1,7 +1,6 @@
 ###
 # UV Index
 ###
-
 - platform: template
   sensors:
     uv_index_friendly:

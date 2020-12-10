@@ -1,8 +1,5 @@
-######################################
-#               CAMERA               #
-######################################
 ###
-# Define cameras
+# Defines cameras
 # https://www.home-assistant.io/integrations/camera
 ###
 

@@ -1,7 +1,6 @@
 ###
 # Indoor Climate
 ###
-
 - platform: template
   sensors:
     master_bedroom_sensibo_humidity:

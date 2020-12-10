@@ -1,7 +1,6 @@
 ###
 # Climate switches
 ###
-
 - platform: template
   switches:
     living_room_ac_switch:

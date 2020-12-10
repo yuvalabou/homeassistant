@@ -1,7 +1,6 @@
 ###
 # PiHole
 ###
-
 - platform: command_line
   name: "PiHole Status"
   scan_interval: 20

@@ -1,8 +1,5 @@
-######################################
-#               TIMERS               #
-######################################
 ###
-# Define timers
+# Defines timers
 # https://www.home-assistant.io/integrations/timer
 ###
 

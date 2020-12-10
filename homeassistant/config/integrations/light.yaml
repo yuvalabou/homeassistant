@@ -1,8 +1,5 @@
-############################################
-#                  LIGHTS                  #
-############################################
 ###
-# Define lights
+# Defines lights
 # https://www.home-assistant.io/integrations/light
 ###
 

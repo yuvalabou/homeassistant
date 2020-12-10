@@ -2,7 +2,7 @@
 # Workday sensor
 ###
 
-# DISABLED UNTIL FIXED
+# DISABLED UNTIL FIXED UPSTREAM
 - platform: workday
   country: IL
   workdays:

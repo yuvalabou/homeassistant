@@ -3,6 +3,7 @@
 ###
 
 # Set Vacuum fan speed
+######################
 vacuum_set_silent:
   alias: "Set Silent"
   icon: mdi:fan
@@ -11,6 +12,7 @@ vacuum_set_silent:
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
       fan_speed: 38
+
 vacuum_set_standard:
   alias: "Set Standard"
   icon: mdi:fan
@@ -19,6 +21,7 @@ vacuum_set_standard:
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
       fan_speed: 60
+
 vacuum_set_turbo:
   alias: "Set Turbo"
   icon: mdi:fan
@@ -27,6 +30,7 @@ vacuum_set_turbo:
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
       fan_speed: 75
+
 vacuum_set_max:
   alias: "Set Max"
   icon: mdi:fan
@@ -37,6 +41,7 @@ vacuum_set_max:
       fan_speed: 100
 
 # Reset Consumables
+###################
 vacuum_reset_sensor:
   alias: "Reset cliff sensors"
   icon: mdi:restart
@@ -46,6 +51,7 @@ vacuum_reset_sensor:
       command: reset_consumable
       entity_id: vacuum.xiaomi_vacuum_cleaner
       params: sensor_dirty_time
+
 vacuum_reset_filter:
   alias: "Reset Filter"
   icon: mdi:restart
@@ -55,6 +61,7 @@ vacuum_reset_filter:
       command: reset_consumable
       entity_id: vacuum.xiaomi_vacuum_cleaner
       params: filter_work_time
+
 vacuum_reset_side_brush:
   alias: "Reset side brush"
   icon: mdi:restart
@@ -64,6 +71,7 @@ vacuum_reset_side_brush:
       command: reset_consumable
       entity_id: vacuum.xiaomi_vacuum_cleaner
       params: side_brush_work_time
+
 vacuum_reset_main_brush:
   alias: "Reset main brush"
   icon: mdi:restart

@@ -1,8 +1,5 @@
-######################################
-#               GROUPS               #
-######################################
 ###
-# Define groups
+# Defines groups
 # https://www.home-assistant.io/integrations/group
 ###
 

@@ -1,8 +1,9 @@
 ###
-# Notifications
+# Defines notifications
+# https://www.home-assistant.io/integrations/notify
 ###
 
-- name: 'Family'
+- name: "Family"
   platform: group
   services:
     - service: mobile_app_yuval

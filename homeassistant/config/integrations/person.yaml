@@ -1,8 +1,5 @@
-#######################################
-#               PERSONS               #
-#######################################
 ###
-# Define persons
+# Defines persons
 # https://www.home-assistant.io/integrations/person
 ###
 

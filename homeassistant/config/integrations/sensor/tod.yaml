@@ -1,7 +1,6 @@
 ###
 # TOD
 ###
-
 - platform: template
   sensors:
     tod_day:

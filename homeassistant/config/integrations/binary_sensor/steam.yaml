@@ -1,7 +1,7 @@
 ###
 # Steam
 ###
-
+# Return True when a game is playing
 - platform: template
   sensors:
     steam_game_on:
