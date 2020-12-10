@@ -17,6 +17,7 @@ from .const import LOGGER_PATH
 from .eval import AstEval
 from .event import Event
 from .function import Function
+from .mqtt import Mqtt
 from .state import STATE_VIRTUAL_ATTRS, State
 
 _LOGGER = logging.getLogger(LOGGER_PATH + ".trigger")
@@ -149,11 +150,14 @@ class TrigTime:
         state_check_now=True,
         time_trigger=None,
         event_trigger=None,
+        mqtt_trigger=None,
         timeout=None,
         state_hold=None,
+        state_hold_false=None,
+        __test_handshake__=None,
     ):
         """Wait for zero or more triggers, until an optional timeout."""
-        if state_trigger is None and time_trigger is None and event_trigger is None:
+        if state_trigger is None and time_trigger is None and event_trigger is None and mqtt_trigger is None:
             if timeout is not None:
                 await asyncio.sleep(timeout)
                 return {"trigger_type": "timeout"}
@@ -162,12 +166,15 @@ class TrigTime:
         state_trig_ident_any = set()
         state_trig_eval = None
         event_trig_expr = None
+        mqtt_trig_expr = None
         exc = None
         notify_q = asyncio.Queue(0)
 
         last_state_trig_time = None
         state_trig_waiting = False
         state_trig_notify_info = [None, None]
+        state_false_time = None
+        check_state_expr_on_start = state_check_now or state_hold_false is not None
 
         if state_trigger is not None:
             state_trig = []
@@ -203,16 +210,22 @@ class TrigTime:
                     raise exc
 
             state_trig_ident.update(state_trig_ident_any)
-            if state_check_now and state_trig_eval:
+            if check_state_expr_on_start and state_trig_eval:
                 #
-                # check straight away to see if the condition is met (to avoid race conditions)
+                # check straight away to see if the condition is met
                 #
                 new_vars = State.notify_var_get(state_trig_ident, {})
                 state_trig_ok = await state_trig_eval.eval(new_vars)
                 exc = state_trig_eval.get_exception_obj()
                 if exc is not None:
                     raise exc
-                if state_hold is not None and state_trig_ok:
+                if state_hold_false is not None and not state_check_now:
+                    #
+                    # if state_trig_ok we wait until it is false;
+                    # otherwise we consider now to be the start of the false hold time
+                    #
+                    state_false_time = None if state_trig_ok else time.monotonic()
+                elif state_hold is not None and state_trig_ok:
                     state_trig_waiting = True
                     state_trig_notify_info = [None, {"trigger_type": "state"}]
                     last_state_trig_time = time.monotonic()
@@ -246,7 +259,32 @@ class TrigTime:
                         State.notify_del(state_trig_ident, notify_q)
                     raise exc
             Event.notify_add(event_trigger[0], notify_q)
+        if mqtt_trigger is not None:
+            if isinstance(mqtt_trigger, str):
+                mqtt_trigger = [mqtt_trigger]
+            if len(mqtt_trigger) > 1:
+                mqtt_trig_expr = AstEval(
+                    f"{ast_ctx.name} mqtt_trigger",
+                    ast_ctx.get_global_ctx(),
+                    logger_name=ast_ctx.get_logger_name(),
+                )
+                Function.install_ast_funcs(mqtt_trig_expr)
+                mqtt_trig_expr.parse(mqtt_trigger[1], mode="eval")
+                exc = mqtt_trig_expr.get_exception_obj()
+                if exc is not None:
+                    if len(state_trig_ident) > 0:
+                        State.notify_del(state_trig_ident, notify_q)
+                    raise exc
+            await Mqtt.notify_add(mqtt_trigger[0], notify_q)
         time0 = time.monotonic()
+
+        if __test_handshake__:
+            #
+            # used for testing to avoid race conditions
+            # we use this as a handshake that we are about to
+            # listen to the queue
+            #
+            State.set(__test_handshake__[0], __test_handshake__[1])
 
         while True:
             ret = None
@@ -275,7 +313,7 @@ class TrigTime:
                     this_timeout = time_left
                     state_trig_timeout = True
             if this_timeout is None:
-                if state_trigger is None and event_trigger is None:
+                if state_trigger is None and event_trigger is None and mqtt_trigger is None:
                     _LOGGER.debug(
                         "trigger %s wait_until no next time - returning with none", ast_ctx.name,
                     )
@@ -319,6 +357,26 @@ class TrigTime:
                         if exc is not None:
                             break
 
+                        if state_hold_false is not None:
+                            if state_false_time is None:
+                                if state_trig_ok:
+                                    #
+                                    # wasn't False, so ignore
+                                    #
+                                    continue
+                                #
+                                # first False, so remember when it is
+                                #
+                                state_false_time = time.monotonic()
+                            elif state_trig_ok:
+                                too_soon = time.monotonic() - state_false_time < state_hold_false
+                                state_false_time = None
+                                if too_soon:
+                                    #
+                                    # was False but not for long enough, so start over
+                                    #
+                                    continue
+
                 if state_hold is not None:
                     if state_trig_ok:
                         if not state_trig_waiting:
@@ -361,6 +419,17 @@ class TrigTime:
                 if event_trig_ok:
                     ret = notify_info
                     break
+            elif notify_type == "mqtt":
+                if mqtt_trig_expr is None:
+                    ret = notify_info
+                    break
+                mqtt_trig_ok = await mqtt_trig_expr.eval(notify_info)
+                exc = mqtt_trig_expr.get_exception_obj()
+                if exc is not None:
+                    break
+                if mqtt_trig_ok:
+                    ret = notify_info
+                    break
             else:
                 _LOGGER.error(
                     "trigger %s wait_until got unexpected queue message %s", ast_ctx.name, notify_type,
@@ -370,6 +439,8 @@ class TrigTime:
             State.notify_del(state_trig_ident, notify_q)
         if event_trigger is not None:
             Event.notify_del(event_trigger[0], notify_q)
+        if mqtt_trigger is not None:
+            Mqtt.notify_del(mqtt_trigger[0], notify_q)
         if exc:
             raise exc
         return ret
@@ -594,10 +665,12 @@ class TrigInfo:
         self.trig_cfg = trig_cfg
         self.state_trigger = trig_cfg.get("state_trigger", {}).get("args", None)
         self.state_trigger_kwargs = trig_cfg.get("state_trigger", {}).get("kwargs", {})
-        self.state_hold_dur = self.state_trigger_kwargs.get("state_hold", None)
+        self.state_hold = self.state_trigger_kwargs.get("state_hold", None)
+        self.state_hold_false = self.state_trigger_kwargs.get("state_hold_false", None)
         self.state_check_now = self.state_trigger_kwargs.get("state_check_now", False)
         self.time_trigger = trig_cfg.get("time_trigger", {}).get("args", None)
         self.event_trigger = trig_cfg.get("event_trigger", {}).get("args", None)
+        self.mqtt_trigger = trig_cfg.get("mqtt_trigger", {}).get("args", None)
         self.state_active = trig_cfg.get("state_active", {}).get("args", None)
         self.time_active = trig_cfg.get("time_active", {}).get("args", None)
         self.time_active_hold_off = trig_cfg.get("time_active", {}).get("kwargs", {}).get("hold_off", None)
@@ -613,9 +686,11 @@ class TrigInfo:
         self.state_trig_ident = None
         self.state_trig_ident_any = set()
         self.event_trig_expr = None
+        self.mqtt_trig_expr = None
         self.have_trigger = False
         self.setup_ok = False
         self.run_on_startup = False
+        self.run_on_shutdown = False
 
         if self.state_active is not None:
             self.active_expr = AstEval(
@@ -628,14 +703,17 @@ class TrigInfo:
                 self.active_expr.get_logger().error(exc)
                 return
 
+        if "time_trigger" in trig_cfg and self.time_trigger is None:
+            self.run_on_startup = True
         if self.time_trigger is not None:
             while "startup" in self.time_trigger:
                 self.run_on_startup = True
                 self.time_trigger.remove("startup")
+            while "shutdown" in self.time_trigger:
+                self.run_on_shutdown = True
+                self.time_trigger.remove("shutdown")
             if len(self.time_trigger) == 0:
                 self.time_trigger = None
-        if "time_trigger" in trig_cfg and self.time_trigger is None:
-            self.run_on_startup = True
 
         if self.state_trigger is not None:
             state_trig = []
@@ -683,6 +761,19 @@ class TrigInfo:
                     return
             self.have_trigger = True
 
+        if self.mqtt_trigger is not None:
+            if len(self.mqtt_trigger) == 2:
+                self.mqtt_trig_expr = AstEval(
+                    f"{self.name} @mqtt_trigger()", self.global_ctx, logger_name=self.name,
+                )
+                Function.install_ast_funcs(self.mqtt_trig_expr)
+                self.mqtt_trig_expr.parse(self.mqtt_trigger[1], mode="eval")
+                exc = self.mqtt_trig_expr.get_exception_long()
+                if exc is not None:
+                    self.mqtt_trig_expr.get_logger().error(exc)
+                    return
+            self.have_trigger = True
+
         self.setup_ok = True
 
     def stop(self):
@@ -693,8 +784,15 @@ class TrigInfo:
                 State.notify_del(self.state_trig_ident, self.notify_q)
             if self.event_trigger is not None:
                 Event.notify_del(self.event_trigger[0], self.notify_q)
+            if self.mqtt_trigger is not None:
+                Mqtt.notify_del(self.mqtt_trigger[0], self.notify_q)
             if self.task:
-                Function.task_cancel(self.task)
+                Function.reaper_cancel(self.task)
+        if self.run_on_shutdown:
+            notify_type = "shutdown"
+            notify_info = {"trigger_type": "time", "trigger_time": "shutdown"}
+            action_future = self.call_action(notify_type, notify_info, run_task=False)
+            Function.reaper_await(action_future)
 
     def start(self):
         """Start this trigger task."""
@@ -722,11 +820,16 @@ class TrigInfo:
             if self.event_trigger is not None:
                 _LOGGER.debug("trigger %s adding event_trigger %s", self.name, self.event_trigger[0])
                 Event.notify_add(self.event_trigger[0], self.notify_q)
+            if self.mqtt_trigger is not None:
+                _LOGGER.debug("trigger %s adding mqtt_trigger %s", self.name, self.mqtt_trigger[0])
+                await Mqtt.notify_add(self.mqtt_trigger[0], self.notify_q)
 
             last_trig_time = None
             last_state_trig_time = None
             state_trig_waiting = False
             state_trig_notify_info = [None, None]
+            state_false_time = None
+            check_state_expr_on_start = self.state_check_now or self.state_hold_false is not None
 
             while True:
                 timeout = None
@@ -738,9 +841,9 @@ class TrigInfo:
                     # first time only - skip waiting for other triggers
                     #
                     notify_type = "startup"
-                    notify_info = {"trigger_type": "time", "trigger_time": None}
+                    notify_info = {"trigger_type": "time", "trigger_time": "startup"}
                     self.run_on_startup = False
-                elif self.state_check_now:
+                elif check_state_expr_on_start:
                     #
                     # first time only - skip wait and check state trigger
                     #
@@ -750,7 +853,7 @@ class TrigInfo:
                     else:
                         notify_vars = {}
                     notify_info = [notify_vars, {"trigger_type": notify_type}]
-                    self.state_check_now = False
+                    check_state_expr_on_start = False
                 else:
                     if self.time_trigger:
                         now = dt_now()
@@ -761,7 +864,7 @@ class TrigInfo:
                         if time_next is not None:
                             timeout = (time_next - now).total_seconds()
                     if state_trig_waiting:
-                        time_left = last_state_trig_time + self.state_hold_dur - time.monotonic()
+                        time_left = last_state_trig_time + self.state_hold - time.monotonic()
                         if timeout is None or time_left < timeout:
                             timeout = time_left
                             state_trig_timeout = True
@@ -798,7 +901,9 @@ class TrigInfo:
                     new_vars, func_args = notify_info
 
                     if not ident_any_values_changed(func_args, self.state_trig_ident_any):
-                        # if var_name not in func_args we are state_check_now
+                        #
+                        # if var_name not in func_args we are check_state_expr_on_start
+                        #
                         if "var_name" in func_args and not ident_values_changed(
                             func_args, self.state_trig_ident
                         ):
@@ -810,10 +915,41 @@ class TrigInfo:
                             if exc is not None:
                                 self.state_trig_eval.get_logger().error(exc)
                                 trig_ok = False
+
+                            if self.state_hold_false is not None:
+                                if "var_name" not in func_args:
+                                    #
+                                    # this is check_state_expr_on_start check
+                                    # if immediately true, force wait until False
+                                    # otherwise start False wait now
+                                    #
+                                    state_false_time = None if trig_ok else time.monotonic()
+                                    if not self.state_check_now:
+                                        continue
+                                if state_false_time is None:
+                                    if trig_ok:
+                                        #
+                                        # wasn't False, so ignore after initial check
+                                        #
+                                        if "var_name" in func_args:
+                                            continue
+                                    else:
+                                        #
+                                        # first False, so remember when it is
+                                        #
+                                        state_false_time = time.monotonic()
+                                elif trig_ok and "var_name" in func_args:
+                                    too_soon = time.monotonic() - state_false_time < self.state_hold_false
+                                    state_false_time = None
+                                    if too_soon:
+                                        #
+                                        # was False but not for long enough, so start over
+                                        #
+                                        continue
                         else:
                             trig_ok = False
 
-                    if self.state_hold_dur is not None:
+                    if self.state_hold is not None:
                         if trig_ok:
                             if not state_trig_waiting:
                                 state_trig_waiting = True
@@ -823,14 +959,14 @@ class TrigInfo:
                                     "trigger %s got %s trigger; now waiting for state_hold of %g seconds",
                                     notify_type,
                                     self.name,
-                                    self.state_hold_dur,
+                                    self.state_hold,
                                 )
                             else:
                                 _LOGGER.debug(
                                     "trigger %s got %s trigger; still waiting for state_hold of %g seconds",
                                     notify_type,
                                     self.name,
-                                    self.state_hold_dur,
+                                    self.state_hold,
                                 )
                             continue
                         if state_trig_waiting:
@@ -846,6 +982,10 @@ class TrigInfo:
                     func_args = notify_info
                     if self.event_trig_expr:
                         trig_ok = await self.event_trig_expr.eval(notify_info)
+                elif notify_type == "mqtt":
+                    func_args = notify_info
+                    if self.mqtt_trig_expr:
+                        trig_ok = await self.mqtt_trig_expr.eval(notify_info)
 
                 else:
                     func_args = notify_info
@@ -869,30 +1009,6 @@ class TrigInfo:
                     )
                     continue
 
-                action_ast_ctx = AstEval(
-                    f"{self.action.global_ctx_name}.{self.action.name}", self.action.global_ctx
-                )
-                Function.install_ast_funcs(action_ast_ctx)
-                task_unique_func = None
-                if self.task_unique is not None:
-                    task_unique_func = Function.task_unique_factory(action_ast_ctx)
-
-                #
-                # check for @task_unique with kill_me=True
-                #
-                if (
-                    self.task_unique is not None
-                    and self.task_unique_kwargs
-                    and self.task_unique_kwargs["kill_me"]
-                    and Function.unique_name_used(action_ast_ctx, self.task_unique)
-                ):
-                    _LOGGER.debug(
-                        "trigger %s got %s trigger, @task_unique kill_me=True prevented new action",
-                        notify_type,
-                        self.name,
-                    )
-                    continue
-
                 if (
                     self.time_active_hold_off is not None
                     and last_trig_time is not None
@@ -906,49 +1022,8 @@ class TrigInfo:
                     )
                     continue
 
-                # Create new HASS Context with incoming as parent
-                if "context" in func_args and isinstance(func_args["context"], Context):
-                    hass_context = Context(parent_id=func_args["context"].id)
-                else:
-                    hass_context = Context()
-
-                # Fire an event indicating that pyscript is running
-                # Note: the event must have an entity_id for logbook to work correctly.
-                ev_name = self.name.replace(".", "_")
-                ev_entity_id = f"pyscript.{ev_name}"
-
-                event_data = dict(name=ev_name, entity_id=ev_entity_id, func_args=func_args)
-                Function.hass.bus.async_fire("pyscript_running", event_data, context=hass_context)
-
-                _LOGGER.debug(
-                    "trigger %s got %s trigger, running action (kwargs = %s)",
-                    self.name,
-                    notify_type,
-                    func_args,
-                )
-
-                async def do_func_call(func, ast_ctx, task_unique, task_unique_func, hass_context, **kwargs):
-                    # Store HASS Context for this Task
-                    Function.store_hass_context(hass_context)
-
-                    if task_unique and task_unique_func:
-                        await task_unique_func(task_unique)
-                    await func.call(ast_ctx, **kwargs)
-                    if ast_ctx.get_exception_obj():
-                        ast_ctx.get_logger().error(ast_ctx.get_exception_long())
-
-                last_trig_time = time.monotonic()
-
-                Function.create_task(
-                    do_func_call(
-                        self.action,
-                        action_ast_ctx,
-                        self.task_unique,
-                        task_unique_func,
-                        hass_context,
-                        **func_args,
-                    )
-                )
+                if self.call_action(notify_type, func_args):
+                    last_trig_time = time.monotonic()
 
         except asyncio.CancelledError:
             raise
@@ -960,4 +1035,66 @@ class TrigInfo:
                 State.notify_del(self.state_trig_ident, self.notify_q)
             if self.event_trigger is not None:
                 Event.notify_del(self.event_trigger[0], self.notify_q)
+            if self.mqtt_trigger is not None:
+                Mqtt.notify_del(self.mqtt_trigger[0], self.notify_q)
             return
+
+    def call_action(self, notify_type, func_args, run_task=True):
+        """Call the trigger action function."""
+        action_ast_ctx = AstEval(f"{self.action.global_ctx_name}.{self.action.name}", self.action.global_ctx)
+        Function.install_ast_funcs(action_ast_ctx)
+        task_unique_func = None
+        if self.task_unique is not None:
+            task_unique_func = Function.task_unique_factory(action_ast_ctx)
+
+        #
+        # check for @task_unique with kill_me=True
+        #
+        if (
+            self.task_unique is not None
+            and self.task_unique_kwargs
+            and self.task_unique_kwargs["kill_me"]
+            and Function.unique_name_used(action_ast_ctx, self.task_unique)
+        ):
+            _LOGGER.debug(
+                "trigger %s got %s trigger, @task_unique kill_me=True prevented new action",
+                notify_type,
+                self.name,
+            )
+            return False
+
+        # Create new HASS Context with incoming as parent
+        if "context" in func_args and isinstance(func_args["context"], Context):
+            hass_context = Context(parent_id=func_args["context"].id)
+        else:
+            hass_context = Context()
+
+        # Fire an event indicating that pyscript is running
+        # Note: the event must have an entity_id for logbook to work correctly.
+        ev_name = self.name.replace(".", "_")
+        ev_entity_id = f"pyscript.{ev_name}"
+
+        event_data = dict(name=ev_name, entity_id=ev_entity_id, func_args=func_args)
+        Function.hass.bus.async_fire("pyscript_running", event_data, context=hass_context)
+
+        _LOGGER.debug(
+            "trigger %s got %s trigger, running action (kwargs = %s)", self.name, notify_type, func_args,
+        )
+
+        async def do_func_call(func, ast_ctx, task_unique, task_unique_func, hass_context, **kwargs):
+            # Store HASS Context for this Task
+            Function.store_hass_context(hass_context)
+
+            if task_unique and task_unique_func:
+                await task_unique_func(task_unique)
+            await func.call(ast_ctx, **kwargs)
+            if ast_ctx.get_exception_obj():
+                ast_ctx.get_logger().error(ast_ctx.get_exception_long())
+
+        func = do_func_call(
+            self.action, action_ast_ctx, self.task_unique, task_unique_func, hass_context, **func_args,
+        )
+        if run_task:
+            Function.create_task(func)
+            return True
+        return func

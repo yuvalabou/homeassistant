@@ -278,11 +278,13 @@ class EvalFunc:
             "time_trigger",
             "state_trigger",
             "event_trigger",
+            "mqtt_trigger",
         }
         trig_decorators = {
             "time_trigger",
             "state_trigger",
             "event_trigger",
+            "mqtt_trigger",
             "state_active",
             "time_active",
             "task_unique",
@@ -393,6 +395,7 @@ class EvalFunc:
         #
         arg_check = {
             "event_trigger": {"arg_cnt": {1, 2}},
+            "mqtt_trigger": {"arg_cnt": {1, 2}},
             "state_active": {"arg_cnt": {1}},
             "state_trigger": {"arg_cnt": {"*"}, "type": {list, set}},
             "task_unique": {"arg_cnt": {1}},
@@ -455,7 +458,7 @@ class EvalFunc:
         kwarg_check = {
             "task_unique": {"kill_me"},
             "time_active": {"hold_off"},
-            "state_trigger": {"state_hold", "state_check_now"},
+            "state_trigger": {"state_hold", "state_check_now", "state_hold_false"},
         }
         for dec_name in trig_args:
             if dec_name not in kwarg_check and "kwargs" in trig_args[dec_name]:
@@ -1214,14 +1217,14 @@ class AstEval:
                 raise NotImplementedError(f"unknown lhs type {lhs} (got {var_name}) in assign")
             dot_count = var_name.count(".")
             if dot_count == 1:
-                await State.set(var_name, val)
+                State.set(var_name, val)
                 return
             if dot_count == 2:
-                await State.setattr(var_name, val)
+                State.setattr(var_name, val)
                 return
             if dot_count > 0:
                 raise NameError(
-                    f"invalid name '{var_name}' (should be 'domain.entity' or 'domain.entity.attr'"
+                    f"invalid name '{var_name}' (should be 'domain.entity' or 'domain.entity.attr')"
                 )
             if self.curr_func and var_name in self.curr_func.global_names:
                 self.global_sym_table[var_name] = val
@@ -1284,6 +1287,11 @@ class AstEval:
                         del self.sym_table[arg1.id]
                 else:
                     raise NameError(f"name '{arg1.id}' is not defined")
+            elif isinstance(arg1, ast.Attribute):
+                var_name = await self.ast_attribute_collapse(arg1, check_undef=False)
+                if not isinstance(var_name, str):
+                    raise NameError("state name should be 'domain.entity' or 'domain.entity.attr'")
+                State.delete(var_name)
             else:
                 raise NotImplementedError(f"unknown target type {arg1} in del")
 
