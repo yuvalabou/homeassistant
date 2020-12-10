@@ -82,6 +82,11 @@ sun:
 switch: !include_dir_merge_list integrations/switch
 system_health:
 timer: !include integrations/timer.yaml
+tts:
+  - platform: microsoft
+    api_key: !secret azure_tts
+    language: he-il
+    type: HilaNeural
 updater:
 utility_meter: !include integrations/sensor/utility_meter.yaml
 vacuum:
