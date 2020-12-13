@@ -2,7 +2,7 @@
 # Shabbat climate
 ###
 
-- alias: "Turn on Living room Heater on shabbat enter"
+- alias: "Turn on Living room Heater on Shabbat enter"
   id: eb10652e-6276-4c18-b063-d14fc7c2d2cb
   trigger:
     platform: state
@@ -34,7 +34,7 @@
     data:
       entity_id: climate.living_room_heat_thermostat
 
-- alias: "Turn on Living room Climate at shabbat"
+- alias: "Turn on Living room Climate at Shabbat"
   id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
   trigger:
     - platform: time
@@ -53,7 +53,7 @@
     data:
       entity_id: climate.living_room_heat_thermostat
 
-- alias: "Turn off Living room Heater at shabbat noon"
+- alias: "Turn off Living room Heater at Shabbat noon"
   id: f570b89f-8ce5-4b09-9230-1acc55c54528
   trigger:
     platform: time

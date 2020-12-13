@@ -2,7 +2,7 @@
 # Shabbat notifications
 ###
 
-- alias: "Notify for Salatim"
+- alias: "Notify for candles"
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
   trigger:
     platform: state
@@ -16,7 +16,7 @@
     service: notify.mobile_app_yuval
     data:
       title: "שבת שלום!"
-      message: "זכרת להכין מיחם, חציל וסלטים אחרים?"
+      message: "זכרת להכין מיחם ונרות?"
 
 - alias: "Notify for Shabbat"
   id: 1145acf8-55b2-4564-bab8-94090f75d7d5

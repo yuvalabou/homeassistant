@@ -15,11 +15,11 @@
     data:
       entity_id: switch.shabbat_plate
 
-- alias: "Shabbat operation"
+- alias: "Turn-off plate on Shabbat noon"
   id: 48acb771-25fe-4629-9ce7-77dfc35adeab
   trigger:
     platform: time
-    at: '11:30:00'
+    at: '11:00:00'
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -89,7 +89,7 @@
   trigger:
     platform: sun
     event: sunset
-    offset: '-03:30:00'
+    offset: '-03:00:00'
   condition:
     - condition: time
       weekday:

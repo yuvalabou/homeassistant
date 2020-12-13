@@ -85,23 +85,29 @@
     data:
       entity_id: input_boolean.cleaned_today
 
-- alias: "Intelligent Turbo mode"
+- alias: "Intelligent mode switch"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
-    platform: state
-    entity_id: group.person
-    to: 'not_home'
+    - platform: state
+      entity_id: group.person
+      to: 'not_home'
+    - platform: state
+      entity_id: group.person
+      to: 'home'
   action:
-    service: script.vacuum_set_turbo
-
-- alias: "Intelligent Quiet mode"
-  id: f4000e26-b404-4d74-93a0-85b9900a7278
-  trigger:
-    platform: state
-    entity_id: group.person
-    to: 'home'
-  action:
-    service: script.vacuum_set_silent
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: group.person
+          state: 'not_home'
+        sequence:
+          service: script.vacuum_set_turbo
+      - conditions:
+        - condition: state
+          entity_id: group.person
+          state: 'home'
+        sequence:
+          service: script.vacuum_set_silent
 
 - alias: "Vacuum - Set mode"
   id: 339c44db-f51b-4174-b396-18e69213b4e7

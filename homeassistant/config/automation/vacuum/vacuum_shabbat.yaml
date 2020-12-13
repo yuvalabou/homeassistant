@@ -34,7 +34,6 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'
   action:
-    - delay: 1
     - service: vacuum.stop
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
@@ -56,7 +55,6 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       state: 'on'
   action:
-    - delay: 1
     - service: vacuum.start
       data:
         entity_id: vacuum.xiaomi_vacuum_cleaner
