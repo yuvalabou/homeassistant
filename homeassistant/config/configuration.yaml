@@ -49,7 +49,6 @@ device_tracker: !include integrations/device_tracker.yaml
 ##################################################
 #                   DISCOVERY                    #
 ##################################################
-
 discovery:
 zeroconf:
 ssdp:
@@ -57,9 +56,9 @@ ssdp:
 ##################################################
 #                  INTEGRATIONS                  #
 ##################################################
-
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list integrations/binary_sensor
+blueprint:
 camera: !include integrations/camera.yaml
 climate: !include_dir_merge_list integrations/climate
 group: !include integrations/group.yaml
