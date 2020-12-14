@@ -8,7 +8,7 @@
       value_template: >-
         {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
       icon_template: >-
-        {% set status =  state_attr('vacuum.xiaomi_vacuum_cleaner', 'status')  %}
+        {% set status = state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') %}
         {% if status == 'Charging' %}
           mdi:battery-charging
         {% elif status == 'Cleaning' %}

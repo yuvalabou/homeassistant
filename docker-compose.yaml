@@ -25,11 +25,11 @@ services:
     ports:
       - 35432:5432
     environment:
-        PUID: ${LOCAL_USER}
-        PGID: ${LOCAL_USER}
-        TZ: "Asia/Jerusalem"
-        POSTGRES_USER: ${POSTGRES_USER}
-        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-        POSTGRES_DB: HADB
+      PUID: ${LOCAL_USER}
+      PGID: ${LOCAL_USER}
+      TZ: "Asia/Jerusalem"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: HADB
     volumes:
-        - /home/homeassistant/postgres/data:/var/lib/postgresql/data
+      - /home/homeassistant/postgres/data:/var/lib/postgresql/data
