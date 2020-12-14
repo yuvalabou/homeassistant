@@ -86,7 +86,7 @@ cards:
         card_type: picture-entity
         image: 'https://repository-images.githubusercontent.com/12888993/0f9eb780-655b-11e9-85cb-0d3956096fe5'
         entity: sensor.current_version
-      - entity: sensor.uptime_friendly
+      - entity: sensor.uptime
       - entity: script.homeassistant_restart
         icon: mdi:restart
       - type: custom:decluttering-card
