@@ -2,7 +2,7 @@
 # Living room
 ###
 
-- alias: "Turn on living room lights in workday morning-early"
+- alias: "Turn on living room lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
     platform: time
@@ -15,29 +15,17 @@
       entity_id: group.person
       state: 'home'
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room_lights
-      kelvin: 2800
-      brightness_pct: 20
-      transition: 300
-
-- alias: "Turn on living room lights in workday morning-later"
-  id: 3a42a962-7bf3-4952-b8a2-99591aa827f5
-  trigger:
-    platform: time
-    at: '06:30:00'
-  condition:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - condition: state
-      entity_id: group.person
-      state: 'home'
-  action:
-    service: light.turn_on
-    data:
-      entity_id: light.living_room_lights
-      kelvin: 4000
-      brightness_pct: 100
-      transition: 600
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lights
+        kelvin: 2800
+        brightness_pct: 20
+        transition: 300
+    - delay:
+        minutes: 45
+    - service: light.turn_on
+      data:
+        entity_id: light.living_room_lights
+        kelvin: 4000
+        brightness_pct: 100
+        transition: 600

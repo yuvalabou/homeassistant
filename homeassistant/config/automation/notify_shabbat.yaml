@@ -29,7 +29,7 @@
       weekday:
         - fri
   action:
-    - service: notify.family
-      data:
-        title: "שבת שלום!"
-        message: "שבת נכנסת בעוד 10 דקות."
+    service: notify.family
+    data:
+      title: "שבת שלום!"
+      message: "שבת נכנסת בעוד 10 דקות."

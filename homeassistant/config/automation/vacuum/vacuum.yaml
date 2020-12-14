@@ -36,12 +36,12 @@
     from: 'cleaning'
     to: 'returning'
   action:
-    - service: notify.family
+    service: notify.family
+    data:
+      title: "Finished cleaning"
+      message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
       data:
-        title: "Finished cleaning"
-        message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
-        data:
-          image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
+        image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"
 
 - alias: "Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
