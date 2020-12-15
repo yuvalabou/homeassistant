@@ -61,6 +61,10 @@ binary_sensor: !include_dir_merge_list integrations/binary_sensor
 blueprint:
 camera: !include integrations/camera.yaml
 climate: !include_dir_merge_list integrations/climate
+# Example configuration.yaml entry
+google:
+  client_id: !secret google_cal_id
+  client_secret: !secret google_cal_secret
 group: !include integrations/group.yaml
 input_boolean: !include_dir_merge_named integrations/input_boolean
 input_datetime:
