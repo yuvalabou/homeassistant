@@ -28,17 +28,19 @@ def link() -> str:
 
     return link
 
+
 # The order is importent
 slag = [
     "br /&gt;",
     "/b&gt;",
     "b&gt;",
     "&gt;",
-    "font style=&quot;text-decoration: underline;&quot;",
+    "style=&quot;text-decoration: underline;&quot;",
     "&lt;",
     "/font&gt;",
     "&quot;",
     "עדכון אחרון:",
+    "font ",
     "/",
 ]
 
@@ -99,27 +101,30 @@ def long_term_forecast() -> str:
         return long_term
 
 
-attrs = json.dumps(
-    {
-        "short_term": short_term_forecast(),
-        "long_term": long_term_forecast(),
-        "link": link(),
-        "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
-    },
-    ensure_ascii=False,
-    indent=2,
-)
+def get_attributes() -> dict:
+    """Get all atrributes."""
+    attrs = json.dumps(
+        {
+            "short_term": short_term_forecast(),
+            "long_term": long_term_forecast(),
+            "link": link(),
+            "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
+        },
+        ensure_ascii=False,
+        indent=2,
+    )
+
+    return attrs
 
 
 @service
-@time_trigger
 def ims_sensor():
     """Send IMS data over MQTT."""
     client.connect(BROKER)
     log.info(f"Connected")
 
     client.publish("homeassistant/ims", state())
-    client.publish("homeassistant/ims/attrs", attrs)
+    client.publish("homeassistant/ims/attrs", get_attributes())
     log.info(f"Published")
 
     sleep(3)
