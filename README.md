@@ -40,7 +40,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|389       |241      |29              |12        |39           |28       |
+|389       |239      |29              |12        |40           |28       |
 
 -----
 
@@ -48,7 +48,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Lovelace Mode | Dashboards | Resources | Views |
 |:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |15         |8      |
+|YAML           |1           |16         |8      |
 
 [Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
@@ -86,6 +86,7 @@ You may benefit from the script if you want to implement it yourself, But it's a
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
+- [Card Mod](https://github.com/thomasloven/lovelace-card-mod) - Apply CSS styles to any card
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
