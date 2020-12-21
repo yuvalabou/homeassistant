@@ -8,3 +8,8 @@
   services:
     - service: mobile_app_yuval
     - service: mobile_app_tohar
+
+- name: "Nest mini"
+  platform: tts
+  tts_service: tts.microsoft_say
+  media_player: media_player.googlehome3668

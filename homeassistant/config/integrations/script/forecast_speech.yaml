@@ -1,0 +1,14 @@
+
+give_short_term_forecast:
+  alias: "Give short term forecast"
+  sequence:
+    - service: notify.nest_mini
+      data:
+        message: "{{state_attr('sensor.ims_daily', 'short_term')}}"
+
+give_long_term_forecast:
+  alias: "Give long term forecast"
+  sequence:
+    - service: notify.nest_mini
+      data:
+        message: "{{state_attr('sensor.ims_daily', 'long_term')}}"
