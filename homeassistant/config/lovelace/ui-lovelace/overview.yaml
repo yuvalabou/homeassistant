@@ -12,20 +12,22 @@ cards:
             card_type: picture-entity
             image: '/local/assets/yuval.jpg'
             entity: person.yuval
-#          - entity: sensor.yuval_geocoded_location
-#            name: "Location"
-          - entity: sensor.yuval_battery_level
-            name: "Phone Battery"
+          - entity: sensor.yuval_geocoded_location
+            name: "Location"
+          - type: custom:battery-entity-row
+            entity: sensor.yuval_battery_level
+            name: 'Phone Battery'
       - type: entities
         entities:
           - type: custom:hui-element
             card_type: picture-entity
             image: '/local/assets/tohar.jpg'
             entity: person.tohar
-#          - entity: sensor.tohar_geocoded_location
-#            name: "Location"
-          - entity: sensor.tohar_battery_level
-            name: "Phone Battery"
+          - entity: sensor.tohar_geocoded_location
+            name: "Location"
+          - type: custom:battery-entity-row
+            entity: sensor.tohar_battery_level
+            name: 'Phone Battery'
 
   - type: entities
     entities:
@@ -50,6 +52,11 @@ cards:
               - entity: sensor.wind_scale_friendly
           - type: custom:hui-element
             card_type: glance
+            style: |
+              ha-card {
+                background: {{ state_attr('sensor.uv_index_friendly', 'color') }};
+                text-shadow: 2px 2px 10px #041623;
+              }
             entities:
               - entity: sensor.uv_index_friendly
           - type: custom:hui-element
@@ -110,6 +117,30 @@ cards:
       - type: divider
       - entity: sensor.jewish_calendar_daf_yomi
         name: "דף יומי"
+
+  - type: custom:mini-media-player
+    entity: media_player.googlehome3668
+    group: false
+    tts:
+      platform: microsoft
+    hide:
+      # power: true
+      progress: true
+    shortcuts:
+      columns: 2
+      buttons:
+        - name: "Galatz"
+          type: script
+          id: script.play_radio_stream
+          data:
+            entity_id: media_player.googlehome3668
+            content_id: Galei Zahal
+        - name: "Galgalatz"
+          type: script
+          id: script.play_radio_stream
+          data:
+            entity_id: media_player.googlehome3668
+            content_id: GLGLZ
 
   - type: entities
     title: "תאורת שבת"
