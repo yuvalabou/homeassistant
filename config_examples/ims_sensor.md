@@ -2,13 +2,13 @@
 
 ## prerequisites
 
-The [Pyscript](https://github.com/custom-components/pyscript) custom-component for allowing a more comprehensive python scripts to be used in Home-Assistant.
+The [Pyscript](https://github.com/custom-components/pyscript) custom-component, This is required for a more comprehensive python scripts to be used in Home-Assistant.
 
 MQTT Broker of your choice to retrive the data from the sensor.
 
 ## The script
 
-Place the script found [here](https://github.com/yuvalabou/HomeAssistant-Config/blob/master/homeassistant/config/pyscript/ims2mqtt.py) in your _config/pyscript_ folder.
+Place the script found [here](https://github.com/yuvalabou/HomeAssistant-Config/blob/master/homeassistant/config/pyscript/ims2mqtt.py) in your _config/pyscript_ folder, and replace the _BROKER = "10.0.0.6"_ with your MQTT broker address.
 
 This will expose a new service called _pyscript.ims_sensor_.
 
