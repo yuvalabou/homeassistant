@@ -28,7 +28,7 @@ sensor:
 To Update the sensor regularly add the following automation
 
 ```yaml
-sensor:
+automation:
     - alias: "Update IMS sensor"
       id: 8092fd00-4f2b-46cb-9855-5adde0e310c9
       trigger:
