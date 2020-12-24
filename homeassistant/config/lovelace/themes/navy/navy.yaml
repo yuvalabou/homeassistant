@@ -99,7 +99,7 @@ navy:
   custom-bar-card-color: 'var(--accent-color)'
 
   # CodeMirror editor
-  codemirror-keyword: '#042D40'
+  codemirror-keyword: '#57CAFF'
   codemirror-operator: 'var(--codemirror-keyword)'
   codemirror-variable: 'var(--codemirror-keyword)'
 #  codemirror-variable-2:
