@@ -12,6 +12,7 @@ cards:
         cards:
           - type: custom:mini-graph-card
             icon: mdi:download-network
+            font_size: 80
             entities:
               - entity: sensor.speedtest_download
                 name: "Download"
@@ -20,6 +21,7 @@ cards:
               fill: fade
           - type: custom:mini-graph-card
             icon: mdi:upload-network
+            font_size: 80
             entities:
               - entity: sensor.speedtest_upload
                 name: "Upload"
@@ -47,7 +49,7 @@ cards:
         name: "Automations"
         tap_action:
           action: call-service
-          service: script.reload_automations
+          service: automation.reload
       - entity: sensor.count_scripts
         name: "Scripts"
         tap_action:
@@ -55,28 +57,31 @@ cards:
           service: script.reload
       - entity: sensor.count_zones
         name: "Zones"
+        tap_action:
+          action: call-service
+          service: zone.reload
       - entity: sensor.count_device_trackers
         name: "Device Trackers"
       - entity: sensor.count_input_booleans
         name: "Input Booleans"
         tap_action:
           action: call-service
-          service: script.reload_input_boolean
+          service: input_boolean.reload
       - entity: sensor.count_input_selects
         name: "Input Select"
         tap_action:
           action: call-service
-          service: script.reload_input_select
+          service: input_select.reload
       - entity: sensor.count_input_datetimes
         name: "Input Date Times"
         tap_action:
           action: call-service
-          service: script.reload_input_datetime
+          service: input_datetime.reload
       - entity: sensor.count_timers
         name: "Timers"
         tap_action:
           action: call-service
-          service: script.reload_timers
+          service: timer.reload
       - entity: sensor.count_climates
         name: "Climate"
 
@@ -117,7 +122,6 @@ cards:
         entities:
           - script.reload_cli_sensors
           - script.reload_thermostats
-          - script.reload_groups
           - script.reload_history_stats
           - script.reload_persons
           - script.reload_ping_sensors
@@ -183,6 +187,8 @@ cards:
             card_type: custom:mini-graph-card
             entities:
               - entity: sensor.pi_hole_ads_blocked_today
+                name: "Queries blocked today"
+                unit: 'Blocked'
                 color: '#FF0F00'
               - entity: sensor.pi_hole_dns_queries_today
               - entity: sensor.pi_hole_dns_queries_forwarded
