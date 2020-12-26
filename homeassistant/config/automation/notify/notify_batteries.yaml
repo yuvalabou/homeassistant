@@ -1,0 +1,49 @@
+###
+# Battery notifications
+###
+
+- alias: "Notify for full batteries"
+  id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
+  trigger:
+    - platform: template
+      value_template: >-
+        {{ states('sensor.yuval_battery_level') == 100 }}
+    - platform: template
+      value_template: >-
+        {{ states('sensor.tohar_battery_level') == 100 }}
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'off'
+    - condition: state
+      entity_id: group.person
+      state: 'home'
+    - condition: time
+      after: '06:00:00'
+      before: '22:00:00'
+  action:
+    - choose:
+      - conditions:
+        - condition: state
+          entity_id: sensor.yuval_battery_level
+          state: '100'
+        - condition: state
+          entity_id: person.yuval
+          state: 'home'
+        sequence:
+          service: notify.nest_mini
+          data:
+            message: >-
+              "הסוללה של יובל טעונה במלואה"
+      - conditions:
+        - condition: state
+          entity_id: sensor.tohar_battery_level
+          state: '100'
+        - condition: state
+          entity_id: person.tohar
+          state: 'home'
+        sequence:
+          service: notify.nest_mini
+          data:
+            message: >-
+              "הסוללה של טוהר טעונה במלואה"

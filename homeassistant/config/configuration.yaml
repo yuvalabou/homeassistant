@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 112020            #
+#            Yuval Aboulafia - 122020            #
 ##################################################
 
 ##################################################
@@ -17,24 +17,21 @@ homeassistant:
   time_zone: Asia/Jerusalem
   # Customizing entities.
   customize: !include customize.yaml
+  allowlist_external_dirs:
+    - /config
 
-# Integrates Home Assistant mobile app.
+config:
+cloud:
 mobile_app:
 
 ##################################################
 #                       GUI                      #
 ##################################################
-# Enables the frontend.
 frontend:
   themes: !include_dir_merge_named lovelace/themes
 lovelace:
   mode: yaml
   resources: !include lovelace/resources/resources.yaml
-
-# Enables configuration UI.
-config:
-
-# Enables a map showing the location of tracked devices.
 map:
 
 ##################################################
@@ -61,7 +58,6 @@ binary_sensor: !include_dir_merge_list integrations/binary_sensor
 blueprint:
 camera: !include integrations/camera.yaml
 climate: !include_dir_merge_list integrations/climate
-# Example configuration.yaml entry
 google:
   client_id: !secret google_cal_id
   client_secret: !secret google_cal_secret
@@ -106,6 +102,4 @@ logbook: !include logging/logbook.yaml
 recorder: !include logging/recorder.yaml
 logger:
   default: warning
-  logs:
-    custom_components.pyscript.file: info
 system_log:

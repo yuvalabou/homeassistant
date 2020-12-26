@@ -13,10 +13,11 @@
       weekday:
         - fri
   action:
-    service: notify.mobile_app_yuval
-    data:
-      title: "שבת שלום!"
-      message: "זכרת להכין מיחם ונרות?"
+    - service: notify.mobile_app_yuval
+      data:
+        title: "שבת שלום!"
+        message: "זכרת להכין מיחם ונרות?"
+    - service: script.notify_for_shabbat
 
 - alias: "Notify for Shabbat"
   id: 1145acf8-55b2-4564-bab8-94090f75d7d5

@@ -4,6 +4,14 @@ Here is a summery of the scripts and their functionality
 
 _The script integration allows users to specify a sequence of actions to be executed by Home Assistant. These are run when you turn the script on. The script integration will create an entity for each script and allow them to be controlled via services._
 
+## Forecast speech
+
+Pass the IMS sensor to a tts device
+
+## Radio stream
+
+Broadcast radio to a media device
+
 ## Reload entities
 
 Scripts to reload entities

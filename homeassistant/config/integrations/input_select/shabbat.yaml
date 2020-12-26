@@ -5,7 +5,7 @@
 shabbat_lights_off_time:
   name: "Shabbat turn off light time"
   icon: mdi:clock
-  initial: '21:00'
+  initial: '20:30'
   options:
     - '20:30'
     - '20:45'

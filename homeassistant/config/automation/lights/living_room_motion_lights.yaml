@@ -2,7 +2,7 @@
 # Motion
 ###
 
-- alias: "Turn on lights when movement detected at night"
+- alias: "Turn on lights when motion is detected at night"
   id: bbe9c72e-6578-4fd1-b25c-12908145ac14
   trigger:
     platform: state
@@ -22,7 +22,7 @@
       kelvin: 3600
       brightness_pct: 2
 
-- alias: "Start the lights timer"
+- alias: "Turn-off the light"
   id: 2c73b4e0-34cc-4cfd-984e-159f321faa64
   mode: restart
   trigger:
@@ -37,23 +37,15 @@
       entity_id: input_boolean.night_light_override
       state: 'off'
   action:
-    service: timer.start
-    data:
-      entity_id: timer.motion_lights_night
-
-- alias: "Turn off lights when the timer is finished"
-  id: 395fbb3d-01ec-477e-a5dc-aab76acef310
-  trigger:
-    platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.motion_lights_night
-  condition:
-    - condition: state
-      entity_id: input_boolean.night_light_override
-      state: 'off'
-  action:
-    service: light.turn_off
-    data:
-      entity_id: light.yeelight_color_living_room_2
-      transition: 30
+    - service: timer.start
+      data:
+        entity_id: timer.motion_lights_night
+    - wait_for_trigger:
+        platform: event
+        event_type: timer.finished
+        event_data:
+          entity_id: timer.motion_lights_night
+    - service: light.turn_off
+      data:
+        entity_id: light.yeelight_color_living_room_2
+        transition: 30

@@ -4,6 +4,7 @@
 ###
 
 play_radio_stream:
+  alias: "Play radio stream"
   sequence:
     - service: media_player.play_media
       data_template:

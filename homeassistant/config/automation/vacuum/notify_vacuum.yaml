@@ -1,0 +1,18 @@
+###
+# Vacuum nofity on complete
+###
+
+- alias: "Vacuum - Notify on complete"
+  id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
+  trigger:
+    platform: state
+    entity_id: vacuum.xiaomi_vacuum_cleaner
+    from: 'cleaning'
+    to: 'returning'
+  action:
+    service: notify.family
+    data:
+      title: "Finished cleaning"
+      message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
+      data:
+        image: "https://steamuserimages-a.akamaihd.net/ugc/307738670230847301/02FCBC35FC39EC8A78464A4CB62F049987C44892/"

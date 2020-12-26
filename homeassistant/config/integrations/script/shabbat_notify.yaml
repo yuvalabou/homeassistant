@@ -1,0 +1,15 @@
+###
+# Shabbat summary
+###
+
+notify_for_shabbat:
+  alias: "Notify for Shabbat"
+  description: "Give a Shabbat brief on a media device using tts"
+  sequence:
+    - delay: 3
+    - service: notify.nest_mini
+      data:
+        message: >-
+          "השבת פרשת {{ states('sensor.jewish_calendar_parshat_hashavua') }},
+          כניסת שבת בשעה {{ as_timestamp(states('sensor.jewish_calendar_upcoming_shabbat_candle_lighting')) | timestamp_custom('%I:%M') }},
+          צאת השבת בשעה {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah')) | timestamp_custom('%I:%M') }}."

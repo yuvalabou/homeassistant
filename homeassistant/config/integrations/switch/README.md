@@ -15,3 +15,7 @@ _Keeps track which switches are in your environment, their state and allows you 
 ## Shabat switch
 
 [Template](https://www.home-assistant.io/integrations/switch.template/) to create a "on/off" switch for Shabat mode that disable all human triggered sensors
+
+## Vacuum
+
+[Template](https://www.home-assistant.io/integrations/switch.template/) switch to disable vacuum automatic cleaning

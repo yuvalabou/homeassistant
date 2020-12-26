@@ -6,8 +6,11 @@
 - name: "Yuval"
   id: yuval
   device_trackers:
+    - device_tracker.yuval
     - device_tracker.yuval_ping
+
 - name: "Tohar"
   id: tohar
   device_trackers:
+    - device_tracker.tohar
     - device_tracker.tohar_ping

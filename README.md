@@ -40,17 +40,17 @@ You may benefit from the script if you want to implement it yourself, But it's a
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|389       |239      |29              |12        |40           |28       |
+|383       |232      |32              |12        |39           |25       |
 
 -----
 
-## Lovelace
+## [Lovelace](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
 | Lovelace Mode | Dashboards | Resources | Views |
 |:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |16         |8      |
+|YAML           |1           |16         |7      |
 
-[Lovelace configurations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
+-----
 
 ### Devices
 

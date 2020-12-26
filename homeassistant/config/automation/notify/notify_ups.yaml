@@ -1,5 +1,5 @@
 ###
-# UPS
+# UPS notifications
 ###
 
 - alias: "Notify for power outage and restore"
@@ -7,9 +7,11 @@
   trigger:
     - platform: state
       entity_id: sensor.ups_status
+      from: 'Online'
       to: 'On Battery'
     - platform: state
       entity_id: sensor.ups_status
+      from: 'On Battery'
       to: 'Online'
   action:
     - choose:

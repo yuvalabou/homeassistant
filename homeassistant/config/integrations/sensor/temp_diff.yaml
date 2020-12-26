@@ -1,0 +1,37 @@
+###
+# Temperature difference between home and outdoors
+###
+- platform: template
+  sensors:
+    warmer_or_cooler_outside:
+      friendly_name: "Warmer or cooler outside"
+      value_template: >-
+        {% if states('sensor.openweathermap_temperature') <
+              states('sensor.living_room_temperature')
+        %}
+          Cooler outside
+        {% else %}
+          Warmer outside
+        {% endif %}
+      icon_template: >
+        {% if states('sensor.openweathermap_temperature') <
+              states('sensor.living_room_temperature')
+        %}
+          mdi:thermometer-chevron-up
+        {% else %}
+        mdi:thermometer-chevron-down
+        {% endif %}
+      attribute_templates:
+        temperature_inside: >
+          {{ states('sensor.living_room_temperature') }}
+        temperature_outside: >
+          {{ states('sensor.openweathermap_temperature') }}
+        temperature_difference: >
+          {{
+            (
+              states('sensor.openweathermap_temperature') | float
+              -
+              states('sensor.living_room_temperature') | float
+            )
+            | round(2)
+          }}

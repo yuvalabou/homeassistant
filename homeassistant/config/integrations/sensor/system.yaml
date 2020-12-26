@@ -14,3 +14,6 @@
     - type: throughput_network_out
       arg: eth0
     - type: last_boot
+
+- platform: folder
+  folder: /config/tts

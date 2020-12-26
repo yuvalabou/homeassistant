@@ -33,3 +33,7 @@ Standard [Random boolean](https://www.home-assistant.io/integrations/random/) se
 
 - [Time of Day](https://www.home-assistant.io/integrations/tod/) to track the "state" of the day
 - Standard [Workday](https://www.home-assistant.io/integrations/workday/) Sensor
+
+## TV
+
+[Template](https://www.home-assistant.io/integrations/binary_sensor.template/) binary sensor to track applications watch time
