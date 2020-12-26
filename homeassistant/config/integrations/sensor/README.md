@@ -28,6 +28,14 @@ Standard [Season](https://www.home-assistant.io/integrations/season/) sensor
 
 [SQL](https://www.home-assistant.io/integrations/sql/) sensor to get the database size
 
+## FeedParser
+
+TBD
+
+## IMS
+
+[MQTT](https://www.home-assistant.io/integrations/sensor.mqtt/) sensor to get the forecast from a [pyscript](https://github.com/custom-components/pyscript) sensor
+
 ## Jewish Calendar
 
 [Template](https://www.home-assistant.io/integrations/template/) sensor to extract certain times in HH:MM format
@@ -47,10 +55,6 @@ Standard [Season](https://www.home-assistant.io/integrations/season/) sensor
 ## Random
 
 Standard [Random](https://www.home-assistant.io/integrations/random/) sensor
-
-## 17Track
-
-[17Track](https://www.home-assistant.io/integrations/seventeentrack/) is a sensor platform to track mail packages
 
 ## Steam
 
