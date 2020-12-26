@@ -27,18 +27,23 @@ Automations for lightings
 
 ---
 
-## Notify mold
-Notify us when mold is developing in the bathroom
-
----
-
-## Notify Shabbat
-Automations to notify before Shabbat enters
+## Notify
+Notifications
+- ### Notify batteries
+    Notify us when cellphones bateries are fully charged
+- ### Notify mold
+    Notify us when mold is developing in the bathroom
+- ### Notify Shabbat
+    Notifications for Shabbat
+- ### Notify UPS
+    Notify on power changes
 
 ---
 
 ## Vacuum
 Robot Vacuum automations
+- ### Notify Vacuum
+    Notify for cleaning changes
 - ### Vacuum Shabbat
     Robot Vacuum automations, But for Shabbat
 - ### Vacuum
@@ -46,10 +51,19 @@ Robot Vacuum automations
 
 ---
 
-## Themes
-Automations to switch between themes
+## IMS Sensor
+Update the IMS Sensor
 
 ---
 
-## UPS
-Notify on power outage (and restoration)
+## Shabbat plate
+Automating the Shabbat plate
+- ### Shabbat plate
+    Automations to control Shabbat heating plate in Shabbat
+- ### Chag plate
+    Automations to control Shabbat heating plate in Chag
+
+---
+
+## Themes
+Automations to switch between themes

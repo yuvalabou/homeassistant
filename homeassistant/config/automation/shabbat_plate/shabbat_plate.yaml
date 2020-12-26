@@ -1,0 +1,61 @@
+###
+# Automate the Shabbat plate in Shabbat
+###
+
+- alias: "Plate - Shabbat enter"
+  description: >-
+    "Precoution for Shabbat after Chag,
+    Turn-on the plate if it's off,
+    If its on it dosn't matter"
+  id: 175ea9fb-d7b6-419f-992d-a7cea43a7420
+  trigger:
+    platform: sun
+    event: sunset
+  condition:
+    - condition: time
+      weekday:
+        - fri
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Plate - Turn-off plate on Shabbat noon"
+  id: 48acb771-25fe-4629-9ce7-77dfc35adeab
+  trigger:
+    platform: time
+    at: '11:00:00'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'on'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Plate - Seuda-Shlishit"
+  id: eec856fd-3958-4296-984a-c62458c75c97
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-03:00:00'
+  condition:
+    - condition: time
+      weekday:
+        - sat
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Plate - Shabbat/Chag ends"
+  id: 0cb6679a-5286-419e-95be-fe5c2850a247
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'off'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate
