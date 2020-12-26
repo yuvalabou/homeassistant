@@ -21,7 +21,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: |
-          cp -R .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
+          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
+          mkdir ./homeassistant/config/tts
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:stable"
         with:
@@ -38,7 +39,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: |
-          cp -R .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
+          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
+          mkdir ./homeassistant/config/tts
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:beta"
         with:
