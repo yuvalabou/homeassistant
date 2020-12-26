@@ -7,18 +7,18 @@ exclude:
     - sensor.uptime_friendly
     - sensor.dnsip
     - sensor.season
-    - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime
-    - sensor.track_steam_playtime_formatted
     - sensor.israel_weather_forecast
-    - sensor.local_ip
+    - sensor.myip
     - sensor.ims_daily
   entity_globs:
+    - binary_sensor.*_notification_trigger
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.mfc_*
     - sensor.brother_mfc_*
     - sensor.skin_type_*
+    - sensor.*_formatted
   domains:
     - camera
     - automation

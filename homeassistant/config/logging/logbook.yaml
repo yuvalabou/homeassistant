@@ -10,13 +10,11 @@ exclude:
     - sensor.dnsip
     - binary_sensor.random_boolean
     - sensor.random_number
-    - sensor.track_tv_usage_formatted
     - sensor.track_steam_playtime
-    - sensor.track_steam_playtime_formatted
-    - binary_sensor.steam_game_on
     - sensor.season
     - sensor.israel_weather_forecast
-    - sensor.local_ip
+    - sensor.myip
+    - sensor.tts
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*
@@ -24,6 +22,7 @@ exclude:
     - sensor.mfc_*
     - sensor.brother_mfc_*
     - sensor.skin_type_*
+    - sensor.*_formatted
   domains:
     - updater
     - sun

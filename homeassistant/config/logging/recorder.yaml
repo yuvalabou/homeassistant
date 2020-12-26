@@ -12,11 +12,11 @@ exclude:
     - sensor.date_time
     - sensor.season
     - sensor.israel_weather_forecast
-    - sensor.local_ip
+    - sensor.myip
     - sensor.ims_daily
+    - sensor.openweathermap_forecast_time
   entity_globs:
     - sensor.count_*
-    - sensor.seventeentrack_*
     - sensor.mfc_*
     - sensor.brother_mfc_*
     - sensor.skin_type_*
