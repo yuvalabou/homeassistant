@@ -28,19 +28,13 @@
             style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
 </p>
 
-## [GitHub CI](https://github.com/yuvalabou/HomeAssistant-Config/blob/master/.github/workflows/homeassistant.yml)
-
-Every push or PR is checked with [GitHub actions](https://github.com/yuvalabou/HomeAssistant-Config/actions?query=workflow%3A%22Home+Assistant%22), Ensuring proper YAML formatting and configuration pass against current and RC versions of Home Assistant.
-I did it mainly as a good practice and learning experience as I obviously can check it localy.
-You may benefit from the script if you want to implement it yourself, But it's also guarantee that whatever you copy from this repo, Will work!
-
 -----
 
 ## Statistics
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|383       |232      |32              |12        |39           |25       |
+|381       |229      |33              |12        |39           |25       |
 
 -----
 
