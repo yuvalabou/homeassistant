@@ -7,10 +7,10 @@
   trigger:
     - platform: template
       value_template: >-
-        {{ states('sensor.yuval_battery_level') == 100 }}
+        {{ is_state('sensor.yuval_battery_level', '100') }}
     - platform: template
       value_template: >-
-        {{ states('sensor.tohar_battery_level') == 100 }}
+        {{ is_state('sensor.tohar_battery_level', '100') }}
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
