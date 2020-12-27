@@ -11,7 +11,7 @@ jobs:
       - name: Getting your configuration from GitHub
         uses: actions/checkout@v1
       - name: Running YAMLlint
-        uses: ibiqlik/action-yamllint@v1
+        uses: ibiqlik/action-yamllint@v3
         continue-on-error: true
         with:
           config_file: .github/yamllint-config.yml
@@ -21,8 +21,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: |
-          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml \
-          mkdir -p ./homeassistant/config/tts
+          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:stable"
         with:
@@ -39,8 +38,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Copy stub files into configuration folder
         run: |
-          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml \
-          mkdir -p ./homeassistant/config/tts
+          cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:beta"
         with:

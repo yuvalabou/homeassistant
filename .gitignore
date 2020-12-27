@@ -11,7 +11,6 @@
 .google.token
 .storage
 .vscode
-tts
 deps
 assets/
 floor_plan/
@@ -26,6 +25,7 @@ __pycache__
 *.token
 *.pickle
 .env
+*.mp3
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml
