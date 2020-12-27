@@ -126,25 +126,13 @@ cards:
 
   - type: entities
     entities:
-      - entity: binary_sensor.tv
-      - type: custom:hui-element
-        card_type: custom:mini-graph-card
-        name: "TV"
-        hours_to_show: 168
-        group_by: date
-        entities:
-          - entity: sensor.track_tv_watchtime_formatted
-            unit: hours
-        color_thresholds:
-          - value: 1
-            color: '#74A4F4'
-          - value: 2
-            color: '#F19631'
-          - value: 3
-            color: '#D2212A'
-        show:
-          graph: bar
-          labels: false
+      - entity: media_player.mibox3
+      - entity: sensor.track_tv_watch_time
+        format: total
+      - entity: sensor.track_netflix_watch_time
+        format: total
+      - entity: sensor.track_youtube_watch_time
+        format: total
 
   - type: custom:mini-graph-card
     name: "AC Power Consumption"

@@ -4,11 +4,15 @@
 
 - platform: template
   sensors:
+    mibox_on:
+      friendly_name: "MiBox on"
+      value_template: >-
+        {{ is_state('media_player.mibox3', 'playing') }}
     netflix_on:
       friendly_name: "Netflix on"
       value_template: >-
-        {{ state_attr('media_player.mibox3', 'app_name') == 'Netflix' }}
+        {{ is_state_attr('media_player.mibox3', 'app_name', 'Netflix') }}
     youtube_on:
       friendly_name: "YouTube on"
       value_template: >-
-        {{ state_attr('media_player.mibox3', 'app_name') == 'YouTube' }}
+        {{ state_attr('media_player.mibox3', 'app_name', 'YouTube') }}

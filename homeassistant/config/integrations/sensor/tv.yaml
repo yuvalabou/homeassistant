@@ -1,25 +1,16 @@
 ###
 # TV tracking
 ###
+
 - platform: history_stats
-  name: "Track TV usage"
-  entity_id: binary_sensor.tv
+  name: "Track TV watch time"
+  entity_id: binary_sensor.mibox_on
   state: 'on'
   type: time
   start: >-
     {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
   end: >-
     {{ now() }}
-- platform: template
-  sensors:
-    track_tv_watchtime_formatted:
-      friendly_name: "Formatted TV usage"
-      value_template: >-
-        {% set hours = states('sensor.track_tv_usage') | float %}
-        {% set minutes = ((hours % 1) * 60) | int %}
-        {% set hours = (hours - (hours % 1)) | int %}
-        {{ '%02i.%02i'%(hours, minutes) }}
-      icon_template: mdi:timetable
 
 - platform: history_stats
   name: "Track Netflix watch time"
@@ -30,16 +21,6 @@
     {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
   end: >-
     {{ now() }}
-- platform: template
-  sensors:
-    track_netflix_watchtime_formatted:
-      friendly_name: "Formatted Netflix time"
-      value_template: >-
-        {% set hours = states('sensor.track_netflix') | float %}
-        {% set minutes = ((hours % 1) * 60) | int %}
-        {% set hours = (hours - (hours % 1)) | int %}
-        {{ '%02i.%02i'%(hours, minutes) }}
-      icon_template: mdi:netflix
 
 - platform: history_stats
   name: "Track YouTube watch time"
@@ -50,13 +31,3 @@
     {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
   end: >-
     {{ now() }}
-- platform: template
-  sensors:
-    track_youtube_watchtime_formatted:
-      friendly_name: "Formatted YouTube usage"
-      value_template: >-
-        {% set hours = states('sensor.track_youtube') | float %}
-        {% set minutes = ((hours % 1) * 60) | int %}
-        {% set hours = (hours - (hours % 1)) | int %}
-        {{ '%02i.%02i'%(hours, minutes) }}
-      icon_template: mdi:youtube

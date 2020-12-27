@@ -9,7 +9,7 @@
       # Does not return true on Kippur as it is a Holiday
       friendly_name: "צום"
       value_template: >-
-        {{ state_attr('sensor.jewish_calendar_holiday', 'type_id') == 5 }}
+        {{ is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 5) }}
       icon_template: >-
         {% if is_state('binary_sensor.is_fast_day', 'on') %}
           mdi:food-off
