@@ -1,8 +1,7 @@
 ###
 # Jewish calendar
 ###
-# Return True when it is fast today
-# Does not return true on Kippur as it is a Holiday
+
 - platform: template
   sensors:
     is_fast_day:
