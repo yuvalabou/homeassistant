@@ -22,7 +22,7 @@ jobs:
       - name: Copy stub files into configuration folder
         run: |
           cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml \
-          mkdir ./homeassistant/config/tts
+          mkdir -p ./homeassistant/config/tts
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:stable"
         with:
@@ -40,7 +40,7 @@ jobs:
       - name: Copy stub files into configuration folder
         run: |
           cp .github/.stubs/secrets_dummy.yaml ./homeassistant/config/secrets.yaml \
-          mkdir ./homeassistant/config/tts
+          mkdir -p ./homeassistant/config/tts
       - name: Home Assistant Version
         uses: "docker://homeassistant/home-assistant:beta"
         with:
