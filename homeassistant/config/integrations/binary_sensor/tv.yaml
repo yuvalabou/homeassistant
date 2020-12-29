@@ -15,4 +15,4 @@
     youtube_on:
       friendly_name: "YouTube on"
       value_template: >-
-        {{ state_attr('media_player.mibox3', 'app_name', 'YouTube') }}
+        {{ is_state_attr('media_player.mibox3', 'app_name', 'YouTube') }}
