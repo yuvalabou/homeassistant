@@ -1,0 +1,16 @@
+
+- alias: "Yuval has left work"
+  description: "Notify at home that Yuval has left work, and arrive in x minutes"
+  trigger:
+    platform: zone
+    entity_id: person.yuval
+    zone: zone.yuval_work
+    event: leave
+  condition:
+    - platform: state
+      entity_id: group.person
+      state: 'home'
+  action:
+    service: notify.nest_mini
+    data:
+      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_from_work_to_home') }} דקות"
