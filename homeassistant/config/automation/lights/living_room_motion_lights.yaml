@@ -2,7 +2,7 @@
 # Motion
 ###
 
-- alias: "Turn on lights when motion is detected at night"
+- alias: "Turn on light when motion is detected at night"
   id: bbe9c72e-6578-4fd1-b25c-12908145ac14
   trigger:
     platform: state

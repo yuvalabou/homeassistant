@@ -27,7 +27,7 @@
         title: "Cleaning started"
         message: "The house was empty - So I started cleaning."
 
-- alias: "Return to dock if error for 1 hr"
+- alias: "Vacuum - Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state
@@ -69,7 +69,7 @@
     data:
       entity_id: input_boolean.cleaned_today
 
-- alias: "Intelligent mode switch"
+- alias: "Vacuum - Intelligent mode switch"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
     - platform: state

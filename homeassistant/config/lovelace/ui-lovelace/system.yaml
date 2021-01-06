@@ -159,7 +159,7 @@ cards:
         template: system_monitor
         variables:
           - cpu_usage: npn2_cpu_used
-          - cpu_temps: npn2_cpu_thermal_1_temp
+          - cpu_temps: npn2_cpu_thermal_1_temperature
           - ram_usage: npn2_ram_used_percent
       - type: custom:bar-card
         entities:
@@ -212,7 +212,7 @@ cards:
         template: system_monitor
         variables:
           - cpu_usage: rpi2_cpu_used
-          - cpu_temps: rpi2_cpu_thermal_1_temp
+          - cpu_temps: rpi2_cpu_thermal_1_temperature
           - ram_usage: rpi2_ram_used_percent
       - type: custom:bar-card
         entities:
