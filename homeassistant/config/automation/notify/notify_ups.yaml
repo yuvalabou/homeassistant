@@ -15,18 +15,12 @@
       to: 'Online'
   action:
     - choose:
-      - conditions:
-        - condition: state
-          entity_id: sensor.ups_status
-          state: 'On Battery'
+      - conditions: "{{ is_state('sensor.sensor.ups_status', 'On Battery') }}"
         sequence:
           - service: notify.family
             data:
               message: "EMERGENCY POWER ONLY"
-      - conditions:
-        - condition: state
-          entity_id: sensor.ups_status
-          state: 'Online'
+      - conditions: "{{ is_state('sensor.sensor.ups_status', 'Online') }}"
         sequence:
           - service: notify.family
             data:

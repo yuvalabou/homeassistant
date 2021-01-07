@@ -9,12 +9,8 @@
     entity_id: binary_sensor.living_room_motion
     to: 'on'
   condition:
-    - condition: state
-      entity_id: binary_sensor.night
-      state: 'on'
-    - condition: state
-      entity_id: light.yeelight_color_living_room_2
-      state: 'off'
+    - "{{ is_state('binary_sensor.night', 'on') }}"
+    - "{{ is_state('light.yeelight_color_living_room_2', 'off') }}"
   action:
     service: light.turn_on
     data:
@@ -30,12 +26,8 @@
     entity_id: binary_sensor.living_room_motion
     to: 'off'
   condition:
-    - condition: state
-      entity_id: binary_sensor.night
-      state: 'on'
-    - condition: state
-      entity_id: input_boolean.night_light_override
-      state: 'off'
+    - "{{ is_state('binary_sensor.night', 'on') }}"
+    - "{{ is_state('input_boolean.night_light_override', 'off') }}"
   action:
     - service: timer.start
       data:

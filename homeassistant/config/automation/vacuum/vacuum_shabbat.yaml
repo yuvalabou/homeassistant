@@ -28,9 +28,7 @@
           before: '10:59:00'
         - condition: time
           after: '11:01:00'
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     - service: vacuum.stop
       data:
@@ -49,9 +47,7 @@
   condition:
     - condition: time
       after: '11:00:00'
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: vacuum.start
     data:

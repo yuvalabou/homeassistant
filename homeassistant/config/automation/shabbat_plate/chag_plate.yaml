@@ -52,9 +52,7 @@
         - wed
         - thu
         - fri
-    - condition: state
-      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-      state: 'on'
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: switch.turn_on
     data:

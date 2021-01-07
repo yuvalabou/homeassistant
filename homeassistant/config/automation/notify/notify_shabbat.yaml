@@ -12,9 +12,7 @@
     - condition: time
       weekday:
         - fri
-    - condition: state
-      entity_id: group.person
-      state: 'home'
+    - "{{ is_state('group.person', 'home') }}"
   action:
     - service: notify.mobile_app_yuval
       data:
@@ -32,9 +30,7 @@
     - condition: time
       weekday:
         - fri
-    - condition: state
-      entity_id: group.person
-      state: 'home'
+    - "{{ is_state('group.person', 'home') }}"
   action:
     service: notify.family
     data:
