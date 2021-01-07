@@ -47,10 +47,10 @@
 
 ### Devices
 
-| Roborock S50 | YEELIGHT (YLDP06YL) | Sensibo Sky | Tuya |
-|:------------:|:-------------------:|:-----------:|:----:|
-|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|
-|1             |3                    |2            |2     |
+| Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Sensibo Sky | Tuya |
+|:---------:|:------------:|:-------------------:|:-----------:|:----:|
+|<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width = 100>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://cdn.shopify.com/s/files/1/1669/6891/products/minimised-M16_128691-1_1024x1024.jpg?v=1583048706" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|
+|1          |1             |3                    |2            |2     |
 
 -----
 
