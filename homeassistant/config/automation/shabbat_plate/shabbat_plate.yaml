@@ -1,6 +1,4 @@
-###
-# Automate the Shabbat plate in Shabbat
-###
+---
 
 - alias: "Plate - Shabbat enter"
   description: >-
@@ -20,7 +18,7 @@
     data:
       entity_id: switch.shabbat_plate
 
-- alias: "Plate - Turn-off plate on Shabbat noon"
+- alias: "Plate - Turn off plate at Shabbat noon"
   id: 48acb771-25fe-4629-9ce7-77dfc35adeab
   trigger:
     platform: time

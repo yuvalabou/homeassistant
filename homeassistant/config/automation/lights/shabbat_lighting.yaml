@@ -1,8 +1,6 @@
-###
-# Shabbat lighting
-###
+---
 
-- alias: "Shabbat and Chag Lighting"
+- alias: "Shabbat and Chag light notification"
   id: 66aff0fc-7022-4577-9d72-2f35104ca746
   trigger:
     - platform: state
@@ -21,7 +19,7 @@
         sequence:
           service: script.shabbat_chag_end_lighting_sequence
 
-- alias: "Shabbat and Chag Lighting off"
+- alias: "Shabbat and Chag lighting off"
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
     platform: template
@@ -35,7 +33,7 @@
       entity_id: light.public_lights
       transition: 300
 
-- alias: "Shabbat Morning lighting"
+- alias: "Shabbat morning lights"
   id: 3ac9405a-dde0-41f2-850b-413cb15a708d
   trigger:
     platform: time
@@ -50,7 +48,7 @@
       transition: 120
       brightness_pct: 70
 
-- alias: "Shabbat Morning Dining lighting"
+- alias: "Shabbat morning dining lights"
   id: d2980177-8560-43f1-9fc4-26afd6406e73
   trigger:
     platform: time

@@ -1,6 +1,4 @@
-###
-# Automate the Shabbat plate in Chag
-###
+---
 
 - alias: "Plate - Start Chag timer"
   id: f6711174-7249-43d3-a70a-e1a9fa147ffe
@@ -24,7 +22,7 @@
       data:
         entity_id: switch.shabbat_plate
 
-- alias: "Plate - Turn-off plate on chag eve"
+- alias: "Plate - Turn off plate on chag eve"
   description: "We don't need the plate for the night in Chag"
   id: ab698dfc-9a41-4f15-bf63-cd95eaf95ee2
   trigger:
@@ -37,7 +35,7 @@
     data:
       entity_id: switch.shabbat_plate
 
-- alias: "Plate - Chag morning opration"
+- alias: "Plate - Chag morning operation"
   # Will be turned off later by "Shabbat noon" automation
   id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
   trigger:

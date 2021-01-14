@@ -6,9 +6,9 @@ Here is a summery of the Automations and their functionality
 
 ## Climate
 - ### Climate
-    Automations for climate control
+    Climate control
 - ### Shabbat climate
-    Automations for climate control, But for Shabbat
+    Climate control, But for Shabbat
 
 ---
 
@@ -67,3 +67,8 @@ Automating the Shabbat plate
 
 ## Themes
 Automations to switch between themes
+
+---
+
+## TTS
+Automations related to my voice assistant tts services

@@ -1,3 +1,4 @@
+---
 
 - alias: "Yuval has left work"
   description: "Notify at home that Yuval has left work, and arrive in x minutes"

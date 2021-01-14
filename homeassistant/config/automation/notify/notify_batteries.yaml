@@ -1,6 +1,4 @@
-###
-# Battery notifications
-###
+---
 
 - alias: "Notify for full batteries"
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df

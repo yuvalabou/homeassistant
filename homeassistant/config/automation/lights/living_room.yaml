@@ -1,8 +1,6 @@
-###
-# Living room
-###
+---
 
-- alias: "Turn on living room lights in workday morning"
+- alias: "Turn on Living-room lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
     platform: time

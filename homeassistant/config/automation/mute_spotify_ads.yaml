@@ -1,6 +1,4 @@
-###
-# Mute Spotify ads
-###
+---
 
 - alias: "Mute Spotify ads on Nest speaker"
   id: e8e1bf28-e10e-4a2f-a09f-f58847aa8031

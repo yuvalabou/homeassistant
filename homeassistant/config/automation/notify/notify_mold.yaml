@@ -1,6 +1,4 @@
-###
-# Mold alerts
-###
+---
 
 - alias: "Mold alert"
   id: bed08b9e-78e4-4610-8220-be3e6193c288

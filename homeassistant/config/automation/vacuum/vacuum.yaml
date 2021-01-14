@@ -1,6 +1,4 @@
-###
-# Vacuum
-###
+---
 
 - alias: "Vacuum - Wait until everybody leave to start cleaning"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
