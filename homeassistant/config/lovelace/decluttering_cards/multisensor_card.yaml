@@ -48,8 +48,6 @@ multisensor_card:
         entities:
           - entity: binary_sensor.[[room]]_motion
             name: "Motion"
-          - entity: binary_sensor.[[room]]_door
-            name: "Door"
           - entity: sensor.[[room]]_comfort_scale
             name: "Comfort scale"
           - entity: sensor.[[room]]_illuminance

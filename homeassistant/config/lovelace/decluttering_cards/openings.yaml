@@ -1,0 +1,12 @@
+###
+# Doors and windows
+###
+
+openings:
+  card:
+    type: glance
+    entities:
+      - entity: binary_sensor.[[room]]_door
+        name: "Door"
+      - entity: binary_sensor.[[room]]_window
+        name: "Window"

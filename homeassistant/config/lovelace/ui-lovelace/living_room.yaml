@@ -9,6 +9,10 @@ cards:
     template: multisensor_card
     variables:
       - room: living_room
+  - type: custom:decluttering-card
+    template: openings
+    variables:
+      - room: living_room
 
   - type: custom:simple-thermostat
     entity: climate.living_room_heat_thermostat

@@ -41,3 +41,16 @@
       data:
         entity_id: light.yeelight_color_living_room_2
         transition: 30
+
+- alias: "Reset night light override"
+  id: 1a225ce8-4fdd-4036-a8cc-ead0639719fc
+  trigger:
+    platform: state
+    entity_id: input_boolean.night_light_override
+    to: 'on'
+    for:
+      hours: 1
+  action:
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.night_light_override
