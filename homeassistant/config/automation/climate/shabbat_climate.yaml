@@ -6,7 +6,8 @@
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'on'
-  condition: "{{ is_state('group.person', 'home') }}"
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
   action:
     service: climate.turn_on
     data:
@@ -15,15 +16,17 @@
 - alias: "Turn off Living-room climate at Shabbat night"
   id: c7396673-d257-4267-a72f-060ee4d43603
   trigger:
-    platform: template
-    value_template: >-
-      {{ states('sensor.time') == states('input_select.shabbat_lights_off_time') }}
-  condition: >-
-    "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
     data:
-      entity_id: climate.living_room_heat_thermostat
+      entity_id:
+        - climate.living_room_cool_thermostat
+        - climate.living_room_heat_thermostat
+        - climate.slvn
 
 - alias: "Turn on Living-room climate at Shabbat"
   id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
@@ -45,9 +48,12 @@
   trigger:
     platform: time
     at: '12:00:00'
-  condition: >-
-    "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
     data:
-      entity_id: climate.living_room_heat_thermostat
+      entity_id:
+        - climate.living_room_cool_thermostat
+        - climate.living_room_heat_thermostat
+        - climate.slvn

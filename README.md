@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.1.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.1.3%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -33,7 +33,7 @@
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|382       |225      |34              |12        |42           |25       |
+|376       |220      |34              |12        |41           |25       |
 
 -----
 
@@ -41,7 +41,7 @@
 
 | Lovelace Mode | Dashboards | Resources | Views |
 |:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |16         |7      |
+|YAML           |1           |17         |7      |
 
 -----
 
@@ -83,10 +83,13 @@
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
+- [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Weather Card](https://github.com/bramkragten/weather-card)
+
+-----
 
 You can join us on [Discord!](https://discord.gg/ayZ3Kkg)

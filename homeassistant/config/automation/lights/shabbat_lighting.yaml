@@ -9,7 +9,8 @@
     - platform: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
-  condition: "{{ is_state('group.person', 'home') }}"
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
   action:
     - choose:
       - conditions: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
@@ -22,11 +23,10 @@
 - alias: "Shabbat and Chag lighting off"
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
-    platform: template
-    value_template: >-
-      {{ states('sensor.time') == states('input_select.shabbat_lights_off_time') }}
-  condition: >-
-    "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: light.turn_off
     data:
