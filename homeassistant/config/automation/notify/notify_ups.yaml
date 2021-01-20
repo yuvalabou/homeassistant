@@ -23,3 +23,14 @@
           - service: notify.family
             data:
               message: "POWER RESTORED, ALL SYSTEMS ONLINE"
+
+- alias: "Notify for low battery"
+  id: 564c9fc6-a645-4614-9d86-3d3936b32910
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.ups_battery_charge
+      below: 20
+  action:
+    service: notify.nest_mini
+    data:
+      message: "סוללה נמוכה, כבה צרכנים מיותרים"

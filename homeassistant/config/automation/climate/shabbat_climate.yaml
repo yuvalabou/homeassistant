@@ -6,8 +6,7 @@
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'on'
-  condition:
-    - "{{ is_state('group.person', 'home') }}"
+  condition: "{{ is_state('group.person', 'home') }}"
   action:
     service: climate.turn_on
     data:
@@ -18,8 +17,7 @@
   trigger:
     platform: time
     at: input_datetime.shabbat_lights_off_time
-  condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
     data:
@@ -48,8 +46,7 @@
   trigger:
     platform: time
     at: '12:00:00'
-  condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
     data:

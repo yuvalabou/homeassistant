@@ -7,8 +7,6 @@
     entity_id: vacuum.xiaomi_vacuum_cleaner
     from: 'cleaning'
     to: 'returning'
-  condition:
-    - "{{ states('sensor.vacuum_time_cleaned') >= 5 }}"
   action:
     service: notify.family
     data:
