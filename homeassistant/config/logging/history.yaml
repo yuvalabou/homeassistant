@@ -15,8 +15,6 @@ exclude:
     - binary_sensor.*_notification_trigger
     - sensor.jewish_calendar_*
     - sensor.count_*
-    - sensor.mfc_*
-    - sensor.brother_mfc_*
     - sensor.skin_type_*
     - sensor.*_formatted
   domains:

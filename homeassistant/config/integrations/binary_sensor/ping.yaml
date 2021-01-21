@@ -1,6 +1,5 @@
-###
-# Ping
-###
+---
+
 - platform: ping
   host: !secret vacuum
   name: "Vacuum"
@@ -16,10 +15,6 @@
 - platform: ping
   host: !secret tv
   name: "TV"
-  count: 2
-- platform: ping
-  host: !secret printer
-  name: "Printer"
   count: 2
 - platform: ping
   host: !secret rpi2
