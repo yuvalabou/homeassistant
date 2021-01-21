@@ -216,8 +216,8 @@ cards:
           - ram_usage: rpi2_ram_used_percent
       - type: custom:bar-card
         entities:
-          - entity: sensor.rpi2_mnt_used_percent
-            name: "External HDD"
+          - entity: sensor.rpi2_srv_dev_disk_by_uuid_3256fae656faaa2d_used_percent
+            name: "Media drive"
             severity:
               - color: '#FF0F00'
                 from: 91

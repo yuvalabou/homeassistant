@@ -26,6 +26,7 @@ __pycache__
 *.token
 *.pickle
 .env
+.omv_cookies.json
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml

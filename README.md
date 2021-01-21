@@ -33,7 +33,7 @@
 
 | Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
 |:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|377       |220      |34              |12        |41           |25       |
+|409       |249      |37              |12        |41           |25       |
 
 -----
 
@@ -70,6 +70,7 @@
 
 - [City-mind Water Meter](https://github.com/maorcc/citymind_water_meter)
 - [FeedParser](https://github.com/custom-components/feedparser)
+- [Open media vault](https://github.com/tomaae/homeassistant-openmediavault)
 - [Pyscript](https://github.com/custom-components/pyscript)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
