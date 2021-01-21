@@ -1,7 +1,7 @@
 ---
 
 shabbat_lights_off_time:
-  name: "Shabbat lights off time"
+  name: "כיבוי אורות שבת"
   icon: mdi:clock
   has_time: true
   initial: '20:30'

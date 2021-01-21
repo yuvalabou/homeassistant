@@ -41,7 +41,7 @@
 
 | Lovelace Mode | Dashboards | Resources | Views |
 |:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |17         |7      |
+|YAML           |1           |18         |7      |
 
 -----
 
@@ -84,6 +84,7 @@
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Lovelace Swipe Navigation](https://github.com/maykar/lovelace-swipe-navigation)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
+- [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
