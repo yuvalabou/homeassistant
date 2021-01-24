@@ -1,6 +1,4 @@
-###
-# Jewish calendar
-###
+---
 
 - platform: template
   sensors:

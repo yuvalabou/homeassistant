@@ -1,30 +1,38 @@
-###
-# Card for my machines
-###
+---
 
 system_monitor:
   card:
-    type: custom:hui-element
-    card_type: horizontal-stack
-    cards:
-      - type: gauge
-        name: "CPU Use"
-        entity: sensor.[[cpu_usage]]
-        severity:
-          green: 0
-          yellow: 45
-          red: 85
-      - type: gauge
-        name: "CPU Temp"
-        entity: sensor.[[cpu_temps]]
-        severity:
-          green: 0
-          yellow: 60
-          red: 80
-      - type: gauge
-        name: "RAM Use"
-        entity: sensor.[[ram_usage]]
-        severity:
-          green: 0
-          yellow: 50
-          red: 75
+    type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: gauge
+            name: "CPU Use"
+            entity: sensor.[[cpu_usage]]
+            severity:
+              green: 0
+              yellow: 45
+              red: 85
+          - type: gauge
+            name: "CPU Temp"
+            entity: sensor.[[cpu_temps]]
+            severity:
+              green: 0
+              yellow: 60
+              red: 80
+          - type: gauge
+            name: "RAM Use"
+            entity: sensor.[[ram_usage]]
+            severity:
+              green: 0
+              yellow: 50
+              red: 75
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.[[storage]]
+            name: "SD Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100

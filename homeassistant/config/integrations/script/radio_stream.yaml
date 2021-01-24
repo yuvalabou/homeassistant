@@ -1,7 +1,7 @@
-###
-# Play Radio on chromecast
+---
+
+# Source:
 # https://github.com/eyalcha/home-assistant-cookbook/blob/master/chromecast_radio_player_card/README.md
-###
 
 play_radio_stream:
   alias: "Play radio stream"

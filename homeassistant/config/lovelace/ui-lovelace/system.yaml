@@ -1,6 +1,5 @@
-####################################################
-#                     UTILITIES                    #
-####################################################
+---
+
 id: utilities
 title: "System Monitor"
 icon: mdi:server
@@ -100,14 +99,7 @@ cards:
           - cpu_usage: processor_use_percent
           - cpu_temps: processor_temperature
           - ram_usage: memory_use_percent
-      - type: custom:bar-card
-        entities:
-          - entity: sensor.disk_use_percent
-            name: "SD Storage"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
+          - storage: disk_use_percent
       - type: custom:hui-element
         card_type: custom:mini-graph-card
         icon: mdi:database
@@ -161,14 +153,7 @@ cards:
           - cpu_usage: npn2_cpu_used
           - cpu_temps: npn2_cpu_thermal_1_temperature
           - ram_usage: npn2_ram_used_percent
-      - type: custom:bar-card
-        entities:
-          - entity: sensor.npn2_used_percent
-            name: "SD Storage"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
+          - storage: npn2_used_percent
       - type: custom:hui-element
         card_type: entities
         entities:
@@ -214,16 +199,11 @@ cards:
           - cpu_usage: rpi2_cpu_used
           - cpu_temps: rpi2_cpu_thermal_1_temperature
           - ram_usage: rpi2_ram_used_percent
+          - storage: rpi2_used_percent
       - type: custom:bar-card
         entities:
           - entity: sensor.rpi2_srv_dev_disk_by_uuid_3256fae656faaa2d_used_percent
             name: "Media drive"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
-          - entity: sensor.rpi2_used_percent
-            name: "SD Storage"
             severity:
               - color: '#FF0F00'
                 from: 91

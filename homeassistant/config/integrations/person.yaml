@@ -1,7 +1,4 @@
-###
-# Defines persons
-# https://www.home-assistant.io/integrations/person
-###
+---
 
 - name: "Yuval"
   id: yuval

@@ -1,7 +1,4 @@
-###
-# Defines notifications
-# https://www.home-assistant.io/integrations/notify
-###
+---
 
 - name: "Family"
   platform: group

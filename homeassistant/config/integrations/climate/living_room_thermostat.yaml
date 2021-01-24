@@ -1,6 +1,5 @@
-###
-# Living room generic thermostat
-###
+---
+
 - platform: generic_thermostat
   name: "Living Room Cool Thermostat"
   heater: switch.living_room_ac_switch

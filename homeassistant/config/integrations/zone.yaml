@@ -1,9 +1,5 @@
-###
-# Defines zones
-# https://www.home-assistant.io/integrations/zone
-###
+---
 
-# Home
 - name: "Home"
   latitude: !secret home_lat
   longitude: !secret home_lon

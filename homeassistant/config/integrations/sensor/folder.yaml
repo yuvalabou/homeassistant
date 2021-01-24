@@ -1,5 +1,4 @@
-###
-# Folder sensor
-###
+---
+
 - platform: folder
   folder: /config/tts

@@ -1,6 +1,4 @@
-###
-# Logbook settings
-###
+---
 
 exclude:
   entities:

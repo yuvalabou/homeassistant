@@ -1,6 +1,5 @@
-###
-# AC power calculations
-###
+---
+
 - platform: template
   sensors:
     living_room_ac_power_consumption:

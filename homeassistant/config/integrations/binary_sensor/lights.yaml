@@ -1,6 +1,5 @@
-###
-# Lights
-###
+---
+
 # Return True when a light is on
 - platform: template
   sensors:

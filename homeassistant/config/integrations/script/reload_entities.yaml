@@ -1,6 +1,4 @@
-###
-# Reload all the things
-###
+---
 
 reload_cli_sensors:
   alias: "Reload CLI sensors"

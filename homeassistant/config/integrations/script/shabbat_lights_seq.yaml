@@ -1,6 +1,4 @@
-###
-# Shabbat lights sequence
-###
+---
 
 shabbat_chag_lighting_sequence:
   alias: "Shabbat and Chag lighting sequence"

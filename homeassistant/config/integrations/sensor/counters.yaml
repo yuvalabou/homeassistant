@@ -1,6 +1,5 @@
-###
-# Component Counters
-###
+---
+
 - platform: template
   sensors:
     count_automations:

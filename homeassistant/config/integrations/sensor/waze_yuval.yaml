@@ -1,6 +1,4 @@
-###
-# Waze
-###
+---
 
 - platform: waze_travel_time
   name: "Yuval - From home to work"

@@ -1,6 +1,5 @@
-###
-# SQL
-###
+---
+
 - platform: sql
   db_url: !secret postgres_addr
   queries:

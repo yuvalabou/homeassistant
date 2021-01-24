@@ -1,0 +1,18 @@
+---
+
+- platform: tod
+  name: "Night"
+  after: sunset
+  before: sunrise
+
+- platform: tod
+  name: "Day"
+  after: sunrise
+  before: sunset
+
+- platform: template
+  sensors:
+    is_friday:
+      friendly_name: mdi:calendar-today
+      value_template: >-
+        {{ now().weekday() == 4 }}

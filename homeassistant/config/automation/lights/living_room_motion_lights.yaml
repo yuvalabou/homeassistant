@@ -1,6 +1,6 @@
 ---
 
-- alias: "Turn on light when motion is detected at night"
+- alias: "Lights - Turn on light when motion is detected at night"
   id: bbe9c72e-6578-4fd1-b25c-12908145ac14
   trigger:
     platform: state
@@ -16,7 +16,7 @@
       kelvin: 3600
       brightness_pct: 2
 
-- alias: "Turn off the light"
+- alias: "Lights - Turn off the light"
   id: 2c73b4e0-34cc-4cfd-984e-159f321faa64
   mode: restart
   trigger:
@@ -40,7 +40,7 @@
         entity_id: light.yeelight_color_living_room_2
         transition: 30
 
-- alias: "Reset night light override"
+- alias: "Lights - Reset night light override"
   id: 1a225ce8-4fdd-4036-a8cc-ead0639719fc
   trigger:
     platform: state

@@ -1,6 +1,4 @@
-###
-# Read out the forecast
-###
+---
 
 short_term_forecast:
   alias: "Give short term forecast"

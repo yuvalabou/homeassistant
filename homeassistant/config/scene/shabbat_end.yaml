@@ -1,6 +1,4 @@
-###
-# Shabbat end scene
-###
+---
 
 - name: "Shabbat end"
   icon: mdi:candle

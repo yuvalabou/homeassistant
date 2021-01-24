@@ -1,9 +1,5 @@
-###
-# Presence detection
-# https://www.home-assistant.io/integrations/device_tracker
-###
+---
 
-# Presence detection using Ping
 - platform: ping
   hosts:
     yuval_ping: !secret yuval_ping

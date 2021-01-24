@@ -1,6 +1,4 @@
-###
-# TV
-###
+---
 
 - platform: template
   sensors:

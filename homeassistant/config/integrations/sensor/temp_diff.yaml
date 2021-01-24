@@ -1,6 +1,5 @@
-###
-# Temperature difference between home and outdoors
-###
+---
+
 - platform: template
   sensors:
     warmer_or_cooler_outside:

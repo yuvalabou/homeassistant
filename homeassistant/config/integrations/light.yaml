@@ -1,10 +1,5 @@
-###
-# Defines lights
-# https://www.home-assistant.io/integrations/light
-###
+---
 
-# Create light groups
-# https://www.home-assistant.io/integrations/light.group
 - platform: group
   name: "All lights"
   entities:

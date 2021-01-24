@@ -1,11 +1,24 @@
 ---
 
-- alias: "Turn off Living-room climate at night"
+- alias: "Climate - Turn off Living-room climate at night"
   id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
   trigger:
     platform: time
     at: '20:00:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+  action:
+    service: climate.turn_off
+    data:
+      entity_id:
+        - climate.living_room_cool_thermostat
+        - climate.living_room_heat_thermostat
+        - climate.slvn
+
+- alias: "Climate - Do not keep climate at night"
+  id: 24aac191-227a-4ba3-88da-d21d2cc1269b
+  trigger:
+    platform: time
+    at: '23:00:00'
   action:
     service: climate.turn_off
     data:

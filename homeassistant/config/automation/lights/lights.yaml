@@ -1,6 +1,6 @@
 ---
 
-- alias: "Turn off lights when away"
+- alias: "Lights - Turn off lights when away"
   id: c4219e30-3edb-4e1d-9621-eba64f593883
   trigger:
     platform: state

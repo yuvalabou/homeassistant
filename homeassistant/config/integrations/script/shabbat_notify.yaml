@@ -1,6 +1,4 @@
-###
-# Shabbat summary
-###
+---
 
 notify_for_shabbat:
   alias: "Notify for Shabbat"

@@ -1,6 +1,5 @@
-###
-# Shabbat switches
-###
+---
+
 - platform: template
   switches:
     shabbat_mode:

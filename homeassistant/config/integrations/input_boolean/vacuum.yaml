@@ -1,6 +1,4 @@
-###
-# Vacuum
-###
+---
 
 cleaned_today:
   name: "Cleaned today"

@@ -1,6 +1,5 @@
-####################################################
-#                     MAIN VIEW                    #
-####################################################
+---
+
 id: overview
 title: "Overview"
 cards:
@@ -142,19 +141,24 @@ cards:
             entity_id: media_player.googlehome3668
             content_id: GLGLZ
 
-  - type: entities
-    title: "פיקוד שבת"
-    show_header_toggle: false
-    entities:
-      - switch.shabbat_mode
-      - switch.shabbat_plate
-      - type: custom:time-picker-card
-        entity: input_datetime.shabbat_lights_off_time
-        link_values: true
-        minute_step: 30
-        layout:
-          name: inside
-          align_controls: right
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.is_friday
+        state: 'on'
+    card:
+      type: entities
+      title: "פיקוד שבת"
+      show_header_toggle: false
+      entities:
+        - switch.shabbat_mode
+        - switch.shabbat_plate
+        - type: custom:time-picker-card
+          entity: input_datetime.shabbat_lights_off_time
+          link_values: true
+          minute_step: 30
+          layout:
+            name: inside
+            align_controls: right
 
   - type: entities
     show_header_toggle: false

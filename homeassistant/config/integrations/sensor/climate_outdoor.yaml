@@ -1,6 +1,5 @@
-###
-# Weather
-###
+---
+
 - platform: template
   sensors:
     outside_temps:

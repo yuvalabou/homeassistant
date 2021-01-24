@@ -1,6 +1,6 @@
 ---
 
-- alias: "Turn on the Master-bedroom lights in a workday morning"
+- alias: "Lights - Turn on the Master-bedroom lights in a workday morning"
   id: cb2d8573-74f4-440c-9b2e-23057b5e492c
   trigger:
     platform: time

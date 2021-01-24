@@ -1,6 +1,5 @@
-####################################################
-#                     MASTER BEDROOM               #
-####################################################
+---
+
 id: master_bedroom
 title: "Master Bedroom"
 icon: mdi:bed-king-outline

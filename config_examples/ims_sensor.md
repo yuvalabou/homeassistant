@@ -37,6 +37,7 @@ automation:
       action:
         service: pyscript.ims_sensor
 ```
+
 This will update the sensor every hour.
 
 ## TTS
@@ -63,7 +64,7 @@ script:
             message: "{{state_attr('sensor.ims_daily', 'long_term')}}"
 ```
 
-# Automating
+## Automating
 
 Have at it :)
 

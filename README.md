@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.1.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.1.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -8,17 +8,14 @@
       🏡 <a href="https://www.home-assistant.io">Home Assistant</a> Configuration &amp; documentation for my Smart Home.
 </h2>
 
-<p align =
-    "center">
+<p align = "center">
     Hi, My name is Yuval Aboulafia.
 </p>
 
-<p align =
-    "center">
+<p align = "center">
     Please ⭐ this repo if you find it useful.
 </p>
-    <p align =
-        "center">
+    <p align = "center">
     <a href =
         "https://www.buymeacoffee.com/HMa8m26"
         target="_blank">
@@ -31,17 +28,22 @@
 
 ## Statistics
 
-| Entities | [Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor) | [Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor) | [Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch) | [Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation) | [Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script) |
-|:--------:|:-------:|:--------------:|:--------:|:-----------:|:-------:|
-|409       |249      |37              |12        |41           |25       |
+| Type | Count |
+|------|:-----:|
+| **Entities** |413    |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 253 |
+| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 37 |
+| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 12 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 42 |
+| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 25 |
 
 -----
 
 ## [Lovelace](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
 
-| Lovelace Mode | Dashboards | Resources | Views |
-|:-------------:|:----------:|:---------:|:-----:|
-|YAML           |1           |18         |7      |
+| Lovelace Mode | Dashboards | Views | Resources |
+|:-------------:|:----------:|:-----:|:---------:|
+|YAML           |1           |7      |18         |
 
 -----
 
@@ -58,8 +60,8 @@
 
 <img src =
     "https://avatars2.githubusercontent.com/u/56713226?s=200&v=4"
-    align = "right"
-    width=90>
+    align = "right" width=90
+    >
 
 [HACS](https://github.com/hacs/integration) is Home Assistant Community Store
 

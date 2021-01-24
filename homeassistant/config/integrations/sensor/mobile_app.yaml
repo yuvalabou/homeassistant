@@ -1,6 +1,4 @@
-###
-# Mobile-App
-###
+---
 
 # Android devices report the alarm by the time it will fire a notification about upcoming alarm
 # It is usually 30 to 10 minutes before the actual alarm will trigger

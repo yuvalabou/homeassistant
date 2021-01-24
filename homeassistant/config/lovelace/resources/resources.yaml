@@ -1,6 +1,4 @@
-###
-# LOVELACE-UI RESOURCES
-###
+---
 
 - url: /hacsfiles/air-visual-card/air-visual-card.js
   type: js

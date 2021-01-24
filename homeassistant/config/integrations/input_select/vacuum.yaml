@@ -1,6 +1,4 @@
-###
-# Vacumm
-###
+---
 
 vacuum_fan_speed_list:
   name: "Vacuum - Set fan speed"

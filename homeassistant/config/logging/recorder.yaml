@@ -1,6 +1,4 @@
-###
-# Recorder settings
-###
+---
 
 db_url: !secret postgres_addr
 purge_keep_days: 7

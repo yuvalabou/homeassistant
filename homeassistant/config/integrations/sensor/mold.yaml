@@ -1,6 +1,5 @@
-###
-# Mold Indicator
-###
+---
+
 - platform: mold_indicator
   name: "Bathroom Mold Indicator"
   indoor_temp_sensor: sensor.bathroom_temperature

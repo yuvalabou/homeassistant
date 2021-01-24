@@ -1,6 +1,4 @@
-###
-# Restart
-###
+---
 
 homeassistant_restart:
   alias: "Restart Home Assistant"

@@ -1,10 +1,6 @@
-###
-# Defines groups
-# https://www.home-assistant.io/integrations/group
-###
+---
 
-# Combine all Person entities to a Group
-person:
+  person:
   name: "Person"
   entities:
     - person.yuval

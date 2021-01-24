@@ -18,7 +18,7 @@ homeassistant:
     - /config
 
 config:
-cloud:
+#cloud:
 mobile_app:
 
 ##################################################

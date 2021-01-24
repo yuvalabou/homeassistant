@@ -1,6 +1,4 @@
-###
-# Workday sensor
-###
+---
 
 # DISABLED UNTIL FIXED UPSTREAM
 - platform: workday

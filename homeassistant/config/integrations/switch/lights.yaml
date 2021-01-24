@@ -1,6 +1,5 @@
-###
-# Light switches
-###
+---
+
 - platform: template
   switches:
     night_light_override:
