@@ -3,6 +3,7 @@
 DOMAIN = "pyscript"
 
 CONFIG_ENTRY = "config_entry"
+CONFIG_ENTRY_OLD = "config_entry_old"
 UNSUB_LISTENERS = "unsub_listeners"
 
 FOLDER = "pyscript"
@@ -22,7 +23,10 @@ SERVICE_JUPYTER_KERNEL_START = "jupyter_kernel_start"
 LOGGER_PATH = "custom_components.pyscript"
 
 REQUIREMENTS_FILE = "requirements.txt"
-REQUIREMENTS_PATHS = ("", "apps/*", "modules/*")
+REQUIREMENTS_PATHS = ("", "apps/*", "modules/*", "scripts/**")
+
+WATCHDOG_OBSERVER = "watch_dog_observer"
+WATCHDOG_TASK = "watch_dog_task"
 
 ALLOWED_IMPORTS = {
     "black",

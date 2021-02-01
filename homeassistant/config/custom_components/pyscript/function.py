@@ -1,7 +1,6 @@
 """Function call handling."""
 
 import asyncio
-import functools
 import logging
 import traceback
 
@@ -36,6 +35,11 @@ class Function:
     our_tasks = set()
 
     #
+    # Done callbacks for each task
+    #
+    task2cb = {}
+
+    #
     # initial list of available functions
     #
     functions = {}
@@ -49,9 +53,22 @@ class Function:
 
     #
     # task id of the task that cancels and waits for other tasks,
-    # and also awaits on coros
     #
-    task_repeaer = None
+    task_reaper = None
+    task_reaper_q = None
+
+    #
+    # task id of the task that awaits for coros (used by shutdown triggers)
+    #
+    task_waiter = None
+    task_waiter_q = None
+
+    #
+    # reference counting for service registrations; the new @service trigger
+    # registers the service call before the old one is removed, so we only
+    # remove the service registration when the reference count goes to zero
+    #
+    service_cnt = {}
 
     def __init__(self):
         """Warn on Function instantiation."""
@@ -63,11 +80,14 @@ class Function:
         cls.hass = hass
         cls.functions.update(
             {
-                "task.executor": cls.task_executor,
                 "event.fire": cls.event_fire,
-                "task.sleep": cls.async_sleep,
                 "service.call": cls.service_call,
                 "service.has_service": cls.service_has_service,
+                "task.cancel": cls.user_task_cancel,
+                "task.current_task": cls.user_task_current_task,
+                "task.remove_done_callback": cls.user_task_remove_done_callback,
+                "task.sleep": cls.async_sleep,
+                "task.wait": cls.user_task_wait,
             }
         )
         cls.ast_functions.update(
@@ -77,6 +97,7 @@ class Function:
                 "log.info": lambda ast_ctx: ast_ctx.get_logger().info,
                 "log.warning": lambda ast_ctx: ast_ctx.get_logger().warning,
                 "print": lambda ast_ctx: ast_ctx.get_logger().debug,
+                "task.name2id": cls.task_name2id_factory,
                 "task.unique": cls.task_unique_factory,
             }
         )
@@ -97,10 +118,6 @@ class Function:
                             await cmd[1]
                         except asyncio.CancelledError:
                             pass
-                    elif cmd[0] == "await":
-                        await cmd[1]
-                    elif cmd[0] == "sync":
-                        await cmd[1].put(0)
                     else:
                         _LOGGER.error("task_reaper: unknown command %s", cmd[0])
                 except asyncio.CancelledError:
@@ -108,18 +125,38 @@ class Function:
                 except Exception:
                     _LOGGER.error("task_reaper: got exception %s", traceback.format_exc(-1))
 
-        if not cls.task_repeaer:
+        if not cls.task_reaper:
             cls.task_reaper_q = asyncio.Queue(0)
-            cls.task_repeaer = Function.create_task(task_reaper(cls.task_reaper_q))
+            cls.task_reaper = cls.create_task(task_reaper(cls.task_reaper_q))
 
-    @classmethod
-    async def reaper_stop(cls):
-        """Tell the reaper task to exit by sending a special task None."""
-        if cls.task_repeaer:
-            cls.task_reaper_q.put_nowait(["exit"])
-            await cls.task_repeaer
-            cls.task_repeaer = None
-            cls.task_reaper_q = None
+        #
+        # start a task which creates tasks to run coros, and then syncs on their completion;
+        # this is used by the shutdown trigger
+        #
+        async def task_waiter(waiter_q):
+            aws = []
+            while True:
+                try:
+                    cmd = await waiter_q.get()
+                    if cmd[0] == "exit":
+                        return
+                    if cmd[0] == "await":
+                        aws.append(cls.create_task(cmd[1]))
+                    elif cmd[0] == "sync":
+                        if len(aws) > 0:
+                            await asyncio.gather(*aws)
+                            aws = []
+                        await cmd[1].put(0)
+                    else:
+                        _LOGGER.error("task_waiter: unknown command %s", cmd[0])
+                except asyncio.CancelledError:
+                    raise
+                except Exception:
+                    _LOGGER.error("task_waiter: got exception %s", traceback.format_exc(-1))
+
+        if not cls.task_waiter:
+            cls.task_waiter_q = asyncio.Queue(0)
+            cls.task_waiter = cls.create_task(task_waiter(cls.task_waiter_q))
 
     @classmethod
     def reaper_cancel(cls, task):
@@ -127,21 +164,35 @@ class Function:
         cls.task_reaper_q.put_nowait(["cancel", task])
 
     @classmethod
-    def reaper_await(cls, coro):
-        """Send a coro to be awaited by the reaper."""
-        cls.task_reaper_q.put_nowait(["await", coro])
+    async def reaper_stop(cls):
+        """Tell the reaper task to exit."""
+        if cls.task_reaper:
+            cls.task_reaper_q.put_nowait(["exit"])
+            await cls.task_reaper
+            cls.task_reaper = None
+            cls.task_reaper_q = None
 
     @classmethod
-    async def reaper_sync(cls):
-        """Wait until the reaper queue is empty."""
-        sync_q = asyncio.Queue(0)
-        sync_q.put_nowait(["sync", sync_q])
-        await sync_q.get()
+    def waiter_await(cls, coro):
+        """Send a coro to be awaited by the waiter task."""
+        cls.task_waiter_q.put_nowait(["await", coro])
 
     @classmethod
-    def reaper_exit(cls):
-        """Send an exit request to the reaper."""
-        cls.task_reaper_q.put_nowait(["exit"])
+    async def waiter_sync(cls):
+        """Wait until the waiter queue is empty."""
+        if cls.task_waiter:
+            sync_q = asyncio.Queue(0)
+            cls.task_waiter_q.put_nowait(["sync", sync_q])
+            await sync_q.get()
+
+    @classmethod
+    async def waiter_stop(cls):
+        """Tell the waiter task to exit."""
+        if cls.task_waiter:
+            cls.task_waiter_q.put_nowait(["exit"])
+            await cls.task_waiter
+            cls.task_waiter = None
+            cls.task_waiter_q = None
 
     @classmethod
     async def async_sleep(cls, duration):
@@ -180,18 +231,14 @@ class Function:
                     if task != curr_task:
                         #
                         # it seems we can't cancel ourselves, so we
-                        # tell the repeaer task to cancel us
+                        # tell the reaper task to cancel us
                         #
-                        Function.reaper_cancel(curr_task)
+                        cls.reaper_cancel(curr_task)
                         # wait to be canceled
                         await asyncio.sleep(100000)
                 elif task != curr_task and task in cls.our_tasks:
                     # only cancel tasks if they are ones we started
-                    try:
-                        task.cancel()
-                        await task
-                    except asyncio.CancelledError:
-                        pass
+                    cls.reaper_cancel(task)
             if curr_task in cls.our_tasks:
                 if name in cls.unique_name2task:
                     task = cls.unique_name2task[name]
@@ -205,11 +252,52 @@ class Function:
         return task_unique
 
     @classmethod
-    async def task_executor(cls, func, *args, **kwargs):
-        """Implement task.executor()."""
-        if asyncio.iscoroutinefunction(func) or not callable(func):
-            raise TypeError("function is not callable by task.executor()")
-        return await cls.hass.async_add_executor_job(functools.partial(func, **kwargs), *args)
+    async def user_task_cancel(cls, task=None):
+        """Implement task.cancel()."""
+        do_sleep = False
+        if not task:
+            task = asyncio.current_task()
+            do_sleep = True
+        if task not in cls.our_tasks:
+            raise TypeError(f"{task} is not a user-started task")
+        cls.reaper_cancel(task)
+        if do_sleep:
+            # wait to be canceled
+            await asyncio.sleep(100000)
+
+    @classmethod
+    async def user_task_current_task(cls):
+        """Implement task.current_task()."""
+        return asyncio.current_task()
+
+    @classmethod
+    def task_name2id_factory(cls, ctx):
+        """Define and return task.name2id() for this context."""
+
+        def user_task_name2id(name=None):
+            """Implement task.name2id()."""
+            prefix = f"{ctx.get_global_ctx_name()}."
+            if name is None:
+                ret = {}
+                for task_name, task_id in cls.unique_name2task.items():
+                    if task_name.startswith(prefix):
+                        ret[task_name[len(prefix) :]] = task_id
+                return ret
+            if prefix + name in cls.unique_name2task:
+                return cls.unique_name2task[prefix + name]
+            raise NameError(f"task name '{name}' is unknown")
+
+        return user_task_name2id
+
+    @classmethod
+    async def user_task_wait(cls, aws, **kwargs):
+        """Implement task.wait()."""
+        return await asyncio.wait(aws, **kwargs)
+
+    @classmethod
+    def user_task_remove_done_callback(cls, task, callback):
+        """Implement task.remove_done_callback()."""
+        cls.task2cb[task]["cb"].pop(callback, None)
 
     @classmethod
     def unique_name_used(cls, ctx, name):
@@ -317,29 +405,72 @@ class Function:
         return service_call_factory(domain, service)
 
     @classmethod
-    async def run_coro(cls, coro):
+    async def run_coro(cls, coro, ast_ctx=None):
         """Run coroutine task and update unique task on start and exit."""
         #
         # Add a placeholder for the new task so we know it's one we started
         #
+        task: asyncio.Task = None
         try:
             task = asyncio.current_task()
             cls.our_tasks.add(task)
-            await coro
+            if ast_ctx is not None:
+                cls.task_done_callback_ctx(task, ast_ctx)
+            result = await coro
+            return result
         except asyncio.CancelledError:
             raise
         except Exception:
             _LOGGER.error("run_coro: got exception %s", traceback.format_exc(-1))
         finally:
+            if task in cls.task2cb:
+                for callback, info in cls.task2cb[task]["cb"].items():
+                    ast_ctx, args, kwargs = info
+                    await ast_ctx.call_func(callback, None, *args, **kwargs)
+                    if ast_ctx.get_exception_obj():
+                        ast_ctx.get_logger().error(ast_ctx.get_exception_long())
+                        break
             if task in cls.unique_task2name:
                 for name in cls.unique_task2name[task]:
                     del cls.unique_name2task[name]
                 del cls.unique_task2name[task]
-            if task in cls.task2context:
-                del cls.task2context[task]
+            cls.task2context.pop(task, None)
+            cls.task2cb.pop(task, None)
             cls.our_tasks.discard(task)
 
     @classmethod
-    def create_task(cls, coro):
+    def create_task(cls, coro, ast_ctx=None):
         """Create a new task that runs a coroutine."""
-        return cls.hass.loop.create_task(cls.run_coro(coro))
+        return cls.hass.loop.create_task(cls.run_coro(coro, ast_ctx=ast_ctx))
+
+    @classmethod
+    def service_register(cls, domain, service, callback):
+        """Register a new service callback."""
+        key = f"{domain}.{service}"
+        if key not in cls.service_cnt:
+            cls.service_cnt[key] = 0
+        cls.service_cnt[key] += 1
+        cls.hass.services.async_register(domain, service, callback)
+
+    @classmethod
+    def service_remove(cls, domain, service):
+        """Remove a service callback."""
+        key = f"{domain}.{service}"
+        if cls.service_cnt.get(key, 0) > 1:
+            cls.service_cnt[key] -= 1
+            return
+        cls.service_cnt[key] = 0
+        cls.hass.services.async_remove(domain, service)
+
+    @classmethod
+    def task_done_callback_ctx(cls, task, ast_ctx):
+        """Set the ast_ctx for a task, which is needed for done callbacks."""
+        if task not in cls.task2cb or "ctx" not in cls.task2cb[task]:
+            cls.task2cb[task] = {"ctx": ast_ctx, "cb": {}}
+
+    @classmethod
+    def task_add_done_callback(cls, task, ast_ctx, callback, *args, **kwargs):
+        """Add a done callback to the given task."""
+        if ast_ctx is None:
+            ast_ctx = cls.task2cb[task]["ctx"]
+        cls.task2cb[task]["cb"][callback] = [ast_ctx, args, kwargs]

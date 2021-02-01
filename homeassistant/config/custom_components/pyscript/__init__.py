@@ -1,22 +1,30 @@
 """Component to allow running Python scripts."""
 
+import asyncio
 import glob
 import json
 import logging
 import os
+import time
+import traceback
+from typing import Any, Callable, Dict, List, Set, Union
 
 import voluptuous as vol
+from watchdog.events import DirModifiedEvent, FileSystemEvent, FileSystemEventHandler
+import watchdog.observers
 
 from homeassistant.config import async_hass_config_yaml
-from homeassistant.config_entries import SOURCE_IMPORT
+from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
 from homeassistant.const import (
     EVENT_HOMEASSISTANT_STARTED,
     EVENT_HOMEASSISTANT_STOP,
     EVENT_STATE_CHANGED,
     SERVICE_RELOAD,
 )
+from homeassistant.core import Config, HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 import homeassistant.helpers.config_validation as cv
+from homeassistant.helpers.event import Event as HAEvent
 from homeassistant.helpers.restore_state import RestoreStateData
 from homeassistant.loader import bind_hass
 
@@ -24,11 +32,15 @@ from .const import (
     CONF_ALLOW_ALL_IMPORTS,
     CONF_HASS_IS_GLOBAL,
     CONFIG_ENTRY,
+    CONFIG_ENTRY_OLD,
     DOMAIN,
     FOLDER,
     LOGGER_PATH,
+    REQUIREMENTS_FILE,
     SERVICE_JUPYTER_KERNEL_START,
     UNSUB_LISTENERS,
+    WATCHDOG_OBSERVER,
+    WATCHDOG_TASK,
 )
 from .eval import AstEval
 from .event import Event
@@ -53,7 +65,7 @@ PYSCRIPT_SCHEMA = vol.Schema(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: PYSCRIPT_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_setup(hass, config):
+async def async_setup(hass: HomeAssistant, config: Config) -> bool:
     """Component setup, run import config flow for each entry in config."""
     await restore_state(hass)
     if DOMAIN in config:
@@ -66,7 +78,7 @@ async def async_setup(hass, config):
     return True
 
 
-async def restore_state(hass):
+async def restore_state(hass: HomeAssistant) -> None:
     """Restores the persisted pyscript state."""
     restore_data = await RestoreStateData.async_get_instance(hass)
     for entity_id, value in restore_data.last_states.items():
@@ -75,7 +87,7 @@ async def restore_state(hass):
             hass.states.async_set(entity_id, last_state.state, last_state.attributes)
 
 
-async def update_yaml_config(hass, config_entry):
+async def update_yaml_config(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Update the yaml config."""
     try:
         conf = await async_hass_config_yaml(hass)
@@ -92,8 +104,26 @@ async def update_yaml_config(hass, config_entry):
     if config != config_entry.data:
         await hass.config_entries.flow.async_init(DOMAIN, context={"source": SOURCE_IMPORT}, data=config)
 
+    #
+    # if hass_is_global or allow_all_imports have changed, we need to reload all scripts
+    # since they affect all scripts
+    #
+    config_save = {
+        param: config_entry.data.get(param, False) for param in {CONF_HASS_IS_GLOBAL, CONF_ALLOW_ALL_IMPORTS}
+    }
+    if DOMAIN not in hass.data:
+        hass.data.setdefault(DOMAIN, {})
+    if CONFIG_ENTRY_OLD in hass.data[DOMAIN]:
+        old_entry = hass.data[DOMAIN][CONFIG_ENTRY_OLD]
+        hass.data[DOMAIN][CONFIG_ENTRY_OLD] = config_save
+        for param in {CONF_HASS_IS_GLOBAL, CONF_ALLOW_ALL_IMPORTS}:
+            if old_entry.get(param, False) != config_entry.data.get(param, False):
+                return True
+    hass.data[DOMAIN][CONFIG_ENTRY_OLD] = config_save
+    return False
 
-def start_global_contexts(global_ctx_only=None):
+
+def start_global_contexts(global_ctx_only: str = None) -> None:
     """Start all the file and apps global contexts."""
     start_list = []
     for global_ctx_name, global_ctx in GlobalContextMgr.items():
@@ -109,13 +139,99 @@ def start_global_contexts(global_ctx_only=None):
         global_ctx.start()
 
 
-async def async_setup_entry(hass, config_entry):
+async def watchdog_start(
+    hass: HomeAssistant, pyscript_folder: str, reload_scripts_handler: Callable[[None], None]
+) -> None:
+    """Start watchdog thread to look for changed files in pyscript_folder."""
+    if WATCHDOG_OBSERVER in hass.data[DOMAIN]:
+        return
+
+    class WatchDogHandler(FileSystemEventHandler):
+        """Class for handling watchdog events."""
+
+        def __init__(self, watchdog_q: asyncio.Queue) -> None:
+            self.watchdog_q = watchdog_q
+
+        def process(self, event: FileSystemEvent) -> None:
+            """Send watchdog events to main loop task."""
+            _LOGGER.debug("watchdog process(%s)", event)
+            hass.loop.call_soon_threadsafe(self.watchdog_q.put_nowait, event)
+
+        def on_modified(self, event: FileSystemEvent) -> None:
+            """File modified."""
+            self.process(event)
+
+        def on_moved(self, event: FileSystemEvent) -> None:
+            """File moved."""
+            self.process(event)
+
+        def on_created(self, event: FileSystemEvent) -> None:
+            """File created."""
+            self.process(event)
+
+        def on_deleted(self, event: FileSystemEvent) -> None:
+            """File deleted."""
+            self.process(event)
+
+    async def task_watchdog(watchdog_q: asyncio.Queue) -> None:
+        def check_event(event, do_reload: bool) -> bool:
+            """Check if event should trigger a reload."""
+            if event.is_directory:
+                # don't reload if it's just a directory modified
+                if isinstance(event, DirModifiedEvent):
+                    return do_reload
+                return True
+            # only reload if it's a script, yaml, or requirements.txt file
+            for valid_suffix in [".py", ".yaml", "/" + REQUIREMENTS_FILE]:
+                if event.src_path.endswith(valid_suffix):
+                    return True
+            return do_reload
+
+        while True:
+            try:
+                #
+                # since some file/dir changes create multiple events, we consume all
+                # events in a small window; first # wait indefinitely for next event
+                #
+                do_reload = check_event(await watchdog_q.get(), False)
+                #
+                # now consume all additional events with 50ms timeout or 500ms elapsed
+                #
+                t_start = time.monotonic()
+                while time.monotonic() - t_start < 0.5:
+                    try:
+                        do_reload = check_event(
+                            await asyncio.wait_for(watchdog_q.get(), timeout=0.05), do_reload
+                        )
+                    except asyncio.TimeoutError:
+                        break
+                if do_reload:
+                    await reload_scripts_handler(None)
+
+            except asyncio.CancelledError:
+                raise
+            except Exception:
+                _LOGGER.error("task_watchdog: got exception %s", traceback.format_exc(-1))
+
+    watchdog_q = asyncio.Queue(0)
+    observer = watchdog.observers.Observer()
+    if observer is not None:
+        # don't run watchdog when we are testing (Observer() patches to None)
+        hass.data[DOMAIN][WATCHDOG_OBSERVER] = observer
+        hass.data[DOMAIN][WATCHDOG_TASK] = Function.create_task(task_watchdog(watchdog_q))
+
+        observer.schedule(WatchDogHandler(watchdog_q), pyscript_folder, recursive=True)
+
+
+async def async_setup_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Initialize the pyscript config entry."""
+    global_ctx_only = None
     if Function.hass:
         #
         # reload yaml if this isn't the first time (ie, on reload)
         #
-        await update_yaml_config(hass, config_entry)
+        if await update_yaml_config(hass, config_entry):
+            global_ctx_only = "*"
 
     Function.init(hass)
     Event.init(hass)
@@ -137,18 +253,19 @@ async def async_setup_entry(hass, config_entry):
     State.set_pyscript_config(config_entry.data)
 
     await install_requirements(hass, config_entry, pyscript_folder)
-    await load_scripts(hass, config_entry.data)
+    await load_scripts(hass, config_entry.data, global_ctx_only=global_ctx_only)
 
-    async def reload_scripts_handler(call):
+    async def reload_scripts_handler(call: ServiceCall) -> None:
         """Handle reload service calls."""
         _LOGGER.debug("reload: yaml, reloading scripts, and restarting")
 
-        await update_yaml_config(hass, config_entry)
+        global_ctx_only = call.data.get("global_ctx", None) if call else None
+
+        if await update_yaml_config(hass, config_entry):
+            global_ctx_only = "*"
         State.set_pyscript_config(config_entry.data)
 
         await State.get_service_params()
-
-        global_ctx_only = call.data.get("global_ctx", None)
 
         await install_requirements(hass, config_entry, pyscript_folder)
         await load_scripts(hass, config_entry.data, global_ctx_only=global_ctx_only)
@@ -157,7 +274,7 @@ async def async_setup_entry(hass, config_entry):
 
     hass.services.async_register(DOMAIN, SERVICE_RELOAD, reload_scripts_handler)
 
-    async def jupyter_kernel_start(call):
+    async def jupyter_kernel_start(call: ServiceCall) -> None:
         """Handle Jupyter kernel start call."""
         _LOGGER.debug("service call to jupyter_kernel_start: %s", call.data)
 
@@ -166,12 +283,11 @@ async def async_setup_entry(hass, config_entry):
             global_ctx_name, global_sym_table={"__name__": global_ctx_name}, manager=GlobalContextMgr
         )
         global_ctx.set_auto_start(True)
-
         GlobalContextMgr.set(global_ctx_name, global_ctx)
 
         ast_ctx = AstEval(global_ctx_name, global_ctx)
         Function.install_ast_funcs(ast_ctx)
-        kernel = Kernel(call.data, ast_ctx, global_ctx_name)
+        kernel = Kernel(call.data, ast_ctx, global_ctx, global_ctx_name)
         await kernel.session_start()
         hass.states.async_set(call.data["state_var"], json.dumps(kernel.get_ports()))
 
@@ -182,7 +298,7 @@ async def async_setup_entry(hass, config_entry):
 
     hass.services.async_register(DOMAIN, SERVICE_JUPYTER_KERNEL_START, jupyter_kernel_start)
 
-    async def state_changed(event):
+    async def state_changed(event: HAEvent) -> None:
         var_name = event.data["entity_id"]
         if event.data.get("new_state", None):
             new_val = StateVal(event.data["new_state"])
@@ -206,16 +322,29 @@ async def async_setup_entry(hass, config_entry):
         }
         await State.update(new_vars, func_args)
 
-    async def hass_started(event):
+    async def hass_started(event: HAEvent) -> None:
         _LOGGER.debug("adding state changed listener and starting global contexts")
         await State.get_service_params()
         hass.data[DOMAIN][UNSUB_LISTENERS].append(hass.bus.async_listen(EVENT_STATE_CHANGED, state_changed))
         start_global_contexts()
+        if WATCHDOG_OBSERVER in hass.data[DOMAIN]:
+            observer = hass.data[DOMAIN][WATCHDOG_OBSERVER]
+            observer.start()
 
-    async def hass_stop(event):
+    async def hass_stop(event: HAEvent) -> None:
+        if WATCHDOG_OBSERVER in hass.data[DOMAIN]:
+            observer = hass.data[DOMAIN][WATCHDOG_OBSERVER]
+            observer.stop()
+            observer.join()
+            del hass.data[DOMAIN][WATCHDOG_OBSERVER]
+            Function.reaper_cancel(hass.data[DOMAIN][WATCHDOG_TASK])
+            del hass.data[DOMAIN][WATCHDOG_TASK]
+
         _LOGGER.debug("stopping global contexts")
         await unload_scripts(unload_all=True)
-        # tell reaper task to exit (after other tasks are cancelled)
+        # sync with waiter, and then tell waiter and reaper tasks to exit
+        await Function.waiter_sync()
+        await Function.waiter_stop()
         await Function.reaper_stop()
 
     # Store callbacks to event listeners so we can unsubscribe on unload
@@ -224,23 +353,24 @@ async def async_setup_entry(hass, config_entry):
     )
     hass.data[DOMAIN][UNSUB_LISTENERS].append(hass.bus.async_listen(EVENT_HOMEASSISTANT_STOP, hass_stop))
 
+    await watchdog_start(hass, pyscript_folder, reload_scripts_handler)
+
     return True
 
 
-async def async_unload_entry(hass, config_entry):
+async def async_unload_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    # Unload scripts
+    _LOGGER.info("Unloading all scripts")
     await unload_scripts()
 
-    # Unsubscribe from listeners
     for unsub_listener in hass.data[DOMAIN][UNSUB_LISTENERS]:
         unsub_listener()
+    hass.data[DOMAIN][UNSUB_LISTENERS] = []
 
-    hass.data.pop(DOMAIN)
     return True
 
 
-async def unload_scripts(global_ctx_only=None, unload_all=False):
+async def unload_scripts(global_ctx_only: str = None, unload_all: bool = False) -> None:
     """Unload all scripts from GlobalContextMgr with given name prefixes."""
     ctx_delete = {}
     for global_ctx_name, global_ctx in GlobalContextMgr.items():
@@ -255,11 +385,11 @@ async def unload_scripts(global_ctx_only=None, unload_all=False):
         ctx_delete[global_ctx_name] = global_ctx
     for global_ctx_name, global_ctx in ctx_delete.items():
         GlobalContextMgr.delete(global_ctx_name)
-    await Function.reaper_sync()
+    await Function.waiter_sync()
 
 
 @bind_hass
-async def load_scripts(hass, config_data, global_ctx_only=None):
+async def load_scripts(hass: HomeAssistant, config_data: Dict[str, Any], global_ctx_only: str = None):
     """Load all python scripts in FOLDER."""
 
     class SourceFile:
@@ -292,7 +422,9 @@ async def load_scripts(hass, config_data, global_ctx_only=None):
 
     pyscript_dir = hass.config.path(FOLDER)
 
-    def glob_read_files(load_paths, apps_config):
+    def glob_read_files(
+        load_paths: List[Set[Union[str, bool]]], apps_config: Dict[str, Any]
+    ) -> Dict[str, SourceFile]:
         """Expand globs and read all the source files."""
         ctx2source = {}
         for path, match, check_config, autoload in load_paths:
@@ -341,7 +473,7 @@ async def load_scripts(hass, config_data, global_ctx_only=None):
                     app_config = apps_config[app_name]
 
                 try:
-                    with open(this_path) as file_desc:
+                    with open(this_path, encoding="utf-8") as file_desc:
                         source = file_desc.read()
                     mtime = os.path.getmtime(this_path)
                 except Exception as exc:
@@ -501,7 +633,7 @@ async def load_scripts(hass, config_data, global_ctx_only=None):
             if global_ctx_name not in ctx2files or not ctx2files[global_ctx_name].autoload:
                 _LOGGER.info("Unloaded %s", global_ctx.get_file_path())
             GlobalContextMgr.delete(global_ctx_name)
-    await Function.reaper_sync()
+    await Function.waiter_sync()
 
     #
     # now load the requested files, and files that depend on loaded files

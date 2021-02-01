@@ -249,7 +249,7 @@ class State:
         return False
 
     @classmethod
-    async def get(cls, var_name):
+    def get(cls, var_name):
         """Get a state variable value or attribute from hass."""
         parts = var_name.split(".")
         if len(parts) != 2 and len(parts) != 3:
@@ -413,7 +413,7 @@ class State:
     def set_pyscript_config(cls, config):
         """Set pyscript yaml config."""
         #
-        # have to update inplace, since dist is already used as value
+        # have to update inplace, since dest is already used as value
         #
         cls.pyscript_config.clear()
         for name, value in config.items():
