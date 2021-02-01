@@ -1,6 +1,6 @@
 ---
 
-  person:
+person:
   name: "Person"
   entities:
     - person.yuval
