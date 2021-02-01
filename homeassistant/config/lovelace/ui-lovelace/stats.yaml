@@ -4,6 +4,9 @@ id: statistics
 title: "Statistics"
 icon: mdi:chart-areaspline
 cards:
+  - type: custom:animated-consumption-card
+    entity: sensor.total_ac_power_consumption
+
   - type: custom:mini-graph-card
     name: "Temperature"
     hours_to_show: 84

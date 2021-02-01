@@ -131,6 +131,7 @@ cards:
       - type: custom:battery-entity-row
         entity: sensor.ups_battery_charge
         name: 'Battery Charge'
+      - sensor.ups_time_remaining
       - type: custom:bar-card
         entity: sensor.ups_load
         name: 'Load'
@@ -139,8 +140,6 @@ cards:
           speed: 2
         positions:
           indicator: 'off'
-      - sensor.ups_input_voltage
-      - sensor.ups_output_voltage
 
   - type: entities
     entities:

@@ -29,51 +29,6 @@ cards:
             name: 'Phone Battery'
 
   - type: entities
-    entities:
-      - type: custom:weather-card
-        entity: weather.openweathermap
-        current: true
-        details: true
-        hourly_forecast: true
-        number_of_forecasts: 5
-      - type: custom:hui-element
-        card_type: markdown
-        content: >-
-          {{
-            states.sensor.israel_weather_forecast.attributes.entries[0].summary
-          }}
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:hui-element
-            card_type: glance
-            entities:
-              - entity: sensor.wind_scale_friendly
-          - type: custom:hui-element
-            card_type: glance
-            style: |
-              ha-card {
-                background: {{ state_attr('sensor.uv_index_friendly', 'color') }};
-                text-shadow: 2px 2px 10px #041623;
-              }
-            entities:
-              - entity: sensor.uv_index_friendly
-          - type: custom:hui-element
-            card_type: custom:compass-card
-            indicator_sensors:
-              - sensor: sensor.openweathermap_wind_bearing
-            value_sensors:
-              - sensor: sensor.openweathermap_wind_speed
-      - type: custom:air-visual-card
-        hide_title: true
-        air_pollution_level: sensor.u_s_air_pollution_level
-        air_quality_index: sensor.u_s_air_quality_index
-        main_pollutant: sensor.u_s_main_pollutant
-
-  - type: custom:animated-consumption-card
-    entity: sensor.total_ac_power_consumption
-
-  - type: entities
     title: "זמני היום"
     show_header_toggle: false
     entities:
@@ -117,13 +72,54 @@ cards:
       - entity: sensor.jewish_calendar_daf_yomi
         name: "דף יומי"
 
+  - type: entities
+    entities:
+      - type: custom:weather-card
+        entity: weather.openweathermap
+        current: true
+        details: true
+        hourly_forecast: true
+        number_of_forecasts: 5
+      - type: custom:hui-element
+        card_type: markdown
+        content: >-
+          {{
+            states.sensor.israel_weather_forecast.attributes.entries[0].summary
+          }}
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:hui-element
+            card_type: glance
+            entities:
+              - entity: sensor.wind_scale_friendly
+          - type: custom:hui-element
+            card_type: glance
+            style: |
+              ha-card {
+                background: {{ state_attr('sensor.uv_index_friendly', 'color') }};
+                text-shadow: 2px 2px 10px #041623;
+              }
+            entities:
+              - entity: sensor.uv_index_friendly
+          - type: custom:hui-element
+            card_type: custom:compass-card
+            indicator_sensors:
+              - sensor: sensor.openweathermap_wind_bearing
+            value_sensors:
+              - sensor: sensor.openweathermap_wind_speed
+      - type: custom:air-visual-card
+        hide_title: true
+        air_pollution_level: sensor.u_s_air_pollution_level
+        air_quality_index: sensor.u_s_air_quality_index
+        main_pollutant: sensor.u_s_main_pollutant
+
   - type: custom:mini-media-player
     entity: media_player.googlehome3668
     group: false
     tts:
       platform: microsoft
     hide:
-      # power: true
       progress: true
     shortcuts:
       columns: 2
