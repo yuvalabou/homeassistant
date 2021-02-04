@@ -22,8 +22,6 @@
   type: module
 - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
   type: module
-- url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
-  type: module
 - url: /hacsfiles/lovelace-template-entity-row/template-entity-row.js
   type: module
 - url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js
