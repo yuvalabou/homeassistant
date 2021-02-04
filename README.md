@@ -80,6 +80,7 @@
 
 - [Animated Consumption Card](https://github.com/bessarabov/animated-consumption-card)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
+- [ApexCharts Card](https://github.com/RomRider/apexcharts-card)
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod) - Apply CSS styles to any card

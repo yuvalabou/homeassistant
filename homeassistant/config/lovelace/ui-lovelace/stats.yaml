@@ -160,21 +160,40 @@ cards:
     show:
       fill: fade
 
-  - type: custom:mini-graph-card
-    name: "Water Consumption"
-    unit: 'm³'
-    icon: mdi:water-pump
-    hours_to_show: 750
-    group_by: date
-    line_width: 1
-    upper_bound: ~0.4
-    entities:
-      - entity: sensor.water_meter_9926387_monthly_consumption
-        name: "Monthly consumption"
-        show_graph: false
-      - entity: sensor.water_meter_9926387_today_s_consumption
-        name: "Today"
-        color: '#74A4F4'
-    show:
-      graph: bar
-      fill: fade
+  - type: custom:apexcharts-card
+    graph_span: 30d
+    span:
+      end: day
+    header:
+      show: true
+      title: "Daily water consumption"
+    apex_config:
+      chart:
+        type: area
+        height: 200
+      stroke:
+        show: true
+        width: 1
+        curve: smooth
+      legend:
+        show: false
+      dataLabels:
+        enabled: true
+      fill:
+        type: gradient
+        gradient:
+          shadeIntensity: 0.1
+          opacityFrom: 0.25
+          opacityTo: 1
+          inverseColors: true
+          stops:
+            - 0
+            - 90
+            - 100
+    series:
+      - color: '#74A4F4'
+        entity: sensor.water_meter_9926387_today_s_consumption
+        type: column
+        group_by:
+          func: max
+          duration: 24h
