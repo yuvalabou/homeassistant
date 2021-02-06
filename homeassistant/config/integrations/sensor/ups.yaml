@@ -1,0 +1,16 @@
+---
+
+- platform: template
+  sensors:
+    ups_time_remaining:
+      friendly_name: "UPS Time remaining"
+      value_template: >-
+        {{ (states('sensor.ups_battery_runtime') | int) // 60 }}
+      icon_template: >-
+        {% if is_state('sensor.ups_status', 'Online') %}
+        mdi:battery-charging
+        {%else%}
+        mdi:battery-alert
+        {%endif%}
+      unit_of_measurement: 'minutes'
+      device_class: 'battery'

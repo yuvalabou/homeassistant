@@ -89,21 +89,13 @@ cards:
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:
-          - type: custom:hui-element
-            card_type: glance
+          - type: glance
             entities:
               - entity: sensor.wind_scale_friendly
-          - type: custom:hui-element
-            card_type: glance
-            style: |
-              ha-card {
-                background: {{ state_attr('sensor.uv_index_friendly', 'color') }};
-                text-shadow: 2px 2px 10px #041623;
-              }
+          - type: glance
             entities:
               - entity: sensor.uv_index_friendly
-          - type: custom:hui-element
-            card_type: custom:compass-card
+          - type: custom:compass-card
             indicator_sensors:
               - sensor: sensor.openweathermap_wind_bearing
             value_sensors:

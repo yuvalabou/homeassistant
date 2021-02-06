@@ -24,20 +24,26 @@
     at: input_datetime.shabbat_lights_off_time
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: climate.turn_off
-    data:
-      entity_id:
-        - climate.living_room_cool_thermostat
-        - climate.living_room_heat_thermostat
-        - climate.slvn
+    - service: climate.turn_off
+      data:
+        entity_id:
+          - climate.living_room_heat_thermostat
+          - climate.slvn
+    - delay: 20
+    # Repeat one more time becouse I can't trust sensibo
+    - service: climate.turn_off
+      data:
+        entity_id:
+          - climate.living_room_heat_thermostat
+          - climate.slvn
 
 - alias: "Climate - Turn on Living-room climate at Shabbat"
   id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
   trigger:
-    - platform: time
-      at: '08:00:00'
-    - platform: time
-      at: '14:00:00'
+    platform: time
+    at:
+      - '08:00:00'
+      - '14:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
@@ -58,9 +64,15 @@
     at: '12:00:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: climate.turn_off
-    data:
-      entity_id:
-        - climate.living_room_cool_thermostat
-        - climate.living_room_heat_thermostat
-        - climate.slvn
+    - service: climate.turn_off
+      data:
+        entity_id:
+          - climate.living_room_heat_thermostat
+          - climate.slvn
+    - delay: 20
+    # Repeat one more time becouse I can't trust sensibo
+    - service: climate.turn_off
+      data:
+        entity_id:
+          - climate.living_room_heat_thermostat
+          - climate.slvn

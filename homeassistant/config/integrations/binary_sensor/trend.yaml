@@ -1,0 +1,16 @@
+---
+
+- platform: trend
+  sensors:
+    bathroom_temp_trend:
+      friendly_name: "Bathroom temperature trend"
+      entity_id: sensor.bathroom_temperature
+      device_class: heat
+      sample_duration: 180
+      max_samples: 6
+    bathroom_humid_trend:
+      friendly_name: "Bathroom humidity trend"
+      entity_id: sensor.bathroom_humidity
+      device_class: moisture
+      sample_duration: 180
+      max_samples: 6

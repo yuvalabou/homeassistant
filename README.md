@@ -1,5 +1,5 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.1.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.2.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -30,11 +30,11 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 411 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 250 |
-| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 39 |
+| **Entities** | 424 |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 262 |
+| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 40 |
 | **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 12 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 42 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 41 |
 | **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 25 |
 
 -----

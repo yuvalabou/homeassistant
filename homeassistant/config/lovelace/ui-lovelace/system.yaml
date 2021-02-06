@@ -105,7 +105,7 @@ cards:
         icon: mdi:database
         entities:
           - entity: sensor.db_size
-            name: 'Database'
+            name: "Database"
         show:
           fill: fade
           points: false
@@ -119,7 +119,6 @@ cards:
           - script.reload_ping_sensors
           - script.reload_pyscript
           - script.reload_templates
-          - script.reload_lovelace_resources
           - script.reload_themes
 
   - type: entities
@@ -130,11 +129,11 @@ cards:
         entity: sensor.ups_status
       - type: custom:battery-entity-row
         entity: sensor.ups_battery_charge
-        name: 'Battery Charge'
+        name: "Battery Charge"
       - sensor.ups_time_remaining
       - type: custom:bar-card
         entity: sensor.ups_load
-        name: 'Load'
+        name: "Load"
         animation:
           state: 'on'
           speed: 2

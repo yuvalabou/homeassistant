@@ -1,6 +1,5 @@
 ---
 
-# DISABLED UNTIL FIXED UPSTREAM
 - platform: workday
   country: IL
   workdays:
