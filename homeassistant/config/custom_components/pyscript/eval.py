@@ -257,6 +257,7 @@ class EvalFunc:
         self.decorators = []
         self.global_names = set()
         self.nonlocal_names = set()
+        self.local_names = None
         self.local_sym_table = {}
         self.doc_string = ast.get_docstring(func_def)
         self.num_posn_arg = len(self.func_def.args.args) - len(self.defaults)
@@ -562,14 +563,17 @@ class EvalFunc:
         nonlocal_names = set()
         global_names = set()
         var_names = set(args)
-        local_names = set(args)
+        self.local_names = set(args)
         for stmt in self.func_def.body:
             self.has_closure = self.has_closure or isinstance(
                 stmt, (ast.FunctionDef, ast.ClassDef, ast.AsyncFunctionDef)
             )
             var_names = var_names.union(
                 await ast_ctx.get_names(
-                    stmt, nonlocal_names=nonlocal_names, global_names=global_names, local_names=local_names,
+                    stmt,
+                    nonlocal_names=nonlocal_names,
+                    global_names=global_names,
+                    local_names=self.local_names,
                 )
             )
         for var_name in var_names:
@@ -580,7 +584,7 @@ class EvalFunc:
             if var_name in global_names:
                 continue
 
-            if var_name in local_names and var_name not in nonlocal_names:
+            if var_name in self.local_names and var_name not in nonlocal_names:
                 if self.has_closure:
                     self.local_sym_table[var_name] = EvalLocalVar(var_name)
                 continue
@@ -1042,13 +1046,21 @@ class AstEval:
             sym_table[name] = func_var
 
     async def ast_lambda(self, arg):
-        """Evaluate lambda definition."""
-        funcdef = ast.FunctionDef(
-            args=arg.args, body=[ast.Return(value=arg.body)], name="lambda", decorator_list=None,
+        """Evaluate lambda definition by compiling a regular function."""
+        name = "__lambda_defn_temp__"
+        await self.aeval(
+            ast.FunctionDef(
+                args=arg.args,
+                body=[ast.Return(value=arg.body, lineno=arg.body.lineno, col_offset=arg.body.col_offset)],
+                name=name,
+                decorator_list=[ast.Name(id="pyscript_compile", ctx=ast.Load())],
+                lineno=arg.col_offset,
+                col_offset=arg.col_offset,
+            )
         )
-        func = EvalFunc(funcdef, self.code_list, self.code_str, self.global_ctx)
-        await func.eval_defaults(self)
-        return EvalFuncVar(func)
+        func = self.sym_table[name]
+        del self.sym_table[name]
+        return func
 
     async def ast_asyncfunctiondef(self, arg):
         """Evaluate async function definition."""
@@ -1418,6 +1430,8 @@ class AstEval:
             if arg.id in self.local_sym_table:
                 return self.local_sym_table[arg.id]
             if arg.id in self.global_sym_table:
+                if self.curr_func and arg.id in self.curr_func.local_names:
+                    raise UnboundLocalError(f"local variable '{arg.id}' referenced before assignment")
                 return self.global_sym_table[arg.id]
             if arg.id in BUILTIN_AST_FUNCS_FACTORY:
                 return BUILTIN_AST_FUNCS_FACTORY[arg.id](self)
