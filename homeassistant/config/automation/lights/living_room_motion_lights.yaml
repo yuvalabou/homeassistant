@@ -26,6 +26,7 @@
   condition:
     - "{{ is_state('binary_sensor.night', 'on') }}"
     - "{{ is_state('input_boolean.night_light_override', 'off') }}"
+    - "{{ state_attr('light.yeelight_color_living_room_1', 'brightness') | int > 100 }}"
   action:
     - service: timer.start
       data:
@@ -47,7 +48,7 @@
     entity_id: input_boolean.night_light_override
     to: 'on'
     for:
-      hours: 1
+      hours: 6
   action:
     service: input_boolean.turn_off
     data:
