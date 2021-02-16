@@ -1,0 +1,57 @@
+---
+
+id: homelab
+title: "Homelab"
+icon: mdi:server
+cards:
+  - type: entities
+    entities:
+      - entity: sensor.myip
+        name: "DNS IP"
+
+  - type: entities
+    title: nanopi neo 3
+    entities:
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: processor_use_percent
+          - cpu_temps: processor_temperature
+          - ram_usage: memory_use_percent
+          - storage: disk_use_percent
+
+  - type: entities
+    title: nano pi neo 2
+    entities:
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: npn2_cpu_used
+          - cpu_temps: npn2_cpu_thermal_1_temperature
+          - ram_usage: npn2_ram_used_percent
+          - storage: npn2_used_percent
+
+  - type: entities
+    title: raspberry pi 2
+    entities:
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: rpi2_cpu_used
+          - cpu_temps: rpi2_cpu_thermal_1_temperature
+          - ram_usage: rpi2_ram_used_percent
+          - storage: rpi2_used_percent
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.omv_media
+            name: "Media drive"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+          - entity: sensor.omv_m_bm_m_om_bm_m_om_wm_pm_wm_m_wm_m_wm
+            name: "1TB drive"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100

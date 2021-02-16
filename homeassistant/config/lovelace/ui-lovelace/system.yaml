@@ -4,32 +4,6 @@ id: utilities
 title: "System Monitor"
 icon: mdi:server
 cards:
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            icon: mdi:download-network
-            font_size: 80
-            entities:
-              - entity: sensor.speedtest_download
-                name: "Download"
-            show:
-              points: false
-              fill: fade
-          - type: custom:mini-graph-card
-            icon: mdi:upload-network
-            font_size: 80
-            entities:
-              - entity: sensor.speedtest_upload
-                name: "Upload"
-            show:
-              fill: fade
-              points: false
-      - entity: sensor.myip
-        name: "DNS IP"
-
   - type: glance
     title: "Components"
     columns: 4
@@ -93,13 +67,6 @@ cards:
       - entity: sensor.uptime
       - entity: script.homeassistant_restart
         icon: mdi:restart
-      - type: custom:decluttering-card
-        template: system_monitor
-        variables:
-          - cpu_usage: processor_use_percent
-          - cpu_temps: processor_temperature
-          - ram_usage: memory_use_percent
-          - storage: disk_use_percent
       - type: custom:hui-element
         card_type: custom:mini-graph-card
         icon: mdi:database
@@ -145,13 +112,6 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
-      - type: custom:decluttering-card
-        template: system_monitor
-        variables:
-          - cpu_usage: npn2_cpu_used
-          - cpu_temps: npn2_cpu_thermal_1_temperature
-          - ram_usage: npn2_ram_used_percent
-          - storage: npn2_used_percent
       - type: custom:hui-element
         card_type: entities
         entities:
@@ -185,27 +145,6 @@ cards:
             name: "Cached"
           - entity: sensor.pi_hole_dns_unique_domains
             name: "Unique Domains"
-
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture
-        image: 'https://new-desk.com/wp-content/uploads/2019/09/RPi-Logo-Landscape-Reg-SCREEN.png'
-      - type: custom:decluttering-card
-        template: system_monitor
-        variables:
-          - cpu_usage: rpi2_cpu_used
-          - cpu_temps: rpi2_cpu_thermal_1_temperature
-          - ram_usage: rpi2_ram_used_percent
-          - storage: rpi2_used_percent
-      - type: custom:bar-card
-        entities:
-          - entity: sensor.rpi2_srv_dev_disk_by_uuid_3256fae656faaa2d_used_percent
-            name: "Media drive"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
 
   - type: entities
     show_header_toggle: false
