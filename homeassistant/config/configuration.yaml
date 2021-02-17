@@ -73,7 +73,6 @@ pi_hole:
 scene: !include_dir_merge_list scene
 script: !include_dir_merge_named integrations/script
 sensor: !include_dir_merge_list integrations/sensor
-speedtestdotnet:
 sun:
 switch: !include_dir_merge_list integrations/switch
 system_health:
