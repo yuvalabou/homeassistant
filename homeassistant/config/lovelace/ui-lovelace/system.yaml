@@ -110,9 +110,6 @@ cards:
   - type: entities
     entities:
       - type: custom:hui-element
-        card_type: picture
-        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
-      - type: custom:hui-element
         card_type: entities
         entities:
           - type: custom:hui-element

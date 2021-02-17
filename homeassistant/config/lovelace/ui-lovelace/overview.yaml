@@ -5,28 +5,120 @@ title: "Overview"
 cards:
   - type: horizontal-stack
     cards:
-      - type: entities
-        entities:
-          - type: custom:hui-element
-            card_type: picture-entity
-            image: '/local/assets/yuval.jpg'
-            entity: person.yuval
-          - entity: sensor.yuval_geocoded_location
-            name: "Location"
-          - type: custom:battery-entity-row
+      - type: picture-elements
+        image: '/local/assets/yuval.jpg'
+        elements:
+          - type: state-label
             entity: sensor.yuval_battery_level
-            name: 'Phone Battery'
-      - type: entities
-        entities:
-          - type: custom:hui-element
-            card_type: picture-entity
-            image: '/local/assets/tohar.jpg'
-            entity: person.tohar
-          - entity: sensor.tohar_geocoded_location
-            name: "Location"
-          - type: custom:battery-entity-row
+            style:
+              top: 11%
+              right: '-2%'
+          - type: state-icon
+            entity: sensor.yuval_battery_level
+            style:
+              top: 10%
+              right: '-10%'
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.workday_sensor
+                state: 'on'
+              - entity: person.yuval
+                state: 'home'
+            elements:
+              - type: state-icon
+                entity: sensor.yuval_from_home_to_work
+                icon: mdi:home-export-outline
+                style:
+                  top: 60%
+                  right: '-1%'
+                  '--paper-item-icon-color': white
+                  transform: scale(0.8)
+              - type: state-label
+                entity: sensor.yuval_from_home_to_work
+                style:
+                  top: 68.5%
+                  right: '-1%'
+                  weight: 50px
+                  color: white
+                  font-weight: 300
+                  font-size: 12px
+          - type: conditional
+            conditions:
+              - entity: binary_sensor.workday_sensor
+                state: 'on'
+              - entity: person.yuval
+                state: 'not_home'
+            elements:
+              - type: state-icon
+                entity: sensor.yuval_from_work_to_home
+                icon: mdi:home-export-outline
+                style:
+                  top: 60%
+                  right: '-1%'
+                  '--paper-item-icon-color': white
+                  transform: scale(0.8)
+              - type: state-label
+                entity: sensor.yuval_from_work_to_home
+                style:
+                  top: 68.5%
+                  right: '-1%'
+                  weight: 50px
+                  color: white
+                  font-weight: 300
+                  font-size: 12px
+          - type: state-label
+            entity: sensor.yuval_geocoded_location
+            attribute: Thoroughfare
+            style:
+              bottom: '8%'
+              right: '-18%'
+              weight: 200px
+              color: white
+              font-weight: 300
+              font-size: 16px
+          - type: state-label
+            entity: sensor.yuval_geocoded_location
+            attribute: Locality
+            style:
+              bottom: '3%'
+              right: '-12.5%'
+              weight: 200px
+              color: white
+              font-weight: 300
+              font-size: 12px
+      - type: picture-elements
+        image: '/local/assets/tohar.jpg'
+        elements:
+          - type: state-label
             entity: sensor.tohar_battery_level
-            name: 'Phone Battery'
+            style:
+              top: 11%
+              right: '-2%'
+          - type: state-icon
+            entity: sensor.tohar_battery_level
+            style:
+              top: 10%
+              right: '-10%'
+          - type: state-label
+            entity: sensor.tohar_geocoded_location
+            attribute: Thoroughfare
+            style:
+              bottom: '8%'
+              right: '-18%'
+              weight: 200px
+              color: white
+              font-weight: 300
+              font-size: 16px
+          - type: state-label
+            entity: sensor.tohar_geocoded_location
+            attribute: Locality
+            style:
+              bottom: '3%'
+              right: '-12.5%'
+              weight: 200px
+              color: white
+              font-weight: 300
+              font-size: 12px
 
   - type: entities
     title: "זמני היום"

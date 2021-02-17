@@ -12,6 +12,9 @@ cards:
   - type: entities
     title: nanopi neo 3
     entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
       - type: custom:decluttering-card
         template: system_monitor
         variables:
@@ -23,6 +26,9 @@ cards:
   - type: entities
     title: nano pi neo 2
     entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
       - type: custom:decluttering-card
         template: system_monitor
         variables:
