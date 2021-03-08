@@ -10,7 +10,7 @@ cards:
         name: "DNS IP"
 
   - type: entities
-    title: nanopi neo 3
+    title: "NanoPi NEO 3"
     entities:
       - type: custom:hui-element
         card_type: picture
@@ -24,22 +24,27 @@ cards:
           - storage: disk_use_percent
 
   - type: entities
-    title: nano pi neo 2
+    title: "NanoPi NEO 2"
     entities:
       - type: custom:hui-element
         card_type: picture
         image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+      - entity: sensor.npn2_containers_active
+        name: "Active Containers"
       - type: custom:decluttering-card
         template: system_monitor
         variables:
           - cpu_usage: npn2_cpu_used
           - cpu_temps: npn2_cpu_thermal_1_temperature
           - ram_usage: npn2_ram_used_percent
-          - storage: npn2_used_percent
+          - storage: npn2_etc_hostname_used_percent
 
   - type: entities
-    title: raspberry pi 2
+    title: "RaspberryPi 2"
     entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'http://magazine.odroid.com/wp-content/uploads/fig-02-omv.png'
       - type: custom:decluttering-card
         template: system_monitor
         variables:
