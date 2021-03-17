@@ -16,7 +16,7 @@
 
 - platform: waze_travel_time
   name: "Yuval - Current location to home"
-  origin: person.yuval
+  origin: device_tracker.yuval
   destination: !secret home_coordinates
   region: 'IL'
   avoid_toll_roads: true
