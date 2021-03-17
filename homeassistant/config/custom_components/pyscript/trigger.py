@@ -24,7 +24,7 @@ from .state import STATE_VIRTUAL_ATTRS, State
 _LOGGER = logging.getLogger(LOGGER_PATH + ".trigger")
 
 
-STATE_RE = re.compile(r"[a-zA-Z]\w*\.[a-zA-Z]\w*(\.(([a-zA-Z]\w*)|\*))?$")
+STATE_RE = re.compile(r"\w+\.\w+(\.((\w+)|\*))?$")
 
 
 def dt_now():
@@ -97,10 +97,13 @@ def ident_values_changed(func_args, ident):
 
     for check_var in ident:
         var_pieces = check_var.split(".")
-        if len(var_pieces) == 2 and check_var == var_name:
+        if len(var_pieces) < 2 or len(var_pieces) > 3:
+            continue
+        var_root = f"{var_pieces[0]}.{var_pieces[1]}"
+        if var_root == var_name and (len(var_pieces) == 2 or var_pieces[2] == "old"):
             if value != old_value:
                 return True
-        elif len(var_pieces) == 3 and f"{var_pieces[0]}.{var_pieces[1]}" == var_name:
+        elif len(var_pieces) == 3 and var_root == var_name:
             if getattr(value, var_pieces[2], None) != getattr(old_value, var_pieces[2], None):
                 return True
 
@@ -359,10 +362,10 @@ class TrigTime:
             state_trig_timeout = False
             time_next = None
             startup_time = None
+            now = dt_now()
+            if startup_time is None:
+                startup_time = now
             if time_trigger is not None:
-                now = dt_now()
-                if startup_time is None:
-                    startup_time = now
                 time_next = cls.timer_trigger_next(time_trigger, now, startup_time)
                 _LOGGER.debug(
                     "trigger %s wait_until time_next = %s, now = %s", ast_ctx.name, time_next, now,
@@ -377,11 +380,13 @@ class TrigTime:
                 if this_timeout is None or this_timeout > time_left:
                     ret = {"trigger_type": "timeout"}
                     this_timeout = time_left
+                    time_next = now + dt.timedelta(seconds=this_timeout)
             if state_trig_waiting:
                 time_left = last_state_trig_time + state_hold - time.monotonic()
                 if this_timeout is None or time_left < this_timeout:
                     this_timeout = time_left
                     state_trig_timeout = True
+                    time_next = now + dt.timedelta(seconds=this_timeout)
             if this_timeout is None:
                 if state_trigger is None and event_trigger is None and mqtt_trigger is None:
                     _LOGGER.debug(
@@ -392,18 +397,33 @@ class TrigTime:
                 _LOGGER.debug("trigger %s wait_until no timeout", ast_ctx.name)
                 notify_type, notify_info = await notify_q.get()
             else:
-                try:
-                    this_timeout = max(0, this_timeout)
-                    _LOGGER.debug("trigger %s wait_until %.6g secs", ast_ctx.name, this_timeout)
-                    notify_type, notify_info = await asyncio.wait_for(notify_q.get(), timeout=this_timeout)
-                    state_trig_timeout = False
-                except asyncio.TimeoutError:
-                    if not state_trig_timeout:
-                        if not ret:
-                            ret = {"trigger_type": "time"}
-                            if time_next is not None:
-                                ret["trigger_time"] = time_next
-                        break
+                timeout_occured = False
+                while True:
+                    try:
+                        this_timeout = max(0, this_timeout)
+                        _LOGGER.debug("trigger %s wait_until %.6g secs", ast_ctx.name, this_timeout)
+                        notify_type, notify_info = await asyncio.wait_for(
+                            notify_q.get(), timeout=this_timeout
+                        )
+                        state_trig_timeout = False
+                    except asyncio.TimeoutError:
+                        actual_now = dt_now()
+                        if actual_now < time_next:
+                            this_timeout = (time_next - actual_now).total_seconds()
+                            # tests/tests_function's simple now() requires us to ignore
+                            # timeouts that are up to 1us too early; otherwise wait for
+                            # longer until we are sure we are at or past time_next
+                            if this_timeout > 1e-6:
+                                continue
+                        if not state_trig_timeout:
+                            if not ret:
+                                ret = {"trigger_type": "time"}
+                                if time_next is not None:
+                                    ret["trigger_time"] = time_next
+                            timeout_occured = True
+                    break
+                if timeout_occured:
+                    break
             if state_trig_timeout:
                 ret = state_trig_notify_info[1]
                 state_trig_waiting = False
@@ -757,9 +777,13 @@ class TrigInfo:
         self.state_hold = self.state_trigger_kwargs.get("state_hold", None)
         self.state_hold_false = self.state_trigger_kwargs.get("state_hold_false", None)
         self.state_check_now = self.state_trigger_kwargs.get("state_check_now", False)
+        self.state_user_watch = self.state_trigger_kwargs.get("watch", None)
         self.time_trigger = trig_cfg.get("time_trigger", {}).get("args", None)
+        self.time_trigger_kwargs = trig_cfg.get("time_trigger", {}).get("kwargs", {})
         self.event_trigger = trig_cfg.get("event_trigger", {}).get("args", None)
+        self.event_trigger_kwargs = trig_cfg.get("event_trigger", {}).get("kwargs", {})
         self.mqtt_trigger = trig_cfg.get("mqtt_trigger", {}).get("args", None)
+        self.mqtt_trigger_kwargs = trig_cfg.get("mqtt_trigger", {}).get("kwargs", {})
         self.state_active = trig_cfg.get("state_active", {}).get("args", None)
         self.time_active = trig_cfg.get("time_active", {}).get("args", None)
         self.time_active_hold_off = trig_cfg.get("time_active", {}).get("kwargs", {}).get("hold_off", None)
@@ -881,6 +905,7 @@ class TrigInfo:
         if self.run_on_shutdown:
             notify_type = "shutdown"
             notify_info = {"trigger_type": "time", "trigger_time": "shutdown"}
+            notify_info.update(self.time_trigger_kwargs.get("kwargs", {}))
             action_future = self.call_action(notify_type, notify_info, run_task=False)
             Function.waiter_await(action_future)
 
@@ -897,12 +922,23 @@ class TrigInfo:
 
             if self.state_trigger is not None:
                 self.state_trig_ident = set()
-                if self.state_trig_eval:
-                    self.state_trig_ident = await self.state_trig_eval.get_names()
-                self.state_trig_ident.update(self.state_trig_ident_any)
+                if self.state_user_watch:
+                    if isinstance(self.state_user_watch, list):
+                        self.state_trig_ident = set(self.state_user_watch)
+                    else:
+                        self.state_trig_ident = self.state_user_watch
+                else:
+                    if self.state_trig_eval:
+                        self.state_trig_ident = await self.state_trig_eval.get_names()
+                    self.state_trig_ident.update(self.state_trig_ident_any)
                 _LOGGER.debug("trigger %s: watching vars %s", self.name, self.state_trig_ident)
-                if len(self.state_trig_ident) > 0:
-                    await State.notify_add(self.state_trig_ident, self.notify_q)
+                if len(self.state_trig_ident) == 0 or not await State.notify_add(
+                    self.state_trig_ident, self.notify_q
+                ):
+                    _LOGGER.error(
+                        "trigger %s: @state_trigger is not watching any variables; will never trigger",
+                        self.name,
+                    )
 
             if self.active_expr:
                 self.state_active_ident = await self.active_expr.get_names()
@@ -960,24 +996,31 @@ class TrigInfo:
                         time_left = last_state_trig_time + self.state_hold - time.monotonic()
                         if timeout is None or time_left < timeout:
                             timeout = time_left
+                            time_next = now + dt.timedelta(seconds=timeout)
                             state_trig_timeout = True
                     if timeout is not None:
-                        try:
-                            timeout = max(0, timeout)
-                            _LOGGER.debug("trigger %s waiting for %.6g secs", self.name, timeout)
-                            notify_type, notify_info = await asyncio.wait_for(
-                                self.notify_q.get(), timeout=timeout
-                            )
-                            state_trig_timeout = False
-                            now = dt_now()
-                        except asyncio.TimeoutError:
-                            now += dt.timedelta(seconds=timeout)
-                            if not state_trig_timeout:
-                                notify_type = "time"
-                                notify_info = {
-                                    "trigger_type": "time",
-                                    "trigger_time": time_next,
-                                }
+                        while True:
+                            try:
+                                timeout = max(0, timeout)
+                                _LOGGER.debug("trigger %s waiting for %.6g secs", self.name, timeout)
+                                notify_type, notify_info = await asyncio.wait_for(
+                                    self.notify_q.get(), timeout=timeout
+                                )
+                                state_trig_timeout = False
+                                now = dt_now()
+                            except asyncio.TimeoutError:
+                                actual_now = dt_now()
+                                if actual_now < time_next:
+                                    timeout = (time_next - actual_now).total_seconds()
+                                    continue
+                                now = time_next
+                                if not state_trig_timeout:
+                                    notify_type = "time"
+                                    notify_info = {
+                                        "trigger_type": "time",
+                                        "trigger_time": time_next,
+                                    }
+                            break
                     elif self.have_trigger:
                         _LOGGER.debug("trigger %s waiting for state change or event", self.name)
                         notify_type, notify_info = await self.notify_q.get()
@@ -991,11 +1034,13 @@ class TrigInfo:
                 #
                 trig_ok = True
                 new_vars = {}
+                user_kwargs = {}
                 if state_trig_timeout:
                     new_vars, func_args = state_trig_notify_info
                     state_trig_waiting = False
                 elif notify_type == "state":
                     new_vars, func_args = notify_info
+                    user_kwargs = self.state_trigger_kwargs.get("kwargs", {})
 
                     if not ident_any_values_changed(func_args, self.state_trig_ident_any):
                         #
@@ -1077,14 +1122,17 @@ class TrigInfo:
 
                 elif notify_type == "event":
                     func_args = notify_info
+                    user_kwargs = self.event_trigger_kwargs.get("kwargs", {})
                     if self.event_trig_expr:
                         trig_ok = await self.event_trig_expr.eval(notify_info)
                 elif notify_type == "mqtt":
                     func_args = notify_info
+                    user_kwargs = self.mqtt_trigger_kwargs.get("kwargs", {})
                     if self.mqtt_trig_expr:
                         trig_ok = await self.mqtt_trig_expr.eval(notify_info)
 
                 else:
+                    user_kwargs = self.time_trigger_kwargs.get("kwargs", {})
                     func_args = notify_info
 
                 #
@@ -1119,6 +1167,7 @@ class TrigInfo:
                     )
                     continue
 
+                func_args.update(user_kwargs)
                 if self.call_action(notify_type, func_args):
                     last_trig_time = time.monotonic()
 

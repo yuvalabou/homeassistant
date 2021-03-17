@@ -4,6 +4,7 @@ import ast
 import asyncio
 import builtins
 from collections import OrderedDict
+import functools
 import importlib
 import inspect
 import io
@@ -52,7 +53,26 @@ TRIG_DECORATORS = {
     "task_unique",
 }
 
-ALL_DECORATORS = TRIG_DECORATORS.union({"service"})
+TRIG_SERV_DECORATORS = TRIG_DECORATORS.union({"service"})
+
+COMP_DECORATORS = {
+    "pyscript_compile",
+    "pyscript_executor",
+}
+
+TRIGGER_KWARGS = {
+    "context",
+    "event_type",
+    "old_value",
+    "payload",
+    "payload_obj",
+    "qos",
+    "topic",
+    "trigger_type",
+    "trigger_time",
+    "var_name",
+    "value",
+}
 
 
 def ast_eval_exec_factory(ast_ctx, mode):
@@ -74,8 +94,22 @@ def ast_eval_exec_factory(ast_ctx, mode):
                 eval_ast.sym_table = eval_globals
         else:
             eval_ast.sym_table_stack = ast_ctx.sym_table_stack.copy()
-            eval_ast.sym_table = ast_ctx.sym_table
-        eval_ast.curr_func = ast_ctx.curr_func
+            if ast_ctx.sym_table == ast_ctx.global_sym_table:
+                eval_ast.sym_table = ast_ctx.sym_table
+            else:
+                eval_ast.sym_table = ast_ctx.sym_table.copy()
+                eval_ast.sym_table.update(ast_ctx.user_locals)
+                to_delete = set()
+                for var, value in eval_ast.sym_table.items():
+                    if isinstance(value, EvalLocalVar):
+                        if value.is_defined():
+                            eval_ast.sym_table[var] = value.get()
+                        else:
+                            to_delete.add(var)
+                for var in to_delete:
+                    del eval_ast.sym_table[var]
+
+        eval_ast.curr_func = None
         try:
             eval_result = await eval_ast.aeval(eval_ast.ast)
         except Exception as err:
@@ -87,7 +121,17 @@ def ast_eval_exec_factory(ast_ctx, mode):
                 + eval_ast.exception_long
             )
             raise
-        ast_ctx.curr_func = eval_ast.curr_func
+        #
+        # save variables only in the locals scope
+        #
+        if eval_globals is None and eval_ast.sym_table != ast_ctx.sym_table:
+            for var, value in eval_ast.sym_table.items():
+                if var in ast_ctx.global_sym_table and value == ast_ctx.global_sym_table[var]:
+                    continue
+                if var not in ast_ctx.sym_table and (
+                    ast_ctx.curr_func is None or var not in ast_ctx.curr_func.local_names
+                ):
+                    ast_ctx.user_locals[var] = value
         return eval_result
 
     return eval_func
@@ -116,7 +160,20 @@ def ast_locals_factory(ast_ctx):
     """Generate a locals() function with given ast_ctx."""
 
     async def locals_func():
-        return ast_ctx.sym_table
+        if ast_ctx.sym_table == ast_ctx.global_sym_table:
+            return ast_ctx.sym_table
+        local_sym_table = ast_ctx.sym_table.copy()
+        local_sym_table.update(ast_ctx.user_locals)
+        to_delete = set()
+        for var, value in local_sym_table.items():
+            if isinstance(value, EvalLocalVar):
+                if value.is_defined():
+                    local_sym_table[var] = value.get()
+                else:
+                    to_delete.add(var)
+        for var in to_delete:
+            del local_sym_table[var]
+        return local_sym_table
 
     return locals_func
 
@@ -266,8 +323,8 @@ class EvalFunc:
         self.exception = None
         self.exception_obj = None
         self.exception_long = None
-        self.trigger = None
-        self.trigger_service = False
+        self.trigger = []
+        self.trigger_service = set()
         self.has_closure = False
 
     def get_name(self):
@@ -287,63 +344,99 @@ class EvalFunc:
     async def trigger_init(self):
         """Initialize decorator triggers for this function."""
         trig_args = {}
+        trig_decs = {}
         got_reqd_dec = False
+        exc_mesg = f"function '{self.name}' defined in {self.global_ctx_name}"
         trig_decorators_reqd = {
-            "time_trigger",
-            "state_trigger",
             "event_trigger",
             "mqtt_trigger",
+            "state_trigger",
+            "time_trigger",
         }
         arg_check = {
-            "event_trigger": {"arg_cnt": {1, 2}},
-            "mqtt_trigger": {"arg_cnt": {1, 2}},
+            "event_trigger": {"arg_cnt": {1, 2}, "rep_ok": True},
+            "mqtt_trigger": {"arg_cnt": {1, 2}, "rep_ok": True},
             "state_active": {"arg_cnt": {1}},
-            "state_trigger": {"arg_cnt": {"*"}, "type": {list, set}},
+            "state_trigger": {"arg_cnt": {"*"}, "type": {list, set}, "rep_ok": True},
+            "service": {"arg_cnt": {0, "*"}},
             "task_unique": {"arg_cnt": {1}},
-            "time_active": {"arg_cnt": {0, "*"}},
-            "time_trigger": {"arg_cnt": {0, "*"}},
+            "time_active": {"arg_cnt": {"*"}},
+            "time_trigger": {"arg_cnt": {0, "*"}, "rep_ok": True},
+        }
+        kwarg_check = {
+            "event_trigger": {"kwargs": {dict}},
+            "mqtt_trigger": {"kwargs": {dict}},
+            "time_trigger": {"kwargs": {dict}},
+            "task_unique": {"kill_me": {bool, int}},
+            "time_active": {"hold_off": {int, float}},
+            "state_trigger": {
+                "kwargs": {dict},
+                "state_hold": {int, float},
+                "state_check_now": {bool, int},
+                "state_hold_false": {int, float},
+                "watch": {set, list},
+            },
         }
 
-        decorator_used = set()
         for dec in self.decorators:
             dec_name, dec_args, dec_kwargs = dec[0], dec[1], dec[2]
-            if dec_name in decorator_used and "*" not in arg_check.get(dec_name, {"arg_cnt": {}})["arg_cnt"]:
-                self.logger.error(
-                    "%s defined in %s: decorator %s repeated; ignoring decorator",
-                    self.name,
-                    self.global_ctx_name,
-                    dec_name,
-                )
-                continue
-            decorator_used.add(dec_name)
+            if dec_name not in TRIG_SERV_DECORATORS:
+                raise SyntaxError(f"{exc_mesg}: unknown decorator @{dec_name}")
             if dec_name in trig_decorators_reqd:
                 got_reqd_dec = True
-            if dec_name in TRIG_DECORATORS:
-                if dec_name not in trig_args:
-                    trig_args[dec_name] = {}
-                    trig_args[dec_name]["args"] = []
-                if dec_args is not None:
-                    trig_args[dec_name]["args"] += dec_args
-                if dec_kwargs is not None:
-                    if "kwargs" in trig_args[dec_name]:
-                        trig_args[dec_name]["kwargs"].update(dec_kwargs)
-                    else:
-                        trig_args[dec_name]["kwargs"] = dec_kwargs
-            elif dec_name == "service":
-                if dec_args is not None:
-                    self.logger.error(
-                        "%s defined in %s: decorator @service takes no arguments; ignoring decorator",
-                        self.name,
-                        self.global_ctx_name,
+            arg_info = arg_check.get(dec_name, {})
+            #
+            # check that we have the right number of arguments, and that they are
+            # strings
+            #
+            arg_cnt = arg_info["arg_cnt"]
+            if dec_args is None and 0 not in arg_cnt:
+                raise TypeError(f"{exc_mesg}: decorator @{dec_name} needs at least one argument")
+            if dec_args:
+                if "*" not in arg_cnt and len(dec_args) not in arg_cnt:
+                    raise TypeError(
+                        f"{exc_mesg}: decorator @{dec_name} got {len(dec_args)}"
+                        f" argument{'s' if len(dec_args) > 1 else ''}, expected"
+                        f" {' or '.join([str(cnt) for cnt in sorted(arg_cnt)])}"
                     )
-                    continue
-                if self.name in (SERVICE_RELOAD, SERVICE_JUPYTER_KERNEL_START):
-                    self.logger.error(
-                        "function '%s' in %s with @service conflicts with builtin service; ignoring (please rename function)",
-                        self.name,
-                        self.global_ctx_name,
+                for arg_num, arg in enumerate(dec_args):
+                    if isinstance(arg, str):
+                        continue
+                    mesg = "string"
+                    if "type" in arg_info:
+                        if type(arg) in arg_info["type"]:
+                            for val in arg:
+                                if not isinstance(val, str):
+                                    break
+                            else:
+                                continue
+                            mesg += ", or " + ", or ".join(
+                                sorted([ok_type.__name__ for ok_type in arg_info["type"]])
+                            )
+                    raise TypeError(
+                        f"{exc_mesg}: decorator @{dec_name} argument {arg_num + 1} should be a {mesg}"
                     )
-                    return
+            if arg_cnt == {1}:
+                dec_args = dec_args[0]
+
+            if dec_name not in kwarg_check and dec_kwargs is not None:
+                raise TypeError(f"{exc_mesg}: decorator @{dec_name} doesn't take keyword arguments")
+            if dec_kwargs is None:
+                dec_kwargs = {}
+            if dec_name in kwarg_check:
+                allowed = kwarg_check[dec_name]
+                for arg, value in dec_kwargs.items():
+                    if arg not in allowed:
+                        raise TypeError(
+                            f"{exc_mesg}: decorator @{dec_name} invalid keyword argument '{arg}'"
+                        )
+                    if value is None or type(value) in allowed[arg]:
+                        continue
+                    ok_types = " or ".join(sorted([t.__name__ for t in allowed[arg]]))
+                    raise TypeError(
+                        f"{exc_mesg}: decorator @{dec_name} keyword '{arg}' should be type {ok_types}"
+                    )
+            if dec_name == "service":
                 desc = self.doc_string
                 if desc is None or desc == "":
                     desc = f"pyscript function {self.name}()"
@@ -390,103 +483,26 @@ class EvalFunc:
 
                     return pyscript_service_handler
 
-                Function.service_register(DOMAIN, self.name, pyscript_service_factory(self.name, self))
-                async_set_service_schema(Function.hass, DOMAIN, self.name, service_desc)
-                self.trigger_service = True
-            else:
-                self.logger.warning(
-                    "%s defined in %s: unknown decorator @%s: ignored",
-                    self.name,
-                    self.global_ctx_name,
-                    dec_name,
-                )
-
-        for dec_name in TRIG_DECORATORS:
-            if dec_name in trig_args and len(trig_args[dec_name]["args"]) == 0:
-                trig_args[dec_name]["args"] = None
-
-        #
-        # check that we have the right number of arguments, and that they are
-        # strings
-        #
-        for dec_name, arg_info in arg_check.items():
-            arg_cnt = arg_info["arg_cnt"]
-            if dec_name not in trig_args:
-                continue
-            if trig_args[dec_name]["args"] is None:
-                if 0 not in arg_cnt:
-                    self.logger.error(
-                        "%s defined in %s: decorator @%s needs at least one argument; ignoring decorator",
-                        self.name,
-                        self.global_ctx_name,
-                        dec_name,
+                for srv_name in dec_args if dec_args else [f"{DOMAIN}.{self.name}"]:
+                    if type(srv_name) is not str or srv_name.count(".") != 1:
+                        raise ValueError(f"{exc_mesg}: @service argument must be a string with one period")
+                    domain, name = srv_name.split(".", 1)
+                    if name in (SERVICE_RELOAD, SERVICE_JUPYTER_KERNEL_START):
+                        raise SyntaxError(f"{exc_mesg}: @service conflicts with builtin service")
+                    Function.service_register(
+                        self.global_ctx_name, domain, name, pyscript_service_factory(self.name, self)
                     )
-                    del trig_args[dec_name]
+                    async_set_service_schema(Function.hass, domain, name, service_desc)
+                    self.trigger_service.add(srv_name)
                 continue
-            if "*" not in arg_cnt and len(trig_args[dec_name]["args"]) not in arg_cnt:
-                self.logger.error(
-                    "%s defined in %s: decorator @%s got %d argument%s, expected %s; ignoring decorator",
-                    self.name,
-                    self.global_ctx_name,
-                    dec_name,
-                    len(trig_args[dec_name]["args"]),
-                    "s" if len(trig_args[dec_name]["args"]) > 1 else "",
-                    " or ".join([str(cnt) for cnt in sorted(arg_cnt)]),
-                )
-                del trig_args[dec_name]
-                continue
-            for arg_num, arg in enumerate(trig_args[dec_name]["args"]):
-                if isinstance(arg, str):
-                    continue
-                mesg = "string"
-                if "type" in arg_info:
-                    if type(arg) in arg_info["type"]:
-                        for val in arg:
-                            if not isinstance(val, str):
-                                break
-                        else:
-                            continue
-                        mesg += ", or " + ", or ".join(
-                            sorted([ok_type.__name__ for ok_type in arg_info["type"]])
-                        )
-                self.logger.error(
-                    "%s defined in %s: decorator @%s argument %d should be a %s; ignoring decorator",
-                    self.name,
-                    self.global_ctx_name,
-                    dec_name,
-                    arg_num + 1,
-                    mesg,
-                )
-                del trig_args[dec_name]
-                continue
-            if arg_cnt == {1}:
-                trig_args[dec_name]["args"] = trig_args[dec_name]["args"][0]
 
-        kwarg_check = {
-            "task_unique": {"kill_me"},
-            "time_active": {"hold_off"},
-            "state_trigger": {"state_hold", "state_check_now", "state_hold_false"},
-        }
-        for dec_name in trig_args:
-            if dec_name not in kwarg_check and "kwargs" in trig_args[dec_name]:
-                self.logger.error(
-                    "%s defined in %s: decorator @%s doesn't take keyword arguments; ignored",
-                    self.name,
-                    self.global_ctx_name,
-                    dec_name,
-                )
-            if dec_name in kwarg_check and "kwargs" in trig_args[dec_name]:
-                used_kw = set(trig_args[dec_name]["kwargs"].keys())
-                if not used_kw.issubset(kwarg_check[dec_name]):
-                    self.logger.error(
-                        "%s defined in %s: decorator @%s valid keyword arguments are: %s; others ignored",
-                        self.name,
-                        self.global_ctx_name,
-                        dec_name,
-                        ", ".join(sorted(kwarg_check[dec_name])),
-                    )
+            if dec_name not in trig_decs:
+                trig_decs[dec_name] = []
+            if len(trig_decs[dec_name]) > 0 and "rep_ok" not in arg_info:
+                raise SyntaxError(f"{exc_mesg}: decorator @{dec_name} can only be used once")
+            trig_decs[dec_name].append({"args": dec_args, "kwargs": dec_kwargs})
 
-        if not got_reqd_dec and len(trig_args) > 0:
+        if not got_reqd_dec and len(trig_decs) > 0:
             self.logger.error(
                 "%s defined in %s: needs at least one trigger decorator (ie: %s)",
                 self.name,
@@ -495,32 +511,55 @@ class EvalFunc:
             )
             return
 
-        if len(trig_args) == 0:
-            if self.trigger_service:
+        if len(trig_decs) == 0:
+            if len(self.trigger_service) > 0:
                 self.global_ctx.trigger_register(self)
             return
 
-        trig_args["action"] = self
-        trig_args["global_sym_table"] = self.global_ctx.global_sym_table
+        #
+        # start one or more triggers until they are all consumed
+        # each trigger task can handle at most one of each type of
+        # trigger; all get the same state_active, time_active and
+        # task_unique decorators
+        #
+        while True:
+            trig_args = {
+                "action": self,
+                "global_sym_table": self.global_ctx.global_sym_table,
+            }
+            got_trig = False
+            for trig in trig_decorators_reqd:
+                if trig not in trig_decs or len(trig_decs[trig]) == 0:
+                    continue
+                trig_args[trig] = trig_decs[trig].pop(0)
+                got_trig = True
+            if not got_trig:
+                break
+            for dec_name in {"state_active", "time_active", "task_unique"}:
+                if dec_name in trig_decs:
+                    trig_args[dec_name] = trig_decs[dec_name][0]
 
-        self.trigger = self.global_ctx.get_trig_info(f"{self.global_ctx_name}.{self.name}", trig_args)
+            self.trigger.append(
+                self.global_ctx.get_trig_info(f"{self.global_ctx_name}.{self.name}", trig_args)
+            )
+
         if self.global_ctx.trigger_register(self):
             self.trigger_start()
 
     def trigger_start(self):
         """Start any triggers for this function."""
-        if self.trigger:
-            self.trigger.start()
+        for trigger in self.trigger:
+            trigger.start()
 
     def trigger_stop(self):
         """Stop any triggers for this function."""
-        if self.trigger:
-            trigger = self.trigger
-            self.trigger = None
+        for trigger in self.trigger:
             trigger.stop()
-        if self.trigger_service:
-            self.trigger_service = False
-            Function.service_remove(DOMAIN, self.name)
+        self.trigger = []
+        for srv_name in self.trigger_service:
+            domain, name = srv_name.split(".", 1)
+            Function.service_remove(self.global_ctx_name, domain, name)
+        self.trigger_service = set()
 
     async def eval_decorators(self, ast_ctx):
         """Evaluate the function decorators arguments."""
@@ -533,12 +572,12 @@ class EvalFunc:
             if (
                 isinstance(dec, ast.Call)
                 and isinstance(dec.func, ast.Name)
-                and dec.func.id in ALL_DECORATORS
+                and dec.func.id in TRIG_SERV_DECORATORS
             ):
                 args = [await ast_ctx.aeval(arg) for arg in dec.args]
                 kwargs = {keyw.arg: await ast_ctx.aeval(keyw.value) for keyw in dec.keywords}
                 dec_trig.append([dec.func.id, args, kwargs if len(kwargs) > 0 else None])
-            elif isinstance(dec, ast.Name) and dec.id in ALL_DECORATORS:
+            elif isinstance(dec, ast.Name) and dec.id in TRIG_SERV_DECORATORS:
                 dec_trig.append([dec.id, None, None])
             else:
                 dec_other.append(await ast_ctx.aeval(dec))
@@ -663,6 +702,12 @@ class EvalFunc:
             sym_table[var_name] = val
         if self.func_def.args.kwarg:
             sym_table[self.func_def.args.kwarg.arg] = kwargs
+        elif not set(kwargs.keys()).issubset(TRIGGER_KWARGS):
+            # don't raise an exception for extra trigger keyword parameters;
+            # it's difficult to apply this exception to just trigger functions
+            # since they could have non-trigger decorators too
+            unexpected = ", ".join(sorted(set(kwargs.keys()) - TRIGGER_KWARGS))
+            raise TypeError(f"{self.name}() called with unexpected keyword arguments: {unexpected}")
         if self.func_def.args.vararg:
             if len(args) > len(self.func_def.args.args):
                 sym_table[self.func_def.args.vararg.arg] = tuple(args[len(self.func_def.args.args) :])
@@ -701,6 +746,8 @@ class EvalFunc:
         self.exception_obj = None
         self.exception_long = None
         prev_func = ast_ctx.curr_func
+        save_user_locals = ast_ctx.user_locals
+        ast_ctx.user_locals = {}
         ast_ctx.curr_func = self
         del args, kwargs
         for arg1 in self.func_def.body:
@@ -713,6 +760,7 @@ class EvalFunc:
             if ast_ctx.get_exception_obj():
                 break
         ast_ctx.curr_func = prev_func
+        ast_ctx.user_locals = save_user_locals
         ast_ctx.code_str, ast_ctx.code_list = code_str, code_list
         if prev_sym_table is not None:
             (
@@ -801,6 +849,7 @@ class AstEval:
         self.sym_table_stack = []
         self.sym_table = self.global_sym_table
         self.local_sym_table = {}
+        self.user_locals = {}
         self.curr_func = None
         self.filename = name
         self.code_str = None
@@ -996,21 +1045,59 @@ class AstEval:
 
     async def ast_functiondef(self, arg):
         """Evaluate function definition."""
+        other_dec = []
+        dec_name = None
+        pyscript_compile = None
         for dec in arg.decorator_list:
-            if isinstance(dec, ast.Name):
-                if dec.id != "pyscript_compile":
-                    continue
-                arg.decorator_list = []
-                local_var = None
-                if arg.name in self.sym_table and isinstance(self.sym_table[arg.name], EvalLocalVar):
-                    local_var = self.sym_table[arg.name]
-                code = compile(ast.Module(body=[arg], type_ignores=[]), filename=self.filename, mode="exec")
-                exec(code, self.global_sym_table, self.sym_table)  # pylint: disable=exec-used
-                if local_var:
-                    func = self.sym_table[arg.name]
-                    self.sym_table[arg.name] = local_var
-                    self.sym_table[arg.name].set(func)
-                return
+            if isinstance(dec, ast.Name) and dec.id in COMP_DECORATORS:
+                dec_name = dec.id
+            elif (
+                isinstance(dec, ast.Call)
+                and isinstance(dec.func, ast.Name)
+                and dec.func.id in COMP_DECORATORS
+            ):
+                dec_name = dec.func.id
+            else:
+                other_dec.append(dec)
+                continue
+            if pyscript_compile:
+                raise SyntaxError(
+                    f"can only specify single decorator of {', '.join(sorted(COMP_DECORATORS))}"
+                )
+            pyscript_compile = dec
+
+        if pyscript_compile:
+            if isinstance(pyscript_compile, ast.Call):
+                if len(pyscript_compile.args) > 0:
+                    raise TypeError(f"@{dec_name}() takes 0 positional arguments")
+                if len(pyscript_compile.keywords) > 0:
+                    raise TypeError(f"@{dec_name}() takes no keyword arguments")
+            arg.decorator_list = other_dec
+            local_var = None
+            if arg.name in self.sym_table and isinstance(self.sym_table[arg.name], EvalLocalVar):
+                local_var = self.sym_table[arg.name]
+            code = compile(ast.Module(body=[arg], type_ignores=[]), filename=self.filename, mode="exec")
+            exec(code, self.global_sym_table, self.sym_table)  # pylint: disable=exec-used
+
+            func = self.sym_table[arg.name]
+            if dec_name == "pyscript_executor":
+                if not asyncio.iscoroutinefunction(func):
+
+                    def executor_wrap_factory(func):
+                        async def executor_wrap(*args, **kwargs):
+                            return await Function.hass.async_add_executor_job(
+                                functools.partial(func, **kwargs), *args
+                            )
+
+                        return executor_wrap
+
+                    self.sym_table[arg.name] = executor_wrap_factory(func)
+                else:
+                    raise TypeError("@pyscript_executor() needs a regular, not async, function")
+            if local_var:
+                self.sym_table[arg.name] = local_var
+                self.sym_table[arg.name].set(func)
+            return
 
         func = EvalFunc(arg, self.code_list, self.code_str, self.global_ctx)
         await func.eval_defaults(self)
@@ -1278,11 +1365,13 @@ class AstEval:
             if isinstance(lhs.slice, ast.Index):
                 ind = await self.aeval(lhs.slice.value)
                 var[ind] = val
-            else:
+            elif isinstance(lhs.slice, ast.Slice):
                 lower = await self.aeval(lhs.slice.lower) if lhs.slice.lower else None
                 upper = await self.aeval(lhs.slice.upper) if lhs.slice.upper else None
                 step = await self.aeval(lhs.slice.step) if lhs.slice.step else None
                 var[slice(lower, upper, step)] = val
+            else:
+                var[await self.aeval(lhs.slice)] = val
         else:
             var_name = await self.aeval(lhs)
             if isinstance(var_name, EvalAttrSet):
@@ -1347,7 +1436,7 @@ class AstEval:
                         step = await self.aeval(arg1.slice.step)
                     del var[slice(lower, upper, step)]
                 else:
-                    raise NotImplementedError(f"{self.name}: not implemented slice type {arg1.slice} in del")
+                    del var[await self.aeval(arg1.slice)]
             elif isinstance(arg1, ast.Name):
                 if self.curr_func and arg1.id in self.curr_func.global_names:
                     if arg1.id in self.global_sym_table:
@@ -1737,8 +1826,8 @@ class AstEval:
                 upper = (await self.aeval(arg.slice.upper)) if arg.slice.upper else None
                 step = (await self.aeval(arg.slice.step)) if arg.slice.step else None
                 return var[slice(lower, upper, step)]
-        else:
-            return None
+            return var[await self.aeval(arg.slice)]
+        return None
 
     async def ast_index(self, arg):
         """Evaluate index."""
@@ -1925,6 +2014,8 @@ class AstEval:
                 await self.get_names_set(arg.func, names, nonlocal_names, global_names, local_names)
                 for this_arg in arg.args:
                     await self.get_names_set(this_arg, names, nonlocal_names, global_names, local_names)
+                for this_arg in arg.keywords or []:
+                    await self.get_names_set(this_arg, names, nonlocal_names, global_names, local_names)
                 return
             elif cls_name in {"FunctionDef", "ClassDef", "AsyncFunctionDef"}:
                 local_names.add(arg.name)
@@ -2000,7 +2091,7 @@ class AstEval:
         """Format an multi-line exception message using lineno if available."""
         if code_list is None:
             code_list = self.code_list
-        if lineno is not None:
+        if lineno is not None and lineno <= len(code_list):
             if short:
                 mesg = f"In <{self.filename}> line {lineno}:\n"
                 mesg += "    " + code_list[lineno - 1]
@@ -2013,6 +2104,11 @@ class AstEval:
         else:
             mesg = f"Exception in <{self.filename}>:\n"
             mesg += f"{type(exc).__name__}: {exc}"
+        #
+        # to get a more detailed traceback on exception (eg, when chasing an internal
+        # error), add an "import traceback" above, and uncomment this next line
+        #
+        # return mesg + "\n" + traceback.format_exc(-1)
         return mesg
 
     def get_exception(self):
