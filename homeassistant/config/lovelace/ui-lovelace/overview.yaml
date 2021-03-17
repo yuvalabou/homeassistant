@@ -240,12 +240,17 @@ cards:
             name: inside
             align_controls: right
 
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - switch.night_light_override
-      - switch.disable_auto_clean
-      - switch.kettle
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.night_light_override
+      - type: custom:button-card
+        entity: switch.disable_auto_clean
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.kettle
 
   - type: custom:auto-entities
     card:
