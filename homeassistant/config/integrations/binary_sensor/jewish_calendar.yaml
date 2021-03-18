@@ -15,6 +15,7 @@
           mdi:food
         {% endif %}
     is_omer:
+      friendly_name: "עומר"
       # Return True when it is Omer today
       value_template: >-
         {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}

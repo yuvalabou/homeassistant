@@ -13,6 +13,7 @@
 - platform: template
   sensors:
     is_friday:
-      friendly_name: mdi:calendar-today
+      friendly_name: "Friday"
       value_template: >-
         {{ now().weekday() == 4 }}
+      icon_template: mdi:calendar-today
