@@ -17,7 +17,8 @@ client = mqtt.Client()
 def state() -> str:
     """Return the state of the sensor."""
     for item in FEED.entries:
-        last_updated = str(dt.strptime(item.guid, "%a, %d %b %Y %H:%M:%S GMT"))
+        last_updated = str(item.guid).replace("Country ", "")
+        last_updated = str(dt.strptime(last_updated, "%a, %d %b %Y %H:%M:%S GMT"))
 
         return last_updated
 
