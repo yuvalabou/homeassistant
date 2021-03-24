@@ -4,6 +4,10 @@ notify_for_shabbat:
   alias: "Notify for Shabbat"
   description: "Give a Shabbat brief on a media device using tts"
   sequence:
+    - service: media_player.volume_set
+      entity_id: media_player.googlehome3668
+      data:
+        volume_level: 0.8
     - delay: 3
     - service: notify.nest_mini
       data:

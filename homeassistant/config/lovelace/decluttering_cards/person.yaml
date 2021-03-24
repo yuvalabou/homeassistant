@@ -1,0 +1,85 @@
+---
+
+person:
+  card:
+    type: picture-elements
+    image: '/local/assets/[[name]].jpg'
+    elements:
+      - type: state-label
+        entity: sensor.[[name]]_battery_level
+        style:
+          top: 11%
+          right: -2%
+      - type: state-icon
+        entity: sensor.[[name]]_battery_level
+        style:
+          top: 10%
+          right: -10%
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.workday_sensor
+            state: 'on'
+          - entity: person.[[name]]
+            state: 'home'
+          - entity: binary_sensor.day
+            state: 'on'
+        elements:
+          - type: state-icon
+            entity: sensor.[[name]]_from_home_to_work
+            icon: mdi:home-export-outline
+            style:
+              top: 60%
+              right: -1%
+              '--paper-item-icon-color': white
+              transform: scale(0.8)
+          - type: state-label
+            entity: sensor.[[name]]_from_home_to_work
+            style:
+              top: 68.5%
+              right: -1%
+              weight: 50px
+              color: white
+              font-weight: 300
+              font-size: 12px
+      - type: conditional
+        conditions:
+          - entity: person.[[name]]
+            state: 'not_home'
+        elements:
+          - type: state-icon
+            entity: sensor.[[name]]_current_location_to_home
+            icon: mdi:car
+            style:
+              top: 60%
+              right: -1%
+              '--paper-item-icon-color': white
+              transform: scale(0.8)
+          - type: state-label
+            entity: sensor.[[name]]_current_location_to_home
+            style:
+              top: 68.5%
+              right: -1%
+              weight: 50px
+              color: white
+              font-weight: 300
+              font-size: 12px
+      - type: state-label
+        entity: sensor.[[name]]_geocoded_location
+        attribute: Thoroughfare
+        style:
+          bottom: 8%
+          right: -18%
+          weight: 200px
+          color: white
+          font-weight: 300
+          font-size: 16px
+      - type: state-label
+        entity: sensor.[[name]]_geocoded_location
+        attribute: Locality
+        style:
+          bottom: 3%
+          right: -12.5%
+          weight: 200px
+          color: white
+          font-weight: 300
+          font-size: 12px

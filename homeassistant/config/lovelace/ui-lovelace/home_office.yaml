@@ -5,7 +5,7 @@ title: "Home Office"
 icon: mdi:desk
 cards:
 #  - type: custom:decluttering-card
-#    template: multisensor_card
+#    template: multisensor
 #    variables:
 #      - room: home_office
 

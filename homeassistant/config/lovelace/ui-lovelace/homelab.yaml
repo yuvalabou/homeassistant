@@ -37,7 +37,6 @@ cards:
           - cpu_usage: npn2_cpu_used
           - cpu_temps: npn2_cpu_thermal_1_temperature
           - ram_usage: npn2_ram_used_percent
-          - storage: npn2_etc_hostname_used_percent
 
   - type: entities
     title: "RaspberryPi 2"

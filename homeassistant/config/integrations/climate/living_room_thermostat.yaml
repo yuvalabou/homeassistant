@@ -7,7 +7,7 @@
   target_sensor: sensor.living_room_temperature
   min_temp: 22
   max_temp: 26
-  target_temp: 25
+  target_temp: 24
   min_cycle_duration:
     minutes: 5
   keep_alive:

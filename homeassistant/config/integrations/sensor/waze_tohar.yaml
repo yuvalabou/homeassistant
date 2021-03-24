@@ -1,0 +1,22 @@
+---
+
+- platform: waze_travel_time
+  name: "Tohar - From home to work"
+  origin: !secret home_coordinates
+  destination: !secret tohar_work_coordinates
+  region: 'IL'
+  avoid_toll_roads: true
+
+- platform: waze_travel_time
+  name: "Tohar - From work to home"
+  origin: !secret tohar_work_coordinates
+  destination: !secret home_coordinates
+  region: 'IL'
+  avoid_toll_roads: true
+
+- platform: waze_travel_time
+  name: "Tohar - Current location to home"
+  origin: device_tracker.tohar
+  destination: !secret home_coordinates
+  region: 'IL'
+  avoid_toll_roads: true

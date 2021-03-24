@@ -1,6 +1,6 @@
 ---
 
-multisensor_card:
+multisensor:
   card:
     type: entities
     show_header_toggle: false
