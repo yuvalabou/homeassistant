@@ -17,3 +17,8 @@
       value_template: >-
         {{ now().weekday() == 4 }}
       icon_template: mdi:calendar-today
+    is_sunday:
+      friendly_name: "Sunday"
+      value_template: >-
+        {{ now().weekday() == 6 }}
+      icon_template: mdi:calendar-today

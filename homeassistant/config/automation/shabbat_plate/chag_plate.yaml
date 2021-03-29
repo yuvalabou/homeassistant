@@ -55,3 +55,5 @@
     service: switch.turn_on
     data:
       entity_id: switch.shabbat_plate
+
+# TODO: add chag after Shabbat logic

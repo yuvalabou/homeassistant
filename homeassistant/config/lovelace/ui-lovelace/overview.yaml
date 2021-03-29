@@ -130,7 +130,7 @@ cards:
       show_header_toggle: false
       entities:
         - switch.shabbat_mode
-        - switch.shabbat_plate
+        - switch.shabbat_plate #TODO: Change icon to mdi-pot/mdi:pot-steam and move to sparate kitchen tab 
         - type: custom:time-picker-card
           entity: input_datetime.shabbat_lights_off_time
           link_values: true
@@ -146,7 +146,7 @@ cards:
       - type: custom:button-card
         entity: switch.disable_auto_clean
 
-  - type: horizontal-stack
+  - type: horizontal-stack #TODO: Change icon to mdi:kettle and move to sparate kitchen tab 
     cards:
       - type: custom:button-card
         entity: switch.kettle

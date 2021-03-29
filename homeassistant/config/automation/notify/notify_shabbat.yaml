@@ -4,7 +4,7 @@
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
   trigger:
     platform: state
-    entity_id: binary_sensor.shabbat_notification_trigger_30m
+    entity_id: binary_sensor.shabbat_notification_trigger_30m # TODO: Chande trigger to template from sensor
     to: 'on'
   condition:
     - condition: time
@@ -22,7 +22,7 @@
   id: 1145acf8-55b2-4564-bab8-94090f75d7d5
   trigger:
     platform: state
-    entity_id: binary_sensor.shabbat_notification_trigger_10m
+    entity_id: binary_sensor.shabbat_notification_trigger_10m # TODO: Chande trigger to template from sensor
     to: 'on'
   condition:
     - condition: time

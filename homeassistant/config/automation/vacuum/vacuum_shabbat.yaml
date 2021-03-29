@@ -5,7 +5,9 @@
   trigger:
     platform: time
     at: '11:00:00'
-  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    - "{{ is_state('group.person', 'home') }}"
   action:
     service: vacuum.start
     data:

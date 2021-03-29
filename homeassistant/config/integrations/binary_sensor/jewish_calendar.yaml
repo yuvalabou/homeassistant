@@ -48,3 +48,10 @@
           float + (30*60) - (7200) ) |
           timestamp_custom("%H:%M:%S")
         }}
+
+# {{
+#   strptime(
+#     states('sensor.jewish_calendar_upcoming_candle_lighting'), '%H:%M') - timedelta( minutes = 10 ) <=
+#   strptime(
+#     states('sensor.time'), '%H:%M')
+# }} # TODO: Check this template from the post - https://www.facebook.com/groups/801414950005336/permalink/2518534924959988
