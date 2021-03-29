@@ -43,7 +43,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |1           |9      |20         |
+|YAML           |1           |9      |21         |
 
 -----
 
@@ -86,6 +86,7 @@
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod) - Apply CSS styles to any card
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
+- [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
