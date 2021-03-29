@@ -1,36 +1,34 @@
 ---
 
-- alias: "Notify for candles"
+- alias: "Shabbat notifications"
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
+  description: "Notify 30 minutes and 10 minutes before Shabbat"
   trigger:
-    platform: state
-    entity_id: binary_sensor.shabbat_notification_trigger_30m # TODO: Chande trigger to template from sensor
-    to: 'on'
+    - platform: state
+      entity_id: binary_sensor.shabbat_notification_trigger_30m
+      to: 'on'
+    - platform: state
+      entity_id: binary_sensor.shabbat_notification_trigger_10m
+      to: 'on'
   condition:
     - condition: time
       weekday:
         - fri
     - "{{ is_state('group.person', 'home') }}"
   action:
-    - service: notify.mobile_app_yuval
-      data:
-        title: "שבת שלום!"
-        message: "זכרת להכין מיחם ונרות?"
-    - service: script.notify_for_shabbat
-
-- alias: "Notify for Shabbat"
-  id: 1145acf8-55b2-4564-bab8-94090f75d7d5
-  trigger:
-    platform: state
-    entity_id: binary_sensor.shabbat_notification_trigger_10m # TODO: Chande trigger to template from sensor
-    to: 'on'
-  condition:
-    - condition: time
-      weekday:
-        - fri
-    - "{{ is_state('group.person', 'home') }}"
-  action:
-    service: notify.family
-    data:
-      title: "שבת שלום!"
-      message: "שבת נכנסת בעוד 10 דקות."
+    - choose:
+        - conditions:
+            - "{{ is_state('binary_sensor.shabbat_notification_trigger_30m', 'on') }}"
+          sequence:
+            - service: notify.mobile_app_yuval
+              data:
+                title: "שבת שלום!"
+                message: "זכרת להכין מיחם ונרות?"
+            - service: script.notify_for_shabbat
+        - conditions:
+            - "{{ is_state('binary_sensor.shabbat_notification_trigger_10m', 'on') }}"
+          sequence:
+            - service: notify.family
+              data:
+                title: "שבת שלום!"
+                message: "שבת נכנסת בעוד 10 דקות."

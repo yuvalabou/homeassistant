@@ -3,8 +3,8 @@
 - alias: "Plate - Shabbat enter"
   description: >-
     "Precoution for Shabbat after Chag,
-    Turn-on the plate if it's off,
-    If its on it dosn't matter"
+     Turn-on the plate if it's off,
+     If its on it dosn't matter"
   id: 175ea9fb-d7b6-419f-992d-a7cea43a7420
   trigger:
     platform: sun
@@ -34,7 +34,7 @@
   trigger:
     platform: sun
     event: sunset
-    offset: '-03:00:00'
+    offset: '-03:30:00'
   condition:
     - condition: time
       weekday:

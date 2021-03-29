@@ -11,4 +11,4 @@
   action:
     service: notify.nest_mini
     data:
-      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_from_work_to_home') }} דקות"
+      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_current_location_to_home') }} דקות"
