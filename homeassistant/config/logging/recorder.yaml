@@ -11,13 +11,20 @@ exclude:
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.ims_daily
-    - sensor.openweathermap_forecast_time
     - sensor.openweathermap_weather_code
     - sensor.omv_mmcblk0
+    - sensor.random_number
+    - sensor.hacs
+
+    - binary_sensor.random_boolean
   entity_globs:
     - sensor.count_*
     - sensor.skin_type_*
+    - sensor.openweathermap_forecast_*
+
+    - binary_sensor.is_*
   domains:
     - sun
     - weather
     - updater
+    - timer
