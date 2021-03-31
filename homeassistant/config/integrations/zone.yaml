@@ -11,3 +11,9 @@
   longitude: !secret yuval_work_lon
   radius: 200
   icon: mdi:briefcase
+
+- name: "Tohar work"
+  latitude: !secret tohar_work_lat
+  longitude: !secret tohar_work_lon
+  radius: 200
+  icon: mdi:briefcase
