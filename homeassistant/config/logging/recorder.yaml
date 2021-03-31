@@ -12,7 +12,6 @@ exclude:
     - sensor.myip
     - sensor.ims_daily
     - sensor.openweathermap_weather_code
-    - sensor.omv_mmcblk0
     - sensor.random_number
     - sensor.hacs
 

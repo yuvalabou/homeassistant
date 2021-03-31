@@ -10,11 +10,19 @@ exclude:
     - sensor.myip
     - sensor.ims_daily
     - sensor.hacs
+    - sensor.random_number
+    - sensor.openweathermap_weather_code
+    - sensor.tod_day
+
+    - binary_sensor.random_boolean
+    - binary_sensor.day
+    - binary_sensor.night
   entity_globs:
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.skin_type_*
     - sensor.*_formatted
+    - sensor.openweathermap_forecast_*
 
     - binary_sensor.*_notification_trigger
     - binary_sensor.is_*
