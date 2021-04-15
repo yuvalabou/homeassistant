@@ -1,35 +1,29 @@
 """Config flow to configure OpenMediaVault."""
 
-import logging
-
 import voluptuous as vol
-from homeassistant.config_entries import (
-    CONN_CLASS_LOCAL_POLL,
-    ConfigFlow,
-)
+import logging
+_LOGGER = logging.getLogger(__name__)
+from homeassistant.config_entries import CONN_CLASS_LOCAL_POLL, ConfigFlow
 from homeassistant.const import (
-    CONF_NAME,
     CONF_HOST,
-    CONF_USERNAME,
+    CONF_NAME,
     CONF_PASSWORD,
     CONF_SSL,
+    CONF_VERIFY_SSL,
+    CONF_USERNAME,
 )
 from homeassistant.core import callback
 
 from .const import (
-    DOMAIN,
-    DEFAULT_HOST,
-    DEFAULT_USERNAME,
-    DEFAULT_PASSWORD,
     DEFAULT_DEVICE_NAME,
+    DEFAULT_HOST,
+    DEFAULT_PASSWORD,
     DEFAULT_SSL,
-    CONF_SSL_VERIFY,
     DEFAULT_SSL_VERIFY,
+    DEFAULT_USERNAME,
+    DOMAIN,
 )
 from .omv_api import OpenMediaVaultAPI
-
-_LOGGER = logging.getLogger(__name__)
-
 
 # ---------------------------
 #   configured_instances
@@ -43,19 +37,19 @@ def configured_instances(hass):
 
 
 # ---------------------------
-#   OpenMediaVaultConfigFlow
+#   OMVConfigFlow
 # ---------------------------
-class OpenMediaVaultConfigFlow(ConfigFlow, domain=DOMAIN):
-    """OpenMediaVaultConfigFlow class"""
+class OMVConfigFlow(ConfigFlow, domain=DOMAIN):
+    """OMVConfigFlow class."""
 
     VERSION = 1
     CONNECTION_CLASS = CONN_CLASS_LOCAL_POLL
 
     def __init__(self):
-        """Initialize OpenMediaVaultConfigFlow."""
+        """Initialize OMVConfigFlow."""
 
     async def async_step_import(self, user_input=None):
-        """Occurs when a previously entry setup fails and is re-initiated."""
+        """Occurs when a previous entry setup fails and is re-initiated."""
         return await self.async_step_user(user_input)
 
     async def async_step_user(self, user_input=None):
@@ -67,15 +61,15 @@ class OpenMediaVaultConfigFlow(ConfigFlow, domain=DOMAIN):
                 errors["base"] = "name_exists"
 
             # Test connection
-            api = OpenMediaVaultAPI(
-                self.hass,
-                host=user_input[CONF_HOST],
-                username=user_input[CONF_USERNAME],
-                password=user_input[CONF_PASSWORD],
-                use_ssl=user_input[CONF_SSL],
-                verify_ssl=user_input[CONF_SSL_VERIFY],
-            )
-            if not api.connect():
+            api = await self.hass.async_add_executor_job(OpenMediaVaultAPI, self.hass,
+                user_input[CONF_HOST],
+                user_input[CONF_USERNAME],
+                user_input[CONF_PASSWORD],
+                user_input[CONF_SSL],
+                user_input[CONF_VERIFY_SSL])
+
+            if not await self.hass.async_add_executor_job(api.connect):
+                _LOGGER.error("OpenMediaVault %s connect error", api.error)
                 errors[CONF_HOST] = api.error
 
             # Save instance
@@ -93,16 +87,13 @@ class OpenMediaVaultConfigFlow(ConfigFlow, domain=DOMAIN):
                 CONF_USERNAME: DEFAULT_USERNAME,
                 CONF_PASSWORD: DEFAULT_PASSWORD,
                 CONF_SSL: DEFAULT_SSL,
-                CONF_SSL_VERIFY: DEFAULT_SSL_VERIFY,
+                CONF_VERIFY_SSL: DEFAULT_SSL_VERIFY,
             },
             errors=errors,
         )
 
-    # ---------------------------
-    #   _show_config_form
-    # ---------------------------
     def _show_config_form(self, user_input, errors=None):
-        """Show the configuration form to edit data."""
+        """Show the configuration form."""
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
@@ -113,7 +104,7 @@ class OpenMediaVaultConfigFlow(ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_PASSWORD, default=user_input[CONF_PASSWORD]): str,
                     vol.Optional(CONF_SSL, default=user_input[CONF_SSL]): bool,
                     vol.Optional(
-                        CONF_SSL_VERIFY, default=user_input[CONF_SSL_VERIFY]
+                        CONF_VERIFY_SSL, default=user_input[CONF_VERIFY_SSL]
                     ): bool,
                 }
             ),

@@ -1,26 +1,26 @@
 {
     "config": {
-        "error": {
-            "cannot_connect": "Cannot connect to OpenMediaVault.",
-            "connection_timeout": "OpenMediaVault connection timeout.",
-            "name_exists": "Name already exists.",
-            "ssl_verify_failed": "SSL certificate verify failed.",
-            "wrong_login": "Invalid user name or password."
-        },
+        "title": "OpenMediaVault",
         "step": {
             "user": {
-                "data": {
-                    "host": "Host",
-                    "name": "Name of the integration",
-                    "password": "Password",
-                    "ssl": "Use SSL",
-                    "username": "Username",
-                    "verify_ssl": "Verify SSL certificate"
-                },
+                "title": "OpenMediaVault",
                 "description": "Set up OpenMediaVault integration.",
-                "title": "OpenMediaVault"
+                "data": {
+                    "name": "Name of the integration",
+                    "host": "[%key:common::config_flow::data::host%]",
+                    "username": "[%key:common::config_flow::data::username%]",
+                    "password": "[%key:common::config_flow::data::password%]",
+                    "ssl": "[%key:common::config_flow::data::ssl%]",
+                    "verify_ssl": "[%key:common::config_flow::data::verify_ssl%]"
+                }
             }
         },
-        "title": "OpenMediaVault"
+        "error": {
+            "name_exists": "Name already exists.",
+            "cannot_connect": "[%key:common::config_flow::error::cannot_connect%]",
+            "connection_timeout": "OpenMediaVault connection timeout.",
+            "invalid_auth": "[%key:common::config_flow::error::invalid_auth%]",
+            "ssl_verify_failed": "SSL certificate verify failed."
+        }
     }
 }

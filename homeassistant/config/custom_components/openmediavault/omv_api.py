@@ -1,18 +1,21 @@
-"""OpenMediaVault API"""
+"""OpenMediaVault API."""
 
-import logging
-from time import time
-from threading import Lock
 import json
-import requests
-from pickle import dump as pickle_dump, load as pickle_load
+import logging
 from os import path
+from pickle import dump as pickle_dump
+from pickle import load as pickle_load
+from threading import Lock
+from time import time
 
+import requests
 from voluptuous import Optional
 
 _LOGGER = logging.getLogger(__name__)
 
-
+# ---------------------------
+#   load_cookies
+# ---------------------------
 def load_cookies(filename: str) -> Optional(dict):
     """Load cookies from file."""
     if path.isfile(filename):
@@ -21,6 +24,9 @@ def load_cookies(filename: str) -> Optional(dict):
     return None
 
 
+# ---------------------------
+#   save_cookies
+# ---------------------------
 def save_cookies(filename: str, data: dict):
     """Save cookies to file."""
     with open(filename, "wb") as f:
@@ -34,7 +40,7 @@ class OpenMediaVaultAPI(object):
     """Handle all communication with OMV."""
 
     def __init__(self, hass, host, username, password, use_ssl=False, verify_ssl=True):
-        """Initialize OMV API."""
+        """Initialize the OMV API."""
         self._hass = hass
         self._host = host
         self._use_ssl = use_ssl
@@ -63,7 +69,7 @@ class OpenMediaVaultAPI(object):
     #   has_reconnected
     # ---------------------------
     def has_reconnected(self) -> bool:
-        """Check if API has reconnected"""
+        """Check if API has reconnected."""
         if self._reconnected:
             self._reconnected = False
             return True
@@ -74,7 +80,7 @@ class OpenMediaVaultAPI(object):
     #   connection_check
     # ---------------------------
     def connection_check(self) -> bool:
-        """Check if API is connected"""
+        """Check if API is connected."""
         if not self._connected or not self._connection:
             if self._connection_epoch > time() - self._connection_retry_sec:
                 return False
@@ -88,7 +94,7 @@ class OpenMediaVaultAPI(object):
     #   disconnect
     # ---------------------------
     def disconnect(self, location="unknown", error=None):
-        """Disconnect API"""
+        """Disconnect API."""
         if not error:
             error = "unknown"
 
@@ -156,7 +162,7 @@ class OpenMediaVaultAPI(object):
                 return False
 
             if not data["response"]["authenticated"]:
-                _LOGGER.error("OpenMediaVault %s authenticated failed", self._host)
+                _LOGGER.error("OpenMediaVault %s authentication failed", self._host)
                 self.error_to_strings()
                 self._connection = None
                 self.lock.release()
@@ -170,6 +176,10 @@ class OpenMediaVaultAPI(object):
             self._connection = None
             self.lock.release()
             return False
+        except:
+            self.disconnect("connect")
+            self.lock.release()
+            return None
 
         else:
             if self.connection_error_reported:
@@ -198,7 +208,7 @@ class OpenMediaVaultAPI(object):
         """Translate error output to error string."""
         self.error = "cannot_connect"
         if "Incorrect username or password" in error:
-            self.error = "wrong_login"
+            self.error = "invalid_auth"
 
         if "certificate verify failed" in error:
             self.error = "ssl_verify_failed"
@@ -214,7 +224,7 @@ class OpenMediaVaultAPI(object):
     #   query
     # ---------------------------
     def query(self, service, method, params=None, options=None) -> Optional(list):
-        """Retrieve data from OMV"""
+        """Retrieve data from OMV."""
         if not self.connection_check():
             return None
 
@@ -256,6 +266,10 @@ class OpenMediaVaultAPI(object):
         ) as api_error:
             _LOGGER.warning("OpenMediaVault %s unable to fetch data", self._host)
             self.disconnect("query", api_error)
+            self.lock.release()
+            return None
+        except:
+            self.disconnect("query")
             self.lock.release()
             return None
 
