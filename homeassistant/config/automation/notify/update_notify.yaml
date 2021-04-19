@@ -8,11 +8,9 @@
     entity_id: binary_sensor.updater
     to: 'on'
   action:
-    - service: notify.mobile_app_yuval
-      device_id: mobile_app.yuval
-      data:
-        title: "Update time!"
-        message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available"
-        color: "homeassistant"
+    service: notify.mobile_app_yuval
+    data:
+      title: "Update time!"
+      message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available"
+      color: "homeassistant"
   mode: restart
-  max_exceeded: silent
