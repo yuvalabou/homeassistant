@@ -6,13 +6,12 @@
   trigger:
     platform: state
     entity_id: binary_sensor.updater
-    to: "on"
-
+    to: 'on'
   action:
     - service: notify.mobile_app_yuval
       device_id: mobile_app.yuval
       data:
-        title: "{{ notification_title }}"
+        title: "Update time!"
         message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available"
         color: "homeassistant"
   mode: restart
