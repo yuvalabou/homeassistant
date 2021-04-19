@@ -31,6 +31,5 @@
               states('sensor.openweathermap_temperature') | float
               -
               states('sensor.living_room_temperature') | float
-            )
-            | round(2)
+            ) | round(2)
           }}

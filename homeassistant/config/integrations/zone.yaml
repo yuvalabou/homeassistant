@@ -6,11 +6,11 @@
   radius: 50
   icon: mdi:home
 
-- name: "Yuval work"
-  latitude: !secret yuval_work_lat
-  longitude: !secret yuval_work_lon
-  radius: 200
-  icon: mdi:briefcase
+# - name: "Yuval work"
+#   latitude: !secret yuval_work_lat
+#   longitude: !secret yuval_work_lon
+#   radius: 200
+#   icon: mdi:briefcase
 
 - name: "Tohar work"
   latitude: !secret tohar_work_lat

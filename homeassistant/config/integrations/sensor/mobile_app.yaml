@@ -12,8 +12,7 @@
         {{
           ((as_timestamp(
             states('sensor.tohar_next_alarm')
-          ) | int) + ( 15*60 )) |
-          timestamp_custom('%H:%M')
+          ) | int) + ( 15*60 )) | timestamp_custom('%H:%M')
         }}
       icon_template: mdi:alarm
     yuval_next_alarm_formatted:
@@ -22,7 +21,6 @@
         {{
           ((as_timestamp(
             states('sensor.yuval_next_alarm')
-          ) | int) + ( 15*60 )) |
-          timestamp_custom('%H:%M')
+          ) | int) + ( 15*60 )) | timestamp_custom('%H:%M')
         }}
       icon_template: mdi:alarm
