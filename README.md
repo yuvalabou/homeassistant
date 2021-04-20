@@ -56,6 +56,16 @@
 
 -----
 
+### HomeLab
+
+| NanoPi NEO2      | NanoPi NEO3   | RaspberryPi 2  |
+|:----------------:|:-------------:|:--------------:|
+| PiHole           | HomeAssistant | OpenMediaVault |
+| Mosquitto broker | PostgreSQL DB | NUT UPS tools  |
+| Portainer        | Portainer     |                |
+
+-----
+
 ## HACS custom components
 
 <img src =
