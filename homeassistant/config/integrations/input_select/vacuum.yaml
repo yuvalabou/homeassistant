@@ -6,5 +6,5 @@ vacuum_fan_speed_list:
   options:
     - Silent
     - Standard
+    - Medium
     - Turbo
-    - Max

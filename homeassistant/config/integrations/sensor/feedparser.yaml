@@ -2,8 +2,7 @@
 
 - platform: feedparser
   name: "Israel weather forecast"
-  feed_url: >-
-    'https://ims.gov.il/sites/default/files/ims_data/rss/forecast_country/rssForecastCountry_he.xml'
+  feed_url: 'https://ims.gov.il/sites/default/files/ims_data/rss/forecast_country/rssForecastCountry_he.xml'
   inclusions:
     - title
     - summary

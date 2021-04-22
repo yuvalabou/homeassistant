@@ -130,7 +130,7 @@ cards:
       show_header_toggle: false
       entities:
         - switch.shabbat_mode
-        - switch.shabbat_plate #TODO: Change icon to mdi-pot/mdi:pot-steam and move to sparate kitchen tab 
+        - switch.shabbat_plate #TODO: Change icon to mdi-pot/mdi:pot-steam and move to sparate kitchen tab
         - type: custom:time-picker-card
           entity: input_datetime.shabbat_lights_off_time
           link_values: true
@@ -139,6 +139,40 @@ cards:
             name: inside
             align_controls: right
 
+
+  - type: entities
+    entities:
+      - type: custom:button-card
+        color_type: label-card
+        color: rgb(44, 109, 214)
+        name: "פיקוד שבת"
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            color_type: blank-card
+          - type: custom:button-card
+            entity: switch.shabbat_mode
+          - type: custom:button-card
+            entity: switch.shabbat_plate
+            name: "פלטה"
+            icon: >-
+              [[[
+                if (entity.state == 'off')
+                  return 'mdi:pot';
+                else
+                  return 'mdi:pot-steam';
+              ]]]
+          - type: custom:button-card
+            color_type: blank-card
+      - type: custom:time-picker-card
+        entity: input_datetime.shabbat_lights_off_time
+        link_values: true
+        minute_step: 30
+        layout:
+          name: inside
+          align_controls: right
+
   - type: horizontal-stack
     cards:
       - type: custom:button-card
@@ -146,7 +180,7 @@ cards:
       - type: custom:button-card
         entity: switch.disable_auto_clean
 
-  - type: horizontal-stack #TODO: Change icon to mdi:kettle and move to sparate kitchen tab 
+  - type: horizontal-stack #TODO: Change icon to mdi:kettle and move to sparate kitchen tab
     cards:
       - type: custom:button-card
         entity: switch.kettle
@@ -165,3 +199,22 @@ cards:
           state: 'unavailable'
       exclude:
         - entity_id: '*lights'
+
+  - type: markdown
+    content: >-
+      The Washing Machine is done.
+      {% if (states('sensor.line_dry') | int / 60) | int
+        <
+        ((as_timestamp(state_attr('sun.sun','next_setting'))
+        -
+        as_timestamp(now()))/60/60) | int
+        and
+        states('sensor.line_dry') | int + 1 > 0
+      %}
+      {% endif %}
+
+      You have time to line dry before sunset.
+
+      Estimated Time to dry is {{ (states('sensor.line_dry') | int / 60) | round(1) }} hours.
+
+      There is a {{ states('sensor.openweathermap_forecast_precipitation_probability') }}% chance of rain in the next couple of hours.

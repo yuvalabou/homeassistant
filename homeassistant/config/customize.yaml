@@ -43,10 +43,10 @@ light.yeelight_color_master_bedroom:
 # Time Tracking
 sensor.track_tv_usage:
   icon: mdi:chart-timeline-variant
-#sensor.track_netflix_watch_time:
-#  icon: mdi:netflix
-#sensor.track_youtube_watch_time:
-#  icon: mdi:youtube
+sensor.track_netflix_watch_time:
+  icon: mdi:netflix
+sensor.track_youtube_watch_time:
+  icon: mdi:youtube
 sensor.track_steam_playtime:
   icon: mdi:steam
 

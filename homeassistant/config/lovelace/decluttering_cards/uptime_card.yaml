@@ -1,0 +1,28 @@
+---
+
+uptime_card:
+  card:
+    type: custom:uptime-card
+    entity: binary_sensor.[[device]]
+    name: "[[device_name]]"
+    icon_adaptive_color: true
+    title_adaptive_color: true
+    icon: mdi:server-network
+    ko_icon: mdi:server-network-off
+    color:
+      ok: '#4DFF00'
+      ko: '#FF0F00'
+    bar:
+      spacing: 4
+      height: 10
+      round: 4
+    show:
+      average: false
+      status: false
+      footer: false
+    alignment:
+      status: spaced
+      header: left
+      icon_first: true
+    tap_action:
+      action: more-info

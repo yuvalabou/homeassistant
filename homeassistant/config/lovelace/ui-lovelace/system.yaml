@@ -156,3 +156,14 @@ cards:
           - binary_sensor.bathroom
       - switch.restart_living_room
       - switch.restart_bathroom
+
+  - type: custom:decluttering-card
+    template: uptime_card
+    variables:
+      - device: living_room_sensibo
+      - device_name: "Living room Sensibo"
+  - type: custom:decluttering-card
+    template: uptime_card
+    variables:
+      - device: master_bedroom_sensibo
+      - device_name: "Master bedroom Sensibo"

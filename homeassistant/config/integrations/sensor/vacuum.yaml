@@ -24,20 +24,20 @@
     vacuum_fan_speed:
       friendly_name: "Fan Speed"
       value_template: >-
-        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed_list') %}
         {% if speed == 38 %}
           Silent
         {% elif speed == 60 %}
-          Normal
+          Standard
         {% elif speed == 75 %}
-          Turbo
+          Medium
         {% elif speed == 100 %}
-          Max
+          Turbo
         {% else %}
           unknown
         {% endif %}
       icon_template: >-
-        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed_list') %}
         {% if speed == 38 %}
           mdi:fan-speed-1
         {% elif speed == 60 %}

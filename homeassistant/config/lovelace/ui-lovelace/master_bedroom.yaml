@@ -58,7 +58,7 @@ cards:
     step_size: 1
     name: false
     control:
-      _names: false
+      - hvac
 
   - type: light
     entity: light.yeelight_color_master_bedroom

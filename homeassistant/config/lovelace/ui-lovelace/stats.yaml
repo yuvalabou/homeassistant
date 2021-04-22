@@ -128,6 +128,7 @@ cards:
       - entity: media_player.mibox3
       - entity: sensor.track_tv_watch_time
         format: total
+      - type: divider
       - entity: sensor.track_netflix_watch_time
         format: total
       - entity: sensor.track_youtube_watch_time
