@@ -22,23 +22,23 @@
         {% else %}
           mdi:hvac-off
         {% endif %}
-    living_room_heat_switch:
-      unique_id: 4187cf90-5fed-43c2-a36b-7a0011a9b5e6
-      friendly_name: "Living Room Heat"
-      value_template: >-
-        {{ not is_state('climate.slvn', 'off') }}
-      turn_on:
-        service: climate.set_hvac_mode
-        data:
-          entity_id: climate.slvn
-          hvac_mode: heat
-      turn_off:
-        service: climate.turn_off
-        data:
-          entity_id: climate.slvn
-      icon_template: >-
-        {% if is_state('switch.living_room_heat_switch', 'on') %}
-          mdi:hvac
-        {% else %}
-          mdi:hvac-off
-        {% endif %}
+    # living_room_heat_switch:
+    #   unique_id: 4187cf90-5fed-43c2-a36b-7a0011a9b5e6
+    #   friendly_name: "Living Room Heat"
+    #   value_template: >-
+    #     {{ not is_state('climate.slvn', 'off') }}
+    #   turn_on:
+    #     service: climate.set_hvac_mode
+    #     data:
+    #       entity_id: climate.slvn
+    #       hvac_mode: heat
+    #   turn_off:
+    #     service: climate.turn_off
+    #     data:
+    #       entity_id: climate.slvn
+    #   icon_template: >-
+    #     {% if is_state('switch.living_room_heat_switch', 'on') %}
+    #       mdi:hvac
+    #     {% else %}
+    #       mdi:hvac-off
+    #     {% endif %}

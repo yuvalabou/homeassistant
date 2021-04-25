@@ -114,23 +114,37 @@ cards:
           data:
             entity_id: media_player.googlehome3668
             content_id: GLGLZ
-        - name: Spotify Friday
-          type: script
-          id: script.play_friday
-          data:
-            entity_id: media_player.spotify_yvbl_bvl_pyh
 
   - type: conditional
     conditions:
-      - entity: binary_sensor.is_friday
+      - entity: binary_sensor.issur_melacha_eve
         state: 'on'
     card:
       type: entities
-      title: "פיקוד שבת"
-      show_header_toggle: false
       entities:
-        - switch.shabbat_mode
-        - switch.shabbat_plate #TODO: Change icon to mdi-pot/mdi:pot-steam and move to sparate kitchen tab
+        - type: custom:button-card
+          color_type: label-card
+          color: rgb(44, 109, 214)
+          name: "פיקוד שבת"
+        - type: custom:hui-element
+          card_type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              color_type: blank-card
+            - type: custom:button-card
+              entity: switch.shabbat_mode
+            - type: custom:button-card
+              entity: switch.shabbat_plate
+              name: "פלטה"
+              icon: >-
+                [[[
+                  if (entity.state == 'off')
+                    return 'mdi:pot';
+                  else
+                    return 'mdi:pot-steam';
+                ]]]
+            - type: custom:button-card
+              color_type: blank-card
         - type: custom:time-picker-card
           entity: input_datetime.shabbat_lights_off_time
           link_values: true
@@ -139,40 +153,6 @@ cards:
             name: inside
             align_controls: right
 
-
-  - type: entities
-    entities:
-      - type: custom:button-card
-        color_type: label-card
-        color: rgb(44, 109, 214)
-        name: "פיקוד שבת"
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:button-card
-            color_type: blank-card
-          - type: custom:button-card
-            entity: switch.shabbat_mode
-          - type: custom:button-card
-            entity: switch.shabbat_plate
-            name: "פלטה"
-            icon: >-
-              [[[
-                if (entity.state == 'off')
-                  return 'mdi:pot';
-                else
-                  return 'mdi:pot-steam';
-              ]]]
-          - type: custom:button-card
-            color_type: blank-card
-      - type: custom:time-picker-card
-        entity: input_datetime.shabbat_lights_off_time
-        link_values: true
-        minute_step: 30
-        layout:
-          name: inside
-          align_controls: right
-
   - type: horizontal-stack
     cards:
       - type: custom:button-card
@@ -180,10 +160,17 @@ cards:
       - type: custom:button-card
         entity: switch.disable_auto_clean
 
-  - type: horizontal-stack #TODO: Change icon to mdi:kettle and move to sparate kitchen tab
+  - type: horizontal-stack
     cards:
       - type: custom:button-card
         entity: switch.kettle
+        icon: >-
+          [[[
+            if (entity.state == 'off')
+              return 'mdi:kettle-outline';
+            else
+              return 'mdi:kettle-steam-outline';
+          ]]]
 
   - type: custom:auto-entities
     card:

@@ -19,6 +19,14 @@
       # Return True when it is Omer today
       value_template: >-
         {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
+    issur_melacha_eve:
+      friendly_name: "ערב שבת או חג"
+      value_template: >-
+        {{
+          now().weekday() == 4
+          or
+          states('sensor.jewish_calendar_holiday') == '2'
+        }}
 
 # Shabbat notification triggers
 # FIXME: These sensors have hardcoded timezone offset.

@@ -24,27 +24,27 @@
     vacuum_fan_speed:
       friendly_name: "Fan Speed"
       value_template: >-
-        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed_list') %}
-        {% if speed == 38 %}
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% if speed == 'Silent' %}
           Silent
-        {% elif speed == 60 %}
+        {% elif speed == 'Standard' %}
           Standard
-        {% elif speed == 75 %}
+        {% elif speed == 'Medium' %}
           Medium
-        {% elif speed == 100 %}
+        {% elif speed == 'Turbo' %}
           Turbo
         {% else %}
           unknown
         {% endif %}
       icon_template: >-
-        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed_list') %}
-        {% if speed == 38 %}
+        {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+        {% if speed == 'Silent' %}
           mdi:fan-speed-1
-        {% elif speed == 60 %}
+        {% elif speed == 'Standard' %}
           mdi:fan-speed-2
-        {% elif speed == 75 %}
+        {% elif speed == 'Medium' %}
           mdi:fan-speed-3
-        {% elif speed == 100 %}
+        {% elif speed == 'Turbo' %}
           mdi:weather-tornado
         {% else %}
           mdi:alert-circle

@@ -1,11 +1,9 @@
-###########################################
-#               LOVELACE-UI               #
-###########################################
+---
 
 decluttering_templates:
   !include_dir_merge_named lovelace/decluttering_cards
 
-title: 'Aboulafia Home'
+title: "Aboulafia Home"
 views:
   - !include lovelace/ui-lovelace/overview.yaml
 #  - !include lovelace/ui-lovelace/floorplan.yaml
@@ -18,3 +16,4 @@ views:
   - !include lovelace/ui-lovelace/monitoring.yaml
   - !include lovelace/ui-lovelace/system.yaml
   - !include lovelace/ui-lovelace/homelab.yaml
+  - !include lovelace/ui-lovelace/devices.yaml

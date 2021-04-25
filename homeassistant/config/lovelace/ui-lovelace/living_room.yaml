@@ -13,31 +13,31 @@ cards:
     variables:
       - room: living_room
 
-  - type: vertical-stack
-    cards:
-      - type: custom:simple-thermostat
-        entity: climate.living_room_heat_thermostat
-        step_size: 1
-        name: false
-        decimals: 0
-        control:
-          hvac:
-            'off':
-              name: 'off'
-        hide:
-          temperature: true
-        sensors:
-          - entity: sensor.living_room_temperature
-            name: "Temperature"
-      - type: conditional
-        conditions:
-          - entity: switch.living_room_heat_switch
-            state: 'on'
-        card:
-          type: entities
-          show_header_toggle: false
-          entities:
-            - switch.living_room_heat_switch
+  # - type: vertical-stack
+  #   cards:
+  #     - type: custom:simple-thermostat
+  #       entity: climate.living_room_heat_thermostat
+  #       step_size: 1
+  #       name: false
+  #       decimals: 0
+  #       control:
+  #         hvac:
+  #           'off':
+  #             name: 'off'
+  #       hide:
+  #         temperature: true
+  #       sensors:
+  #         - entity: sensor.living_room_temperature
+  #           name: "Temperature"
+  #     - type: conditional
+  #       conditions:
+  #         - entity: switch.living_room_heat_switch
+  #           state: 'on'
+  #       card:
+  #         type: entities
+  #         show_header_toggle: false
+  #         entities:
+  #           - switch.living_room_heat_switch
 
   - type: vertical-stack
     cards:

@@ -1,0 +1,53 @@
+---
+
+id: devices
+title: "Devices"
+icon: mdi:server
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://cdn.shopify.com/s/files/1/1669/6891/t/29/assets/logo.png?v=397554563567565171'
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: living_room_sensibo
+              - device_name: "Living room Sensibo"
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: master_bedroom_sensibo
+              - device_name: "Master bedroom Sensibo"
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://brands.home-assistant.io/esphome/logo.png'
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: living_room
+              - device_name: "Living room multisensor"
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: bathroom
+              - device_name: "Bathroom multisensor"
+      - switch.restart_living_room
+      - switch.restart_bathroom
+
+  - type: custom:decluttering-card
+    template: uptime_card
+    variables:
+      - device: laptop
+      - device_name: "Laptop"

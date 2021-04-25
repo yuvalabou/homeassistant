@@ -9,9 +9,6 @@ uptime_card:
     title_adaptive_color: true
     icon: mdi:server-network
     ko_icon: mdi:server-network-off
-    color:
-      ok: '#4DFF00'
-      ko: '#FF0F00'
     bar:
       spacing: 4
       height: 10

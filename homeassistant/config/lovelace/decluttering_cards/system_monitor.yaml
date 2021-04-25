@@ -28,14 +28,6 @@ system_monitor:
               green: 0
               yellow: 50
               red: 75
-      - type: custom:bar-card
-        entities:
-          - entity: sensor.[[storage]]
-            name: "SD Storage"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
 
 # TODO: Check for this card
 # https://gist.github.com/yuvalabou/6c11303c6d4950e3863cd1de9f63683d

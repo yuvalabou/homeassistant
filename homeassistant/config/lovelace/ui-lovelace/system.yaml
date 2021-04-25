@@ -142,28 +142,3 @@ cards:
             name: "Cached"
           - entity: sensor.pi_hole_dns_unique_domains
             name: "Unique Domains"
-
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: picture
-        image: 'https://brands.home-assistant.io/esphome/logo.png'
-      - type: custom:hui-element
-        card_type: glance
-        entities:
-          - binary_sensor.living_room
-          - binary_sensor.bathroom
-      - switch.restart_living_room
-      - switch.restart_bathroom
-
-  - type: custom:decluttering-card
-    template: uptime_card
-    variables:
-      - device: living_room_sensibo
-      - device_name: "Living room Sensibo"
-  - type: custom:decluttering-card
-    template: uptime_card
-    variables:
-      - device: master_bedroom_sensibo
-      - device_name: "Master bedroom Sensibo"
