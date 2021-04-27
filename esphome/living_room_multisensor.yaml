@@ -1,0 +1,115 @@
+---
+
+substitutions:
+  devicename: living_room_multisensor
+  upper_devicename: "Living Room"
+  template_id: living_room
+
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_passwd
+  manual_ip:
+    static_ip: !secret static_livingroom
+    gateway: !secret gateway
+    subnet: 255.255.255.0
+  ap:
+    ssid: "${upper_devicename}_fallback_hotspot"
+    password: !secret ap_passwd
+
+captive_portal:
+logger:
+  level: VERBOSE
+api:
+ota:
+
+i2c:
+  sda: D2
+  scl: D1
+  scan: True
+  frequency: 400kHz
+
+mcp23017:
+  - id: mcp23017_hub
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: D6
+    name: "${upper_devicename} Motion"
+    device_class: motion
+    filters:
+      - delayed_on: 1500ms
+      - delayed_off: 30s
+  - platform: gpio
+    name: "${upper_devicename} Window"
+    device_class: window
+    pin:
+      mcp23017: mcp23017_hub
+      number: 8
+      mode: INPUT
+      inverted: false
+  - platform: status
+    name: "${upper_devicename}"
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: "${upper_devicename} Temperature"
+      id: ${template_id}_temperature
+      oversampling: 16x
+    pressure:
+      name: "${upper_devicename} Pressure"
+    humidity:
+      name: "${upper_devicename} Humidity"
+      id: ${template_id}_humidity
+    address: 0x76
+    update_interval: 60s
+  - platform: template
+    name: "${upper_devicename} Dew Point"
+    id: ${template_id}_dewpoint
+    lambda: |-
+      return (243.5 * (log(id(${template_id}_humidity).state/100) + ((17.67 * id(${template_id}_temperature).state) /
+      (243.5 + id(${template_id}_temperature).state))) /
+      (17.67 - log(id(${template_id}_humidity).state/100) - ((17.67 * id(${template_id}_temperature).state) /
+      (243.5 + id(${template_id}_temperature).state))));
+    unit_of_measurement: '°C'
+    icon: mdi:water
+  - platform: bh1750
+    name: "${upper_devicename} Illuminance"
+    address: 0x23
+    measurement_time: 69
+    update_interval: 60s
+
+text_sensor:
+  - platform: template
+    name: "${upper_devicename} Comfort scale"
+    lambda: |-
+      if (id(${template_id}_dewpoint).state > 24) {
+        return {"Opressive"};
+      } else if (id(${template_id}_dewpoint).state > 20) {
+        return {"Muggy"};
+      } else if (id(${template_id}_dewpoint).state > 15) {
+        return {"Humid"};
+      } else if (id(${template_id}_dewpoint).state > 10) {
+        return {"Comfortable"};
+      } else if (id(${template_id}_dewpoint).state > 5) {
+        return {"Dry"};
+      } else {
+        return {"Very dry"};
+      }
+    update_interval: 60s
+    icon: mdi:water-percent
+
+switch:
+  - platform: restart
+    name: "Restart ${upper_devicename}"
+  - platform: gpio
+    name: "${upper_devicename} Shabbat Select"
+    pin:
+      number: D5
+      inverted: yes
