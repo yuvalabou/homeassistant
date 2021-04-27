@@ -1,3 +1,4 @@
+![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
 [![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.4.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
@@ -30,12 +31,12 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 427 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 258 |
-| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 40 |
-| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 12 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 41 |
-| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 26 |
+| **Entities** | 409 |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 245 |
+| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 42 |
+| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 11 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 42 |
+| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 25 |
 
 -----
 
@@ -43,7 +44,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |1           |9      |21         |
+|YAML           |1           |10     |22         |
 
 -----
 
@@ -70,8 +71,7 @@
 
 <img src =
     "https://avatars2.githubusercontent.com/u/56713226?s=200&v=4"
-    align = "right" width=90
-    >
+    align = "right" width=90>
 
 [HACS](https://github.com/hacs/integration) is Home Assistant Community Store
 
