@@ -4,7 +4,7 @@
   sensors:
     line_dry:
       friendly_name: "Line dry"
-      unit_of_measurement: 'Min'
+      unit_of_measurement: 'Minutes'
       value_template: >-
         {% set weather_entity = "weather.openweathermap" %}
         {% set sunshine_percent = states('sensor.living_room_illuminance') | float / 6000 %}

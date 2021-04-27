@@ -198,9 +198,8 @@ cards:
         and
         states('sensor.line_dry') | int + 1 > 0
       %}
+        You have time to line dry before sunset.
       {% endif %}
-
-      You have time to line dry before sunset.
 
       Estimated Time to dry is {{ (states('sensor.line_dry') | int / 60) | round(1) }} hours.
 
