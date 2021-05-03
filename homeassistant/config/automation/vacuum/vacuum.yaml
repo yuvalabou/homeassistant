@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - Wait until everybody leave to start cleaning"
+- alias: "Vacuum - Start cleaning when we leave"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
     platform: state
@@ -19,7 +19,9 @@
     - service: notify.family
       data:
         title: "Cleaning started"
-        message: "The house was empty - So I started cleaning."
+        message: "IFFFFFFFFFF."
+        data:
+          image: "https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg"
 
 - alias: "Vacuum - Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
