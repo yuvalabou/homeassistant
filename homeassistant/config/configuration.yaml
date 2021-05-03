@@ -73,6 +73,9 @@ pi_hole:
 scene: !include_dir_merge_list scene
 script: !include_dir_merge_named integrations/script
 sensor: !include_dir_merge_list integrations/sensor
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
 spotify:
   client_id: !secret spotify_id
   client_secret: !secret spotify_secret
