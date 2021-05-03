@@ -36,18 +36,18 @@ services:
     volumes:
       - /home/homeassistant/postgres/data:/var/lib/postgresql/data
 
-  portainer:
-    hostname: portainer
-    container_name: portainer
-    image: portainer/portainer-ce:latest
-    restart: always
-    network_mode: bridge
-    ports:
-        - '9000:9000'
-    environment:
-        TZ: "Asia/Jerusalem"
-    volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
+  # portainer:
+  #   hostname: portainer
+  #   container_name: portainer
+  #   image: portainer/portainer-ce:latest
+  #   restart: always
+  #   network_mode: bridge
+  #   ports:
+  #       - '9000:9000'
+  #   environment:
+  #       TZ: "Asia/Jerusalem"
+  #   volumes:
+  #       - /var/run/docker.sock:/var/run/docker.sock
 
   # unifi-controller:
   #   image: ghcr.io/linuxserver/unifi-controller
