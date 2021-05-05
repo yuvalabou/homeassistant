@@ -3,6 +3,7 @@
 [![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.4.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
+[![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
 
 <h2 align =
     "center">
@@ -31,11 +32,11 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 409 |
+| **Entities** | 414 |
 | **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 245 |
 | **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 42 |
-| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 11 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 42 |
+| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 12 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 45 |
 | **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 25 |
 
 -----
@@ -63,7 +64,6 @@
 |:----------------:|:-------------:|:--------------:|
 | PiHole           | HomeAssistant | OpenMediaVault |
 | Mosquitto broker | PostgreSQL DB | NUT UPS tools  |
-| Portainer        | Portainer     |                |
 
 -----
 
@@ -84,6 +84,7 @@
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Open media vault](https://github.com/tomaae/homeassistant-openmediavault)
 - [Pyscript](https://github.com/custom-components/pyscript)
+- [Spotcast](https://github.com/fondberg/spotcast)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
 ### Lovelace-UI Enhancements
@@ -98,13 +99,11 @@
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Layout Card](https://github.com/thomasloven/lovelace-layout-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
+- [Time-elapsed Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
+- [Uptime Card](https://github.com/dylandoamaral/uptime-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
-
------
-
-You can join us on [Discord!](https://discord.gg/ayZ3Kkg)
