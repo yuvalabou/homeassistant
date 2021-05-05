@@ -10,12 +10,12 @@
   action:
     - service: climate.turn_on
       data:
-        entity_id: climate.living_room_heat_thermostat
+        entity_id: climate.living_room_cool_thermostat
     - delay: 2
     - service: climate.set_temperature
       data:
         entity_id: climate.slvn
-        temperature: 26
+        temperature: 25
 
 - alias: "Climate - Turn off Living-room climate at Shabbat night"
   id: c7396673-d257-4267-a72f-060ee4d43603
@@ -27,14 +27,14 @@
     - service: climate.turn_off
       data:
         entity_id:
-          - climate.living_room_heat_thermostat
+          - climate.living_room_cool_thermostat
           - climate.slvn
     - delay: 20
-    # Repeat one more time becouse I can't trust sensibo
+    # Repeat once more becouse I can't trust sensibo
     - service: climate.turn_off
       data:
         entity_id:
-          - climate.living_room_heat_thermostat
+          - climate.living_room_cool_thermostat
           - climate.slvn
 
 - alias: "Climate - Turn on Living-room climate at Shabbat"
@@ -50,12 +50,12 @@
   action:
     - service: climate.turn_on
       data:
-        entity_id: climate.living_room_heat_thermostat
+        entity_id: climate.living_room_cool_thermostat
     - delay: 2
     - service: climate.set_temperature
       data:
         entity_id: climate.slvn
-        temperature: 26
+        temperature: 25
 
 - alias: "Climate - Turn off Living-room climate at Shabbat noon"
   id: f570b89f-8ce5-4b09-9230-1acc55c54528
@@ -67,12 +67,12 @@
     - service: climate.turn_off
       data:
         entity_id:
-          - climate.living_room_heat_thermostat
+          - climate.living_room_cool_thermostat
           - climate.slvn
     - delay: 20
     # Repeat one more time becouse I can't trust sensibo
     - service: climate.turn_off
       data:
         entity_id:
-          - climate.living_room_heat_thermostat
+          - climate.living_room_cool_thermostat
           - climate.slvn
