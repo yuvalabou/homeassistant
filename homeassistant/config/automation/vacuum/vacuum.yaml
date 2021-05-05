@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - Start cleaning when we leave"
+- alias: "Vacuum - Start cleaning when away"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
     platform: state
@@ -22,7 +22,7 @@
         title: "Cleaning started"
         message: "IFFFFFFFFFF."
         data:
-          image: "https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg"
+          image: '/local/assets/notification_images/here_i_go_killing_again.jpg'
 
 - alias: "Vacuum - Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
