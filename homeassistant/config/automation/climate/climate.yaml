@@ -10,5 +10,19 @@
     service: climate.turn_off
     data:
       entity_id:
-        - climate.living_room_heat_thermostat
+        - climate.living_room_cool_thermostat
+        - climate.slvn
+
+- alias: "Climate - Turn off when away"
+  id: c4219e30-3edb-4e1d-9621-eba64f593883
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  condition: "{{ is_state('input_boolean.guest_mode', 'off') }}"
+  action:
+    service: climate.turn_off
+    data:
+      entity_id:
+        - climate.living_room_cool_thermostat
         - climate.slvn

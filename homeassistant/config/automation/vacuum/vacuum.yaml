@@ -12,6 +12,7 @@
       before: '20:00:00'
     - "{{ is_state('input_boolean.cleaned_today', 'off') }}"
     - "{{ is_state('input_boolean.disable_auto_clean', 'off') }}"
+    - "{{ is_state('input_boolean.guest_mode', 'off') }}"
   action:
     - service: vacuum.start
       data:
@@ -76,7 +77,9 @@
       to: 'home'
   action:
     - choose:
-      - conditions: "{{ is_state('group.person', 'not_home') }}"
+      - conditions:
+          - "{{ is_state('group.person', 'not_home') }}"
+          - "{{ is_state('input_boolean.guest_mode', 'off') }}"
         sequence:
           service: script.vacuum_set_turbo
       - conditions: "{{ is_state('group.person', 'home') }}"

@@ -159,6 +159,8 @@ cards:
         entity: switch.night_light_override
       - type: custom:button-card
         entity: switch.disable_auto_clean
+      - type: custom:button-card
+        entity: switch.guest_mode
 
   - type: horizontal-stack
     cards:
