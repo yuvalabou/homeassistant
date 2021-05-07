@@ -114,6 +114,22 @@ cards:
           data:
             entity_id: media_player.googlehome3668
             content_id: GLGLZ
+        - name: "שישי רגוע"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: שישי רגוע
+            entity_id: media_player.googlehome3668
+        - name: "גששים"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: גששים
+        - name: "Soft morning"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: Soft morning
 
   - type: conditional
     conditions:
