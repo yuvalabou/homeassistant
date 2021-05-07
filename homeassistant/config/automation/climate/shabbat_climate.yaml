@@ -14,8 +14,10 @@
     - delay: 2
     - service: climate.set_temperature
       data:
-        entity_id: climate.slvn
         temperature: 25
+        hvac_mode: cool
+      target:
+        entity_id: climate.slvn
 
 - alias: "Climate - Turn off Living-room climate at Shabbat night"
   id: c7396673-d257-4267-a72f-060ee4d43603
@@ -54,8 +56,10 @@
     - delay: 2
     - service: climate.set_temperature
       data:
-        entity_id: climate.slvn
         temperature: 25
+        hvac_mode: cool
+      target:
+        entity_id: climate.slvn
 
 - alias: "Climate - Turn off Living-room climate at Shabbat noon"
   id: f570b89f-8ce5-4b09-9230-1acc55c54528

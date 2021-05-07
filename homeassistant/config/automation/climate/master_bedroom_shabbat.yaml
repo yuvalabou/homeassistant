@@ -5,20 +5,17 @@
   trigger:
     platform: time
     at: input_datetime.shabbat_lights_off_time
-    to: 'on'
   condition:
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    - service: climate.set_hvac_mode
-      target:
-        entity_id: climate.shynh
-        hvac_mode: cool
-    - delay: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 21
+    service: climate.set_temperature
+    data:
+      temperature: 21
+      hvac_mode: cool
+    target:
+      entity_id: climate.shynh
+
 
 - alias: "Climate - Turn off Master-bedroom climate on Shabbat"
   id: 34fd87dc-0518-46d5-9bfc-2f9572d74e70
@@ -44,12 +41,9 @@
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    - service: climate.set_hvac_mode
-      target:
-        entity_id: climate.shynh
-        hvac_mode: cool
-    - delay: 2
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.shynh
-        temperature: 21
+    service: climate.set_temperature
+    data:
+      temperature: 21
+      hvac_mode: cool
+    target:
+      entity_id: climate.shynh

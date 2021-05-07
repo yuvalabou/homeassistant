@@ -14,7 +14,7 @@
         - climate.slvn
 
 - alias: "Climate - Turn off when away"
-  id: c4219e30-3edb-4e1d-9621-eba64f593883
+  id: ae0c5bd5-96f8-4cde-ba22-9d46167c1a6b
   trigger:
     platform: state
     entity_id: group.person
