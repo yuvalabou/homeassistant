@@ -12,5 +12,4 @@
     data:
       title: "Update time!"
       message: "Home Assistant {{ state_attr('binary_sensor.updater', 'newest_version') }} is available"
-      color: "homeassistant"
   mode: restart
