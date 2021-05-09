@@ -1,0 +1,138 @@
+---
+
+substitutions:
+  devicename: doorbell
+  upper_devicename: "Doorbell"
+  template_id: doorbell
+
+esphome:
+  name: doorbell
+  platform: ESP32
+  board: esp-wrover-kit
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_passwd
+  manual_ip:
+    static_ip: !secret static_doorbell
+    gateway: !secret gateway
+    subnet: 255.255.255.0
+  ap:
+    ssid: "${upper_devicename}_fallback_hotspot"
+    password: !secret ap_passwd
+
+captive_portal:
+
+logger:
+
+api:
+
+ota:
+
+binary_sensor:
+  - platform: gpio
+    pin: GPIO33
+    name: "${upper_devicename} motion"
+    device_class: motion
+  # - platform: gpio
+  #   pin: GPIO21
+  #   name: "Front Door"
+  #   device_class: door
+  - platform: gpio
+    pin:
+      number: GPIO34
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "${upper_devicename} button"
+    # On press show ding dong page and activate doorbell script in Home Assistant
+    on_press:
+      then:
+        - display.page.show: ding_page
+        - component.update: doorbell_display
+        - delay: 4s
+        - display.page.show: name_page
+        - component.update: doorbell_display
+        - homeassistant.service:
+            service: script.turn_on
+            data:
+              entity_id: "script.doorbell"
+  # If front door is opened, show come in page
+  # - platform: homeassistant
+  #   name: "Doorbell Copy Door Relay"
+  #   entity_id: switch.door_lock_relay
+  #   id: door_lock
+  #   on_press:
+  #     then:
+  #       - display.page.show: come_in_page
+  #       - component.update: doorbell_display
+  #       - delay: 5s
+  #       - display.page.show: name_page
+  #       - component.update: doorbell_display
+  - platform: status
+    name: "${upper_devicename}"
+
+sensor:
+  - platform: wifi_signal
+    name: "${upper_devicename} WiFi Signal"
+    update_interval: 30s
+
+switch:
+  - platform: restart
+    name: "Restart ${upper_devicename}"
+
+esp32_camera:
+  name: Doorbell Camera
+  external_clock:
+    pin: GPIO32
+    frequency: 20MHz
+  i2c_pins:
+    sda: GPIO13
+    scl: GPIO12
+  data_pins: [GPIO5, GPIO14, GPIO4, GPIO15, GPIO18, GPIO23, GPIO36, GPIO39]
+  vsync_pin: GPIO27
+  href_pin: GPIO25
+  pixel_clock_pin: GPIO19
+  power_down_pin: GPIO26
+  resolution: 640x480
+  max_framerate: 10 fps
+  idle_framerate: 0.2 fps
+  jpeg_quality: 10
+  vertical_flip: true
+  horizontal_mirror: true
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+
+font:
+  - file: "fonts/unispace_bd.ttf"
+    id: unispace
+    size: 20
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+display:
+  - platform: ssd1306_i2c
+    model: 'SSD1306 128x64'
+    rotation: 180
+    address: 0x3C
+    id: doorbell_display
+    pages:
+# Name page
+      - id: name_page
+        lambda: |-
+          it.print(64, 0, id(unispace), TextAlign::TOP_CENTER, "Aboulafia");
+          it.print(64, 20, id(unispace), TextAlign::TOP_CENTER, "Yuval");
+          it.print(64, 40, id(unispace), TextAlign::TOP_CENTER, "Tohar");
+# Ding Dong page
+      - id: ding_page
+        lambda: |-
+            it.print(64, 0, id(unispace), TextAlign::TOP_CENTER, "DING");
+            it.print(64, 64, id(unispace), TextAlign::BASELINE_CENTER, "DONG");
+# Welcome in page
+      - id: come_in_page
+        lambda: |-
+            it.print(64, 0, id(unispace), TextAlign::TOP_CENTER, "Welcome");
+            it.print(64, 64, id(unispace), TextAlign::BASELINE_CENTER, "In");

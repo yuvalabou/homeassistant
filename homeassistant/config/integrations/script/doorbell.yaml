@@ -1,0 +1,67 @@
+---
+
+# Main script triggering all the other script
+doorbell:
+  sequence:
+    - service: script.turn_on
+      data:
+        entity_id:
+          - script.doorbell_notifications
+          - script.doorbell_snapshot
+          - script.doorbell_lights
+
+# TTS to all the Nest Homes
+doorbell_notifications:
+  sequence:
+    - delay: 3
+    - service: notify.nest_mini
+      data:
+        message: "מישהו בדלת"
+    - service: notify.family
+      data_template:
+        title: "דינג דונג!"
+        message: "יש מישהו בדלת."
+
+# Take a snapshot of camera and save it
+doorbell_snapshot:
+  sequence:
+    - service: camera.snapshot
+      data:
+        entity_id: camera.doorbell_camera
+        filename: '/config/www/cam_captures/doorbell/doorbell_{{ now ().year }}_{{ now ().month }}_{{ now ().day }}_{{ now ().hour }}_{{ now ().minute }}.jpg'
+    - data_template:
+        entity_id: camera.saved_image
+        file_path: '/config/www/cam_captures/doorbell/doorbell_{{ now ().year }}_{{ now ().month }}_{{ now ().day }}_{{ now ().hour }}_{{ now ().minute }}.jpg'
+      service: camera.local_file_update_file_path
+
+# Make selected lights blink blue then return back to normal
+doorbell_lights:
+  sequence:
+    - service: scene.create
+      data:
+        scene_id: before_doorbell
+        snapshot_entities:
+          - light.living_room_lights
+    - service: light.turn_on
+      data:
+        color_name: blue
+        entity_id:
+          - light.living_room_lights
+    - delay:
+        milliseconds: 500
+    - service: light.turn_off
+      data:
+        entity_id:
+          - light.living_room_lights
+    - delay:
+        milliseconds: 200
+    - service: light.turn_on
+      data:
+        color_name: blue
+        entity_id:
+          - light.living_room_lights
+    - delay:
+        milliseconds: 500
+    - service: scene.turn_on
+      data:
+        entity_id: scene.before_doorbell

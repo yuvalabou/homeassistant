@@ -43,8 +43,14 @@ cards:
             variables:
               - device: bathroom
               - device_name: "Bathroom multisensor"
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: doorbell
+              - device_name: "Doorbell"
       - switch.restart_living_room
       - switch.restart_bathroom
+      - switch.restart_doorbell
 
   - type: custom:decluttering-card
     template: uptime_card

@@ -14,6 +14,16 @@ cards:
         variables:
           - name: tohar
 
+  - type: picture-glance
+    title: Front Door
+    entities:
+      - switch.front_door
+      - sensor.doorbell_wifi_signal
+      - binary_sensor.front_door
+      - binary_sensor.doorbell_motion
+      - light.front_door
+    camera_image: camera.doorbell_camera
+
   - type: entities
     title: "זמני היום"
     show_header_toggle: false
