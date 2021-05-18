@@ -20,9 +20,25 @@
     - service: notify.family
       data:
         title: "Cleaning started"
-        message: "IFFFFFFFFFF."
         data:
           image: '/local/assets/notification_images/here_i_go_killing_again.jpg'
+        actions:
+          - action: 'CANCEL'
+            title: "Cancel cleaning"
+
+- alias: "Vacuum - Cancel on response"
+  id: d6b1aa9c-fcc3-427a-bfa1-372f76612011
+  trigger:
+    platform: event
+    event_type: mobile_app_notification_action
+    action: 'CANCEL'
+  action:
+    - service: vacuum.stop
+      data:
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+    - service: notify.family
+      data:
+        title: "Cleaning stopped"
 
 - alias: "Vacuum - Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
@@ -42,63 +58,3 @@
         message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
-
-- alias: "Vacuum - Set to 'cleaned today'"
-  id: 8d53ce02-066c-4a51-a369-3e13d1220cee
-  trigger:
-    platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
-    to: 'cleaning'
-    for: '00:10:00'
-  action:
-    service: input_boolean.turn_on
-    data:
-      entity_id: input_boolean.cleaned_today
-
-- alias: "Vacuum - Reset 'cleaned today'"
-  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
-  initial_state: on
-  trigger:
-    platform: time
-    at: '00:00:00'
-  action:
-    service: input_boolean.turn_off
-    data:
-      entity_id: input_boolean.cleaned_today
-
-- alias: "Vacuum - Intelligent mode switch"
-  id: c8258c50-16dd-4b3d-b743-7a806bdb1018
-  trigger:
-    - platform: state
-      entity_id: group.person
-      to: 'not_home'
-    - platform: state
-      entity_id: group.person
-      to: 'home'
-  action:
-    - choose:
-      - conditions:
-          - "{{ is_state('group.person', 'not_home') }}"
-          - "{{ is_state('input_boolean.guest_mode', 'off') }}"
-        sequence:
-          service: script.vacuum_set_turbo
-      - conditions: "{{ is_state('group.person', 'home') }}"
-        sequence:
-          service: script.vacuum_set_silent
-
-- alias: "Vacuum - Set mode"
-  id: 339c44db-f51b-4174-b396-18e69213b4e7
-  trigger:
-    platform: state
-    entity_id: input_select.vacuum_fan_speed_list
-  action:
-    service: >-
-      {% if trigger.to_state.state == 'Silent' %}
-        script.vacuum_set_silent
-      {% elif trigger.to_state.state == 'Standard' %}
-        script.vacuum_set_standard
-      {% elif trigger.to_state.state == 'Turbo' %}
-        script.vacuum_set_turbo
-      {% elif trigger.to_state.state == 'Max' %}
-        script.vacuum_set_max
-      {% endif %}
