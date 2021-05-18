@@ -31,7 +31,8 @@
   trigger:
     platform: event
     event_type: mobile_app_notification_action
-    action: 'CANCEL'
+    event_data:
+      action: 'CANCEL'
   action:
     - service: vacuum.stop
       data:
