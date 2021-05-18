@@ -1,0 +1,12 @@
+---
+
+- platform: rest
+  name: "PAKAR Alerts"
+  resource: https://www.oref.org.il/WarningMessages/alert/alerts.json
+  value_template: '{{ value_json.data }}'
+  headers:
+    Accept: application/json
+    Content-Type: application/json
+    x-requested-with: XMLHttpRequest
+    Referer: https://www.oref.org.il//12481-he/Pakar.aspx
+  scan_interval: 2

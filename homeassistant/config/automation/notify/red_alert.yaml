@@ -1,0 +1,17 @@
+---
+
+- alias: 'Red Alert notification'
+  trigger:
+    platform: state
+    entity_id: binary_sensor.red_alert
+    to: 'on'
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+  action:
+    service: notify.family
+    data:
+      title: "צבע אדום"
+      message: "פתח תקווה"
+      data:
+        timeout: 120
+        priority: high
