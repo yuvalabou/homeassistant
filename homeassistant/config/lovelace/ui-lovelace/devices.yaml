@@ -52,6 +52,21 @@ cards:
       - switch.restart_bathroom
       - switch.restart_doorbell
 
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://github.com/Aircoookie/WLED/raw/master/images/wled_logo_akemi.png'
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - type: custom:decluttering-card
+            template: uptime_card
+            variables:
+              - device: wled_master_bedroom
+              - device_name: "Master bedroom WLED"
+
   - type: custom:decluttering-card
     template: uptime_card
     variables:

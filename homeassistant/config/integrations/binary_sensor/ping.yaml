@@ -22,3 +22,9 @@
   host: !secret sensibo_master_bedroom
   name: "Master bedroom Sensibo"
   count: 2
+
+# WLED
+- platform: ping
+  host: !secret wled_master_bedroom
+  name: "WLED Master bedroom"
+  count: 2

@@ -62,6 +62,8 @@ cards:
 
   - type: light
     entity: light.yeelight_color_master_bedroom
+  - type: light
+    entity: light.wled_master_bedroom
 
   - type: entities
     entities:
