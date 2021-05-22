@@ -45,7 +45,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |1           |10     |22         |
+|YAML           |1           |10     |23         |
 
 -----
 
@@ -105,5 +105,6 @@
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
+- [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)

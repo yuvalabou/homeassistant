@@ -16,7 +16,7 @@ multisensor:
               - entity: sensor.[[room]]_climate_set_temp
                 color: 'white'
                 show_fill: false
-              - !include ../resources/graph_card_day_num.yaml
+              - !include ../resources/graph_card_sun_elevation.yaml
             font_size: 80
             color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
             points_per_hour: 3
@@ -31,7 +31,7 @@ multisensor:
               - entity: sensor.[[room]]_humidity
                 name: "Humidity"
                 color: '#74A4F4'
-              - !include ../resources/graph_card_day_num.yaml
+              - !include ../resources/graph_card_sun_elevation.yaml
             font_size: 80
             lower_bound: 0
             upper_bound: 100

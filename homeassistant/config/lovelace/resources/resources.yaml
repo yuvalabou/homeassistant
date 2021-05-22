@@ -16,6 +16,8 @@
   type: module
 - url: /hacsfiles/ha-lovelace-elapsed-time-card/elapsed-time-card.js
   type: module
+- url: /hacsfiles/home-assistant-sun-card/home-assistant-sun-card.js
+  type: module
 - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
 - url: /hacsfiles/lovelace-battery-entity-row/battery-entity-row.js

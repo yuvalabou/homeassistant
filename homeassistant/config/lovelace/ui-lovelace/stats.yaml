@@ -19,7 +19,7 @@ cards:
         show_points: false
         color: 'white'
         show_fill: false
-      - !include ../resources/graph_card_day_num.yaml
+      - !include ../resources/graph_card_sun_elevation.yaml
     show:
       fill: fade
       state: false
@@ -89,7 +89,7 @@ cards:
       - entity: sensor.bathroom_illuminance
         show_points: false
         color: '#C4BAB0'
-      - !include ../resources/graph_card_day_num.yaml
+      - !include ../resources/graph_card_sun_elevation.yaml
     show:
       fill: fade
       state: false

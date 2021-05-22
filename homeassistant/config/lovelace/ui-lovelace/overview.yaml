@@ -70,6 +70,7 @@ cards:
 
   - type: entities
     entities:
+      - type: custom:sun-card
       - type: custom:weather-card
         entity: weather.openweathermap
         current: true
