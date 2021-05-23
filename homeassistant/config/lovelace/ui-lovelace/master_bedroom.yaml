@@ -60,10 +60,40 @@ cards:
     control:
       - hvac
 
-  - type: light
-    entity: light.yeelight_color_master_bedroom
-  - type: light
-    entity: light.wled_master_bedroom
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.yeelight_color_master_bedroom
+      - type: custom:hui-element
+        card_type: light
+        entity: light.wled_master_bedroom
+
+  - type: entities
+    entities:
+      - entity: media_player.mibox3
+      - type: custom:hui-element
+        card_type: grid
+        columns: 3
+        cards:
+          - type: 'custom:elapsed-time-card'
+            format: Time Elapsed
+            time_format: 1h 5m
+            time_today: sensor.track_tv_watch_time
+            name: "Television"
+            icon: television
+          - type: 'custom:elapsed-time-card'
+            format: Time Elapsed
+            time_format: 1h 5m
+            time_today: sensor.track_netflix_watch_time
+            name: "Netflix"
+            icon: netflix
+          - type: 'custom:elapsed-time-card'
+            format: Time Elapsed
+            time_format: 1h 5m
+            time_today: sensor.track_youtube_watch_time
+            name: "Youtube"
+            icon: youtube
 
   - type: entities
     entities:

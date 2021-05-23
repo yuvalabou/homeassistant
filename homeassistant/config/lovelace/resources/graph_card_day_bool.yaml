@@ -1,3 +1,5 @@
+---
+
 entity: binary_sensor.day
 show_points: false
 show_legend: false
