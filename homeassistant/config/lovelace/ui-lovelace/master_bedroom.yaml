@@ -8,10 +8,6 @@ cards:
 #    template: multisensor
 #    variables:
 #      - room: master_bedroom
-#  - type: custom:decluttering-card
-#    template: openings
-#    variables:
-#      - room: master_bedroom
 
   - type: entities
     show_header_toggle: false

@@ -8,10 +8,7 @@ cards:
     template: multisensor
     variables:
       - room: bathroom
-  - type: custom:decluttering-card
-    template: openings
-    variables:
-      - room: bathroom
+
   - type: entities
     entities:
       - sensor.bathroom_mold_indicator

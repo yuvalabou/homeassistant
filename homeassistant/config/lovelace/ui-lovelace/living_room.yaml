@@ -8,10 +8,6 @@ cards:
     template: multisensor
     variables:
       - room: living_room
-  - type: custom:decluttering-card
-    template: openings
-    variables:
-      - room: living_room
 
   # - type: vertical-stack
   #   cards:

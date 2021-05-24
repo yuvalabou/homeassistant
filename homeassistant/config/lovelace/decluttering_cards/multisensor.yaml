@@ -50,3 +50,10 @@ multisensor:
             name: "Comfort scale"
           - entity: sensor.[[room]]_illuminance
             name: "Light"
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - entity: binary_sensor.[[room]]_door
+            name: "Door"
+          - entity: binary_sensor.[[room]]_window
+            name: "Window"
