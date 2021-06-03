@@ -3,7 +3,7 @@ Support for CityMind Water Meter.
 For more details about this platform, please refer to the documentation at
 https://home-assistant.io/components/citymind_water_meter/
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import sys
 from typing import Optional
@@ -20,13 +20,7 @@ from homeassistant.helpers.entity_registry import (
 from homeassistant.helpers.event import async_track_time_interval
 
 from ..api.api import CityMindApi
-from ..helpers.const import (
-    DEFAULT_NAME,
-    DOMAIN,
-    SCAN_INTERVAL,
-    SIGNALS,
-    SUPPORTED_DOMAINS,
-)
+from ..helpers.const import DEFAULT_NAME, DOMAIN, SIGNALS, SUPPORTED_DOMAINS
 from ..models.config_data import ConfigData
 from .configuration_manager import ConfigManager
 from .device_manager import DeviceManager
@@ -144,7 +138,7 @@ class CityMindHomeAssistant:
             entry = self._config_manager.config_entry
 
             self._remove_async_track_time = async_track_time_interval(
-                self._hass, self._update_entities, SCAN_INTERVAL
+                self._hass, self._update_entities, timedelta(minutes=30)
             )
 
         if not self._is_initialized:
