@@ -68,3 +68,20 @@ services:
   #     - 6789:6789
   #     - 5514:5514
   #   restart: unless-stopped
+
+  # vscode:
+  #     image: linuxserver/code-server
+  #     container_name: vscode
+  #     hostname: vscode
+  #     restart: always
+  #     network_mode: bridge
+  #     ports:
+  #       - 8553:8443
+  #     environment:
+  #       PUID: ${LOCAL_USER}
+  #       PGID: ${LOCAL_USER}
+  #       TZ: "Asia/Jerusalem"
+  #       # PASSWORD: ${VSCODE_PASSWORD} #optional
+  #       # SUDO_PASSWORD: password #optional
+  #     volumes:
+  #       - /home/homeassistant/vscode/config:/config
