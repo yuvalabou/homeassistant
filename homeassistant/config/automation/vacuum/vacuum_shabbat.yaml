@@ -13,7 +13,7 @@
     data:
       entity_id: vacuum.xiaomi_vacuum_cleaner
 
-# The two following automations are precoutions from mwssing with the vacuum in Shabbat
+# The two following automations are precoutions from messing with the vacuum in Shabbat
 - alias: "Vacuum - prevent manual cleaning on Shabbat"
   id: dd081698-79b9-4e3b-8b94-15809bcce967
   trigger:

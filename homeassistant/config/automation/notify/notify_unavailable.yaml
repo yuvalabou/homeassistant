@@ -1,0 +1,18 @@
+---
+
+- alias: 'Unavailable lights notification'
+  id: 26879041-377a-47bb-acdb-e684ba45c5e2
+  trigger:
+    platform: state
+    entity_id:
+      - light.yeelight_color_master_bedroom
+      - light.yeelight_color_living_room_1
+      - light.yeelight_color_living_room_2
+    to: 'unavailable'
+    for: '00:05:00'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: LIFX Bulb Offline
+      message: >-
+        the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
