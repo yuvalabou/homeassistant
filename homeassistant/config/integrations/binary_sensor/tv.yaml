@@ -5,15 +5,19 @@
     mibox_on:
       friendly_name: "MiBox on"
       value_template: >-
-        {{ is_state('media_player.mibox3', 'playing') }}
+        {{ is_state('media_player.tv_master_bedroom', 'playing') }}
       attribute_templates:
         app_name: >-
-          {{ state_attr('media_player.mibox3', 'app_name') }}
+          {{ state_attr('media_player.tv_master_bedroom', 'app_name') }}
     netflix_on:
       friendly_name: "Netflix on"
       value_template: >-
-        {{ is_state_attr('media_player.mibox3', 'app_name', 'Netflix') }}
+        {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'Netflix') }}
     youtube_on:
       friendly_name: "YouTube on"
       value_template: >-
-        {{ is_state_attr('media_player.mibox3', 'app_name', 'YouTube') }}
+        {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'YouTube') }}
+    kodi_on:
+      friendly_name: "Kodi on"
+      value_template: >-
+        {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'kodi') }}

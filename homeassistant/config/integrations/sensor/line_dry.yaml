@@ -6,7 +6,7 @@
       friendly_name: "Line dry"
       unit_of_measurement: 'Minutes'
       value_template: >-
-        {% if states('sensor.living_room_illuminance') == 0 %}
+        {% if states('sensor.living_room_illuminance') == 0.0 %}
           unknown
         {% else %}
           {% set weather_entity = "weather.openweathermap" %}
