@@ -13,6 +13,6 @@
   action:
     service: persistent_notification.create
     data_template:
-      title: LIFX Bulb Offline
+      title: "Bulb Offline"
       message: >-
         the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
