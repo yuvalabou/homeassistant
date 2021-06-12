@@ -1,6 +1,5 @@
 ---
 
-id: master_bedroom
 title: "Master Bedroom"
 icon: mdi:bed-king-outline
 cards:
@@ -67,10 +66,10 @@ cards:
 
   - type: entities
     entities:
-      - entity: media_player.mibox3
+      - entity: media_player.tv_master_bedroom
       - type: custom:hui-element
         card_type: grid
-        columns: 3
+        columns: 4
         cards:
           - type: 'custom:elapsed-time-card'
             format: Time Elapsed
@@ -90,6 +89,12 @@ cards:
             time_today: sensor.track_youtube_watch_time
             name: "Youtube"
             icon: youtube
+          - type: 'custom:elapsed-time-card'
+            format: Time Elapsed
+            time_format: 1h 5m
+            time_today: sensor.track_kodi_watch_time
+            name: "Kodi"
+            icon: kodi
 
   - type: entities
     entities:
