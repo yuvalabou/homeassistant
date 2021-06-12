@@ -36,7 +36,7 @@
       entity_id: switch.shabbat_plate
 
 - alias: "Plate - Chag morning operation"
-  # Will be turned off later by "Shabbat noon" automation
+  # Will get turned off later by "Shabbat noon" automation
   id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
   trigger:
     platform: time
@@ -56,4 +56,16 @@
     data:
       entity_id: switch.shabbat_plate
 
-# TODO: add chag after Shabbat logic
+- alias: "Plate - Turn off plate at chag night"
+  id: 8538d242-b171-426b-a18b-e4723f3135a1
+  trigger:
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition:
+    - condition: time
+      weekday:
+        - sat
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate

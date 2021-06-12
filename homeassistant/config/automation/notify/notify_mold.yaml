@@ -14,3 +14,7 @@
     data:
       title: "עובש במקלחת"
       message: "כדאי לפתוח חלון ולאוורר כדי למנוע התפתחות עובש."
+      data:
+        actions:
+          - action: turn_on_vent
+            title: "Turn on the vent"

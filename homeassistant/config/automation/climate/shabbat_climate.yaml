@@ -65,16 +65,9 @@
   id: f570b89f-8ce5-4b09-9230-1acc55c54528
   trigger:
     platform: time
-    at: '12:00:00'
+    at: '13:00:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    - service: climate.turn_off
-      data:
-        entity_id:
-          - climate.living_room_cool_thermostat
-          - climate.slvn
-    - delay: 20
-    # Repeat one more time becouse I can't trust sensibo
     - service: climate.turn_off
       data:
         entity_id:

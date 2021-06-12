@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Turn on Master-bedroom climate on Shabbat eve"
+- alias: "Climate - Turn on Master-bedroom climate on Shabbat night"
   id: b99da572-bad0-4af0-9091-a1df84af0409
   trigger:
     platform: time
@@ -26,8 +26,8 @@
   trigger:
     platform: time
     at:
-      - '09:00:00'
-      - '15:00:00'
+      - '08:30:00'
+      - '16:00:00'
   condition:
     - "{{ not is_state('climate.shynh', 'off') }}"
     - "{{ is_state('group.person', 'home') }}"
