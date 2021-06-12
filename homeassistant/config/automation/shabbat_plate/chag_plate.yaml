@@ -57,7 +57,7 @@
       entity_id: switch.shabbat_plate
 
 - alias: "Plate - Turn off plate at chag night"
-  id: 8538d242-b171-426b-a18b-e4723f3135a1
+  id: 2195b710-0c3a-4c4f-8a6a-961495f470a6
   trigger:
     platform: time
     at: input_datetime.shabbat_lights_off_time
