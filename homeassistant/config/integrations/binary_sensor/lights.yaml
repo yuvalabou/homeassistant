@@ -1,6 +1,5 @@
 ---
 
-# Return True when a light is on
 - platform: template
   sensors:
     master_bedroom_light_is_on:

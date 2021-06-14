@@ -1,6 +1,5 @@
 ---
 
-# Return True when AC unit is on
 - platform: template
   sensors:
     living_room_ac_is_on:

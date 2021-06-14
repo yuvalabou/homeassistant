@@ -3,7 +3,6 @@
 - platform: template
   sensors:
     is_fast_day:
-      # Return True when it is fast today
       # Does not return true on Kippur as it is a Holiday
       friendly_name: "צום"
       value_template: >-
@@ -16,7 +15,6 @@
         {% endif %}
     is_omer:
       friendly_name: "עומר"
-      # Return True when it is Omer today
       value_template: >-
         {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
     issur_melacha_eve:
@@ -56,5 +54,3 @@
           float + (30*60) - (10800) ) |
           timestamp_custom("%H:%M:%S")
         }}
-
-# TODO: Check template from the post - https://www.facebook.com/groups/801414950005336/permalink/2518534924959988

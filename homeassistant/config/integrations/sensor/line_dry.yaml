@@ -25,5 +25,5 @@
           {% set d = (1 - humidity) * ea %}
           {% set e = (delta * rn + y * (6.43 * (1 + 0.536 * wind) * d)) / (lamda * (delta + y)) %}
 
-          {{ ((0.2 / (e)) * 1440) | round(2) }}
+          {{ ((0.2 / (e)) * 1440) | int }}
         {% endif %}
