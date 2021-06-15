@@ -25,7 +25,7 @@ doorbell_notification:
         - action: doorbell_no_entry
           title: "Nope"
         clickAction: /lovelace/ui-lovelace/doorbell
-        image: '/local/cam_captures/doorbell/front_door_snapshot_latest.jpg'
+        image: '/www/cam_captures/doorbell/front_door_snapshot_latest.jpg'
         priority: high
         tag: doorbell
         ttl: 0

@@ -4,8 +4,6 @@
   type: js
 - url: /hacsfiles/animated-consumption-card/animated-consumption-card.js
   type: module
-- url: /hacsfiles/apexcharts-card/apexcharts-card.js
-  type: module
 - url: /hacsfiles/bar-card/bar-card.js
   type: module
 - url: /hacsfiles/button-card/button-card.js

@@ -35,10 +35,10 @@ map:
 #                     PERSONS                    #
 ##################################################
 # Connecting device tracker entities to one or more person entities.
-person: !include integrations/person.yaml
+person: !include components/person.yaml
 
 # Presence detection and tracking.
-device_tracker: !include integrations/device_tracker.yaml
+device_tracker: !include components/device_tracker.yaml
 
 ##################################################
 #                   DISCOVERY                    #
@@ -51,25 +51,25 @@ ssdp:
 #                  INTEGRATIONS                  #
 ##################################################
 automation: !include_dir_merge_list automation
-binary_sensor: !include_dir_merge_list integrations/binary_sensor
+binary_sensor: !include_dir_merge_list components/binary_sensor
 blueprint:
-camera: !include integrations/camera.yaml
-climate: !include_dir_merge_list integrations/climate
+camera: !include components/camera.yaml
+climate: !include_dir_merge_list components/climate
 google:
   client_id: !secret google_cal_id
   client_secret: !secret google_cal_secret
-group: !include integrations/group.yaml
-input_boolean: !include_dir_merge_named integrations/input_boolean
-input_datetime: !include_dir_merge_named integrations/input_datetime
+group: !include_dir_merge_named components/group
+input_boolean: !include_dir_merge_named components/input_boolean
+input_datetime: !include_dir_merge_named components/input_datetime
 input_number:
-input_select: !include_dir_merge_named integrations/input_select
+input_select: !include_dir_merge_named components/input_select
 jewish_calendar:
   language: hebrew
-light: !include integrations/light.yaml
-notify: !include integrations/notify.yaml
-scene: !include_dir_merge_list scene
-script: !include_dir_merge_named integrations/script
-sensor: !include_dir_merge_list integrations/sensor
+light: !include components/light.yaml
+notify: !include components/notify.yaml
+scene: !include_dir_merge_list components/scene
+script: !include_dir_merge_named components/script
+sensor: !include_dir_merge_list components/sensor
 spotcast:
   sp_dc: !secret sp_dc
   sp_key: !secret sp_key
@@ -77,24 +77,24 @@ spotify:
   client_id: !secret spotify_id
   client_secret: !secret spotify_secret
 sun:
-switch: !include_dir_merge_list integrations/switch
+switch: !include_dir_merge_list components/switch
 system_health:
-timer: !include integrations/timer.yaml
+timer: !include_dir_merge_named components/timer.yaml
 tts:
   - platform: microsoft
     api_key: !secret azure_tts
     language: he-il
     type: HilaNeural
 updater:
-utility_meter: !include integrations/sensor/utility_meter.yaml
-zone: !include integrations/zone.yaml
+utility_meter: !include components/sensor/utility_meter.yaml
+zone: !include components/zone.yaml
 
 ##################################################
 #                  LOG COMPONENTS                #
 ##################################################
-history: !include logging/history.yaml
-logbook: !include logging/logbook.yaml
-recorder: !include logging/recorder.yaml
+history: !include components/logging/history.yaml
+logbook: !include components/logging/logbook.yaml
+recorder: !include components/logging/recorder.yaml
 logger:
   default: warning
 system_log:
