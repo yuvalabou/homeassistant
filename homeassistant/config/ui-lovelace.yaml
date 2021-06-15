@@ -17,3 +17,4 @@ views:
   - !include lovelace/ui-lovelace/system.yaml
   - !include lovelace/ui-lovelace/homelab.yaml
   - !include lovelace/ui-lovelace/devices.yaml
+  - !include lovelace/ui-lovelace/doorbell.yaml

@@ -1,67 +1,56 @@
 ---
 
-# Main script triggering all the other script
 doorbell:
   sequence:
     - service: script.turn_on
       data:
         entity_id:
-          - script.doorbell_notifications
-          - script.doorbell_snapshot
+          - script.doorbell_notification
           - script.doorbell_lights
 
-# TTS to all the Nest Homes
-doorbell_notifications:
+doorbell_notification:
   sequence:
-    - delay: 3
-    - service: notify.nest_mini
+  - entity_id: camera.doorbell_camera
+    service: camera.snapshot
+    data:
+      filename: '/config/www/cam_captures/doorbell/front_door_snapshot_latest.jpg'
+  - service: notify.mobile_app_yuval
+    data:
+      title: "Doorbell"
+      message: Doorbell pressed at {{ as_timestamp(now()) | timestamp_custom('%-H:%M', true) }}
       data:
-        message: "מישהו בדלת"
-    - service: notify.family
-      data_template:
-        title: "דינג דונג!"
-        message: "יש מישהו בדלת."
+        actions:
+        - action: doorbell_open
+          title: "Open"
+        - action: doorbell_no_entry
+          title: "Nope"
+        clickAction: /lovelace/ui-lovelace/doorbell
+        image: '/local/cam_captures/doorbell/front_door_snapshot_latest.jpg'
+        priority: high
+        tag: doorbell
+        ttl: 0
 
-# Take a snapshot of camera and save it
-doorbell_snapshot:
-  sequence:
-    - service: camera.snapshot
-      data:
-        entity_id: camera.doorbell_camera
-        filename: '/config/www/cam_captures/doorbell/doorbell_{{ now ().year }}_{{ now ().month }}_{{ now ().day }}_{{ now ().hour }}_{{ now ().minute }}.jpg'
-    - data_template:
-        entity_id: camera.saved_image
-        file_path: '/config/www/cam_captures/doorbell/doorbell_{{ now ().year }}_{{ now ().month }}_{{ now ().day }}_{{ now ().hour }}_{{ now ().minute }}.jpg'
-      service: camera.local_file_update_file_path
-
-# Make selected lights blink blue then return back to normal
 doorbell_lights:
   sequence:
-    - service: scene.create
-      data:
-        scene_id: before_doorbell
-        snapshot_entities:
-          - light.living_room_lights
     - service: light.turn_on
       data:
         color_name: blue
-        entity_id:
-          - light.living_room_lights
+        entity_id: light.living_room_lights
     - delay:
         milliseconds: 500
     - service: light.turn_off
       data:
-        entity_id:
-          - light.living_room_lights
+        entity_id: light.living_room_lights
     - delay:
         milliseconds: 200
     - service: light.turn_on
       data:
         color_name: blue
-        entity_id:
-          - light.living_room_lights
+        entity_id: light.living_room_lights
     - delay:
         milliseconds: 500
-    - service: scene.turn_on
+    - service: light.turn_on
       data:
-        entity_id: scene.before_doorbell
+        entity_id: light.living_room_lights
+        brightness_pct: 100
+        kelvin: 3000
