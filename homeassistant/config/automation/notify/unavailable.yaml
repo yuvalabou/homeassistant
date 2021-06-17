@@ -1,6 +1,6 @@
 ---
 
-- alias: 'Unavailable lights notification'
+- alias: 'Notify - Unavailable lights notification'
   id: 26879041-377a-47bb-acdb-e684ba45c5e2
   trigger:
     platform: state

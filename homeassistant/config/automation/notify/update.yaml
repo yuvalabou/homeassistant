@@ -1,6 +1,6 @@
 ---
 
-- alias: "Update notifications"
+- alias: "Notify - Update"
   id: 21a7799b-083b-45f4-af72-c4b6200fd25b
   description: "Send a notification when there's an update availiable for Home Assistant"
   trigger:

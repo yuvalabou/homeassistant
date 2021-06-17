@@ -1,6 +1,6 @@
 ---
 
-- alias: "Notify for power outage and restore"
+- alias: "Notify - Power outage and restore"
   id: 151f5012-4ee2-4372-926c-81746b3e7f76
   trigger:
     - platform: state

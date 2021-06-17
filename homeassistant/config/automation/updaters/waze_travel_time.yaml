@@ -22,7 +22,7 @@
       entity_id: sensor.tohar_from_home_to_work
 
 - alias: "Waze - update dynamic sensors"
-  id: b420b709-45ee-42f0-9fde-be4da53dc4f9
+  id: b516b10c-2870-47b0-b911-fe934e347a5f
   trigger:
     platform: time_pattern
     minutes: /2

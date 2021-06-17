@@ -1,6 +1,6 @@
 ---
 
-- alias: "Shabbat notifications"
+- alias: "Notify - Shabbat"
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
   description: "Notify 30 minutes and 10 minutes before Shabbat"
   trigger:
