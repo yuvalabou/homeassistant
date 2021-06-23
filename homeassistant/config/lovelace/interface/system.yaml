@@ -97,6 +97,7 @@ cards:
         entity: sensor.ups_battery_charge
         name: "Battery Charge"
       - sensor.ups_time_remaining
+      - sensor.ups_load_watts
       - type: custom:bar-card
         entity: sensor.ups_load
         name: "Load"

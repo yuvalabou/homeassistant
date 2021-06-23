@@ -14,3 +14,12 @@
         {%endif%}
       unit_of_measurement: 'minutes'
       device_class: 'battery'
+    ups_load_watts:
+      friendly_name: "UPS Load"
+      value_template: >-
+        {{
+          (states('sensor.ups_load')|int * 0.01 * states('sensor.ups_nominal_power')|int * 0.8) | round(1)
+        }}
+      icon_template: mdi:current-dc
+      unit_of_measurement: 'Watts'
+      device_class: 'power'
