@@ -9,19 +9,16 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://cdn.shopify.com/s/files/1/1669/6891/t/29/assets/logo.png?v=397554563567565171'
-      - type: custom:hui-element
-        card_type: entities
-        entities:
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: living_room_sensibo
-              - device_name: "Living room Sensibo"
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: master_bedroom_sensibo
-              - device_name: "Master bedroom Sensibo"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: living_room_sensibo
+          - device_name: "Living room Sensibo"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: master_bedroom_sensibo
+          - device_name: "Master bedroom Sensibo"
 
   - type: entities
     show_header_toggle: false
@@ -29,24 +26,21 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://brands.home-assistant.io/esphome/logo.png'
-      - type: custom:hui-element
-        card_type: entities
-        entities:
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: living_room
-              - device_name: "Living room multisensor"
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: bathroom
-              - device_name: "Bathroom multisensor"
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: doorbell
-              - device_name: "Doorbell"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: living_room
+          - device_name: "Living room multisensor"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: bathroom
+          - device_name: "Bathroom multisensor"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: doorbell
+          - device_name: "Doorbell"
       - switch.restart_living_room
       - switch.restart_bathroom
       - switch.restart_doorbell
@@ -57,17 +51,23 @@ cards:
       - type: custom:hui-element
         card_type: picture
         image: 'https://github.com/Aircoookie/WLED/raw/master/images/wled_logo_akemi.png'
-      - type: custom:hui-element
-        card_type: entities
-        entities:
-          - type: custom:decluttering-card
-            template: uptime_card
-            variables:
-              - device: wled_master_bedroom
-              - device_name: "Master bedroom WLED"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: wled_master_bedroom
+          - device_name: "Master bedroom WLED"
 
   - type: custom:decluttering-card
     template: uptime_card
     variables:
       - device: laptop
       - device_name: "Laptop"
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:battery-entity-row
+        name: "Aqara button 1"
+        entity: sensor.aqara_button_1_battery
+      - name: "Aqara button 1"
+        entity: sensor.aqara_button_1_linkquality

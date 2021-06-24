@@ -31,6 +31,11 @@ lovelace:
   resources: !include lovelace/resources/resources.yaml
 map:
 
+panel_iframe:
+  router:
+    title: "Zigbee2mqtt"
+    url: "http://10.0.0.6:8080"
+
 ##################################################
 #                     PERSONS                    #
 ##################################################
