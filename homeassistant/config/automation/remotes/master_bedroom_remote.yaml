@@ -1,19 +1,17 @@
 ---
 
-- alias: "zigbee button - master-bedroom climate control"
+- alias: "Button - master-bedroom climate control"
   id: dc3f19a4-55f9-4104-96b1-672d250bc694
   trigger:
-    - platform: device
-      domain: mqtt
-      device_id: 4932ca0195f7b92a0bb922d9ea12bd70
-      type: click
-      subtype: single
-      discovery_id: 0x00158d0006d0a9bd click_single
+    platform: device
+    domain: mqtt
+    device_id: 4932ca0195f7b92a0bb922d9ea12bd70
+    type: click
+    subtype: single
+    discovery_id: 0x00158d0006d0a9bd click_single
   action:
     choose:
       - conditions:
-          - condition: time
-            after: '15:00:00'
           - "{{ is_state('climate.shynh', 'off') }}"
         sequence:
           - service: climate.turn_on
@@ -27,24 +25,21 @@
             target:
               entity_id: climate.shynh
       - conditions:
-          - condition: time
-            after: '06:00:00'
-            before: '15:00:00'
           - "{{ not is_state('climate.shynh', 'off') }}"
         sequence:
           - service: climate.turn_off
             data:
               entity_id: climate.shynh
 
-- alias: "zigbee button - Turn-off all lights at night"
+- alias: "Button - Turn-off all lights at night"
   id: d188bbe8-773b-4319-b2b8-5f6896f98b0a
   trigger:
-    - platform: device
-      domain: mqtt
-      device_id: 4932ca0195f7b92a0bb922d9ea12bd70
-      type: click
-      subtype: double
-      discovery_id: 0x00158d0006d0a9bd click_double
+    platform: device
+    domain: mqtt
+    device_id: 4932ca0195f7b92a0bb922d9ea12bd70
+    type: click
+    subtype: double
+    discovery_id: 0x00158d0006d0a9bd click_double
   condition:
     condition: time
     after: '20:00:00'
