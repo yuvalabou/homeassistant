@@ -1,0 +1,31 @@
+---
+
+- platform: template
+  switches:
+    zigbee2mqtt_permit_join:
+      unique_id: 3b007c49-1f1d-48b1-93aa-b5c4aa23e2b2
+      friendly_name: "Allow zigbee devices to join"
+      value_template: >-
+        {{ states('input_boolean.zigbee2mqtt_permit_join') }}
+      turn_on:
+        - service: mqtt.publish
+          data:
+            topic: zigbee2mqtt/bridge/config/permit_join
+            payload: 'true'
+        - service: timer.start
+          data:
+            entity_id: timer.zigbee2mqtt_permit_join
+      turn_off:
+        - service: mqtt.publish
+          data:
+            topic: zigbee2mqtt/bridge/config/permit_join
+            payload: 'false'
+        - service: timer.cancel
+          data:
+            entity_id: timer.zigbee2mqtt_permit_join
+      icon_template: >-
+        {% if is_state('switch.zigbee2mqtt_permit_join', 'on') %}
+          mdi:signal
+        {% else %}
+          mdi:signal-off
+        {% endif %}
