@@ -80,7 +80,7 @@ spotify:
 sun:
 switch: !include_dir_merge_list components/switch
 system_health:
-timer: !include_dir_merge_named components/timer.yaml
+timer: !include_dir_merge_named components/timer
 tts:
   - platform: microsoft
     api_key: !secret azure_tts
