@@ -66,6 +66,11 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
+      - name: "Coordinator"
+        entity: sensor.cc2531_bridge
+      - type: custom:timer-bar-card
+        entity: timer.zigbee2mqtt_permit_join
+      - type: divider
       - type: custom:battery-entity-row
         name: "Aqara button 1 battery"
         entity: sensor.aqara_button_1_battery
