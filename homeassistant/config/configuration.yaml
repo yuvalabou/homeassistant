@@ -16,7 +16,6 @@ homeassistant:
   customize: !include customize.yaml
   allowlist_external_dirs:
     - /config
-
 config:
 cloud:
 mobile_app:
@@ -30,19 +29,16 @@ lovelace:
   mode: yaml
   resources: !include lovelace/resources/resources.yaml
 map:
-
 panel_iframe:
-  router:
+  zigbee2mqtt:
     title: "Zigbee2mqtt"
-    url: "http://10.0.0.6:8080"
+    url: !secret zigbee2mqtt_addr
+    icon: mdi:zigbee
 
 ##################################################
 #                     PERSONS                    #
 ##################################################
-# Connecting device tracker entities to one or more person entities.
 person: !include components/person.yaml
-
-# Presence detection and tracking.
 device_tracker: !include components/device_tracker.yaml
 
 ##################################################

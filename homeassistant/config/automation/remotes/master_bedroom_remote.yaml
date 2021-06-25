@@ -6,9 +6,9 @@
     platform: device
     domain: mqtt
     device_id: 4932ca0195f7b92a0bb922d9ea12bd70
-    type: click
+    type: action
     subtype: single
-    discovery_id: 0x00158d0006d0a9bd click_single
+    discovery_id: 0x00158d0006d0a9bd action_single
   action:
     choose:
       - conditions:
@@ -37,9 +37,9 @@
     platform: device
     domain: mqtt
     device_id: 4932ca0195f7b92a0bb922d9ea12bd70
-    type: click
+    type: action
     subtype: double
-    discovery_id: 0x00158d0006d0a9bd click_double
+    discovery_id: 0x00158d0006d0a9bd action_double
   condition:
     condition: time
     after: '20:00:00'

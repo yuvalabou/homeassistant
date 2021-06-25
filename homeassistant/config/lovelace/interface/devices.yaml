@@ -67,7 +67,10 @@ cards:
     show_header_toggle: false
     entities:
       - type: custom:battery-entity-row
-        name: "Aqara button 1"
+        name: "Aqara button 1 battery"
         entity: sensor.aqara_button_1_battery
-      - name: "Aqara button 1"
+      - type: custom:battery-entity-row
+        name: "Aqara button 1 link quality"
         entity: sensor.aqara_button_1_linkquality
+        attribute: linkquality
+        icon: mdi:signal
