@@ -1,0 +1,32 @@
+---
+
+- platform: template
+  sensors:
+    aqara_button_1_linkquality_pct:
+      value_template: >-
+        {{ ((states('sensor.aqara_button_1_linkquality') | int / 255) * 100) | round (1) }}
+      icon_template: >-
+        {% set lqi = states('sensor.aqara_button_1_linkquality_pct') %}
+        {% if lqi <= '35' %}
+          mdi:signal-cellular-1
+        {% elif lqi <= '65' %}
+          mdi:signal-cellular-2
+        {% elif lqi <= '100' %}
+          mdi:signal-cellular-3
+        {% else %}
+          mdi:signal-off
+        {% endif %}
+    aqara_button_2_linkquality_pct:
+      value_template: >-
+        {{ ((states('sensor.aqara_button_2_linkquality') | int / 255) * 100) | round (1) }}
+      icon_template: >-
+        {% set lqi = states('sensor.aqara_button_2_linkquality_pct') %}
+        {% if lqi <= '35' %}
+          mdi:signal-cellular-1
+        {% elif lqi <= '65' %}
+          mdi:signal-cellular-2
+        {% elif lqi <= '100' %}
+          mdi:signal-cellular-3
+        {% else %}
+          mdi:signal-off
+        {% endif %}

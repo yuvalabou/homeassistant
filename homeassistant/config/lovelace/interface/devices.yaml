@@ -70,15 +70,20 @@ cards:
         entity: sensor.cc2531_bridge
       - name: "Permit join"
         entity: switch.zigbee2mqtt_permit_join
-      - type: custom:timer-bar-card
-        entity: timer.zigbee2mqtt_permit_join
+      - type: conditional
+        conditions:
+          - entity: timer.zigbee2mqtt_permit_join
+            state_not: 'idle'
+        row:
+          type: custom:timer-bar-card
+          entity: timer.zigbee2mqtt_permit_join
       - type: divider
       - type: custom:battery-entity-row
         name: "Aqara button 1 battery"
         entity: sensor.aqara_button_1_battery
       - type: custom:battery-entity-row
         name: "Aqara button 1 link quality"
-        entity: sensor.aqara_button_1_linkquality
+        entity: sensor.aqara_button_1_linkquality_pct
         attribute: linkquality
         icon: mdi:signal
       - type: divider
@@ -87,6 +92,6 @@ cards:
         entity: sensor.aqara_button_2_battery
       - type: custom:battery-entity-row
         name: "Aqara button 2 link quality"
-        entity: sensor.aqara_button_2_linkquality
+        entity: sensor.aqara_button_2_linkquality_pct
         attribute: linkquality
         icon: mdi:signal
