@@ -12,6 +12,9 @@
           data:
             topic: zigbee2mqtt/bridge/config/permit_join
             payload: 'true'
+        - service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.zigbee2mqtt_permit_join
         - service: timer.start
           data:
             entity_id: timer.zigbee2mqtt_permit_join
@@ -20,6 +23,9 @@
           data:
             topic: zigbee2mqtt/bridge/config/permit_join
             payload: 'false'
+        - service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.zigbee2mqtt_permit_join
         - service: timer.cancel
           data:
             entity_id: timer.zigbee2mqtt_permit_join
