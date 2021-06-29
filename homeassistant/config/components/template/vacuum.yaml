@@ -83,28 +83,28 @@
       }}
     icon: mdi:timetable
 
-  - name: "Vacuum Clean sensors"
+  - name: "Vacuum sensors"
     unique_id: 41da5766-550b-4c99-93f1-f727d3529d3f
     unit_of_measurement: 'hours'
     state: >-
       {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}
-    icon: mdi:broom
+    icon: mdi:screwdriver
 
-  - name: "Replace Vacuum filter"
+  - name: "Vacuum filter"
     unique_id: 706eefb5-c557-4647-9151-0ff971499a05
     unit_of_measurement: 'hours'
     state: >-
       {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
-    icon: mdi:screwdriver
+    icon: mdi:air-filter
 
-  - name: "Replace Vacuum main brush"
+  - name: "Vacuum main brush"
     unique_id: 1c807aed-f34e-4f30-8e60-13414294fbc2
     unit_of_measurement: 'hours'
     state: >-
       {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
     icon: mdi:screwdriver
 
-  - name: "Replace Vacuum side brush"
+  - name: "Vacuum side brush"
     unique_id: 4be06340-150a-4ccf-acef-3971a3491e94
     unit_of_measurement: 'hours'
     state: >-

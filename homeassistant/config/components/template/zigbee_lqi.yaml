@@ -7,7 +7,7 @@
     state: >-
       {{ ((states('sensor.aqara_button_1_linkquality') | int / 255) * 100) | round (1) }}
     icon: >-
-      {% set lqi = states('sensor.aqara_button_1_linkquality_pct') %}
+      {% set lqi = states('sensor.aqara_button_1_linkquality_percent') %}
       {% if lqi <= '35' %}
         mdi:signal-cellular-1
       {% elif lqi <= '65' %}
@@ -24,7 +24,7 @@
     state: >-
       {{ ((states('sensor.aqara_button_2_linkquality') | int / 255) * 100) | round (1) }}
     icon: >-
-      {% set lqi = states('sensor.aqara_button_2_linkquality_pct') %}
+      {% set lqi = states('sensor.aqara_button_2_linkquality_percent') %}
       {% if lqi <= '35' %}
         mdi:signal-cellular-1
       {% elif lqi <= '65' %}

@@ -18,8 +18,3 @@
     unique_id: c3a02901-4c58-4ab3-83a5-e8782e340e72
     state: >-
       {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'YouTube') }}
-
-  - name: "Kodi on"
-    unique_id: ea27e451-ec87-4586-88b1-1dcc1fe4f7cf
-    state: >-
-      {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'kodi') }}
