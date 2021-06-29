@@ -1,0 +1,25 @@
+---
+
+- binary_sensor:
+  - name: "MiBox on"
+    unique_id: ef62910c-f8d7-438e-9de8-5d4dd2e641d7
+    state: >-
+      {{ is_state('media_player.tv_master_bedroom', 'playing') }}
+    attributes:
+      app_name: >-
+        {{ state_attr('media_player.tv_master_bedroom', 'app_name') }}
+
+  - name: "Netflix on"
+    unique_id: 48381870-ef8b-4be5-b624-1d604468b9cf
+    state: >-
+      {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'Netflix') }}
+
+  - name: "YouTube on"
+    unique_id: c3a02901-4c58-4ab3-83a5-e8782e340e72
+    state: >-
+      {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'YouTube') }}
+
+  - name: "Kodi on"
+    unique_id: ea27e451-ec87-4586-88b1-1dcc1fe4f7cf
+    state: >-
+      {{ is_state_attr('media_player.tv_master_bedroom', 'app_name', 'kodi') }}

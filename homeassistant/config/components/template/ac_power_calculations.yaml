@@ -1,0 +1,42 @@
+---
+
+- sensor:
+  - name: "Living room AC power consumption"
+    unique_id: 29afc9f0-e99e-48ef-8de2-4b2d862fa179
+    unit_of_measurement: 'kW'
+    state: >-
+      {% if is_state('binary_sensor.living_room_ac_is_on', 'on') and
+            is_state('climate.slvn', 'heat_cool') %}
+        2.04
+      {% elif is_state('binary_sensor.living_room_ac_is_on', 'on') and
+            is_state('climate.slvn', 'cool') %}
+        2.04
+      {% elif is_state('binary_sensor.living_room_ac_is_on', 'on') and
+              is_state('climate.slvn', 'heat') %}
+        2.317
+      {% else %}
+        0
+      {% endif %}
+    icon: mdi:flash
+
+  - name: "Master Bedroom AC power consumption"
+    unique_id: b7851f46-3dc4-4dd1-8a2f-95ecf28b08a6
+    unit_of_measurement: 'kW'
+    state: >-
+      {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') %}
+        0.8
+      {% else %}
+        0
+      {% endif %}
+    icon: mdi:flash
+
+  - name: "Total AC power consumption"
+    unique_id: ed1b7788-a184-4c97-bee5-2c876aa1a2de
+    unit_of_measurement: 'kW'
+    state: >-
+      {{
+        (states('sensor.living_room_ac_power_consumption') | float)
+        +
+        (states('sensor.master_bedroom_ac_power_consumption') | float)
+      }}
+    icon: mdi:flash

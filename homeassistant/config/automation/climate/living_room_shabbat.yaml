@@ -31,7 +31,7 @@
         entity_id:
           - climate.living_room_cool_thermostat
           - climate.slvn
-    - delay: 20
+    - delay: 10
     # Repeat once more becouse I can't trust sensibo
     - service: climate.turn_off
       data:

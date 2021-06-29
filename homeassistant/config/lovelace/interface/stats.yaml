@@ -13,7 +13,7 @@ cards:
         show_points: false
       - entity: sensor.bathroom_temperature
         show_points: false
-      - entity: sensor.outside_temps
+      - entity: sensor.outside_temperature
         name: "Outside"
         show_points: false
         color: 'white'

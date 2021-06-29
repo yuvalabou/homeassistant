@@ -27,24 +27,19 @@ cards:
         tap_action:
           action: call-service
           service: script.reload
-      - entity: sensor.count_zones
-        name: "Zones"
-        tap_action:
-          action: call-service
-          service: zone.reload
       - entity: sensor.count_device_trackers
         name: "Device Trackers"
-      - entity: sensor.count_input_booleans
+      - entity: sensor.count_input_boolean_entities
         name: "Input Booleans"
         tap_action:
           action: call-service
           service: input_boolean.reload
-      - entity: sensor.count_input_selects
+      - entity: sensor.count_input_select_entities
         name: "Input Select"
         tap_action:
           action: call-service
           service: input_select.reload
-      - entity: sensor.count_input_datetimes
+      - entity: sensor.count_input_datetime_entities
         name: "Input Date Times"
         tap_action:
           action: call-service

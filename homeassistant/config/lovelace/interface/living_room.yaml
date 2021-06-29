@@ -138,7 +138,7 @@ cards:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         content: |
           Last cleaned at {{ states('sensor.vacuum_last_cleaned') }}
-          It took {{ states('sensor.vacuum_time_cleaned') }} minutes to clean {{ states('sensor.vacuum_area_cleaned') }} meters.
+          It took {{ states('sensor.time_of_last_vacuum_cycle') }} minutes to clean {{ states('sensor.area_of_last_vacuum_cycle') }} meters.
       - type: custom:hui-element
         card_type: glance
         columns: 2
@@ -159,19 +159,19 @@ cards:
           label: "Consumables"
         open: false
         entities:
-          - entity: sensor.vacuum_clean_main_brush
+          - entity: sensor.replace_vacuum_main_brush
             hold_action:
               action: call-service
               service: script.vacuum_reset_main_brush
-          - entity: sensor.vacuum_clean_side_brush
+          - entity: sensor.replace_vacuum_side_brush
             hold_action:
               action: call-service
               service: script.vacuum_reset_side_brush
-          - entity: sensor.vacuum_clean_filter
+          - entity: sensor.replace_vacuum_filter
             hold_action:
               action: call-service
               service: script.vacuum_reset_filter
-          - entity: sensor.vacuum_clean_cliff_sensors
+          - entity: sensor.vacuum_clean_sensors
             hold_action:
               action: call-service
               service: script.vacuum_reset_sensor

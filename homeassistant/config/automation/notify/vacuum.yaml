@@ -11,6 +11,6 @@
     service: notify.family
     data:
       title: "Finished cleaning"
-      message: "It took me {{ states('sensor.vacuum_time_cleaned') }} minutes"
+      message: "It took me {{ states('sensor.time_of_last_vacuum_cycle') }} minutes"
       data:
         image: '/local/assets/notification_images/great_success.jpg'

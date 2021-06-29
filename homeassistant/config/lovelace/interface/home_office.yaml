@@ -15,7 +15,7 @@ cards:
       - type: custom:hui-element
         card_type: custom:mini-graph-card
         entities:
-          - entity: sensor.track_steam_playtime_formatted
+          - entity: sensor.formatted_steam_playtime
             unit: hours
             name: "Steam playtime"
         show:

@@ -9,11 +9,3 @@
   name: "Day"
   after: sunrise
   before: sunset
-
-- platform: template
-  sensors:
-    is_sunday:
-      friendly_name: "Sunday"
-      value_template: >-
-        {{ now().weekday() == 6 }}
-      icon_template: mdi:calendar-today

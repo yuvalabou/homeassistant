@@ -80,6 +80,7 @@ spotify:
 sun:
 switch: !include_dir_merge_list components/switch
 system_health:
+template: !include_dir_merge_list components/template
 timer: !include_dir_merge_named components/timer
 tts:
   - platform: microsoft

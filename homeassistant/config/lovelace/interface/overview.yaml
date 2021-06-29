@@ -19,13 +19,13 @@ cards:
     entities:
       - entity: sensor.jewish_calendar_date
         name: "תאריך"
-      - entity: binary_sensor.is_fast_day
+      - entity: binary_sensor.tzom
         type: conditional
         conditions:
-          - entity: binary_sensor.is_fast_day
+          - entity: binary_sensor.tzom
             state: 'on'
         row:
-          entity: binary_sensor.is_fast_day
+          entity: binary_sensor.tzom
       - entity: sensor.jewish_calendar_day_of_the_omer
         type: conditional
         conditions:

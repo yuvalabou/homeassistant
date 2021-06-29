@@ -1,0 +1,24 @@
+---
+
+- binary_sensor:
+  - name: "Master Bedroom Light is on"
+    unique_id: a5668654-09f1-471c-b5eb-a142ce81cc3a
+    state: >-
+      {{ is_state('light.yeelight_color_master_bedroom', 'on') }}
+    icon: >-
+      {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
+        mdi:lightbulb
+      {% else %}
+        mdi:lightbulb-off
+      {% endif %}
+
+  - name: "Living Room Lights is on"
+    unique_id: b9d4c3c9-04d5-4df8-a49c-5828d1b070ce
+    state: >-
+      {{ is_state('light.living_room_lights', 'on') }}
+    icon: >-
+      {% if is_state('binary_sensor.living_room_lights_is_on', 'on') %}
+        mdi:lightbulb-group
+      {% else %}
+        mdi:lightbulb-group-off
+      {% endif %}

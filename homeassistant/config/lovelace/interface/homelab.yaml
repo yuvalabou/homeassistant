@@ -28,6 +28,7 @@ cards:
               - color: '#FF0F00'
                 from: 91
                 to: 100
+
   - type: entities
     title: "NanoPi NEO 2"
     entities:

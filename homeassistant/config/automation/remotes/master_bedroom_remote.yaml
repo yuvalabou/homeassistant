@@ -31,19 +31,25 @@
             data:
               entity_id: climate.shynh
 
-- alias: "Button - Turn-off all lights at night"
+- alias: "Button - Turn-off everything at night"
   id: d188bbe8-773b-4319-b2b8-5f6896f98b0a
   trigger:
     platform: device
     domain: mqtt
     device_id: 4932ca0195f7b92a0bb922d9ea12bd70
     type: action
-    subtype: double
-    discovery_id: 0x00158d0006d0a9bd action_double
+    subtype: hold
+    discovery_id: 0x00158d0006d0a9bd action_hold
   condition:
     condition: time
     after: '20:00:00'
   action:
-    service: light.turn_off
-    data:
-      entity_id: light.all_lights
+    - service: climate.turn_off
+      data:
+        entity_id:
+          - climate.living_room_cool_thermostat
+          - climate.slvn
+    - delay: 3
+    - service: light.turn_off
+      data:
+        entity_id: light.all_lights

@@ -1,0 +1,112 @@
+---
+
+- sensor:
+  - name: "Vacuum status"
+    unique_id: b453c3bd-560b-4235-9aa2-b25b116820b5
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') }}
+    icon: >-
+      {% set status = state_attr('vacuum.xiaomi_vacuum_cleaner', 'status') %}
+      {% if status == 'Charging' %}
+        mdi:battery-charging
+      {% elif status == 'Cleaning' %}
+        mdi:move-resize
+      {% elif status == 'Returning home' %}
+        mdi:home-import-outline
+      {% elif status == 'Idle' %}
+        mdi:dots-horizontal
+      {% elif status == 'Paused' %}
+        mdi:pause-circle
+      {% else %}
+        mdi:help-circle
+      {% endif %}
+
+  - name: "Vacuum Fan speed"
+    unique_id: c5efde29-c48f-4faa-9363-9c514204bb60
+    state: >-
+      {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+      {% if speed == 'Silent' %}
+        Silent
+      {% elif speed == 'Standard' %}
+        Standard
+      {% elif speed == 'Medium' %}
+        Medium
+      {% elif speed == 'Turbo' %}
+        Turbo
+      {% else %}
+        unknown
+      {% endif %}
+    icon: >-
+      {% set speed = state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') %}
+      {% if speed == 'Silent' %}
+        mdi:fan-speed-1
+      {% elif speed == 'Standard' %}
+        mdi:fan-speed-2
+      {% elif speed == 'Medium' %}
+        mdi:fan-speed-3
+      {% elif speed == 'Turbo' %}
+        mdi:weather-tornado
+      {% else %}
+        mdi:alert-circle
+      {% endif %}
+
+  - name: "Vacuum Battery"
+    unique_id: b6713b14-05ac-4f66-8e46-fa6ae1ef5304
+    unit_of_measurement: '%'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}
+    icon: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}
+
+  - name: "Area of Last Vacuum Cycle"
+    unique_id: 24f3a48b-b288-4d97-bce9-2ff78f11f2c5
+    unit_of_measurement: 'm²'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaned_area') }}
+    icon: mdi:ruler
+
+  - name: "Time of Last Vacuum Cycle"
+    unique_id: 1091fde9-6b03-44de-b3d6-40f528dcd872
+    unit_of_measurement: 'minutes'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'cleaning_time') }}
+    icon: mdi:timer
+
+  - name: "Vacuum Last cleaned"
+    unique_id: 7d051195-e54e-4cef-aaf8-4479dfa19f37
+    state: >-
+      {{
+        as_timestamp(
+          state_attr('vacuum.xiaomi_vacuum_cleaner', 'clean_stop')
+        ) |
+        timestamp_custom("%A, %H:%M", true)
+      }}
+    icon: mdi:timetable
+
+  - name: "Vacuum Clean sensors"
+    unique_id: 41da5766-550b-4c99-93f1-f727d3529d3f
+    unit_of_measurement: 'hours'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}
+    icon: mdi:broom
+
+  - name: "Replace Vacuum filter"
+    unique_id: 706eefb5-c557-4647-9151-0ff971499a05
+    unit_of_measurement: 'hours'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}
+    icon: mdi:screwdriver
+
+  - name: "Replace Vacuum main brush"
+    unique_id: 1c807aed-f34e-4f30-8e60-13414294fbc2
+    unit_of_measurement: 'hours'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}
+    icon: mdi:screwdriver
+
+  - name: "Replace Vacuum side brush"
+    unique_id: 4be06340-150a-4ccf-acef-3971a3491e94
+    unit_of_measurement: 'hours'
+    state: >-
+      {{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}
+    icon: mdi:screwdriver

@@ -1,9 +1,0 @@
----
-
-- platform: template
-  sensors:
-    solar_elevation:
-      friendly_name: "Solar elevation"
-      value_template: >-
-        {{ state_attr('sun.sun', 'elevation') }}
-      icon_template: mdi:weather-sunny

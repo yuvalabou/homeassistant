@@ -1,0 +1,25 @@
+---
+
+- sensor:
+  - name: "UPS Time remaining"
+    unique_id: 221b2ea7-b729-4f7f-97cb-aee375990093
+    unit_of_measurement: 'minutes'
+    device_class: 'battery'
+    state: >-
+      {{ (states('sensor.ups_battery_runtime') | int) // 60 }}
+    icon: >-
+      {% if is_state('sensor.ups_status', 'Online') %}
+        mdi:battery-charging
+      {%else%}
+        mdi:battery-alert
+      {%endif%}
+
+  - name: "UPS Load (Watts)"
+    unique_id: db128936-b50b-41a9-ab2a-46cba5a211e6
+    unit_of_measurement: 'Watts'
+    device_class: 'power'
+    state: >-
+      {{
+        (states('sensor.ups_load')|int * 0.01 * states('sensor.ups_nominal_power')|int * 0.8) | round(1)
+      }}
+    icon: mdi:current-dc

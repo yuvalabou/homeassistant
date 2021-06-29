@@ -1,0 +1,80 @@
+---
+
+- sensor:
+  - name: "Count Automations"
+    unique_id: c16de9bd-f048-4f3f-987a-1683842e4e37
+    state: >-
+      {{ states.automation | count }}
+    icon: mdi:autorenew
+
+  - name: "Count Binary Sensors"
+    unique_id: 22fb2caf-e612-44db-96ed-8105ca8984e0
+    state: >-
+      {{ states.binary_sensor | count }}
+    icon: mdi:unfold-more-horizontal
+
+  - name: "Count Climates"
+    unique_id: 0f28d0e5-2947-4131-816a-174e9da286de
+    state: >-
+      {{ states.climate | count }}
+    icon: mdi:air-conditioner
+
+  - name: "Count Device Trackers"
+    unique_id: c323af5d-77da-42a2-b15a-32004e0f7cdd
+    state: >-
+      {{ states.device_tracker | count }}
+    icon: mdi:map-marker
+
+  - name: "Count Entities"
+    unique_id: 73d9ce53-3f50-4cfe-ad18-9927fd969e6e
+    state: >-
+      {{ states | count }}
+    icon: mdi:format-list-bulleted-square
+
+  - name: "Count Input-Boolean entities"
+    unique_id: 7fe8bbc1-14aa-4a09-b0d7-2fe6949953bf
+    state: >-
+      {{ states.input_boolean | count }}
+    icon: mdi:toggle-switch
+
+  - name: "Count Input-Datetime entities"
+    unique_id: 51cbfc71-56c5-495a-921c-7c80d7527573
+    state: >-
+      {{ states.input_datetime | count }}
+    icon: mdi:timetable
+
+  - name: "Count Input-Select entities"
+    unique_id: fc9bb638-c416-46b4-8fec-69e76ae177b6
+    state: >-
+      {{ states.input_select | count }}
+    icon: mdi:view-list
+
+  - name: "Count Lights"
+    unique_id: 639bc675-041a-4e27-a9d2-00aa79ff97de
+    state: >-
+      {{ states.light | count }}
+    icon: mdi:lightbulb-group
+
+  - name: "Count Scripts"
+    unique_id: ff3af31f-d405-4b75-972d-ef6055c4ed5a
+    state: >-
+      {{ states.script | count }}
+    icon: mdi:script-text-outline
+
+  - name: "Count Sensors"
+    unique_id: 2ad82d18-7ab0-4cbf-9d56-64eb86d91b6f
+    state: >-
+      {{ states.sensor | count }}
+    icon: mdi:resistor
+
+  - name: "Count Switches"
+    unique_id: 58a5fc09-2b56-49ae-ba61-767e9ba1771e
+    state: >-
+      {{ states.switch | count }}
+    icon: mdi:light-switch
+
+  - name: "Count Timers"
+    unique_id: 31b795b3-0815-4971-90c0-e85bbeb71151
+    state: >-
+      {{ states.timer | count }}
+    icon: mdi:timer-outline

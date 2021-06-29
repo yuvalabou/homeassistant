@@ -10,7 +10,7 @@
   action:
   - service: mqtt.publish
     data:
-      topic: zigbee2mqtt/bridge/config/permit_join
+      topic: 'zigbee2mqtt/bridge/config/permit_join'
       payload: 'false'
   - service: input_boolean.turn_off
     data:

@@ -1,0 +1,24 @@
+---
+
+- binary_sensor:
+  - name: "Living Room AC is on"
+    unique_id: c318949b-4013-4538-a75a-92539e0e6e0d
+    state: >-
+      {{ not is_state('climate.slvn', 'off') }}
+    icon: >-
+      {% if is_state('binary_sensor.living_room_ac_is_on', 'on') %}
+        mdi:hvac
+      {% else %}
+        mdi:hvac-off
+      {% endif %}
+
+  - name: "Master Bedroom AC is on"
+    unique_id: 15c62bca-b254-4bee-91dd-0a5f7ed676ed
+    state: >-
+      {{ not is_state('climate.shynh', 'off') }}
+    icon: >-
+      {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') %}
+        mdi:hvac
+      {% else %}
+        mdi:hvac-off
+      {% endif %}
