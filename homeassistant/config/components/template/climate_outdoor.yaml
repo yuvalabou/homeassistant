@@ -1,13 +1,6 @@
 ---
 
 - sensor:
-  - name: "Outside Temperature"
-    unique_id: fb41715f-3004-44a5-8ac3-53b1b4aed2b6
-    unit_of_measurement: '°C'
-    state: >-
-      {{ state_attr('weather.openweathermap', 'temperature') | round }}
-    icon: mdi:thermometer
-
   - name: "Wind Scale (friendly)"
     unique_id: 3bf1562c-4704-48e2-8b60-5a2f06c318e3
     state: >-
