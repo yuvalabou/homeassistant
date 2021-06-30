@@ -17,7 +17,7 @@
       %}
         mdi:thermometer-chevron-up
       {% else %}
-      mdi:thermometer-chevron-down
+        mdi:thermometer-chevron-down
       {% endif %}
     attributes:
       temperature_inside: >-
