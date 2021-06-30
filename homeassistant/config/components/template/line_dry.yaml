@@ -1,6 +1,11 @@
 ---
 
-- sensor:
+- trigger:
+    - platform: state
+      entity_id:
+        - sensor.living_room_illuminance
+        - weather.openweathermap
+  sensor:
   - name: "Line dry"
     unique_id: b34a6e8a-fe25-4cf8-b637-8d1e79f611ce
     unit_of_measurement: 'minutes'
@@ -8,7 +13,7 @@
       {% if states('sensor.living_room_illuminance') | float == 0 %}
         unknown
       {% else %}
-        {% set weather_entity = "weather.openweathermap" %}
+        {% set weather_entity = 'weather.openweathermap' %}
         {% set sunshine_percent = states('sensor.living_room_illuminance') | float / 6000 %}
 
         {% set temp = ((state_attr('weather_entity', 'temperature') | int) - 32) * 5 / 9 + 273 %}
