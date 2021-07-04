@@ -1,7 +1,7 @@
 ---
 
 title: "Devices"
-icon: mdi:server
+icon: mdi:devices
 cards:
   - type: entities
     show_header_toggle: false
