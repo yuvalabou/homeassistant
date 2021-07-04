@@ -62,8 +62,9 @@ google:
 group: !include_dir_merge_named components/group
 input_boolean: !include_dir_merge_named components/input_boolean
 input_datetime: !include_dir_merge_named components/input_datetime
-input_number:
+input_number: !include_dir_merge_named components/input_number
 input_select: !include_dir_merge_named components/input_select
+input_text: !include_dir_merge_named components/input_text
 jewish_calendar:
   language: hebrew
 light: !include components/light.yaml

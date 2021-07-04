@@ -2,8 +2,6 @@
 
 exclude:
   entities:
-    - sensor.uptime_friendly
-    - sensor.dnsip
     - sensor.season
     - sensor.track_steam_playtime
     - sensor.israel_weather_forecast
@@ -23,7 +21,6 @@ exclude:
     - sensor.*_formatted
     - sensor.openweathermap_forecast_*
 
-    - binary_sensor.*_notification_trigger
     - binary_sensor.is_*
   domains:
     - camera
