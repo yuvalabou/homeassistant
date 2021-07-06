@@ -41,3 +41,10 @@
         (states('sensor.master_bedroom_ac_power_consumption') | float)
       }}
     icon: mdi:flash
+
+  - name: "Total AC power price"
+    unique_id: c21bdccf-14a2-4450-8e5c-8a38d87e375c
+    unit_of_measurement: 'ש"ח'
+    state: >-
+      {{ ((states('sensor.living_room_ac_total_energy_usage_monthly') | float) * 0.54) | round(2) }}
+    icon: mdi:currency-ils
