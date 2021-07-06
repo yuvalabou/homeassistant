@@ -13,9 +13,9 @@
 .vscode
 deps
 tts
-assets/
-floor_plan/
-cam_captures/
+assets
+floor_plan
+cam_captures
 __pycache__
 
 # Ignore files
