@@ -4,7 +4,7 @@
   - name: "UV index (friendly)"
     unique_id: 4640e04d-aeee-43ea-8308-374dede093c7
     state: >-
-      {% set index = (states('sensor.current_uv_index')) | int %}
+      {% set index = (states('sensor.openweathermap_uv_index')) | int %}
       {% if index >= 11 %}
         Dangerous
       {% elif index >= 8 %}
@@ -21,7 +21,7 @@
         unknown
       {% endif %}
     icon: >-
-      {% set index = (states('sensor.current_uv_index')) | int %}
+      {% set index = (states('sensor.openweathermap_uv_index')) | int %}
       {% if index >= 11 %}
         mdi:close-octagon
       {% elif index >= 8 %}
@@ -37,7 +37,7 @@
       {% endif %}
     attributes:
       color: >-
-        {% set index = (states('sensor.current_uv_index')) | int %}
+        {% set index = (states('sensor.openweathermap_uv_index')) | int %}
         {% if index >= 11 %}
           #E90E69
         {% elif index >= 8 %}
