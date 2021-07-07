@@ -16,7 +16,7 @@ cards:
         entities:
           - entity: sensor.total_ac_energy_usage_daily
             name: "Daily"
-            color: '#04FC04'
+            color: '#50C878'
             show_state: true
             show_points: false
           - entity: sensor.total_ac_energy_usage_weekly

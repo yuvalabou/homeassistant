@@ -19,15 +19,13 @@ cards:
     entities:
       - entity: sensor.jewish_calendar_date
         name: "תאריך"
-      - entity: binary_sensor.tzom
-        type: conditional
+      - type: conditional
         conditions:
           - entity: binary_sensor.tzom
             state: 'on'
         row:
           entity: binary_sensor.tzom
-      - entity: sensor.jewish_calendar_day_of_the_omer
-        type: conditional
+      - type: conditional
         conditions:
           - entity: binary_sensor.is_omer
             state: 'on'
@@ -78,9 +76,11 @@ cards:
           - type: glance
             entities:
               - entity: sensor.wind_scale_friendly
+                name: Wind scale
           - type: glance
             entities:
               - entity: sensor.uv_index_friendly
+                name: UV Index
           - type: custom:compass-card
             indicator_sensors:
               - sensor: sensor.openweathermap_wind_bearing
