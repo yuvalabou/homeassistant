@@ -22,12 +22,12 @@ noctis:
   primary-color: 'var(--accent-color)'
 
   # Main Colors
-  app-header-background-color: '#242e42'
+  app-header-background-color: '#132c41'
   accent-color: '#1A89F5'
   accent-medium-color: 'var(--accent-color)'
 
   # Background
-  background-color: '#242e42'
+  background-color: 'linear-gradient(3deg, #1c466e, #6f617e, #689ac1)'
   primary-background-color: 'var(--background-color)'
   background-color-2: '#20293c'
   secondary-background-color: 'none'
@@ -35,7 +35,7 @@ noctis:
 
   # Card
   card-background-color: 'var(--ha-card-background)'
-  ha-card-background: 'rgba(43,55,78,1)' #'linear-gradient(145deg, #273246, #2e3b53)'
+  ha-card-background: 'rgba(19,44,65, 0.7)' #132c41 #'linear-gradient(145deg, #273246, #2e3b53)'
   ha-card-box-shadow: "3px 3px 13px -6px rgba(17,35,52,1)"
   ha-card-border-radius: "10px"
   border-color: 'none'
@@ -45,7 +45,7 @@ noctis:
   paper-item-icon-active-color: 'var(--accent-color)'
 
   # Sidebar
-  sidebar-background-color: 'var(--background-color)'
+  sidebar-background-color: 'var(--app-header-background-color)'
   sidebar-icon-color: '#98a7b9'
   sidebar-selected-icon-color: 'var(--accent-color)'
   sidebar-selected-text-color: 'var(--text-color)'

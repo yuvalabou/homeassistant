@@ -52,6 +52,7 @@ cards:
         label: "Detected"
     show:
       fill: fade
+      labels: false
 
   - type: custom:mini-graph-card
     name: "Lights"
@@ -92,9 +93,10 @@ cards:
     show:
       fill: fade
       state: false
-      labels: true
+      labels: false
       labels_secondary: false
       points: false
+      extrema: true
     line_width: 2
 
   - type: custom:mini-graph-card

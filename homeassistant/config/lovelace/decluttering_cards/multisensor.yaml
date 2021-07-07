@@ -23,9 +23,10 @@ multisensor:
             show:
               fill: fade
               points: false
-              labels: true
+              labels: false
               labels_secondary: false
               legend: false
+              extrema: true
           - type: custom:mini-graph-card
             entities:
               - entity: sensor.[[room]]_humidity
@@ -41,6 +42,8 @@ multisensor:
               points: false
               labels: false
               labels_secondary: false
+              legend: false
+              extrema: true
       - type: custom:hui-element
         card_type: glance
         entities:
