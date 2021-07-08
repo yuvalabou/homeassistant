@@ -1,4 +1,4 @@
-noctis:
+noctis_modified:
 
   # Fonts
   primary-font-family: 'Raleway,sans-serif'
@@ -35,9 +35,9 @@ noctis:
 
   # Card
   card-background-color: 'var(--ha-card-background)'
-  ha-card-background: 'rgba(19,44,65, 0.7)' #132c41 #'linear-gradient(145deg, #273246, #2e3b53)'
+  ha-card-background: 'rgba(19,44,65, 0.7)'
   ha-card-box-shadow: "3px 3px 13px -6px rgba(17,35,52,1)"
-  ha-card-border-radius: "10px"
+  ha-card-border-radius: "8px"
   border-color: 'none'
 
   # Icons
@@ -50,7 +50,7 @@ noctis:
   sidebar-selected-icon-color: 'var(--accent-color)'
   sidebar-selected-text-color: 'var(--text-color)'
   paper-listbox-background-color: 'var(--sidebar-background-color)'
-  divider-color: 'var(--background-color)'
+  divider-color: 'var(--background-color-2)'
   light-primary-color: 'var(--ha-card-background)'
 
   # Sliders
@@ -59,7 +59,7 @@ noctis:
   paper-slider-active-color: 'var(--accent-color)'
   paper-slider-container-color: 'var(--background-color-2)'
 
-  # Toggle:
+  # Toggle
   paper-toggle-button-checked-bar-color: 'var(--accent-color)'
   mdc-theme-primary: 'var(--accent-color)'
 
@@ -74,14 +74,14 @@ noctis:
 
   # Popups
   more-info-header-background: 'var(--secondary-background-color)'
-  paper-dialog-background-color: 'var(--background-color)' #'rgba(47,59,82,0.4)'
+  paper-dialog-background-color: 'var(--background-color-2)' #'rgba(47,59,82,0.4)'
 
   # Tables
   table-row-background-color: 'var(--background-color)'
   table-row-alternative-background-color: 'var(--ha-card-background)'
 
   # Badges
-  label-badge-background-color: 'var(--background-color)'
+  label-badge-background-color: 'var(--background-color-2)'
   label-badge-text-color: 'var(--text-primary-color)'
   label-badge-red: 'rgba(73,85,108,1)'
   label-badge-blue: 'rgba(26,137,245,1)'
