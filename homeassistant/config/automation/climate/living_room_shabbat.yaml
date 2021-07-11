@@ -10,11 +10,11 @@
   action:
     - service: climate.turn_on
       data:
-        entity_id: climate.living_room_cool_thermostat
+        entity_id: climate.slvn
     - delay: 2
     - service: climate.set_temperature
       data:
-        temperature: 24
+        temperature: 23
         hvac_mode: cool
       target:
         entity_id: climate.slvn
@@ -28,16 +28,12 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id:
-          - climate.living_room_cool_thermostat
-          - climate.slvn
-    - delay: 10
+        entity_id: climate.slvn
+    - delay: 5
     # Repeat once more becouse I can't trust sensibo
     - service: climate.turn_off
       data:
-        entity_id:
-          - climate.living_room_cool_thermostat
-          - climate.slvn
+        entity_id: climate.slvn
 
 - alias: "Climate - Turn on Living-room climate at Shabbat"
   id: 04e461f4-456c-4b75-a193-a8b9b64b32ac
@@ -52,11 +48,11 @@
   action:
     - service: climate.turn_on
       data:
-        entity_id: climate.living_room_cool_thermostat
+        entity_id: climate.slvn
     - delay: 2
     - service: climate.set_temperature
       data:
-        temperature: 24
+        temperature: 23
         hvac_mode: cool
       target:
         entity_id: climate.slvn
@@ -70,6 +66,4 @@
   action:
     service: climate.turn_off
     data:
-      entity_id:
-        - climate.living_room_cool_thermostat
-        - climate.slvn
+      entity_id: climate.slvn

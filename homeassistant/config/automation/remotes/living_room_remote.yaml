@@ -7,7 +7,7 @@
     domain: mqtt
     device_id: c944778d99d24bc4aa788932e6d7af10
     type: action
-    subtype: hold
+    subtype: single
     discovery_id: 0x00158d0006d0a9eb action_single
   action:
     choose:
@@ -16,13 +16,13 @@
         sequence:
           - service: climate.turn_on
             data:
-              entity_id: climate.living_room_cool_thermostat
+              entity_id: climate.slvn
       - conditions:
           - "{{ not is_state('climate.slvn', 'off') }}"
         sequence:
           - service: climate.turn_off
             data:
-              entity_id: climate.living_room_cool_thermostat
+              entity_id: climate.slvn
 
 - alias: "Button - living room turn-off everything"
   id: dd92e40e-1e33-4ad9-afaa-aab1b03fb94f
@@ -36,10 +36,8 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id:
-          - climate.living_room_cool_thermostat
-          - climate.slvn
-    - delay: 3
+        entity_id: climate.slvn
+    - delay: 2
     - service: light.turn_off
       data:
         entity_id: light.all_lights

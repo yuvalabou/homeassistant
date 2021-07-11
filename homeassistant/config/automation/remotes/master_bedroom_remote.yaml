@@ -46,10 +46,8 @@
   action:
     - service: climate.turn_off
       data:
-        entity_id:
-          - climate.living_room_cool_thermostat
-          - climate.slvn
-    - delay: 3
+        entity_id: climate.slvn
+    - delay: 2
     - service: light.turn_off
       data:
         entity_id: light.all_lights
