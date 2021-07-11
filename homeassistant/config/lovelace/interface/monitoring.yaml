@@ -34,9 +34,10 @@ cards:
       - sensor.total_ac_power_price
 
   - type: custom:mini-graph-card
-    name: "Daily water consumption"
+    name: "Monthly water consumption"
     hours_to_show: 750
     line_width: 1
+    points_per_hour: 0.1
     entities:
       - entity: sensor.water_meter_9926387_today_s_consumption
         name: "Daily"

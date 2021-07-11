@@ -27,7 +27,7 @@ noctis_modified:
   accent-medium-color: 'var(--accent-color)'
 
   # Background
-  background-color: 'linear-gradient(3deg, #1c466e, #6f617e, #689ac1)'
+  background-color: 'linear-gradient(5deg, #1c466e, #6f617e, #689ac1)'
   primary-background-color: 'var(--background-color)'
   background-color-2: '#20293c'
   secondary-background-color: 'none'
