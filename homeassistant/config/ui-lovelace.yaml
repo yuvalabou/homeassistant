@@ -9,7 +9,7 @@ views:
 #  - !include lovelace/interface/floorplan.yaml
   - !include lovelace/interface/living_room.yaml
   - !include lovelace/interface/master_bedroom.yaml
-#  - !include lovelace/interface/bedroom.yaml
+  - !include lovelace/interface/kids_room.yaml
   - !include lovelace/interface/bathroom.yaml
   - !include lovelace/interface/home_office.yaml
   - !include lovelace/interface/stats.yaml

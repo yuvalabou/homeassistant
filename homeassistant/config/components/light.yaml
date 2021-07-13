@@ -6,6 +6,8 @@
     - light.yeelight_color_master_bedroom
     - light.yeelight_color_living_room_1
     - light.yeelight_color_living_room_2
+    - light.wled_harel_bed
+    - light.wled_rotem_bed
 
 - platform: group
   name: "Ceiling lights"
@@ -36,3 +38,11 @@
   name: "Room lights"
   entities:
     - light.yeelight_color_master_bedroom
+    - light.wled_harel_bed
+    - light.wled_rotem_bed
+
+- platform: group
+  name: "Kids ambient lights"
+  entities:
+    - light.wled_harel_bed
+    - light.wled_rotem_bed

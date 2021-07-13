@@ -1,0 +1,18 @@
+---
+
+title: "Kids Room"
+icon: mdi:bed-outline
+cards:
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.kids_ambient_lights
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.wled_harel_bed
+          - type: light
+            entity: light.wled_rotem_bed

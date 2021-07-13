@@ -25,6 +25,10 @@
 
 # WLED
 - platform: ping
-  host: !secret wled_master_bedroom
-  name: "WLED Master bedroom"
+  host: !secret wled_harel_bed
+  name: "WLED Harel bed"
+  count: 2
+- platform: ping
+  host: !secret wled_rotem_bed
+  name: "WLED Rotem bed"
   count: 2

@@ -54,8 +54,13 @@ cards:
       - type: custom:decluttering-card
         template: uptime_card
         variables:
-          - device: wled_master_bedroom
-          - device_name: "Master bedroom WLED"
+          - device: wled_harel_bed
+          - device_name: "Harel bed WLED"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: wled_rotem_bed
+          - device_name: "Rotem bed WLED"
 
   - type: custom:decluttering-card
     template: uptime_card
