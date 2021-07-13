@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.7%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.7.2%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 [![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
@@ -32,18 +32,18 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 455 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 254 |
-| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 45 |
-| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 18 |
-| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 29 |
+| **Entities** | 450 |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 250 |
+| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 46 |
+| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 21 |
+| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 19 |
 | **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 59 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 20253 |
-| Yaml | 5284 |
+| Python | 20571 |
+| Yaml | 5183 |
 
 -----
 
@@ -51,7 +51,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |1           |11     |23         |
+|YAML           |1           |12     |23         |
 
 -----
 
@@ -68,14 +68,14 @@
 | CC2531 (HUB) | Aqara button |
 |:------------:|:------------:|
 |<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width = 100>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width = 100>|
-|1             |1 (1)         |
+|1             |2             |
 
 
 ### Custom devices designed by me
 
 | Multisensor | WLED Strip |
 |:-----------:|:----------:|
-|2            |(1)         |
+|2            |2           |
 
 -----
 
