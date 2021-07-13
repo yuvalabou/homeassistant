@@ -1,7 +1,7 @@
 ---
 
 - sensor:
-  - name: "Wind Scale (friendly)"
+  - name: "Wind Scale"
     unique_id: 3bf1562c-4704-48e2-8b60-5a2f06c318e3
     state: >-
       {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}

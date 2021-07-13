@@ -60,9 +60,6 @@ cards:
       - type: custom:hui-element
         card_type: light
         entity: light.yeelight_color_master_bedroom
-      - type: custom:hui-element
-        card_type: light
-        entity: light.wled_master_bedroom
 
   - type: entities
     entities:

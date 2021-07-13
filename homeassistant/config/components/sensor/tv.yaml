@@ -29,13 +29,3 @@
     {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
   end: >-
     {{ now() }}
-
-- platform: history_stats
-  name: "Track Kodi watch time"
-  entity_id: binary_sensor.kodi_on
-  state: 'on'
-  type: time
-  start: >-
-    {{ now().replace(hour=0).replace(minute=0).replace(second=0) }}
-  end: >-
-    {{ now() }}

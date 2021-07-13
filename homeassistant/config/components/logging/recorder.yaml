@@ -16,6 +16,10 @@ exclude:
     - sensor.hacs
 
     - binary_sensor.random_boolean
+
+    - sensor.ups_nominal_power
+    - sensor.ups_nominal_output_voltage
+    - sensor.ups_ups_status_data
   entity_globs:
     - sensor.count_*
     - sensor.skin_type_*

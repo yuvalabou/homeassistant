@@ -70,17 +70,6 @@ cards:
         show:
           fill: fade
           points: false
-      - type: custom:hui-element
-        card_type: entities
-        entities:
-          - script.reload_cli_sensors
-          - script.reload_thermostats
-          - script.reload_history_stats
-          - script.reload_persons
-          - script.reload_ping_sensors
-          - script.reload_pyscript
-          - script.reload_templates
-          - script.reload_themes
 
   - type: entities
     entities:
