@@ -26,8 +26,8 @@
   trigger:
     platform: time
     at:
-      - '08:30:00'
-      - '16:00:00'
+      - '09:30:00'
+      - '17:00:00'
   condition:
     - "{{ not is_state('climate.shynh', 'off') }}"
     - "{{ is_state('group.person', 'home') }}"
@@ -41,7 +41,7 @@
   id: 414e2d3c-6170-42eb-b644-31da10d7f0fc
   trigger:
     platform: time
-    at: '12:00:00'
+    at: '11:30:00'
   condition:
     - "{{ is_state('climate.shynh', 'off') }}"
     - "{{ is_state('group.person', 'home') }}"

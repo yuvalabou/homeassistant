@@ -3,6 +3,8 @@
 - name: "Shabbat end"
   icon: mdi:candle
   entities:
+    switch.shabbat_mode:
+      state: 'off'
     light.room_lights:
       state: 'off'
     light.living_room_lights:
@@ -11,5 +13,6 @@
       kelvin: 3200
     light.importent_lights:
       state: 'off'
-    switch.shabbat_mode:
-      state: 'off'
+    light.kids_ambient_lights:
+      state: 'on'
+      effect: 'Colortwinkles'

@@ -3,6 +3,8 @@
 - name: "Shabbat eve"
   icon: mdi:candle
   entities:
+    switch.shabbat_mode:
+      state: 'on'
     light.room_lights:
       state: 'off'
     light.living_room_lights:
@@ -13,5 +15,6 @@
       state: 'on'
       brightness_pct: 70
       kelvin: 4000
-    switch.shabbat_mode:
+    light.kids_ambient_lights:
       state: 'on'
+      effect: 'Colortwinkles'
