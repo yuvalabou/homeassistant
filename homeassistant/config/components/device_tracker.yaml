@@ -4,6 +4,5 @@
   hosts:
     yuval_ping: !secret yuval_ping
     tohar_ping: !secret tohar_ping
-    fire_7: !secret fire_7
   count: 2
   scan_interval: 300
