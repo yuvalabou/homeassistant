@@ -1,0 +1,7 @@
+---
+
+- platform: group
+  name: "Public lights"
+  entities:
+    - light.yeelight_color_living_room_1
+    - light.yeelight_color_living_room_2
