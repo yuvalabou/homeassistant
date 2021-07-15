@@ -67,7 +67,7 @@ input_select: !include_dir_merge_named components/input_select
 input_text: !include_dir_merge_named components/input_text
 jewish_calendar:
   language: hebrew
-light: !include components/light.yaml
+light: !include_dir_merge_list components/light
 notify: !include components/notify.yaml
 scene: !include_dir_merge_list components/scene
 script: !include_dir_merge_named components/script
