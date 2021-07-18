@@ -37,9 +37,9 @@
         as_timestamp(
           states('sensor.jewish_calendar_upcoming_candle_lighting')
         ) |
-        timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+        timestamp_custom('%H:%M') == (now().strftime("%s") |
         float + (10*60) - (10800) ) |
-        timestamp_custom("%H:%M:%S")
+        timestamp_custom("%H:%M")
       }}
 
   - name: "Shabbat 30 min Notification trigger"
@@ -49,7 +49,7 @@
         as_timestamp(
           states('sensor.jewish_calendar_upcoming_candle_lighting')
         ) |
-        timestamp_custom('%H:%M:%S') == (now().strftime("%s") |
+        timestamp_custom('%H:%M') == (now().strftime("%s") |
         float + (30*60) - (10800) ) |
-        timestamp_custom("%H:%M:%S")
+        timestamp_custom("%H:%M")
       }}

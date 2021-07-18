@@ -3,8 +3,11 @@
 - alias: "Climate - Turn on Master-bedroom climate on Shabbat night"
   id: b99da572-bad0-4af0-9091-a1df84af0409
   trigger:
-    platform: time
-    at: input_datetime.shabbat_lights_off_time
+    - platform: state
+      entity_id: binary_sensor.ac_shabbat_eve_trigger
+      to: 'on'
+    - platform: time
+      at: input_datetime.shabbat_lights_off_time
   condition:
     - "{{ is_state('climate.shynh', 'off') }}"
     - "{{ is_state('group.person', 'home') }}"

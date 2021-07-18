@@ -5,9 +5,11 @@
   description: "Notify 30 minutes and 10 minutes before Shabbat"
   trigger:
     - platform: state
+      id: '30_min'
       entity_id: binary_sensor.shabbat_30_min_notification_trigger
       to: 'on'
     - platform: state
+      id: '10_min'
       entity_id: binary_sensor.shabbat_10_min_notification_trigger
       to: 'on'
   condition:
@@ -18,7 +20,8 @@
   action:
     - choose:
         - conditions:
-            - "{{ is_state('binary_sensor.shabbat_30_hmin_notification_trigger', 'on') }}"
+            - condition: trigger
+              id: '30_min'
           sequence:
             - service: notify.mobile_app_yuval
               data:
@@ -26,7 +29,8 @@
                 message: "זכרת להכין מיחם ונרות?"
             - service: script.notify_for_shabbat
         - conditions:
-            - "{{ is_state('binary_sensor.shabbat_10_min_notification_trigger', 'on') }}"
+            - condition: trigger
+              id: '10_min'
           sequence:
             - service: notify.family
               data:

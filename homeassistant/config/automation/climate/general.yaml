@@ -17,7 +17,9 @@
     platform: state
     entity_id: group.person
     to: 'not_home'
-  condition: "{{ is_state('input_boolean.guest_mode', 'off') }}"
+  condition:
+    - "{{ is_state('input_boolean.guest_mode', 'off') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
     service: climate.turn_off
     data:
@@ -29,7 +31,9 @@
     platform: state
     entity_id: group.person
     to: 'not_home'
-  condition: "{{ not is_state('climate.shynh', 'off') }}"
+  condition:
+    - "{{ not is_state('climate.shynh', 'off') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
     service: climate.turn_off
     data:

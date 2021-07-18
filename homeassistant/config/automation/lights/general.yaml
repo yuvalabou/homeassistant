@@ -6,7 +6,9 @@
     platform: state
     entity_id: group.person
     to: 'not_home'
-  condition: "{{ is_state('input_boolean.guest_mode', 'off') }}"
+  condition:
+    - "{{ is_state('input_boolean.guest_mode', 'off') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
     service: light.turn_off
     data:
