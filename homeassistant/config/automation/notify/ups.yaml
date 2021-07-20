@@ -5,20 +5,26 @@
   trigger:
     - platform: state
       entity_id: sensor.ups_status
+      id: 'on_battery'
       from: 'Online'
       to: 'On Battery'
     - platform: state
       entity_id: sensor.ups_status
+      id: 'online'
       from: 'On Battery'
       to: 'Online'
   action:
     - choose:
-      - conditions: "{{ is_state('sensor.ups_status', 'On Battery') }}"
+      - conditions:
+        - condition: trigger
+          id: 'on_battery'
         sequence:
           - service: notify.family
             data:
               message: "EMERGENCY POWER ONLY"
-      - conditions: "{{ is_state('sensor.ups_status', 'Online') }}"
+      - conditions:
+        - condition: trigger
+          id: 'online'
         sequence:
           - service: notify.family
             data:

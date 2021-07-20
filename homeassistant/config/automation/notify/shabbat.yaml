@@ -20,8 +20,8 @@
   action:
     - choose:
         - conditions:
-            - condition: trigger
-              id: '30_min'
+          - condition: trigger
+            id: '30_min'
           sequence:
             - service: notify.mobile_app_yuval
               data:
@@ -29,8 +29,8 @@
                 message: "זכרת להכין מיחם ונרות?"
             - service: script.notify_for_shabbat
         - conditions:
-            - condition: trigger
-              id: '10_min'
+          - condition: trigger
+            id: '10_min'
           sequence:
             - service: notify.family
               data:

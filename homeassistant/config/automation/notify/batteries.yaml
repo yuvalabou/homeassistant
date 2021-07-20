@@ -4,10 +4,13 @@
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
   trigger:
     - platform: template
+      id: 'yuval'
       value_template: "{{ is_state('sensor.yuval_battery_level', '100') }}"
     - platform: template
+      id: 'tohar'
       value_template: "{{ is_state('sensor.tohar_battery_level', '100') }}"
     - platform: template
+      id: 'tablet'
       value_template: "{{ is_state('sensor.fire7_battery_level', '100') }}"
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
@@ -17,21 +20,24 @@
   action:
     - choose:
       - conditions:
-        - "{{ is_state('sensor.yuval_battery_level', '100') }}"
+        - condition: trigger
+          id: 'yuval'
         - "{{ is_state('person.yuval', 'home') }}"
         sequence:
           service: notify.nest_mini
           data:
             message: "הסוללה של יובל טעונה במלואה"
       - conditions:
-        - "{{ is_state('sensor.tohar_battery_level', '100') }}"
+        - condition: trigger
+          id: 'tohar'
         - "{{ is_state('person.tohar', 'home') }}"
         sequence:
           service: notify.nest_mini
           data:
             message: "הסוללה של טוהר טעונה במלואה"
       - conditions:
-        - "{{ is_state('sensor.fire7_battery_level', '100') }}"
+        - condition: trigger
+          id: 'tablet'
         - "{{ is_state('gruop.person', 'home') }}"
         sequence:
           service: notify.nest_mini

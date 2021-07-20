@@ -4,19 +4,25 @@
   id: 66aff0fc-7022-4577-9d72-2f35104ca746
   trigger:
     - platform: state
+      id: 'shabbat_enter'
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
     - platform: state
+      id: 'shabbat_exit'
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   condition:
     - "{{ is_state('group.person', 'home') }}"
   action:
     - choose:
-      - conditions: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+      - conditions:
+        - condition: trigger
+          id: 'shabbat_enter'
         sequence:
           service: script.shabbat_chag_lighting_sequence
-      - conditions: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+      - conditions:
+        - condition: trigger
+          id: 'shabbat_exit'
         sequence:
           service: script.shabbat_chag_end_lighting_sequence
 
