@@ -3,7 +3,6 @@
 - platform: systemmonitor
   resources:
     - type: disk_use_percent
-    - type: memory_free
     - type: load_5m
     - type: memory_use_percent
     - type: processor_use
