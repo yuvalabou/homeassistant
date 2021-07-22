@@ -32,18 +32,18 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 441 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 242 |
-| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 46 |
+| **Entities** | 439 |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 236 |
+| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 47 |
 | **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 21 |
 | **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 19 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 59 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 62 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
 | Python | 20571 |
-| Yaml | 5183 |
+| Yaml | 5285 |
 
 -----
 
