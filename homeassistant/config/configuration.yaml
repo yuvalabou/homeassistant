@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202106            #
+#            Yuval Aboulafia - 202107            #
 ##################################################
 
 ##################################################
@@ -24,7 +24,7 @@ mobile_app:
 #                       GUI                      #
 ##################################################
 frontend:
-  themes: !include_dir_merge_named lovelace/themes
+  themes: !include_dir_merge_named themes
 lovelace:
   mode: yaml
   resources: !include lovelace/resources/resources.yaml
