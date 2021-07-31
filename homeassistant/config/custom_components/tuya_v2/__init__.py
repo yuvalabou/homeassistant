@@ -78,7 +78,7 @@ CONFIG_SCHEMA = vol.Schema(
 def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
     aes = Aes()
     # decrypt the new account info
-    if init_entry_data[XOR_KEY]:
+    if XOR_KEY in init_entry_data:
         _LOGGER.info("tuya.__init__.exist_xor_cache-->True")
         key_iv = aes.xor_decrypt(init_entry_data[XOR_KEY], init_entry_data[KEY_KEY])
         cbc_key = key_iv[0:16]
@@ -99,7 +99,7 @@ def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
         c = cbc_key + cbc_iv
         c_xor_entry = aes.xor_encrypt(c, access_id_entry)
         # account info encrypted with AES-CBC
-        user_input_encrpt = aes.cbc_encrypt(cbc_key, cbc_iv, json.dumps(init_entry_data))
+        user_input_encrpt = aes.cbc_encrypt(cbc_key, cbc_iv, json.dumps(dict(init_entry_data)))
         # udpate old account info
         hass.config_entries.async_update_entry(
             entry,
