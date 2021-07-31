@@ -36,6 +36,8 @@
   type: module
 - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
   type: module
+- url: /hacsfiles/rgb-light-card/card.js
+  type: module
 - url: /hacsfiles/simple-thermostat/simple-thermostat.js?v=1
   type: module
 - url: /hacsfiles/timer-bar-card/timer-bar-card.js

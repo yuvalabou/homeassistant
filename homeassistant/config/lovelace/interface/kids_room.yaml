@@ -12,7 +12,29 @@ cards:
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:
-          - type: light
-            entity: light.wled_harel_bed
-          - type: light
-            entity: light.wled_rotem_bed
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: light
+                entity: light.wled_harel_bed
+              - type: custom:rgb-light-card
+                entity: light.wled_harel_bed
+                colors:
+                  - rgb_color:
+                        - 255
+                        - 127
+                        - 255
+                    transition: 1
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: light
+                entity: light.wled_rotem_bed
+              - type: custom:rgb-light-card
+                entity: light.wled_rotem_bed
+                colors:
+                  - rgb_color:
+                        - 255
+                        - 127
+                        - 255
+                    transition: 1
