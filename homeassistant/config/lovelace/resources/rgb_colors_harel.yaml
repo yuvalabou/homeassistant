@@ -1,0 +1,22 @@
+---
+
+- rgb_color:
+      - 255
+      - 127
+      - 255
+  transition: 1
+- rgb_color:
+      - 76
+      - 217
+      - 100
+  transition: 1
+- rgb_color:
+      - 0
+      - 255
+      - 255
+  transition: 1
+- rgb_color:
+      - 255
+      - 127
+      - 255
+  transition: 1
