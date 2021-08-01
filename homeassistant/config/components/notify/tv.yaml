@@ -1,0 +1,5 @@
+---
+
+- name: "Notify on TV"
+  platform: nfandroidtv
+  host: !secret mibox_host
