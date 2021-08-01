@@ -1,0 +1,21 @@
+---
+
+- sensor:
+  - name: "WLED Harel Wh"
+    unique_id: f7c5b077-6c9a-4d88-ac66-37ed4e46bc4e
+    unit_of_measurement: 'Watts'
+    device_class: 'power'
+    state: >-
+      {{
+        ((states('sensor.wled_harel_bed_estimated_current') | float * 0.001 ) * 5) | round(1)
+      }}
+    icon: mdi:current-dc
+  - name: "WLED Rotem Wh"
+    unique_id: 3fe7db2f-24c8-41d4-92ba-635b81dff9c3
+    unit_of_measurement: 'Watts'
+    device_class: 'power'
+    state: >-
+      {{
+        ((states('sensor.wled_rotem_bed_estimated_current') | float * 0.001 ) * 5) | round(1)
+      }}
+    icon: mdi:current-dc
