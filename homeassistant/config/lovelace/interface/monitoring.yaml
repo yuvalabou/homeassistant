@@ -3,36 +3,6 @@
 title: "Monitoring"
 icon: mdi:counter
 cards:
-  - type: custom:animated-consumption-card
-    entity: sensor.total_ac_power_consumption
-
-  - type: entities
-    entities:
-      - type: custom:mini-graph-card
-        name: "AC Power Consumption"
-        unit: 'kW'
-        hours_to_show: 750
-        line_width: 1
-        entities:
-          - entity: sensor.total_ac_energy_usage_daily
-            name: "Daily"
-            color: '#50C878'
-            show_state: true
-            show_points: false
-          - entity: sensor.total_ac_energy_usage_weekly
-            name: "Weekly"
-            color: 'yellow'
-            show_state: false
-            show_points: false
-          - entity: sensor.total_ac_energy_usage_monthly
-            name: "Monthly"
-            color: 'red'
-            show_state: false
-            show_points: false
-        show:
-          fill: fade
-      - sensor.total_ac_power_price
-
   - type: custom:mini-graph-card
     name: "Monthly water consumption"
     hours_to_show: 750

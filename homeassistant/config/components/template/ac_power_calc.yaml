@@ -1,9 +1,11 @@
 ---
 
 - sensor:
-  - name: "Living room AC power consumption"
+  - name: "Living room AC power kW"
     unique_id: 29afc9f0-e99e-48ef-8de2-4b2d862fa179
     unit_of_measurement: 'kW'
+    device_class: power
+    state_class: measurement
     state: >-
       {% if is_state('binary_sensor.living_room_ac_is_on', 'on') and
             (
@@ -20,9 +22,11 @@
       {% endif %}
     icon: mdi:flash
 
-  - name: "Master Bedroom AC power consumption"
+  - name: "Master Bedroom AC power kW"
     unique_id: b7851f46-3dc4-4dd1-8a2f-95ecf28b08a6
     unit_of_measurement: 'kW'
+    device_class: power
+    state_class: measurement
     state: >-
       {% if is_state('binary_sensor.master_bedroom_ac_is_on', 'on') %}
         0.8
@@ -31,20 +35,25 @@
       {% endif %}
     icon: mdi:flash
 
-  - name: "Total AC power consumption"
-    unique_id: ed1b7788-a184-4c97-bee5-2c876aa1a2de
-    unit_of_measurement: 'kW'
+  - name: "Living room AC energy kWh"
+    unique_id: 05f09afb-8ea4-4a12-9b10-5cf7fce6a386
+    state_class: measurement
+    device_class: energy
+    unit_of_measurement: 'kWh'
     state: >-
-      {{
-        (states('sensor.living_room_ac_power_consumption') | float)
-        +
-        (states('sensor.master_bedroom_ac_power_consumption') | float)
-      }}
-    icon: mdi:flash
+      {{ states('sensor.living_room_ac_energy_usage_hourly') | float }}
+
+  - name: "Master Bedroom AC energy kWh"
+    unique_id: 64cf37ba-3262-43be-a85a-e4fe95dd2a70
+    state_class: measurement
+    device_class: energy
+    unit_of_measurement: 'kWh'
+    state: >-
+      {{ states('sensor.master_bedroom_ac_energy_usage_hourly') | float }}
 
   - name: "Total AC power price"
     unique_id: c21bdccf-14a2-4450-8e5c-8a38d87e375c
     unit_of_measurement: 'ש"ח'
     state: >-
-      {{ ((states('sensor.living_room_ac_total_energy_usage_monthly') | float) * 0.54) | round(2) }}
+      {{ ((states('sensor.living_room_ac_energy_usage_monthly') | float) * 0.54) | round(2) }}
     icon: mdi:currency-ils
