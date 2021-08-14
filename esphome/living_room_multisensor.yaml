@@ -23,7 +23,6 @@ wifi:
 
 captive_portal:
 logger:
-  level: VERBOSE
 api:
 ota:
 
@@ -32,6 +31,11 @@ i2c:
   scl: D1
   scan: True
   frequency: 400kHz
+
+uart:
+  rx_pin: D7
+  tx_pin: D8 # BUG: cannot boot if pin pulled high, and the sds011 do so. so we boot and then connect the sensor..
+  baud_rate: 9600
 
 mcp23017:
   - id: mcp23017_hub
@@ -49,7 +53,7 @@ binary_sensor:
     name: "${upper_devicename} Window"
     device_class: window
     pin:
-      mcp23017: mcp23017_hub
+      mcp23xxx: mcp23017_hub
       number: 8
       mode: INPUT
       inverted: false
@@ -82,8 +86,14 @@ sensor:
   - platform: bh1750
     name: "${upper_devicename} Illuminance"
     address: 0x23
-    measurement_time: 69
+    measurement_duration: 69
     update_interval: 60s
+  - platform: sds011
+    pm_2_5:
+      name: "Particulate Matter 2.5µm Concentration in ${upper_devicename}"
+    pm_10_0:
+      name: "Particulate Matter 10.0µm Concentration in ${upper_devicename}"
+    update_interval: 2min
 
 text_sensor:
   - platform: template

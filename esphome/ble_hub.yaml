@@ -1,0 +1,90 @@
+---
+
+substitutions:
+  devicename: ble_hub
+  upper_devicename: "BLE Hub"
+  template_id: ble_hub
+
+esphome:
+  name: ble-hub
+  platform: ESP32
+  board: esp32dev
+
+logger:
+api:
+ota:
+
+wifi:
+  ssid: !secret ssid
+  password: !secret wifi_passwd
+  manual_ip:
+    static_ip: !secret static_ble_hub
+    gateway: !secret gateway
+    subnet: 255.255.255.0
+  ap:
+    ssid: "${upper_devicename}_fallback_hotspot"
+    password: !secret ap_passwd
+
+captive_portal:
+
+esp32_ble_tracker:
+  scan_parameters:
+    interval: 20s
+
+ble_client:
+  - mac_address: FE:7A:A8:35:67:53
+    id: mi_band_3
+    on_connect:
+      then:
+        - lambda: |-
+            ESP_LOGD("ble_client_lambda", "Connected to BLE device");
+    on_disconnect:
+      then:
+        - lambda: |-
+            ESP_LOGD("ble_client_lambda", "Disconnected from BLE device");
+
+binary_sensor:
+  - platform: ble_presence
+    mac_address: FE:7A:A8:35:67:53
+    name: "Yuval Mi Band 3"
+
+sensor:
+  - platform: ble_client
+    ble_client_id: mi_band_3
+    name: "Heart Rate"
+    service_uuid: '180d'
+    characteristic_uuid: '2a37'
+    icon: 'mdi:heart'
+    unit_of_measurement: 'bpm'
+    notify: true
+    lambda: |-
+      uint16_t heart_rate_measurement = x[1];
+      if (x[0] & 1) {
+          heart_rate_measurement += (x[2] << 8);
+      }
+      return (int)heart_rate_measurement;
+    # update_interval: 1s
+  - platform: ble_client
+    ble_client_id: mi_band_3
+    id: device_name
+    service_uuid: '1800'  # Generic Access Profile
+    characteristic_uuid: '2a00'  # Device Name
+    lambda: |-
+      std::string data_string(x.begin(), x.end());
+      id(heart_rate_sensor_name).publish_state(data_string.c_str());
+      return (float)x.size();
+  - platform: ble_rssi
+    mac_address: FE:7A:A8:35:67:53
+    name: "Mi Band 3 RSSI"
+
+text_sensor:
+  - platform: template
+    name: "heart rate sensor name"
+    id: heart_rate_sensor_name
+
+  # - platform: template
+  #   id: heart_rate
+  #   name: "Heart Rate"
+  #   unit_of_measurement: '°C'
+  #   accuracy_decimals: 0
+  #   icon: "mdi:thermometer"

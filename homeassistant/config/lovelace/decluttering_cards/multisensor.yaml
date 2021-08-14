@@ -60,3 +60,16 @@ multisensor:
             name: "Door"
           - entity: binary_sensor.[[room]]_window
             name: "Window"
+      - type: custom:mini-graph-card
+        points_per_hour: 3
+        entities:
+          - entity: sensor.particulate_matter_2_5um_concentration_in_[[room]]
+            name: 2.5um
+            show_state: true
+          - entity: sensor.particulate_matter_10_0um_concentration_in_[[room]]
+            name: 10um
+            show_state: true
+        show:
+          points: false
+          fill: false
+          name: false

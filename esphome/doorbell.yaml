@@ -45,6 +45,7 @@ binary_sensor:
       inverted: True
     name: "${upper_devicename} button"
     # On press show ding dong page and activate doorbell script in Home Assistant
+    # Only if someone at home
     on_press:
       then:
         - display.page.show: ding_page
@@ -72,6 +73,9 @@ binary_sensor:
     name: "${upper_devicename}"
 
 sensor:
+  - platform: homeassistant
+    entity_id: group.person
+    id: anybody_home
   - platform: wifi_signal
     name: "${upper_devicename} WiFi Signal"
     update_interval: 30s
@@ -94,7 +98,7 @@ esp32_camera:
   pixel_clock_pin: GPIO19
   power_down_pin: GPIO26
   resolution: 640x480
-  max_framerate: 10 fps
+  max_framerate: 20 fps
   idle_framerate: 0.2 fps
   jpeg_quality: 10
   vertical_flip: true
@@ -129,8 +133,13 @@ display:
 # Ding Dong page
       - id: ding_page
         lambda: |-
+          if (id(anybody_home).state == 'home') {
             it.print(64, 0, id(unispace), TextAlign::TOP_CENTER, "DING");
             it.print(64, 64, id(unispace), TextAlign::BASELINE_CENTER, "DONG");
+          } else {
+            it.print(64, 0, id(unispace), TextAlign::TOP_CENTER, "NOBODY");
+            it.print(64, 64, id(unispace), TextAlign::BASELINE_CENTER, "HOME");
+          }
 # Welcome in page
       - id: come_in_page
         lambda: |-
