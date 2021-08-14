@@ -1,14 +1,15 @@
-#!/usr/bin/env python3
 """Support for Tuya Binary Sensor."""
 
+import json
 import logging
+from threading import Timer
 from typing import Callable
 
 from homeassistant.components.binary_sensor import (
     DEVICE_CLASS_BATTERY,
     DEVICE_CLASS_DOOR,
+    DEVICE_CLASS_GARAGE_DOOR,
     DEVICE_CLASS_GAS,
-    DEVICE_CLASS_LOCK,
     DEVICE_CLASS_MOISTURE,
     DEVICE_CLASS_MOTION,
     DEVICE_CLASS_PROBLEM,
@@ -18,8 +19,8 @@ from homeassistant.components.binary_sensor import DOMAIN as DEVICE_DOMAIN
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from tuya_iot import TuyaDevice, TuyaDeviceManager
 
 from .base import TuyaHaDevice
@@ -42,6 +43,7 @@ TUYA_SUPPORT_TYPE = [
     "sos",  # Emergency Button
     "hps",  # Human Presence Sensor
     "ms",  # Residential Lock
+    "ckmkzq",  # Garage Door Opener
 ]
 
 # Door Window Sensor
@@ -108,15 +110,21 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_DOOR,
+                    DPCODE_DOORLOCK_STATE,
                     (lambda d: d.status.get(DPCODE_DOORLOCK_STATE, "none") != "closed"),
                 )
             )
         if DPCODE_DOORCONTACT_STATE in device.status:
+            if device.category == "ckmkzq":
+                device_class_d = DEVICE_CLASS_GARAGE_DOOR
+            else:
+                device_class_d = DEVICE_CLASS_DOOR
             entities.append(
                 TuyaHaBSensor(
                     device,
                     device_manager,
-                    DEVICE_CLASS_DOOR,
+                    device_class_d,
+                    DPCODE_DOORCONTACT_STATE,
                     (lambda d: d.status.get(DPCODE_DOORCONTACT_STATE, False)),
                 )
             )
@@ -126,6 +134,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_DOOR,
+                    DPCODE_SWITCH,
                     (lambda d: d.status.get(DPCODE_SWITCH, False)),
                 )
             )
@@ -135,6 +144,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_SMOKE,
+                    DPCODE_SMOKE_SENSOR_STATE,
                     (lambda d: d.status.get(DPCODE_SMOKE_SENSOR_STATE, 1) == "1"),
                 )
             )
@@ -144,6 +154,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_SMOKE,
+                    DPCODE_SMOKE_SENSOR_STATUS,
                     (
                         lambda d: d.status.get(DPCODE_SMOKE_SENSOR_STATUS, "normal")
                         == "alarm"
@@ -156,6 +167,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_BATTERY,
+                    DPCODE_BATTERY_STATE,
                     (lambda d: d.status.get(DPCODE_BATTERY_STATE, "normal") == "low"),
                 )
             )
@@ -165,6 +177,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_MOTION,
+                    DPCODE_TEMPER_ALRAM,
                     (lambda d: d.status.get(DPCODE_TEMPER_ALRAM, False)),
                 )
             )
@@ -174,6 +187,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_GAS,
+                    DPCODE_GAS_SENSOR_STATE,
                     (lambda d: d.status.get(DPCODE_GAS_SENSOR_STATE, 1) == "1"),
                 )
             )
@@ -183,6 +197,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_MOTION,
+                    DPCODE_PIR,
                     (lambda d: d.status.get(DPCODE_PIR, "none") == "pir"),
                 )
             )
@@ -192,6 +207,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_MOISTURE,
+                    DPCODE_WATER_SENSOR_STATE,
                     (
                         lambda d: d.status.get(DPCODE_WATER_SENSOR_STATE, "normal")
                         == "alarm"
@@ -204,6 +220,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_PROBLEM,
+                    DPCODE_SOS_STATE,
                     (lambda d: d.status.get(DPCODE_SOS_STATE, False)),
                 )
             )
@@ -213,6 +230,7 @@ def _setup_entities(hass: HomeAssistant, device_ids: list):
                     device,
                     device_manager,
                     DEVICE_CLASS_MOTION,
+                    DPCODE_PRESENCE_STATE,
                     (
                         lambda d: d.status.get(DPCODE_PRESENCE_STATE, "none")
                         == "presence"
@@ -231,13 +249,16 @@ class TuyaHaBSensor(TuyaHaDevice, BinarySensorEntity):
         device: TuyaDevice,
         device_manager: TuyaDeviceManager,
         sensor_type: str,
+        sensor_code: str,
         sensor_is_on: Callable[..., bool],
     ) -> None:
         """Init TuyaHaBSensor."""
-        self._attr_device_class = sensor_type
-        self._attr_name = self.tuya_device.name + "_" + self._attr_device_class
+        self._type = sensor_type
+        self._code = sensor_code
         self._is_on = sensor_is_on
-        self._attr_unique_id = f"{super().unique_id}{self._type}"
+        self._attr_unique_id = f"{super().unique_id}{self._code}"
+        self._attr_name = f"{self.tuya_device.name}_{self._code}"
+        self._attr_device_class = self._type
         self._attr_available = True
         super().__init__(device, device_manager)
 
@@ -245,3 +266,19 @@ class TuyaHaBSensor(TuyaHaDevice, BinarySensorEntity):
     def is_on(self):
         """Return true if the binary sensor is on."""
         return self._is_on(self.tuya_device)
+
+    def reset_pir(self):
+        self.tuya_device.status[DPCODE_PIR] = "none"
+        self.schedule_update_ha_state()
+
+    def schedule_update_ha_state(self, force_refresh: bool = False) -> None:
+
+        if self._code == DPCODE_PIR:
+            pir_range = json.loads(
+                self.tuya_device.status_range.get(DPCODE_PIR, {}).values
+            ).get("range")
+            if len(pir_range) == 1 and self.tuya_device.status[DPCODE_PIR] == "pir":
+                timer = Timer(10, lambda: self.reset_pir())
+                timer.start()
+
+        super().schedule_update_ha_state(force_refresh)

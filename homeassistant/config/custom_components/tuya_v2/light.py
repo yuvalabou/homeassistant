@@ -1,17 +1,16 @@
-#!/usr/bin/env python3
 """Support for the Tuya lights."""
 
 import json
 import logging
-from typing import Any, Dict, List, Tuple
-
-from tuya_iot import TuyaDevice, TuyaDeviceManager
+from typing import Any
 
 from homeassistant.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_COLOR_TEMP,
     ATTR_HS_COLOR,
-    DOMAIN as DEVICE_DOMAIN,
+)
+from homeassistant.components.light import DOMAIN as DEVICE_DOMAIN
+from homeassistant.components.light import (
     SUPPORT_BRIGHTNESS,
     SUPPORT_COLOR,
     SUPPORT_COLOR_TEMP,
@@ -20,6 +19,8 @@ from homeassistant.components.light import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from tuya_iot import TuyaDevice, TuyaDeviceManager
 
 from .base import TuyaHaDevice
 from .const import (
@@ -41,6 +42,7 @@ DPCODE_BRIGHT_VALUE = "bright_value"
 DPCODE_TEMP_VALUE = "temp_value"
 DPCODE_COLOUR_DATA = "colour_data"
 DPCODE_COLOUR_DATA_V2 = "colour_data_v2"
+DPCODE_LIGHT = "light"
 
 MIREDS_MAX = 500
 MIREDS_MIN = 153
@@ -57,10 +59,11 @@ TUYA_SUPPORT_TYPE = {
     "dj",  # Light
     "dd",  # Light strip
     "fwl",  # Ambient light
-    "dc",   # Light string
+    "dc",  # Light string
     "jsq",  # Humidifier's light
-    "xdd",   # Ceiling Light
-    "xxj"  # Diffuser's light 
+    "xdd",  # Ceiling Light
+    "xxj",  # Diffuser's light
+    "fs",  # Fan
 }
 
 DEFAULT_HSV = {
@@ -77,7 +80,7 @@ DEFAULT_HSV_V2 = {
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, _entry: ConfigEntry, async_add_entities
+    hass: HomeAssistant, _entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ):
     """Set up tuya light dynamically through tuya discovery."""
     _LOGGER.info("light init")
@@ -105,7 +108,7 @@ async def async_setup_entry(
     await async_discover_device(device_ids)
 
 
-def _setup_entities(hass, device_ids: List):
+def _setup_entities(hass: HomeAssistant, device_ids: list):
     """Set up Tuya Light device."""
     device_manager = hass.data[DOMAIN][TUYA_DEVICE_MANAGER]
     entities = []
@@ -120,7 +123,7 @@ def _setup_entities(hass, device_ids: List):
 class TuyaHaLight(TuyaHaDevice, LightEntity):
     """Tuya light device."""
 
-    def __init__(self, device: TuyaDevice, device_manager: TuyaDeviceManager):
+    def __init__(self, device: TuyaDevice, device_manager: TuyaDeviceManager) -> None:
         """Init TuyaHaLight."""
         self.dp_code_bright = DPCODE_BRIGHT_VALUE
         self.dp_code_temp = DPCODE_TEMP_VALUE
@@ -150,16 +153,22 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
         #     and ATTR_HS_COLOR not in kwargs
         #     and ATTR_COLOR_TEMP not in kwargs
         # ):
-        commands += [{"code": DPCODE_SWITCH, "value": True}]
+        if (
+            DPCODE_LIGHT in self.tuya_device.status
+            and DPCODE_SWITCH not in self.tuya_device.status
+        ):
+            commands += [{"code": DPCODE_LIGHT, "value": True}]
+        else:
+            commands += [{"code": DPCODE_SWITCH, "value": True}]
 
         if ATTR_BRIGHTNESS in kwargs:
             if self._work_mode().startswith(WORK_MODE_COLOUR):
                 colour_data = self._get_hsv()
                 v_range = self._tuya_hsv_v_range()
                 # hsv_v = colour_data.get('v', 0)
-                colour_data["v"] = int(self.remap(
-                    kwargs[ATTR_BRIGHTNESS], 0, 255, v_range[0], v_range[1]
-                ))
+                colour_data["v"] = int(
+                    self.remap(kwargs[ATTR_BRIGHTNESS], 0, 255, v_range[0], v_range[1])
+                )
                 commands += [
                     {"code": self.dp_code_colour, "value": json.dumps(colour_data)}
                 ]
@@ -180,13 +189,15 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
             # hsv s
             ha_s = kwargs[ATTR_HS_COLOR][1]
             s_range = self._tuya_hsv_s_range()
-            colour_data["s"] = int(self.remap(
-                ha_s,
-                HSV_HA_SATURATION_MIN,
-                HSV_HA_SATURATION_MAX,
-                s_range[0],
-                s_range[1],
-            ))
+            colour_data["s"] = int(
+                self.remap(
+                    ha_s,
+                    HSV_HA_SATURATION_MIN,
+                    HSV_HA_SATURATION_MAX,
+                    s_range[0],
+                    s_range[1],
+                )
+            )
             # hsv v
             ha_v = self.brightness
             v_range = self._tuya_hsv_v_range()
@@ -225,10 +236,14 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
 
     def turn_off(self, **kwargs: Any) -> None:
         """Instruct the light to turn off."""
-        commands = [{"code": DPCODE_SWITCH, "value": False}]
+        if (
+            DPCODE_LIGHT in self.tuya_device.status
+            and DPCODE_SWITCH not in self.tuya_device.status
+        ):
+            commands = [{"code": DPCODE_LIGHT, "value": False}]
+        else:
+            commands = [{"code": DPCODE_SWITCH, "value": False}]
         self._send_command(commands)
-
-    # LightEntity
 
     @property
     def brightness(self):
@@ -252,7 +267,7 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
 
         return int(self.remap(brightness, old_range[0], old_range[1], 0, 255))
 
-    def _tuya_brightness_range(self) -> Tuple[int, int]:
+    def _tuya_brightness_range(self) -> tuple[int, int]:
         if self.dp_code_bright not in self.tuya_device.status:
             return 0, 255
 
@@ -302,18 +317,18 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
         """Return color temperature max mireds."""
         return MIREDS_MAX
 
-    def _tuya_temp_range(self) -> Tuple[int, int]:
+    def _tuya_temp_range(self) -> tuple[int, int]:
         temp_value = json.loads(
             self.tuya_device.function.get(self.dp_code_temp, {}).values
         )
         return temp_value.get("min", 0), temp_value.get("max", 255)
 
-    def _tuya_hsv_s_range(self) -> Tuple[int, int]:
+    def _tuya_hsv_s_range(self) -> tuple[int, int]:
         colour_data = self._tuya_hsv_function()
         hsv_s = colour_data.get("s")
         return hsv_s.get("min", 0), hsv_s.get("max", 255)
 
-    def _tuya_hsv_v_range(self) -> Tuple[int, int]:
+    def _tuya_hsv_v_range(self) -> tuple[int, int]:
         colour_data = self._tuya_hsv_function()
         hsv_v = colour_data.get("v")
         return hsv_v.get("min", 0), hsv_v.get("max", 255)
@@ -323,7 +338,11 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
             self.tuya_device.function.get(self.dp_code_colour, {}).values
         )
         if hsv_data == {}:
-            return DEFAULT_HSV_V2 if self.dp_code_colour == DPCODE_COLOUR_DATA_V2 else DEFAULT_HSV
+            return (
+                DEFAULT_HSV_V2
+                if self.dp_code_colour == DPCODE_COLOUR_DATA_V2
+                else DEFAULT_HSV
+            )
 
         return hsv_data
 
@@ -331,7 +350,7 @@ class TuyaHaLight(TuyaHaDevice, LightEntity):
 
         return self.tuya_device.status.get(DPCODE_WORK_MODE, "")
 
-    def _get_hsv(self) -> Dict[str, int]:
+    def _get_hsv(self) -> dict[str, int]:
         return json.loads(self.tuya_device.status[self.dp_code_colour])
 
     @property

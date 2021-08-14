@@ -1,19 +1,14 @@
-#!/usr/bin/env python3
 """Config flow for Tuya."""
 
 import json
 import logging
-from .aes_cbc import (
-    AesCBC as Aes,
-    XOR_KEY,
-    KEY_KEY,
-    AES_ACCOUNT_KEY,
-)
-from tuya_iot import ProjectType, TuyaOpenAPI
+
 import voluptuous as vol
-
 from homeassistant import config_entries
+from tuya_iot import ProjectType, TuyaOpenAPI
 
+from .aes_cbc import AES_ACCOUNT_KEY, KEY_KEY, XOR_KEY
+from .aes_cbc import AesCBC as Aes
 from .const import (
     CONF_ACCESS_ID,
     CONF_ACCESS_SECRET,
@@ -62,6 +57,8 @@ DATA_SCHEMA_SMART_HOME = vol.Schema(
     }
 )
 
+COUNTRY_CODE_CHINA = ["86", "+86", "China"]
+
 
 class TuyaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Tuya Config Flow."""
@@ -90,7 +87,11 @@ class TuyaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if project_type == ProjectType.INDUSTY_SOLUTIONS:
             response = api.login(user_input[CONF_USERNAME], user_input[CONF_PASSWORD])
         else:
-            api.endpoint = "https://openapi.tuyacn.com"
+            if user_input[CONF_COUNTRY_CODE] in COUNTRY_CODE_CHINA:
+                api.endpoint = "https://openapi.tuyacn.com"
+            else:
+                api.endpoint = "https://openapi.tuyaus.com"
+
             response = api.login(
                 user_input[CONF_USERNAME],
                 user_input[CONF_PASSWORD],
@@ -123,7 +124,9 @@ class TuyaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(self, user_input=None):
         """Step user."""
-        _LOGGER.info(f"TuyaConfigFlow.async_step_user start, is_import= {self.is_import}")
+        _LOGGER.info(
+            f"TuyaConfigFlow.async_step_user start, is_import= {self.is_import}"
+        )
         _LOGGER.info(f"TuyaConfigFlow.async_step_user start, user_input= {user_input}")
 
         if self._async_current_entries():
@@ -148,7 +151,9 @@ class TuyaConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 c = cbc_key + cbc_iv
                 c_xor_entry = aes.xor_encrypt(c, access_id_entry)
                 # account info encrypted with AES-CBC
-                user_input_encrpt = aes.cbc_encrypt(cbc_key, cbc_iv, json.dumps(user_input))
+                user_input_encrpt = aes.cbc_encrypt(
+                    cbc_key, cbc_iv, json.dumps(user_input)
+                )
                 # account info encrypted add to cache
                 return self.async_create_entry(
                     title=user_input[CONF_USERNAME],

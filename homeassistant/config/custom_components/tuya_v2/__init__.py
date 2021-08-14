@@ -1,17 +1,12 @@
-#!/usr/bin/env python3
 """Support for Tuya Smart devices."""
 
 import itertools
 import json
 import logging
-from .aes_cbc import (
-    AesCBC as Aes,
-    XOR_KEY,
-    KEY_KEY,
-    AES_ACCOUNT_KEY,
-)
-from typing import Any
 
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.dispatcher import async_dispatcher_send
 from tuya_iot import (
     ProjectType,
     TuyaDevice,
@@ -20,15 +15,10 @@ from tuya_iot import (
     TuyaHomeManager,
     TuyaOpenAPI,
     TuyaOpenMQ,
-    tuya_logger,
 )
-import voluptuous as vol
 
-from homeassistant.config_entries import SOURCE_IMPORT, ConfigEntry
-from homeassistant.core import HomeAssistant
-import homeassistant.helpers.config_validation as cv
-from homeassistant.helpers.dispatcher import async_dispatcher_send
-
+from .aes_cbc import AES_ACCOUNT_KEY, KEY_KEY, XOR_KEY
+from .aes_cbc import AesCBC as Aes
 from .const import (
     CONF_ACCESS_ID,
     CONF_ACCESS_SECRET,
@@ -51,31 +41,9 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-CONFIG_SCHEMA = vol.Schema(
-    vol.All(
-        cv.deprecated(DOMAIN),
-        {
-            DOMAIN: vol.Schema(
-                {
-                    vol.Required(CONF_PROJECT_TYPE): int,
-                    vol.Required(CONF_ENDPOINT): cv.string,
-                    vol.Required(CONF_ACCESS_ID): cv.string,
-                    vol.Required(CONF_ACCESS_SECRET): cv.string,
-                    CONF_USERNAME: cv.string,
-                    CONF_PASSWORD: cv.string,
-                    CONF_COUNTRY_CODE: cv.string,
-                    CONF_APP_TYPE: cv.string,
-                }
-            )
-        },
-    ),
-    extra=vol.ALLOW_EXTRA,
-)
-
-# decrypt or encrypt entry info
-
 
 def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
+    """Decript or encrypt entry info."""
     aes = Aes()
     # decrypt the new account info
     if XOR_KEY in init_entry_data:
@@ -83,9 +51,7 @@ def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
         key_iv = aes.xor_decrypt(init_entry_data[XOR_KEY], init_entry_data[KEY_KEY])
         cbc_key = key_iv[0:16]
         cbc_iv = key_iv[16:32]
-        decrpyt_str = aes.cbc_decrypt(
-            cbc_key, cbc_iv, init_entry_data[AES_ACCOUNT_KEY]
-        )
+        decrpyt_str = aes.cbc_decrypt(cbc_key, cbc_iv, init_entry_data[AES_ACCOUNT_KEY])
         # _LOGGER.info(f"tuya.__init__.exist_xor_cache:::decrpyt_str-->{decrpyt_str}")
         entry_data = aes.json_to_dict(decrpyt_str)
     else:
@@ -99,7 +65,9 @@ def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
         c = cbc_key + cbc_iv
         c_xor_entry = aes.xor_encrypt(c, access_id_entry)
         # account info encrypted with AES-CBC
-        user_input_encrpt = aes.cbc_encrypt(cbc_key, cbc_iv, json.dumps(dict(init_entry_data)))
+        user_input_encrpt = aes.cbc_encrypt(
+            cbc_key, cbc_iv, json.dumps(dict(init_entry_data))
+        )
         # udpate old account info
         hass.config_entries.async_update_entry(
             entry,
@@ -113,6 +81,7 @@ def entry_decrypt(hass: HomeAssistant, entry: ConfigEntry, init_entry_data):
 
 
 async def _init_tuya_sdk(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+    """Initialize the Tuya SDK."""
     init_entry_data = entry.data
     # decrypt or encrypt entry info
     entry_data = entry_decrypt(hass, entry, init_entry_data)
@@ -191,7 +160,7 @@ async def _init_tuya_sdk(hass: HomeAssistant, entry: ConfigEntry) -> bool:
                 tuya_mq.start()
 
                 device_manager.mq = tuya_mq
-                tuya_mq.add_message_listener(device_manager._on_message)
+                tuya_mq.add_message_listener(device_manager.on_message)
 
         def remove_device(self, device_id: str):
             _LOGGER.info(f"tuya remove device:{device_id}")
@@ -229,7 +198,7 @@ async def cleanup_device_registry(hass: HomeAssistant):
                 device_registry.async_remove_device(dev_id)
                 break
 
-
+@callback
 def remove_hass_device(hass: HomeAssistant, device_id: str):
     """Remove device from hass cache."""
     device_registry = hass.helpers.device_registry.async_get(hass)
@@ -239,29 +208,6 @@ def remove_hass_device(hass: HomeAssistant, device_id: str):
             entity_registry.async_remove(entity.entity_id)
             if device_registry.async_get(entity.device_id):
                 device_registry.async_remove_device(entity.device_id)
-
-
-async def async_setup(hass, config):
-    """Set up the Tuya integration."""
-    tuya_logger.setLevel(_LOGGER.level)
-    conf = config.get(DOMAIN)
-
-    _LOGGER.info(f"Tuya async setup conf {conf}")
-    if conf is not None:
-
-        async def flow_init() -> Any:
-            try:
-                result = await hass.config_entries.flow.async_init(
-                    DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
-                )
-            except Exception as inst:
-                _LOGGER.error(inst.args)
-            _LOGGER.info("Tuya async setup flow_init")
-            return result
-
-        hass.async_create_task(flow_init())
-
-    return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
@@ -280,7 +226,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     return unload
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
+async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Async setup hass config entry."""
     _LOGGER.info(f"tuya.__init__.async_setup_entry-->{entry.data}")
 
