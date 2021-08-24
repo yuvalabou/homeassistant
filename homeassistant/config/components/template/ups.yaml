@@ -16,7 +16,7 @@
 
   - name: "UPS Load (Watts)"
     unique_id: db128936-b50b-41a9-ab2a-46cba5a211e6
-    unit_of_measurement: 'Watts'
+    unit_of_measurement: 'W'
     device_class: 'power'
     state: >-
       {{
