@@ -4,6 +4,10 @@ db_url: !secret postgres_addr
 purge_keep_days: 30
 exclude:
   entities:
+    - binary_sensor.random_boolean
+
+    - person.aboulafia
+
     - sensor.time
     - sensor.date
     - sensor.date_time
@@ -14,20 +18,19 @@ exclude:
     - sensor.openweathermap_weather_code
     - sensor.random_number
     - sensor.hacs
-
-    - binary_sensor.random_boolean
-
     - sensor.ups_nominal_power
     - sensor.ups_nominal_output_voltage
     - sensor.ups_ups_status_data
   entity_globs:
+    - binary_sensor.is_*
+
     - sensor.count_*
     - sensor.skin_type_*
     - sensor.openweathermap_forecast_*
 
-    - binary_sensor.is_*
+    - persistant_notification.notification_*
   domains:
     - sun
-    - weather
-    - updater
     - timer
+    - updater
+    - weather

@@ -5,12 +5,14 @@ exclude:
     - binary_sensor.day
     - binary_sensor.night
     - binary_sensor.random_boolean
+
     - sensor.random_number
     - sensor.track_steam_playtime
     - sensor.season
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.tts
+
     - automation.waze_update_dynamic_sensors
   entity_globs:
     - sensor.openweathermap_*
@@ -19,6 +21,6 @@ exclude:
     - sensor.skin_type_*
     - sensor.*_formatted
   domains:
-    - updater
-    - sun
     - script
+    - sun
+    - updater
