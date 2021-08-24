@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2021.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.8.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2021.8.8%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 [![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
@@ -32,18 +32,18 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 436 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 233 |
+| **Entities** | 441 |
+| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 236 |
 | **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 48 |
 | **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 21 |
 | **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 19 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 63 |
+| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 64 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 24050 |
-| Yaml | 5357 |
+| Python | 24376 |
+| Yaml | 5463 |
 
 -----
 
@@ -51,7 +51,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |1           |12     |23         |
+|YAML           |1           |12     |24         |
 
 -----
 
@@ -128,4 +128,5 @@
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
+- [Vacuum Card](https://github.com/denysdovhan/vacuum-card)
 - [Weather Card](https://github.com/bramkragten/weather-card)
