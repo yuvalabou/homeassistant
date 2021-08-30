@@ -1,0 +1,231 @@
+---
+
+title: "Overview"
+cards:
+  - type: horizontal-stack
+    cards:
+      - type: custom:decluttering-card
+        template: person
+        variables:
+          - name: yuval
+      - type: custom:decluttering-card
+        template: person
+        variables:
+          - name: tohar
+
+  - type: entities
+    title: "זמני היום"
+    show_header_toggle: false
+    entities:
+      - entity: sensor.jewish_calendar_date
+        name: "תאריך"
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.tzom
+            state: 'on'
+        row:
+          entity: binary_sensor.tzom
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.is_omer
+            state: 'on'
+        row:
+          entity: sensor.jewish_calendar_day_of_the_omer
+          name: "ספירת העומר"
+      - type: divider
+      - entity: sensor.jewish_calendar_parshat_hashavua
+        name: "פרשת השבוע"
+      - entity: sensor.jewish_calendar_upcoming_candle_lighting
+        type: custom:multiple-entity-row
+        name: "הדלקת נרות"
+        format: relative
+        entities:
+          - entity: sensor.jewish_calendar_upcoming_candle_lighting
+            format: time
+            name: false
+      - entity: sensor.jewish_calendar_upcoming_havdalah
+        type: custom:multiple-entity-row
+        name: "הבדלה"
+        format: relative
+        entities:
+          - entity: sensor.jewish_calendar_upcoming_havdalah
+            format: time
+            name: false
+      - type: divider
+      - entity: sensor.jewish_calendar_daf_yomi
+        name: "דף יומי"
+
+  - type: entities
+    entities:
+      - type: custom:sun-card
+      - type: custom:weather-card
+        entity: weather.openweathermap
+        current: true
+        details: true
+        hourly_forecast: true
+        number_of_forecasts: 5
+      - type: custom:hui-element
+        card_type: markdown
+        content: >-
+          {{
+            states.sensor.israel_weather_forecast.attributes.entries[0].summary
+          }}
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: glance
+            entities:
+              - entity: sensor.wind_scale_friendly
+                name: Wind scale
+          - type: glance
+            entities:
+              - entity: sensor.uv_index_friendly
+                name: UV Index
+          - type: custom:compass-card
+            indicator_sensors:
+              - sensor: sensor.openweathermap_wind_bearing
+            value_sensors:
+              - sensor: sensor.openweathermap_wind_speed
+      - type: custom:air-visual-card
+        hide_title: true
+        air_pollution_level: sensor.u_s_air_pollution_level
+        air_quality_index: sensor.u_s_air_quality_index
+        main_pollutant: sensor.u_s_main_pollutant
+
+  - type: custom:mini-media-player
+    entity: media_player.googlehome3668
+    group: false
+    tts:
+      platform: microsoft
+    hide:
+      progress: true
+    shortcuts:
+      columns: 2
+      buttons:
+        - name: "Galatz"
+          type: script
+          id: script.play_radio_stream
+          data:
+            entity_id: media_player.googlehome3668
+            content_id: Galei Zahal
+        - name: "Galgalatz"
+          type: script
+          id: script.play_radio_stream
+          data:
+            entity_id: media_player.googlehome3668
+            content_id: GLGLZ
+        - name: "שישי רגוע"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: שישי רגוע
+            entity_id: media_player.googlehome3668
+        - name: "גששים"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: גששים
+        - name: "Soft morning"
+          type: script
+          id: script.play_spotify
+          data:
+            content_id: Soft morning
+
+  - type: conditional
+    conditions:
+      - entity: binary_sensor.issur_melacha_eve
+        state: 'on'
+    card:
+      type: entities
+      entities:
+        - type: custom:button-card
+          color_type: label-card
+          color: rgb(44, 109, 214)
+          name: "פיקוד שבת"
+        - type: custom:hui-element
+          card_type: horizontal-stack
+          cards:
+            - type: custom:button-card
+              color_type: blank-card
+            - type: custom:button-card
+              entity: switch.shabbat_mode
+            - type: custom:button-card
+              entity: switch.shabbat_plate
+              name: "פלטה"
+              icon: >-
+                [[[
+                  if (entity.state == 'off')
+                    return 'mdi:pot';
+                  else
+                    return 'mdi:pot-steam';
+                ]]]
+            - type: custom:button-card
+              color_type: blank-card
+        - type: custom:time-picker-card
+          entity: input_datetime.shabbat_lights_off_time
+          link_values: true
+          minute_step: 30
+          layout:
+            name: inside
+            align_controls: right
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.night_light_override
+      - type: custom:button-card
+        entity: switch.disable_auto_clean
+      - type: custom:button-card
+        entity: switch.guest_mode
+
+  - type: horizontal-stack
+    cards:
+      - type: custom:button-card
+        entity: switch.kettle
+        icon: >-
+          [[[
+            if (entity.state == 'off')
+              return 'mdi:kettle-outline';
+            else
+              return 'mdi:kettle-steam-outline';
+          ]]]
+      - type: custom:button-card
+        entity: switch.shabbat_plate
+        name: "Oven"
+        icon: >-
+          [[[
+            if (entity.state == 'off')
+              return 'mdi:microwave-off';
+            else
+              return 'mdi:microwave';
+          ]]]
+
+  - type: custom:auto-entities
+    card:
+      type: entities
+      title: "Active Lights"
+      show_header_toggle: false
+    show_empty: false
+    filter:
+      include:
+        - domain: light
+          state: 'on'
+        - domain: light
+          state: 'unavailable'
+      exclude:
+        - entity_id: '*lights'
+
+  - type: markdown
+    content: >-
+      The Washing Machine is done.
+      {% if
+        (states('sensor.line_dry') | int / 60) | int < ((as_timestamp(state_attr('sun.sun','next_setting'))
+        -
+        as_timestamp(now()))/60/60) | int and states('sensor.line_dry') | int + 1 > 0
+      %}
+        You may have time to line dry before sunset.
+      {% endif %}
+
+      Estimated Time to dry is {{ (states('sensor.line_dry') | int / 60) | round(1) }} hours.
+
+      There is {{ states('sensor.openweathermap_forecast_precipitation_probability') }}% chance of rain in the next couple of hours.
