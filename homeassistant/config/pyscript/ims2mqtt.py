@@ -23,15 +23,8 @@ def state() -> str:
         return last_updated
 
 
-def link() -> str:
-    """Return the link."""
-    link = FEED.feed.link
-
-    return link
-
-
 # The order is importent
-slag = [
+SLAG = [
     "br /&gt;",
     "/b&gt;",
     "b&gt;",
@@ -47,9 +40,9 @@ slag = [
 
 
 def clean(desc) -> str:
-    """Helper method that clean-up the feed."""
+    """Helper method that cleans-up the feed."""
     # First pass
-    for i in slag:
+    for i in SLAG:
         desc = desc.replace(i, " ")
 
     # Second pass
@@ -104,18 +97,16 @@ def long_term_forecast() -> str:
 
 def get_attributes() -> dict:
     """Get all atrributes."""
-    attrs = json.dumps(
+    return json.dumps(
         {
             "short_term": short_term_forecast(),
             "long_term": long_term_forecast(),
-            "link": link(),
+            "link": FEED.feed.link,
             "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
         },
         ensure_ascii=False,
         indent=2,
     )
-
-    return attrs
 
 
 @service
