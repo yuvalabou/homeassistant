@@ -19,7 +19,7 @@ cards:
                 entity: light.wled_harel_bed
               - type: custom:rgb-light-card
                 entity: light.wled_harel_bed
-                colors: !include ../resources/rgb_colors_rotem.yaml
+                colors: !include ../../resources/rgb_colors_rotem.yaml
           - type: entities
             entities:
               - type: custom:hui-element
@@ -27,4 +27,4 @@ cards:
                 entity: light.wled_rotem_bed
               - type: custom:rgb-light-card
                 entity: light.wled_rotem_bed
-                colors: !include ../resources/rgb_colors_rotem.yaml
+                colors: !include ../../resources/rgb_colors_rotem.yaml

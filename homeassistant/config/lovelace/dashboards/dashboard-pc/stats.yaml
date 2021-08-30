@@ -18,7 +18,7 @@ cards:
         show_points: false
         color: 'white'
         show_fill: false
-      - !include ../resources/graph_card_sun_elevation.yaml
+      - !include ../../resources/graph_card_sun_elevation.yaml
     show:
       fill: fade
       state: false
@@ -26,7 +26,7 @@ cards:
       labels_secondary: false
       points: false
     line_width: 2
-    color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
+    color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
 
   - type: custom:mini-graph-card
     name: "Motion last 3 Hours"
@@ -44,7 +44,7 @@ cards:
       - entity: binary_sensor.bathroom_motion
         show_points: false
         color: '#C4BAB0'
-      - !include ../resources/graph_card_day_bool.yaml
+      - !include ../../resources/graph_card_day_bool.yaml
     state_map:
       - value: 'off'
         label: "Clear"
@@ -69,7 +69,7 @@ cards:
       - entity: binary_sensor.master_bedroom_light_is_on
         show_points: false
         color: '#A886F7'
-      - !include ../resources/graph_card_day_bool.yaml
+      - !include ../../resources/graph_card_day_bool.yaml
     state_map:
       - value: 'off'
         label: "כבוי"
@@ -89,7 +89,7 @@ cards:
       - entity: sensor.bathroom_percieved_brightness
         show_points: false
         color: '#C4BAB0'
-      - !include ../resources/graph_card_sun_elevation.yaml
+      - !include ../../resources/graph_card_sun_elevation.yaml
     show:
       fill: fade
       state: false
@@ -114,7 +114,7 @@ cards:
       - entity: binary_sensor.master_bedroom_ac_is_on
         show_points: false
         color: '#A886F7'
-      - !include ../resources/graph_card_day_bool.yaml
+      - !include ../../resources/graph_card_day_bool.yaml
     state_map:
       - value: 'off'
         label: "כבוי"
