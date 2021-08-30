@@ -83,10 +83,10 @@ cards:
     name: "Illumination"
     points_per_hour: 6
     entities:
-      - entity: sensor.living_room_illuminance
+      - entity: sensor.living_room_percieved_brightness
         show_points: false
         color: '#7FB1CF'
-      - entity: sensor.bathroom_illuminance
+      - entity: sensor.bathroom_percieved_brightness
         show_points: false
         color: '#C4BAB0'
       - !include ../resources/graph_card_sun_elevation.yaml

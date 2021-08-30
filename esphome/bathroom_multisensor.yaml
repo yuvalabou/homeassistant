@@ -79,11 +79,19 @@ sensor:
       (243.5 + id(${template_id}_temperature).state))));
     unit_of_measurement: '°C'
     icon: mdi:water
+
   - platform: bh1750
     name: "${upper_devicename} Illuminance"
+    id: ${template_id}_illuminance
     address: 0x23
     measurement_duration: 69
     update_interval: 60s
+  - platform: template
+    name: "${upper_devicename} Percieved Brightness"
+    id: ${template_id}_percieved_brightness
+    unit_of_measurement: "%"
+    lambda: |-
+      return ((log10(id(${template_id}_illuminance).state) / 5) * 100) ;
 
 text_sensor:
   - platform: template

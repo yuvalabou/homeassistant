@@ -34,7 +34,7 @@ i2c:
 
 uart:
   rx_pin: D7
-  tx_pin: D8 # BUG: cannot boot if pin pulled high, and the sds011 do so. so we boot and then connect the sensor..
+  tx_pin: D8
   baud_rate: 9600
 
 mcp23017:
@@ -83,16 +83,25 @@ sensor:
       (243.5 + id(${template_id}_temperature).state))));
     unit_of_measurement: '°C'
     icon: mdi:water
+
   - platform: bh1750
     name: "${upper_devicename} Illuminance"
+    id: ${template_id}_illuminance
     address: 0x23
     measurement_duration: 69
     update_interval: 60s
+  - platform: template
+    name: "${upper_devicename} Percieved Brightness"
+    id: ${template_id}_percieved_brightness
+    unit_of_measurement: "%"
+    lambda: |-
+      return ((log10(id(${template_id}_illuminance).state) / 5) * 100) ;
+
   - platform: sds011
     pm_2_5:
-      name: "Particulate Matter 2.5µm Concentration in ${upper_devicename}"
+      name: "2.5µm Particles in the ${upper_devicename}"
     pm_10_0:
-      name: "Particulate Matter 10.0µm Concentration in ${upper_devicename}"
+      name: "10µm Particles in the ${upper_devicename}"
     update_interval: 2min
 
 text_sensor:

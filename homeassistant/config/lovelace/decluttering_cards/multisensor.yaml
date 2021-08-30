@@ -63,10 +63,10 @@ multisensor:
       - type: custom:mini-graph-card
         points_per_hour: 3
         entities:
-          - entity: sensor.particulate_matter_2_5um_concentration_in_[[room]]
+          - entity: sensor.2_5um_particles_in_the_[[room]]
             name: 2.5um
             show_state: true
-          - entity: sensor.particulate_matter_10_0um_concentration_in_[[room]]
+          - entity: sensor.10um_particles_in_the_[[room]]
             name: 10um
             show_state: true
         show:
