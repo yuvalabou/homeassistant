@@ -1,27 +1,16 @@
-##############################################
-#               CUSTOMIZATIONS               #
-##############################################
-###
-# Customize entities
-# https://www.home-assistant.io/docs/configuration/customizing-devices
-###
+---
 
-#  Persons
 person.yuval:
   entity_picture: "/local/assets/yuval.jpg"
 person.tohar:
   entity_picture: "/local/assets/tohar.jpg"
 
-#  Devices
 binary_sensor.yuval_laptop:
   device_class: connectivity
   icon: mdi:laptop
 binary_sensor.tv:
   device_class: connectivity
   icon: mdi:television-classic
-binary_sensor.printer:
-  device_class: connectivity
-  icon: mdi:printer
 binary_sensor.vacuum:
   device_class: connectivity
   icon: mdi:robot-vacuum
@@ -32,7 +21,6 @@ binary_sensor.rpi2:
   device_class: connectivity
   icon: mdi:raspberry-pi
 
-# Time Tracking
 sensor.track_tv_usage:
   icon: mdi:chart-timeline-variant
 sensor.track_netflix_watch_time:
@@ -42,12 +30,10 @@ sensor.track_youtube_watch_time:
 sensor.track_steam_playtime:
   icon: mdi:steam
 
-# Sensors
 sensor.myip:
   icon: mdi:ip-network
 sensor.pihole_status:
   icon: mdi:pi-hole
 
-# Mold indicator
 sensor.bathroom_mold_indicator:
   icon: mdi:water-percent-alert

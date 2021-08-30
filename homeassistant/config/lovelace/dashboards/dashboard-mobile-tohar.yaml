@@ -5,4 +5,4 @@ decluttering_templates:
 
 title: "Tohar Dashboard"
 views:
-  - !include ../dashboard-mobile-tohar/overview.yaml
+  - !include dashboard-mobile-tohar/overview.yaml
