@@ -27,8 +27,8 @@ sensor.track_netflix_watch_time:
   icon: mdi:netflix
 sensor.track_youtube_watch_time:
   icon: mdi:youtube
-sensor.track_steam_playtime:
-  icon: mdi:steam
+# sensor.track_steam_playtime:
+#   icon: mdi:steam
 
 sensor.myip:
   icon: mdi:ip-network
