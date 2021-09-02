@@ -29,6 +29,7 @@ __pycache__
 .env
 .omv_cookies.json
 core
+*.1
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml

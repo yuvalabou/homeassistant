@@ -1,12 +1,11 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202108            #
+#            Yuval Aboulafia - 202109            #
 ##################################################
 
 ##################################################
 #                      CORE                      #
 ##################################################
-# Home Assistant core settings.
 homeassistant:
   name: Aboulafia
   latitude: !secret home_lat
