@@ -1,0 +1,8 @@
+---
+
+views:
+- title: ""
+  cards:
+  - type: markdown
+    content: |
+      Hello, {{user}}
