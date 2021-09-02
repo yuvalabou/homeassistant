@@ -102,7 +102,6 @@ cards:
             name: "Unique Domains"
 
   - type: entities
-    title: "RaspberryPi 2"
     entities:
       - type: custom:hui-element
         card_type: picture

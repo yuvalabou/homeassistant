@@ -92,44 +92,44 @@ cards:
         air_quality_index: sensor.u_s_air_quality_index
         main_pollutant: sensor.u_s_main_pollutant
 
-  - type: custom:mini-media-player
-    entity: media_player.googlehome3668
-    group: false
-    tts:
-      platform: microsoft
-    hide:
-      progress: true
-    shortcuts:
-      columns: 2
-      buttons:
-        - name: "Galatz"
-          type: script
-          id: script.play_radio_stream
-          data:
-            entity_id: media_player.googlehome3668
-            content_id: Galei Zahal
-        - name: "Galgalatz"
-          type: script
-          id: script.play_radio_stream
-          data:
-            entity_id: media_player.googlehome3668
-            content_id: GLGLZ
-        - name: "שישי רגוע"
-          type: script
-          id: script.play_spotify
-          data:
-            content_id: שישי רגוע
-            entity_id: media_player.googlehome3668
-        - name: "גששים"
-          type: script
-          id: script.play_spotify
-          data:
-            content_id: גששים
-        - name: "Soft morning"
-          type: script
-          id: script.play_spotify
-          data:
-            content_id: Soft morning
+  # - type: custom:mini-media-player
+  #   entity: media_player.googlehome3668
+  #   group: false
+  #   tts:
+  #     platform: microsoft
+  #   hide:
+  #     progress: true
+  #   shortcuts:
+  #     columns: 2
+  #     buttons:
+  #       - name: "Galatz"
+  #         type: script
+  #         id: script.play_radio_stream
+  #         data:
+  #           entity_id: media_player.googlehome3668
+  #           content_id: Galei Zahal
+  #       - name: "Galgalatz"
+  #         type: script
+  #         id: script.play_radio_stream
+  #         data:
+  #           entity_id: media_player.googlehome3668
+  #           content_id: GLGLZ
+  #       - name: "שישי רגוע"
+  #         type: script
+  #         id: script.play_spotify
+  #         data:
+  #           content_id: שישי רגוע
+  #           entity_id: media_player.googlehome3668
+  #       - name: "גששים"
+  #         type: script
+  #         id: script.play_spotify
+  #         data:
+  #           content_id: גששים
+  #       - name: "Soft morning"
+  #         type: script
+  #         id: script.play_spotify
+  #         data:
+  #           content_id: Soft morning
 
   - type: conditional
     conditions:
@@ -229,3 +229,339 @@ cards:
       Estimated Time to dry is {{ (states('sensor.line_dry') | int / 60) | round(1) }} hours.
 
       There is {{ states('sensor.openweathermap_forecast_precipitation_probability') }}% chance of rain in the next couple of hours.
+
+  - type: custom:decluttering-card
+    template: multisensor
+    variables:
+      - room: living_room
+
+  - type: vertical-stack
+    cards:
+      - type: custom:simple-thermostat
+        layout:
+          step: row
+        entity: climate.slvn
+        step_size: 1
+        name: false
+        decimals: 0
+        hide:
+          temperature: true
+        sensors:
+          - entity: sensor.living_room_temperature
+            name: "Temperature"
+      - type: conditional
+        conditions:
+          - entity: switch.living_room_ac_switch
+            state: 'on'
+        card:
+          type: entities
+          show_header_toggle: false
+          entities:
+            - switch.living_room_ac_switch
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.living_room_lights
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: light
+            entity: light.yeelight_color_living_room_1
+          - type: light
+            entity: light.yeelight_color_living_room_2
+      - switch.night_light_override
+
+  - type: entities
+    entities:
+      - type: custom:vacuum-card
+        entity: vacuum.xiaomi_vacuum_cleaner
+        map: camera.vacuum_map
+        map-refresh: 10
+        stats:
+          default:
+            - attribute: filter_left
+              unit: hours
+              subtitle: "Filter"
+            - attribute: side_brush_left
+              unit: hours
+              subtitle: "Side brush"
+            - attribute: main_brush_left
+              unit: hours
+              subtitle: "Main brush"
+            - attribute: sensor_dirty_left
+              unit: hours
+              subtitle: Sensors
+          cleaning:
+            - attribute: cleaned_area
+              unit: m2
+              subtitle: "Cleaning area"
+            - attribute: cleaning_time
+              unit: minutes
+              subtitle: "Cleaning time"
+        # actions:
+      - type: custom:hui-element
+        card_type: markdown
+        entity_id: vacuum.xiaomi_vacuum_cleaner
+        content: |
+          Last cleaned at {{ states('sensor.vacuum_last_cleaned') }}
+          It took {{ states('sensor.time_of_last_vacuum_cycle') }} minutes to clean {{ states('sensor.area_of_last_vacuum_cycle') }} meters.
+
+#  - type: custom:decluttering-card
+#    template: multisensor
+#    variables:
+#      - room: master_bedroom
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_sensibo_temperature
+                name: "Temperature"
+                show_points: false
+              - entity: sensor.master_bedroom_climate_set_temp
+                color: 'white'
+                show_fill: false
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 6
+            show:
+              fill: fade
+              points: false
+              labels: true
+              labels_secondary: false
+              legend: false
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_sensibo_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 12
+            show:
+              fill: fade
+              points: false
+              labels: false
+              legend: false
+
+  - type: custom:simple-thermostat
+    layout:
+      step: row
+    entity: climate.shynh
+    step_size: 1
+    name: false
+    control:
+      - hvac
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.yeelight_color_master_bedroom
+
+  - type: entities
+    entities:
+      - type: custom:battery-entity-row
+        entity: sensor.yuval_battery_level
+        name: "Yuval battery"
+        charging: true
+      - entity: sensor.yuval_next_alarm
+        name: "Alarm"
+      - type: divider
+      - type: custom:battery-entity-row
+        entity: sensor.tohar_battery_level
+        name: "Tohar battery"
+        charging: true
+      - entity: sensor.tohar_next_alarm
+        name: "Alarm"
+
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: light
+        entity: light.kids_ambient_lights
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: light
+                entity: light.wled_harel_bed
+              - type: custom:rgb-light-card
+                entity: light.wled_harel_bed
+                colors: !include ../../resources/rgb_colors_rotem.yaml
+          - type: entities
+            entities:
+              - type: custom:hui-element
+                card_type: light
+                entity: light.wled_rotem_bed
+              - type: custom:rgb-light-card
+                entity: light.wled_rotem_bed
+                colors: !include ../../resources/rgb_colors_rotem.yaml
+
+  - type: custom:decluttering-card
+    template: multisensor
+    variables:
+      - room: bathroom
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture-entity
+        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+        entity: sensor.ups_status
+      - type: custom:battery-entity-row
+        entity: sensor.ups_battery_charge
+        name: "Battery Charge"
+      - sensor.ups_time_remaining
+      - sensor.ups_load_watts
+      - type: custom:bar-card
+        entity: sensor.ups_load
+        name: "Load"
+        animation:
+          state: 'on'
+          speed: 2
+        positions:
+          indicator: 'off'
+
+  - type: entities
+    entities:
+      - entity: sensor.myip
+        name: "DNS IP"
+
+  - type: entities
+    title: "NanoPi NEO 3"
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: processor_use_percent
+          - cpu_temps: processor_temperature
+          - ram_usage: memory_use_percent
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.disk_use_percent
+            name: "Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+    footer:
+      type: custom:mini-graph-card
+      style: |
+        ha-card {
+          background: none;
+          box-shadow: none;
+          }
+      points_per_hour: 60
+      hours_to_show: 1.5
+      line_width: 2
+      entities:
+        - entity: sensor.network_throughput_in_eth0
+          color: '#50C878'
+        - entity: sensor.network_throughput_out_eth0
+          color: '#FFBF00'
+      show:
+        fill: fade
+        points: false
+        name: false
+        state: false
+        icon: false
+        labels: false
+        legend: false
+
+  - type: entities
+    title: "NanoPi NEO 2"
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+      - entity: sensor.npn2_containers_active
+        name: "Active Containers"
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: npn2_cpu_used
+          - cpu_temps: npn2_cpu_thermal_1_temperature
+          - ram_usage: npn2_ram_used_percent
+
+      - type: custom:hui-element
+        card_type: entities
+        entities:
+          - type: custom:hui-element
+            card_type: picture
+            image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
+            tap_action:
+              action: url
+              url_path: 'http://10.0.0.6/admin/index.php'
+          - sensor.pihole_status
+          - entity: sensor.pi_hole_ads_percentage_blocked_today
+            name: "Blocked Today"
+          - entity: sensor.pi_hole_domains_blocked
+            name: "Domains on Blocklist"
+          - type: custom:hui-element
+            card_type: custom:mini-graph-card
+            entities:
+              - entity: sensor.pi_hole_ads_blocked_today
+                name: "Queries blocked today"
+                unit: 'Blocked'
+                color: '#FF0F00'
+              - entity: sensor.pi_hole_dns_queries_today
+              - entity: sensor.pi_hole_dns_queries_forwarded
+                color: '#4DFF00'
+            show:
+              points: false
+              legend: false
+            line_width: 2
+            hours_to_show: 72
+          - entity: sensor.pi_hole_dns_queries_cached
+            name: "Cached"
+          - entity: sensor.pi_hole_dns_unique_domains
+            name: "Unique Domains"
+
+  - type: entities
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'http://magazine.odroid.com/wp-content/uploads/fig-02-omv.png'
+      - type: custom:decluttering-card
+        template: system_monitor
+        variables:
+          - cpu_usage: rpi2_cpu_used
+          - cpu_temps: rpi2_cpu_thermal_1_temperature
+          - ram_usage: rpi2_ram_used_percent
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.rpi2_used_percent
+            name: "Storage"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+          - entity: sensor.omv_media
+            name: "Media drive"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
+          - entity: sensor.omv_m_bm_m_om_bm_m_om_wm_pm_wm_m_wm_m_wm
+            name: "1TB drive"
+            severity:
+              - color: '#FF0F00'
+                from: 91
+                to: 100
