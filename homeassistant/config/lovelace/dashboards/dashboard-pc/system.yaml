@@ -65,7 +65,7 @@ cards:
         card_type: custom:mini-graph-card
         icon: mdi:database
         entities:
-          - entity: sensor.db_size
+          - entity: sensor.home_assistant_v2_db
             name: "Database"
         show:
           fill: fade
