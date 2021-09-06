@@ -370,22 +370,6 @@ cards:
         entity: light.yeelight_color_master_bedroom
 
   - type: entities
-    entities:
-      - type: custom:battery-entity-row
-        entity: sensor.yuval_battery_level
-        name: "Yuval battery"
-        charging: true
-      - entity: sensor.yuval_next_alarm
-        name: "Alarm"
-      - type: divider
-      - type: custom:battery-entity-row
-        entity: sensor.tohar_battery_level
-        name: "Tohar battery"
-        charging: true
-      - entity: sensor.tohar_next_alarm
-        name: "Alarm"
-
-  - type: entities
     show_header_toggle: false
     entities:
       - type: custom:hui-element
@@ -422,19 +406,25 @@ cards:
         card_type: picture-entity
         image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
         entity: sensor.ups_status
-      - type: custom:battery-entity-row
-        entity: sensor.ups_battery_charge
-        name: "Battery Charge"
-      - sensor.ups_time_remaining
-      - sensor.ups_load_watts
-      - type: custom:bar-card
-        entity: sensor.ups_load
-        name: "Load"
-        animation:
-          state: 'on'
-          speed: 2
-        positions:
-          indicator: 'off'
+      - type: custom:fold-entity-row
+        head:
+          type: section
+          label: "More info"
+        open: false
+        entities:
+          - type: custom:battery-entity-row
+            entity: sensor.ups_battery_charge
+            name: "Battery Charge"
+          - sensor.ups_time_remaining
+          - sensor.ups_load_watts
+          - type: custom:bar-card
+            entity: sensor.ups_load
+            name: "Load"
+            animation:
+              state: 'on'
+              speed: 2
+            positions:
+              indicator: 'off'
 
   - type: entities
     entities:
@@ -510,29 +500,35 @@ cards:
               action: url
               url_path: 'http://10.0.0.6/admin/index.php'
           - sensor.pihole_status
-          - entity: sensor.pi_hole_ads_percentage_blocked_today
-            name: "Blocked Today"
-          - entity: sensor.pi_hole_domains_blocked
-            name: "Domains on Blocklist"
-          - type: custom:hui-element
-            card_type: custom:mini-graph-card
+          - type: custom:fold-entity-row
+            head:
+              type: section
+              label: "More info"
+            open: false
             entities:
-              - entity: sensor.pi_hole_ads_blocked_today
-                name: "Queries blocked today"
-                unit: 'Blocked'
-                color: '#FF0F00'
-              - entity: sensor.pi_hole_dns_queries_today
-              - entity: sensor.pi_hole_dns_queries_forwarded
-                color: '#4DFF00'
-            show:
-              points: false
-              legend: false
-            line_width: 2
-            hours_to_show: 72
-          - entity: sensor.pi_hole_dns_queries_cached
-            name: "Cached"
-          - entity: sensor.pi_hole_dns_unique_domains
-            name: "Unique Domains"
+              - entity: sensor.pi_hole_ads_percentage_blocked_today
+                name: "Blocked Today"
+              - entity: sensor.pi_hole_domains_blocked
+                name: "Domains on Blocklist"
+              - type: custom:hui-element
+                card_type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.pi_hole_ads_blocked_today
+                    name: "Queries blocked today"
+                    unit: 'Blocked'
+                    color: '#FF0F00'
+                  - entity: sensor.pi_hole_dns_queries_today
+                  - entity: sensor.pi_hole_dns_queries_forwarded
+                    color: '#4DFF00'
+                show:
+                  points: false
+                  legend: false
+                line_width: 2
+                hours_to_show: 72
+              - entity: sensor.pi_hole_dns_queries_cached
+                name: "Cached"
+              - entity: sensor.pi_hole_dns_unique_domains
+                name: "Unique Domains"
 
   - type: entities
     entities:
