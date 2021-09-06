@@ -23,7 +23,7 @@
       {{
         now().weekday() == 4
         or
-        states('sensor.jewish_calendar_holiday') == '2'
+        is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 2)
       }}
 
 # Shabbat notification triggers
