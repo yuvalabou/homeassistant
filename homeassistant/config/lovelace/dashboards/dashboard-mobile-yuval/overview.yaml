@@ -400,31 +400,31 @@ cards:
     variables:
       - room: bathroom
 
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture-entity
-        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
-        entity: sensor.ups_status
-      - type: custom:fold-entity-row
-        head:
-          type: section
-          label: "More info"
-        open: false
-        entities:
-          - type: custom:battery-entity-row
-            entity: sensor.ups_battery_charge
-            name: "Battery Charge"
-          - sensor.ups_time_remaining
-          - sensor.ups_load_watts
-          - type: custom:bar-card
-            entity: sensor.ups_load
-            name: "Load"
-            animation:
-              state: 'on'
-              speed: 2
-            positions:
-              indicator: 'off'
+  # - type: entities
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: picture-entity
+  #       image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+  #       entity: sensor.ups_status
+  #     - type: custom:fold-entity-row
+  #       head:
+  #         type: section
+  #         label: "More info"
+  #       open: false
+  #       entities:
+  #         - type: custom:battery-entity-row
+  #           entity: sensor.ups_battery_charge
+  #           name: "Battery Charge"
+  #         - sensor.ups_time_remaining
+  #         - sensor.ups_load_watts
+  #         - type: custom:bar-card
+  #           entity: sensor.ups_load
+  #           name: "Load"
+  #           animation:
+  #             state: 'on'
+  #             speed: 2
+  #           positions:
+  #             indicator: 'off'
 
   - type: entities
     entities:
@@ -529,35 +529,3 @@ cards:
                 name: "Cached"
               - entity: sensor.pi_hole_dns_unique_domains
                 name: "Unique Domains"
-
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture
-        image: 'http://magazine.odroid.com/wp-content/uploads/fig-02-omv.png'
-      - type: custom:decluttering-card
-        template: system_monitor
-        variables:
-          - cpu_usage: rpi2_cpu_used
-          - cpu_temps: rpi2_cpu_thermal_1_temperature
-          - ram_usage: rpi2_ram_used_percent
-      - type: custom:bar-card
-        entities:
-          - entity: sensor.rpi2_used_percent
-            name: "Storage"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
-          - entity: sensor.omv_media
-            name: "Media drive"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100
-          - entity: sensor.omv_m_bm_m_om_bm_m_om_wm_pm_wm_m_wm_m_wm
-            name: "1TB drive"
-            severity:
-              - color: '#FF0F00'
-                from: 91
-                to: 100

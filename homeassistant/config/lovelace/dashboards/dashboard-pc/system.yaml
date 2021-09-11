@@ -71,22 +71,22 @@ cards:
           fill: fade
           points: false
 
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture-entity
-        image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
-        entity: sensor.ups_status
-      - type: custom:battery-entity-row
-        entity: sensor.ups_battery_charge
-        name: "Battery Charge"
-      - sensor.ups_time_remaining
-      - sensor.ups_load_watts
-      - type: custom:bar-card
-        entity: sensor.ups_load
-        name: "Load"
-        animation:
-          state: 'on'
-          speed: 2
-        positions:
-          indicator: 'off'
+  # - type: entities
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: picture-entity
+  #       image: 'https://cdn.27.ua/main/14e/eaton_logo_mobile.png.pagespeed.ce.b32eoh_8jo.png'
+  #       entity: sensor.ups_status
+  #     - type: custom:battery-entity-row
+  #       entity: sensor.ups_battery_charge
+  #       name: "Battery Charge"
+  #     - sensor.ups_time_remaining
+  #     - sensor.ups_load_watts
+  #     - type: custom:bar-card
+  #       entity: sensor.ups_load
+  #       name: "Load"
+  #       animation:
+  #         state: 'on'
+  #         speed: 2
+  #       positions:
+  #         indicator: 'off'

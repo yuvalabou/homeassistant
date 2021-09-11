@@ -18,9 +18,9 @@ exclude:
     - sensor.openweathermap_weather_code
     - sensor.random_number
     - sensor.hacs
-    - sensor.ups_nominal_power
-    - sensor.ups_nominal_output_voltage
-    - sensor.ups_ups_status_data
+    # - sensor.ups_nominal_power
+    # - sensor.ups_nominal_output_voltage
+    # - sensor.ups_ups_status_data
   entity_globs:
     - binary_sensor.is_*
 
