@@ -36,3 +36,5 @@
               data:
                 title: "שבת שלום!"
                 message: "שבת נכנסת בעוד 10 דקות."
+                data:
+                  image: '/local/assets/notification_images/Shalom_Aleichem.jpg'
