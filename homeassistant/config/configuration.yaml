@@ -13,8 +13,8 @@ homeassistant:
   elevation: !secret elevation
   time_zone: Asia/Jerusalem
   customize: !include customize.yaml
-  allowlist_external_dirs:
-    - /config
+#  allowlist_external_dirs:
+#    - /config
   customize_glob:
     sensor.*_energy_wh:
       last_reset: '1970-01-01T00:00:00+00:00'
