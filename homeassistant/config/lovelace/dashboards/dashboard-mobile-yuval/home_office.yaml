@@ -1,0 +1,32 @@
+---
+
+title: "Home Office"
+icon: mdi:desk
+cards:
+#  - type: custom:decluttering-card
+#    template: multisensor
+#    variables:
+#      - room: home_office
+
+  # - type: entities
+  #   entities:
+  #     - sensor.steam_76561198173612681
+  #     - sensor.steam_game
+  #     - type: custom:hui-element
+  #       card_type: custom:mini-graph-card
+  #       entities:
+  #         - entity: sensor.formatted_steam_playtime
+  #           unit: hours
+  #           name: "Steam playtime"
+  #       show:
+  #         graph: bar
+  #         labels: false
+  #       hours_to_show: 168
+  #       group_by: date
+  #       color_thresholds:
+  #         - value: 1
+  #           color: '#29A797'
+  #         - value: 2
+  #           color: '#F19631'
+  #         - value: 3
+  #           color: '#D2212A'
