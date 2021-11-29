@@ -17,6 +17,7 @@ from .const import (
     CONF_SPOTIFY_ACCOUNT,
     CONF_SPOTIFY_DEVICE_ID,
     CONF_SPOTIFY_URI,
+    CONF_SPOTIFY_SEARCH,
     CONF_START_VOL,
     DOMAIN,
     SCHEMA_PLAYLISTS,
@@ -41,6 +42,13 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def setup(hass, config):
+
+    # get spotify core integration status
+    # if return false, could indicate a bad spotify integration. Race
+    # condition doesn't permit us to abort setup, see #258
+    if not helpers.get_spotify_install_status(hass):
+        _LOGGER.debug("Spotify integration was not found, please verify integration is functionnal. Could result in python error...")
+
     """Setup the Spotcast service."""
     conf = config[DOMAIN]
 
@@ -128,6 +136,7 @@ def setup(hass, config):
     def start_casting(call):
         """service called."""
         uri = call.data.get(CONF_SPOTIFY_URI)
+        search = call.data.get(CONF_SPOTIFY_SEARCH)
         random_song = call.data.get(CONF_RANDOM, False)
         repeat = call.data.get(CONF_REPEAT, False)
         shuffle = call.data.get(CONF_SHUFFLE, False)
@@ -148,7 +157,7 @@ def setup(hass, config):
                 account, spotify_device_id, device_name, entity_id
             )
 
-        if uri is None or uri.strip() == "":
+        if (uri is None or uri.strip() == "") and (search is None or search.strip() == ""):
             _LOGGER.debug("Transfering playback")
             current_playback = client.current_playback()
             if current_playback is not None:
@@ -159,6 +168,11 @@ def setup(hass, config):
                 device_id=spotify_device_id, force_play=force_playback
             )
         else:
+
+            if uri is None or uri.strip() == "":
+                # get uri from search request
+                uri = helpers.get_search_results(search, client)
+
             spotcast_controller.play(
                 client,
                 spotify_device_id,
