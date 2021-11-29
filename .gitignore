@@ -24,6 +24,7 @@ __pycache__
 *db-wal
 *.txt
 *.log
+*.fault
 *.token
 *.pickle
 .env

@@ -12,13 +12,13 @@ services:
     environment:
       - TZ=Asia/Jerusalem
     volumes:
-      - /home/homeassistant/homeassistant/homeassistant/config:/config
+      - /home/dev/homeassistant/homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
-    devices:
-       - /dev/i2c-0:/dev/i2c-0
+    # devices:
+    #    - /dev/i2c-0:/dev/i2c-0
     network_mode: host
-    dns:
-      - ${PIHOLE}
+    # dns:
+    #   - ${PIHOLE}
 
   # postgres:
   #   restart: always

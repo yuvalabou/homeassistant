@@ -215,21 +215,6 @@ cards:
       exclude:
         - entity_id: '*lights'
 
-  - type: markdown
-    content: >-
-      The Washing Machine is done.
-      {% if
-        (states('sensor.line_dry') | int / 60) | int < ((as_timestamp(state_attr('sun.sun','next_setting'))
-        -
-        as_timestamp(now()))/60/60) | int and states('sensor.line_dry') | int + 1 > 0
-      %}
-        You may have time to line dry before sunset.
-      {% endif %}
-
-      Estimated Time to dry is {{ (states('sensor.line_dry') | int / 60) | round(1) }} hours.
-
-      There is {{ states('sensor.openweathermap_forecast_precipitation_probability') }}% chance of rain in the next couple of hours.
-
   - type: custom:decluttering-card
     template: multisensor
     variables:
