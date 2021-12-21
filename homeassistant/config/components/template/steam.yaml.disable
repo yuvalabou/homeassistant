@@ -17,7 +17,7 @@
   - name: "Formatted Steam playtime"
     unique_id: 8e811605-51d2-4e7b-a3ce-98c08f492dbb
     state: >-
-      {% set hours = states('sensor.track_steam_playtime') | float %}
+      {% set hours = states('sensor.track_steam_playtime') | float(0) %}
       {% set minutes = ((hours % 1) * 60) | int %}
       {% set hours = (hours - (hours % 1)) | int %}
       {{ '%02i.%02i'%(hours, minutes) }}

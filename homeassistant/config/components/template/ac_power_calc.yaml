@@ -41,7 +41,7 @@
     device_class: energy
     unit_of_measurement: 'kWh'
     state: >-
-      {{ states('sensor.living_room_ac_energy_usage_hourly') | float }}
+      {{ states('sensor.living_room_ac_energy_usage_hourly') | float(0) }}
 
   - name: "Master Bedroom AC energy kWh"
     unique_id: 64cf37ba-3262-43be-a85a-e4fe95dd2a70
@@ -49,11 +49,11 @@
     device_class: energy
     unit_of_measurement: 'kWh'
     state: >-
-      {{ states('sensor.master_bedroom_ac_energy_usage_hourly') | float }}
+      {{ states('sensor.master_bedroom_ac_energy_usage_hourly') | float(0) }}
 
   - name: "Total AC power price"
     unique_id: c21bdccf-14a2-4450-8e5c-8a38d87e375c
     unit_of_measurement: 'ש"ח'
     state: >-
-      {{ ((states('sensor.living_room_ac_energy_usage_monthly') | float) * 0.54) | round(2) }}
+      {{ ((states('sensor.living_room_ac_energy_usage_monthly') | float(0)) * 0.54) | round(2) }}
     icon: mdi:currency-ils

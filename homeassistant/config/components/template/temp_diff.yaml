@@ -27,8 +27,8 @@
       temperature_difference: >-
         {{
           (
-            states('sensor.openweathermap_temperature') | float
+            states('sensor.openweathermap_temperature') | float(0)
             -
-            states('sensor.living_room_temperature') | float
+            states('sensor.living_room_temperature') | float(0)
           ) | round(2)
         }}

@@ -30,4 +30,4 @@
     device_class: energy
     unit_of_measurement: 'Wh'
     state: >-
-      {{ states('sensor.ups_energy_usage_hourly') | float }}
+      {{ states('sensor.ups_energy_usage_hourly') | float(0) }}
