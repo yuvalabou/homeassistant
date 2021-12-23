@@ -94,12 +94,9 @@ notify: !include_dir_merge_list components/notify
 scene: !include_dir_merge_list components/scene
 script: !include_dir_merge_named components/script
 sensor: !include_dir_merge_list components/sensor
-spotcast:
-  sp_dc: !secret sp_dc
-  sp_key: !secret sp_key
-spotify:
-  client_id: !secret spotify_id
-  client_secret: !secret spotify_secret
+# spotify:
+#   client_id: !secret spotify_id
+#   client_secret: !secret spotify_secret
 sun:
 switch: !include_dir_merge_list components/switch
 system_health:
