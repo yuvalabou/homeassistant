@@ -18,7 +18,7 @@
     unique_id: 8e811605-51d2-4e7b-a3ce-98c08f492dbb
     state: >-
       {% set hours = states('sensor.track_steam_playtime') | float(0) %}
-      {% set minutes = ((hours % 1) * 60) | int %}
-      {% set hours = (hours - (hours % 1)) | int %}
+      {% set minutes = ((hours % 1) * 60) | int(0) %}
+      {% set hours = (hours - (hours % 1)) | int(0) %}
       {{ '%02i.%02i'%(hours, minutes) }}
     icon: mdi:steam

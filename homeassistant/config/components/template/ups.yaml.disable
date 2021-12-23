@@ -6,7 +6,7 @@
     unit_of_measurement: 'minutes'
     device_class: 'battery'
     state: >-
-      {{ (states('sensor.ups_battery_runtime') | int) // 60 }}
+      {{ (states('sensor.ups_battery_runtime') | int(0)) // 60 }}
     icon: >-
       {% if is_state('sensor.ups_status', 'Online') %}
         mdi:battery-charging

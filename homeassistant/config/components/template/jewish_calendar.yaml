@@ -16,7 +16,7 @@
   - name: "Is Omer"
     unique_id: d8d1e7d8-455a-4c67-919f-850c09e5ef13
     state: >-
-      {{ (states('sensor.jewish_calendar_day_of_the_omer') | int) > 0 }}
+      {{ (states('sensor.jewish_calendar_day_of_the_omer') | int(0)) > 0 }}
 
   - name: "Issur melacha eve"
     state: >-
