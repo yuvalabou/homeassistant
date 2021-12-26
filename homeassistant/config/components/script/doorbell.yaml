@@ -14,7 +14,7 @@ doorbell_notification:
     service: camera.snapshot
     data:
       filename: '/config/www/cam_captures/doorbell/front_door_snapshot_latest.jpg'
-  - service: notify.mobile_app_yuval
+  - service: notify.mobile_app_yuval_phone
     data:
       title: "Doorbell"
       message: Doorbell pressed at {{ as_timestamp(now()) | timestamp_custom('%-H:%M', true) }}

@@ -23,7 +23,7 @@
           - condition: trigger
             id: '30_min'
           sequence:
-            - service: notify.mobile_app_yuval
+            - service: notify.mobile_app_yuval_phone
               data:
                 title: "שבת שלום!"
                 message: "זכרת להכין מיחם ונרות?"
