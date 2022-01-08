@@ -1,11 +1,8 @@
 ---
-version: '3.4'
+version: '3.6'
 
 services:
   homeassistant:
-    restart: always
-    # depends_on:
-    #   - postgres
     hostname: homeassistant
     container_name: "homeassistant"
     image: homeassistant/home-assistant:latest
@@ -16,40 +13,24 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     # devices:
     #    - /dev/i2c-0:/dev/i2c-0
-    network_mode: host
+    ports:
+      - 8123:8123
     # dns:
     #   - ${PIHOLE}
+    restart: always
 
-  # postgres:
-  #   restart: always
-  #   hostname: postgres
-  #   container_name: "postgres"
-  #   image: postgres:latest
-  #   network_mode: host
-  #   # ports:
-  #   #   - 5432:5432
-  #   environment:
-  #     PUID: ${LOCAL_USER}
-  #     PGID: ${LOCAL_USER}
-  #     TZ: 'Asia/Jerusalem'
-  #     POSTGRES_USER: ${POSTGRES_USER}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-  #     POSTGRES_DB: HADB
-  #   volumes:
-  #     - /home/homeassistant/postgres/data:/var/lib/postgresql/data
-
-  # portainer:
-  #   hostname: portainer
-  #   container_name: portainer
-  #   image: portainer/portainer-ce:latest
-  #   restart: always
-  #   network_mode: bridge
-  #   ports:
-  #       - '9000:9000'
-  #   environment:
-  #       TZ: "Asia/Jerusalem"
-  #   volumes:
-  #       - /var/run/docker.sock:/var/run/docker.sock
+  esphome:
+    container_name: "esphome"
+    image: esphome/esphome
+    # devices:
+    #   - /dev/ttyUSB0:/dev/ttyUSB0
+    environment:
+      - TZ=Asia/Jerusalem
+    ports:
+      - 6052:6052
+    restart: unless-stopped
+    volumes:
+      - /home/dev/homeassistant/esphome/config:/config
 
   # unifi-controller:
   #   image: ghcr.io/linuxserver/unifi-controller
@@ -70,20 +51,3 @@ services:
   #     - 6789:6789
   #     - 5514:5514
   #   restart: unless-stopped
-
-  # vscode:
-  #     image: linuxserver/code-server
-  #     container_name: vscode
-  #     hostname: vscode
-  #     restart: always
-  #     network_mode: bridge
-  #     ports:
-  #       - 8553:8443
-  #     environment:
-  #       PUID: ${LOCAL_USER}
-  #       PGID: ${LOCAL_USER}
-  #       TZ: "Asia/Jerusalem"
-  #       # PASSWORD: ${VSCODE_PASSWORD} #optional
-  #       # SUDO_PASSWORD: password #optional
-  #     volumes:
-  #       - /home/homeassistant/vscode/config:/config
