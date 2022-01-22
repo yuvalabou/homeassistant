@@ -9,7 +9,7 @@ services:
     environment:
       - TZ=Asia/Jerusalem
     volumes:
-      - /home/dev/homeassistant/homeassistant/config:/config
+      - /home/server/homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
     # devices:
     #    - /dev/i2c-0:/dev/i2c-0
@@ -30,24 +30,21 @@ services:
       - 6052:6052
     restart: unless-stopped
     volumes:
-      - /home/dev/homeassistant/esphome/config:/config
+      - /home/server/homeassistant/esphome/config:/config
 
-  # unifi-controller:
-  #   image: ghcr.io/linuxserver/unifi-controller
-  #   container_name: unifi-controller
-  #   environment:
-  #     - PUID=${LOCAL_USER}
-  #     - PGID=${LOCAL_USER}
-  #   volumes:
-  #     - /home/homeassistant/unifi/config:/config
-  #   ports:
-  #     - 3478:3478/udp
-  #     - 10001:10001/udp
-  #     - 8080:8080
-  #     - 8443:8443
-  #     - 1900:1900/udp
-  #     - 8843:8843
-  #     - 8880:8880
-  #     - 6789:6789
-  #     - 5514:5514
-  #   restart: unless-stopped
+  unifi-controller:
+    image: lscr.io/linuxserver/unifi-controller
+    container_name: unifi-controller
+    volumes:
+      - /home/server/homeassistant/unifi/config:/config
+    ports:
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 8443:8443
+      - 1900:1900/udp
+      - 8843:8843
+      - 8880:8880
+      - 6789:6789
+      - 5514:5514
+    restart: unless-stopped

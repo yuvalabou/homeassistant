@@ -16,6 +16,7 @@ tts
 assets
 floor_plan
 cam_captures
+unifi
 __pycache__
 
 # Ignore files
