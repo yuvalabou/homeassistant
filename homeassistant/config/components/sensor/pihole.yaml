@@ -3,6 +3,6 @@
 - platform: command_line
   name: "PiHole Status"
   scan_interval: 20
-  command: curl -X GET 'http://10.0.0.6/admin/api.php?status'
+  command: !secret pihole_cmd
   value_template: >-
     {{ value_json.status }}
