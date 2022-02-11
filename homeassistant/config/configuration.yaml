@@ -76,7 +76,6 @@ automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list components/binary_sensor
 blueprint:
 camera: !include_dir_merge_list components/camera
-climate: !include_dir_merge_list components/climate
 energy:
 google:
   client_id: !secret google_cal_id
