@@ -49,8 +49,8 @@ cards:
         tap_action:
           action: call-service
           service: timer.reload
-      - entity: sensor.count_climates
-        name: "Climate"
+      # - entity: sensor.count_climates
+      #   name: "Climate"
 
   - type: entities
     entities:
