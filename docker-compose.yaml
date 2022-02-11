@@ -9,14 +9,12 @@ services:
     environment:
       - TZ=Asia/Jerusalem
     volumes:
-      - /home/server/homeassistant/config:/config
+      - /home/homeassistant/homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
     # devices:
     #    - /dev/i2c-0:/dev/i2c-0
     ports:
       - 8123:8123
-    # dns:
-    #   - ${PIHOLE}
     restart: always
 
   esphome:
@@ -30,13 +28,13 @@ services:
       - 6052:6052
     restart: unless-stopped
     volumes:
-      - /home/server/homeassistant/esphome/config:/config
+      - /home/homeassistant/esphome/config:/config
 
   unifi-controller:
     image: lscr.io/linuxserver/unifi-controller
-    container_name: unifi-controller
+    container_name: "unifi-controller"
     volumes:
-      - /home/server/homeassistant/unifi/config:/config
+      - /home/homeassistant/unifi/config:/config
     ports:
       - 3478:3478/udp
       - 10001:10001/udp
