@@ -262,7 +262,7 @@ cards:
   - type: entities
     entities:
       - type: custom:vacuum-card
-        entity: vacuum.xiaomi_vacuum_cleaner
+        entity: vacuum.xiaomi_vacuum
         map: camera.vacuum_map
         map-refresh: 10
         stats:
@@ -289,10 +289,10 @@ cards:
         # actions:
       - type: custom:hui-element
         card_type: markdown
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.xiaomi_vacuum
         content: |
-          Last cleaned at {{ states('sensor.vacuum_last_cleaned') }}
-          It took {{ states('sensor.time_of_last_vacuum_cycle') }} minutes to clean {{ states('sensor.area_of_last_vacuum_cycle') }} meters.
+          Last cleaned at {{ states('sensor.vacuum_last_clean_end') }}
+          It took {{ states('sensor.vacuum_last_clean_duration') }} minutes to clean {{ states('sensor.area_of_last_vacuum_cycle') }} meters.
 
 #  - type: custom:decluttering-card
 #    template: multisensor

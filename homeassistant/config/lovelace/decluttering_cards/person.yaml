@@ -6,17 +6,17 @@ person:
     image: '/local/assets/[[name]].jpg'
     elements:
       - type: state-label
-        entity: sensor.[[name]]_phone_battery_level
+        entity: sensor.[[name]]_battery_level
         style:
           top: 11%
           right: -2%
       - type: state-icon
-        entity: sensor.[[name]]_phone_battery_level
+        entity: sensor.[[name]]_battery_level
         style:
           top: 10%
           right: -10%
       - type: state-label
-        entity: sensor.[[name]]_phone_geocoded_location
+        entity: sensor.[[name]]_geocoded_location
         attribute: Thoroughfare
         style:
           bottom: 8%
@@ -26,7 +26,7 @@ person:
           font-weight: 300
           font-size: 16px
       - type: state-label
-        entity: sensor.[[name]]_phone_geocoded_location
+        entity: sensor.[[name]]_geocoded_location
         attribute: Locality
         style:
           bottom: 3%

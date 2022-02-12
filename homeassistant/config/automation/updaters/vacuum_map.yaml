@@ -4,21 +4,21 @@
   id: f9372f4e-0d4f-4004-823a-061d32d7cb74
   trigger:
     - platform: state
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      entity_id: vacuum.xiaomi_vacuum
       to: 'cleaning'
     - platform: state
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      entity_id: vacuum.xiaomi_vacuum
       to: 'docked'
   action:
     - choose:
       - conditions:
-          - "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'cleaning') }}"
+          - "{{ is_state('vacuum.xiaomi_vacuum', 'cleaning') }}"
         sequence:
           - service: camera.turn_on
             target:
               entity_id: camera.vacuum_map
       - conditions:
-          - "{{ is_state('vacuum.xiaomi_vacuum_cleaner', 'docked') }}"
+          - "{{ is_state('vacuum.xiaomi_vacuum', 'docked') }}"
         sequence:
           - service: camera.turn_off
             target:

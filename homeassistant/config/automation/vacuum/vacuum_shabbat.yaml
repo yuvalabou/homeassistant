@@ -12,14 +12,14 @@
   action:
     service: vacuum.start
     data:
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      entity_id: vacuum.xiaomi_vacuum
 
 # The two following automations are precoutions from messing with the vacuum in Shabbat
 - alias: "Vacuum - prevent manual cleaning on Shabbat"
   id: dd081698-79b9-4e3b-8b94-15809bcce967
   trigger:
     platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
+    entity_id: vacuum.xiaomi_vacuum
     to: 'cleaning'
   condition:
     - condition: or
@@ -32,17 +32,17 @@
   action:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.xiaomi_vacuum
     - delay: 1
     - service: vacuum.return_to_base
       data:
-        entity_id: vacuum.xiaomi_vacuum_cleaner
+        entity_id: vacuum.xiaomi_vacuum
 
 - alias: "Vacuum - prevent stop cleaning on Shabbat"
   id: 48375897-57c4-4e4e-afa5-42dc31e8f3a6
   trigger:
     platform: state
-    entity_id: vacuum.xiaomi_vacuum_cleaner
+    entity_id: vacuum.xiaomi_vacuum
     to: 'paused'
   condition:
     - condition: time
@@ -51,4 +51,4 @@
   action:
     service: vacuum.start
     data:
-      entity_id: vacuum.xiaomi_vacuum_cleaner
+      entity_id: vacuum.xiaomi_vacuum
