@@ -4,7 +4,7 @@
   name: "All lights"
   entities:
     - light.yeelight_color_master_bedroom
-    - light.yeelight_color_living_room_1
-    - light.yeelight_color_living_room_2
+    - light.wall
+    - light.wall_2
     - light.wled_harel_bed
     - light.wled_rotem_bed

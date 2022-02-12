@@ -3,5 +3,5 @@
 - platform: group
   name: "Living room lights"
   entities:
-    - light.yeelight_color_living_room_1
-    - light.yeelight_color_living_room_2
+    - light.wall
+    - light.wall_2
