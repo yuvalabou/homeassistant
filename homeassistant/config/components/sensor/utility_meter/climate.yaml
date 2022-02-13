@@ -1,9 +1,0 @@
----
-
-living_room_ac_energy_usage_hourly:
-  source: sensor.living_room_ac_power_kw
-  cycle: hourly
-
-master_bedroom_ac_energy_usage_hourly:
-  source: sensor.master_bedroom_ac_power_kw
-  cycle: hourly
