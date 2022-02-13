@@ -19,9 +19,6 @@ cards:
               - entity: sensor.master_bedroom_sensibo_temperature
                 name: "Temperature"
                 show_points: false
-              - entity: sensor.master_bedroom_climate_set_temp
-                color: 'white'
-                show_fill: false
               - !include ../../resources/graph_card_sun_elevation.yaml
             font_size: 80
             color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
@@ -48,13 +45,6 @@ cards:
               labels: false
               legend: false
 
-  - type: custom:simple-thermostat
-    entity: climate.shynh
-    step_size: 1
-    name: false
-    control:
-      - hvac
-
   - type: entities
     entities:
       - type: custom:hui-element
@@ -80,3 +70,8 @@ cards:
         charging: true
       - entity: sensor.tohar_next_alarm
         name: "Alarm"
+
+  - type: custom:decluttering-card
+    template: multisensor
+    variables:
+      - room: bathroom

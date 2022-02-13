@@ -9,12 +9,12 @@ views:
 #  - !include dashboard-pc/floorplan.yaml
   - !include dashboard-pc/living_room.yaml
   - !include dashboard-pc/master_bedroom.yaml
-  - !include dashboard-pc/kids_room.yaml
+  # - !include dashboard-pc/kids_room.yaml
   - !include dashboard-pc/bathroom.yaml
-  - !include dashboard-pc/home_office.yaml
+  # - !include dashboard-pc/home_office.yaml
   - !include dashboard-pc/stats.yaml
   # - !include dashboard-pc/monitoring.yaml
   - !include dashboard-pc/system.yaml
   - !include dashboard-pc/homelab.yaml
-  - !include dashboard-pc/devices.yaml
-  - !include dashboard-pc/doorbell.yaml
+  # - !include dashboard-pc/devices.yaml
+  # - !include dashboard-pc/doorbell.yaml
