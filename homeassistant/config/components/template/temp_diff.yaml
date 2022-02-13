@@ -1,7 +1,7 @@
 ---
 
 - sensor:
-  - name: "Warmer or cooler outside"
+  - name: "Warmer or colder outside"
     unique_id: 8c57f5ee-d766-49d5-8121-5604d704481c
     state: >-
       {% if states('sensor.openweathermap_temperature') <

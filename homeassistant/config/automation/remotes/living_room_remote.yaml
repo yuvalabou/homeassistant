@@ -1,29 +1,5 @@
 ---
 
-- alias: "Button - living room turn-on AC"
-  id: 103b6719-46c6-4a0e-9b1e-62a6ad261bed
-  trigger:
-    platform: device
-    domain: mqtt
-    device_id: c944778d99d24bc4aa788932e6d7af10
-    type: action
-    subtype: single
-    discovery_id: 0x00158d0006d0a9eb action_single
-  action:
-    choose:
-      - conditions:
-          - "{{ is_state('climate.slvn', 'off') }}"
-        sequence:
-          - service: climate.turn_on
-            data:
-              entity_id: climate.slvn
-      - conditions:
-          - "{{ not is_state('climate.slvn', 'off') }}"
-        sequence:
-          - service: climate.turn_off
-            data:
-              entity_id: climate.slvn
-
 - alias: "Button - living room turn-off everything"
   id: dd92e40e-1e33-4ad9-afaa-aab1b03fb94f
   trigger:

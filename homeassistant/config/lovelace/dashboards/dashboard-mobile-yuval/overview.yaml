@@ -291,8 +291,8 @@ cards:
         card_type: markdown
         entity_id: vacuum.xiaomi_vacuum
         content: |
-          Last cleaned at {{ states('sensor.vacuum_last_clean_end') }}
-          It took {{ states('sensor.vacuum_last_clean_duration') }} minutes to clean {{ states('sensor.area_of_last_vacuum_cycle') }} meters.
+          Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
+          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ states('sensor.vacuum_last_clean_area') }} meters.
 
 #  - type: custom:decluttering-card
 #    template: multisensor
@@ -338,15 +338,6 @@ cards:
               points: false
               labels: false
               legend: false
-
-  - type: custom:simple-thermostat
-    layout:
-      step: row
-    entity: climate.shynh
-    step_size: 1
-    name: false
-    control:
-      - hvac
 
   - type: entities
     entities:

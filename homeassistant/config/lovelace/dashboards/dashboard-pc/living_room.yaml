@@ -77,27 +77,5 @@ cards:
         card_type: markdown
         entity_id: vacuum.xiaomi_vacuum
         content: |
-          Last cleaned at {{ states('sensor.vacuum_last_clean_end') }}
-          It took {{ states('sensor.vacuum_last_clean_duration') }} minutes to clean {{ states('sensor.vacuum_last_clean_area') }} meters.
-      - type: custom:fold-entity-row
-        head:
-          type: section
-          label: "Consumables"
-        open: false
-        entities:
-          - entity: sensor.vacuum_main_brush
-            hold_action:
-              action: call-service
-              service: script.vacuum_reset_main_brush
-          - entity: sensor.vacuum_side_brush
-            hold_action:
-              action: call-service
-              service: script.vacuum_reset_side_brush
-          - entity: sensor.vacuum_filter
-            hold_action:
-              action: call-service
-              service: script.vacuum_reset_filter
-          - entity: sensor.vacuum_sensors
-            hold_action:
-              action: call-service
-              service: script.vacuum_reset_sensor
+          Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
+          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ states('sensor.vacuum_last_clean_area') }} meters.

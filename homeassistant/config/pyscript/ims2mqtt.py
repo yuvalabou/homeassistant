@@ -8,7 +8,7 @@ import feedparser
 from paho.mqtt import client as mqtt
 
 RSS = "https://ims.gov.il/sites/default/files/ims_data/rss/forecast_country/rssForecastCountry_he.xml"
-BROKER = "10.0.0.6"
+BROKER = "10.0.0.238"
 FEED = task.executor(feedparser.parse, RSS)
 
 client = mqtt.Client()
