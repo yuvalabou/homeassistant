@@ -4,7 +4,7 @@ title: "Living Room"
 icon: mdi:sofa
 cards:
   - type: custom:decluttering-card
-    template: multisensor
+    template: multisensor_full
     variables:
       - room: living_room
 
