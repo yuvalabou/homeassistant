@@ -189,16 +189,6 @@ cards:
             else
               return 'mdi:kettle-steam-outline';
           ]]]
-      - type: custom:button-card
-        entity: switch.shabbat_plate
-        name: "Oven"
-        icon: >-
-          [[[
-            if (entity.state == 'off')
-              return 'mdi:microwave-off';
-            else
-              return 'mdi:microwave';
-          ]]]
 
   - type: custom:auto-entities
     card:
