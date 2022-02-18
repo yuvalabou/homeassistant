@@ -4,7 +4,7 @@
   id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
   trigger:
     platform: state
-    entity_id: vacuum.xiaomi_vacuum
+    entity_id: vacuum.mi_vacuum
     from: 'cleaning'
     to: 'returning'
   action:

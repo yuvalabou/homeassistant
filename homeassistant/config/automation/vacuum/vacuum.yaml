@@ -16,7 +16,7 @@
   action:
     - service: vacuum.start
       data:
-        entity_id: vacuum.xiaomi_vacuum
+        entity_id: vacuum.mi_vacuum
     - service: notify.family
       data:
         title: "Cleaning started"
@@ -36,7 +36,7 @@
   action:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.xiaomi_vacuum
+        entity_id: vacuum.mi_vacuum
     - service: notify.family
       data:
         title: "Cleaning stopped"
@@ -45,14 +45,14 @@
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state
-    entity_id: vacuum.xiaomi_vacuum
+    entity_id: vacuum.mi_vacuum
     from: 'cleaning'
     to: 'error'
     for: '01:00:00'
   action:
     - service: vacuum.return_to_base
       data:
-        entity_id: vacuum.xiaomi_vacuum
+        entity_id: vacuum.mi_vacuum
     - service: notify.family
       data:
         title: "Returning to Dock"

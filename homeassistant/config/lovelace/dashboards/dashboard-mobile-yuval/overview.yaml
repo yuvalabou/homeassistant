@@ -262,7 +262,7 @@ cards:
   - type: entities
     entities:
       - type: custom:vacuum-card
-        entity: vacuum.xiaomi_vacuum
+        entity: vacuum.mi_vacuum
         map: camera.vacuum_map
         map-refresh: 10
         stats:
@@ -289,7 +289,7 @@ cards:
         # actions:
       - type: custom:hui-element
         card_type: markdown
-        entity_id: vacuum.xiaomi_vacuum
+        entity_id: vacuum.mi_vacuum
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
           It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ states('sensor.vacuum_last_clean_area') }} meters.

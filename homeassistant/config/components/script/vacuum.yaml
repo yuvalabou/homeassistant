@@ -8,7 +8,7 @@ vacuum_set_silent:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       fan_speed: 38
 
 vacuum_set_standard:
@@ -17,7 +17,7 @@ vacuum_set_standard:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       fan_speed: 60
 
 vacuum_set_turbo:
@@ -26,7 +26,7 @@ vacuum_set_turbo:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       fan_speed: 75
 
 vacuum_set_max:
@@ -35,7 +35,7 @@ vacuum_set_max:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       fan_speed: 100
 
 # Reset Consumables
@@ -47,7 +47,7 @@ vacuum_reset_sensor:
     service: vacuum.send_command
     data:
       command: reset_consumable
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       params: sensor_dirty_time
 
 vacuum_reset_filter:
@@ -57,7 +57,7 @@ vacuum_reset_filter:
     service: vacuum.send_command
     data:
       command: reset_consumable
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       params: filter_work_time
 
 vacuum_reset_side_brush:
@@ -67,7 +67,7 @@ vacuum_reset_side_brush:
     service: vacuum.send_command
     data:
       command: reset_consumable
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       params: side_brush_work_time
 
 vacuum_reset_main_brush:
@@ -77,5 +77,5 @@ vacuum_reset_main_brush:
     service: vacuum.send_command
     data:
       command: reset_consumable
-      entity_id: vacuum.xiaomi_vacuum
+      entity_id: vacuum.mi_vacuum
       params: main_brush_work_time
