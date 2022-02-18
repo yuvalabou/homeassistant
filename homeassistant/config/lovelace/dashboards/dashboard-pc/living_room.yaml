@@ -44,11 +44,11 @@ cards:
               unit: hours
               subtitle: Sensors
           cleaning:
-            - attribute: cleaned_area
+            - entity_id: sensor.vacuum_current_clean_area
               unit: m2
               subtitle: "Cleaning area"
-            - attribute: cleaning_time
-              unit: minutes
+            - entity_id: sensor.vacuum_current_clean_suration
+              unit: s
               subtitle: "Cleaning time"
         # actions:
       - type: custom:hui-element
