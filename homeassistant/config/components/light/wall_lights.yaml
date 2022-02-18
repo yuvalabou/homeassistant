@@ -1,0 +1,7 @@
+---
+
+- platform: group
+  name: "Wall lights"
+  entities:
+    - light.wall
+    - light.wall_2
