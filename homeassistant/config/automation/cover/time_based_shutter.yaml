@@ -1,0 +1,25 @@
+---
+
+- alias: "Cover - Morning Cover"
+  id: 3e52818c-536a-4e9e-b92f-088e60a03070
+  trigger:
+    platform: time
+    at: 06:10:00
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+  action:
+    service: cover.open_cover
+    target:
+      device_id: 182e26f6c4cae7c966762eeb23f0754a
+
+- alias: "Cover - Evening Cover"
+  id: dee66d89-f22f-4b21-ba18-92bbb15efb83
+  trigger:
+    platform: time
+    at: 23:00:00
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+  action:
+    service: cover.close_cover
+    target:
+      device_id: 182e26f6c4cae7c966762eeb23f0754a
