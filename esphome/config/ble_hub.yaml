@@ -42,49 +42,30 @@ ble_client:
       then:
         - lambda: |-
             ESP_LOGD("ble_client_lambda", "Disconnected from BLE device");
+  - mac_address: F8:71:96:00:C9:D3
+    id: amazefit_gts
+    on_connect:
+      then:
+        - lambda: |-
+            ESP_LOGD("ble_client_lambda", "Connected to BLE device");
+    on_disconnect:
+      then:
+        - lambda: |-
+            ESP_LOGD("ble_client_lambda", "Disconnected from BLE device");
 
 binary_sensor:
   - platform: ble_presence
     mac_address: FE:7A:A8:35:67:53
     name: "Yuval Mi Band 3"
+  - platform: ble_presence
+    mac_address: F8:71:96:00:C9:D3
+    name: "Tohar Amazefit gts"
 
 sensor:
-  - platform: ble_client
-    ble_client_id: mi_band_3
-    name: "Heart Rate"
-    service_uuid: '180d'
-    characteristic_uuid: '2a37'
-    icon: 'mdi:heart'
-    unit_of_measurement: 'bpm'
-    notify: true
-    lambda: |-
-      uint16_t heart_rate_measurement = x[1];
-      if (x[0] & 1) {
-          heart_rate_measurement += (x[2] << 8);
-      }
-      return (int)heart_rate_measurement;
-    # update_interval: 1s
-  - platform: ble_client
-    ble_client_id: mi_band_3
-    id: device_name
-    service_uuid: '1800'  # Generic Access Profile
-    characteristic_uuid: '2a00'  # Device Name
-    lambda: |-
-      std::string data_string(x.begin(), x.end());
-      id(heart_rate_sensor_name).publish_state(data_string.c_str());
-      return (float)x.size();
   - platform: ble_rssi
     mac_address: FE:7A:A8:35:67:53
     name: "Mi Band 3 RSSI"
 
-text_sensor:
-  - platform: template
-    name: "heart rate sensor name"
-    id: heart_rate_sensor_name
-
-  # - platform: template
-  #   id: heart_rate
-  #   name: "Heart Rate"
-  #   unit_of_measurement: '°C'
-  #   accuracy_decimals: 0
-  #   icon: "mdi:thermometer"
+  - platform: ble_rssi
+    mac_address: F8:71:96:00:C9:D3
+    name: "Amazefit gts RSSI"

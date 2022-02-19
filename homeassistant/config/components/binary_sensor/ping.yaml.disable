@@ -1,34 +1,34 @@
 ---
 
-- platform: ping
-  host: !secret vacuum
-  name: "Vacuum"
-  count: 2
-- platform: ping
-  host: !secret laptop
-  name: "Laptop"
-  count: 2
-- platform: ping
-  host: !secret tv
-  name: "TV"
-  count: 2
+# - platform: ping
+#   host: !secret vacuum
+#   name: "Vacuum"
+#   count: 2
+# - platform: ping
+#   host: !secret laptop
+#   name: "Laptop"
+#   count: 2
+# - platform: ping
+#   host: !secret tv
+#   name: "TV"
+#   count: 2
 
-# Sensibo
-- platform: ping
-  host: !secret sensibo_living_room
-  name: "Living room Sensibo"
-  count: 2
-- platform: ping
-  host: !secret sensibo_master_bedroom
-  name: "Master bedroom Sensibo"
-  count: 2
+# # Sensibo
+# - platform: ping
+#   host: !secret sensibo_living_room
+#   name: "Living room Sensibo"
+#   count: 2
+# - platform: ping
+#   host: !secret sensibo_master_bedroom
+#   name: "Master bedroom Sensibo"
+#   count: 2
 
-# WLED
-- platform: ping
-  host: !secret wled_harel_bed
-  name: "WLED Harel bed"
-  count: 2
-- platform: ping
-  host: !secret wled_rotem_bed
-  name: "WLED Rotem bed"
-  count: 2
+# # WLED
+# - platform: ping
+#   host: !secret wled_harel_bed
+#   name: "WLED Harel bed"
+#   count: 2
+# - platform: ping
+#   host: !secret wled_rotem_bed
+#   name: "WLED Rotem bed"
+#   count: 2

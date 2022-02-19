@@ -52,51 +52,51 @@ cards:
         labels: false
         legend: false
 
-  - type: entities
-    title: "NanoPi NEO 2"
-    entities:
-      - type: custom:hui-element
-        card_type: picture
-        image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
-      - entity: sensor.npn2_containers_active
-        name: "Active Containers"
-      - type: custom:decluttering-card
-        template: system_monitor
-        variables:
-          - cpu_usage: npn2_cpu_used
-          - cpu_temps: npn2_cpu_thermal_1_temperature
-          - ram_usage: npn2_ram_used_percent
+  # - type: entities
+  #   title: "NanoPi NEO 2"
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: picture
+  #       image: 'https://leeselectronic.com/c/3280-category_default/nano-pi.jpg'
+  #     - entity: sensor.npn2_containers_active
+  #       name: "Active Containers"
+  #     - type: custom:decluttering-card
+  #       template: system_monitor
+  #       variables:
+  #         - cpu_usage: npn2_cpu_used
+  #         - cpu_temps: npn2_cpu_thermal_1_temperature
+  #         - ram_usage: npn2_ram_used_percent
 
-      - type: custom:hui-element
-        card_type: entities
-        entities:
-          - type: custom:hui-element
-            card_type: picture
-            image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
-            tap_action:
-              action: url
-              url_path: 'http://10.0.0.6/admin/index.php'
-          - sensor.pihole_status
-          - entity: sensor.pi_hole_ads_percentage_blocked_today
-            name: "Blocked Today"
-          - entity: sensor.pi_hole_domains_blocked
-            name: "Domains on Blocklist"
-          - type: custom:hui-element
-            card_type: custom:mini-graph-card
-            entities:
-              - entity: sensor.pi_hole_ads_blocked_today
-                name: "Queries blocked today"
-                unit: 'Blocked'
-                color: '#FF0F00'
-              - entity: sensor.pi_hole_dns_queries_today
-              - entity: sensor.pi_hole_dns_queries_forwarded
-                color: '#4DFF00'
-            show:
-              points: false
-              legend: false
-            line_width: 2
-            hours_to_show: 72
-          - entity: sensor.pi_hole_dns_queries_cached
-            name: "Cached"
-          - entity: sensor.pi_hole_dns_unique_domains
-            name: "Unique Domains"
+  #     - type: custom:hui-element
+  #       card_type: entities
+  #       entities:
+  #         - type: custom:hui-element
+  #           card_type: picture
+  #           image: 'https://pi-hole.net/wp-content/uploads/2018/12/pihole-text-logo-white.png'
+  #           tap_action:
+  #             action: url
+  #             url_path: 'http://10.0.0.6/admin/index.php'
+  #         - sensor.pihole_status
+  #         - entity: sensor.pi_hole_ads_percentage_blocked_today
+  #           name: "Blocked Today"
+  #         - entity: sensor.pi_hole_domains_blocked
+  #           name: "Domains on Blocklist"
+  #         - type: custom:hui-element
+  #           card_type: custom:mini-graph-card
+  #           entities:
+  #             - entity: sensor.pi_hole_ads_blocked_today
+  #               name: "Queries blocked today"
+  #               unit: 'Blocked'
+  #               color: '#FF0F00'
+  #             - entity: sensor.pi_hole_dns_queries_today
+  #             - entity: sensor.pi_hole_dns_queries_forwarded
+  #               color: '#4DFF00'
+  #           show:
+  #             points: false
+  #             legend: false
+  #           line_width: 2
+  #           hours_to_show: 72
+  #         - entity: sensor.pi_hole_dns_queries_cached
+  #           name: "Cached"
+  #         - entity: sensor.pi_hole_dns_unique_domains
+  #           name: "Unique Domains"

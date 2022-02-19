@@ -22,6 +22,12 @@ cards:
           - type: light
             entity: light.wall_2
       - switch.night_light_override
+  
+  - type: entities
+    show_header_toggle: false
+    entities:
+     - entity: cover.living_room_shutter
+        name: "Shutter"
 
   - type: entities
     entities:

@@ -215,6 +215,12 @@ cards:
       exclude:
         - entity_id: '*lights'
 
+  - type: entities
+    show_header_toggle: false
+    entities:
+     - entity: cover.living_room_shutter
+        name: "Shutter"
+
   - type: custom:decluttering-card
     template: multisensor
     variables:
@@ -401,11 +407,6 @@ cards:
   #             speed: 2
   #           positions:
   #             indicator: 'off'
-
-  - type: entities
-    entities:
-      - entity: sensor.myip
-        name: "DNS IP"
 
   - type: entities
     title: "NanoPi NEO 3"
