@@ -145,9 +145,9 @@ cards:
         card_type: horizontal-stack
         cards:
           - type: light
-            entity: light.wall
+            entity: light.wall_light_right
           - type: light
-            entity: light.wall_2
+            entity: light.wall_light_left
       - switch.night_light_override
 
   - type: entities
