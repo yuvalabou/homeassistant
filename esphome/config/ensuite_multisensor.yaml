@@ -1,9 +1,9 @@
 ---
 
 substitutions:
-  devicename: bathroom_multisensor
-  upper_devicename: "Bathroom"
-  template_id: bathroom
+  devicename: ensuite_multisensor
+  upper_devicename: "Ensuite"
+  template_id: ensuite
 
 esphome:
   name: $devicename
@@ -14,7 +14,7 @@ wifi:
   ssid: !secret ssid
   password: !secret wifi_passwd
   manual_ip:
-    static_ip: !secret static_bathroom
+    static_ip: !secret static_ensuite
     gateway: !secret gateway
     subnet: 255.255.255.0
   ap:
@@ -45,14 +45,14 @@ binary_sensor:
     filters:
       - delayed_on: 500ms
       - delayed_off: 30s
-  - platform: gpio
-    name: "${upper_devicename} Door"
-    device_class: door
-    pin:
-      mcp23xxx: mcp23017_hub
-      number: 8
-      mode: INPUT_PULLUP
-      inverted: false
+  # - platform: gpio
+  #   name: "${upper_devicename} Door"
+  #   device_class: door
+  #   pin:
+  #     mcp23xxx: mcp23017_hub
+  #     number: 8
+  #     mode: INPUT_PULLUP
+  #     inverted: false
   - platform: status
     name: "${upper_devicename}"
 

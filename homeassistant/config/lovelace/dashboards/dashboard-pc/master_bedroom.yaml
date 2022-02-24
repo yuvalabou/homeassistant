@@ -76,7 +76,7 @@ cards:
       - type: custom:decluttering-card
         template: multisensor
         variables:
-          - room: bathroom
+          - room: ensuite
       - type: custom:button-card
         color_type: label-card
         color: rgb(44, 109, 214)
