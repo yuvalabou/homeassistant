@@ -6,11 +6,11 @@
   trigger:
     platform: state
     entity_id:
-      - light.yeelight_color_master_bedroom
-      - light.yeelight_color_living_room_1
-      - light.yeelight_color_living_room_2
-      - light.wled_harel_bed
-      - light.wled_rotem_bed
+      # - light.yeelight_color_master_bedroom
+      - light.wall_light_right
+      - light.wall_light_left
+      # - light.wled_harel_bed
+      # - light.wled_rotem_bed
     to: 'unavailable'
     for: '00:05:00'
   action:

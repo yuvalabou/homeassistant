@@ -8,11 +8,14 @@
     to: 'on'
   condition:
     - "{{ is_state('binary_sensor.night', 'on') }}"
-    - "{{ is_state('light.yeelight_color_living_room_2', 'off') }}"
+    - "{{ is_state('light.wall_light_right', 'off') }}"
+    - "{{ is_state('light.wall_light_left', 'off') }}"
   action:
     service: light.turn_on
     data:
-      entity_id: light.yeelight_color_living_room_2
+      entity_id:
+        - light.wall_light_right
+        - light.wall_light_left
       kelvin: 3600
       brightness_pct: 2
 
@@ -26,7 +29,8 @@
   condition:
     - "{{ is_state('binary_sensor.night', 'on') }}"
     - "{{ is_state('input_boolean.night_light_override', 'off') }}"
-    - "{{ state_attr('light.yeelight_color_living_room_2', 'brightness') | int < 10 }}"
+    - "{{ state_attr('light.wall_light_right', 'brightness') | int < 10 }}"
+    - "{{ state_attr('light.wall_light_left', 'brightness') | int < 10 }}"
   action:
     - service: timer.start
       data:
@@ -38,7 +42,9 @@
           entity_id: timer.motion_lights_night
     - service: light.turn_off
       data:
-        entity_id: light.yeelight_color_living_room_2
+        entity_id:
+          - light.wall_light_right
+          - light.wall_light_left
         transition: 30
 
 - alias: "Lights - Reset night light override"

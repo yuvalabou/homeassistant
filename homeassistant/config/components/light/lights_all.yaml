@@ -3,8 +3,8 @@
 - platform: group
   name: "All lights"
   entities:
-    - light.yeelight_color_master_bedroom
-    - light.wall
-    - light.wall_2
-    - light.wled_harel_bed
-    - light.wled_rotem_bed
+    # - light.yeelight_color_master_bedroom
+    - light.wall_light_right
+    - light.wall_light_left
+    # - light.wled_harel_bed
+    # - light.wled_rotem_bed
