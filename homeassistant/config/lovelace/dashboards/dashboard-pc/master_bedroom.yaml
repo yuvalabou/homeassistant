@@ -71,7 +71,27 @@ cards:
       - entity: sensor.tohar_next_alarm
         name: "Alarm"
 
-  - type: custom:decluttering-card
-    template: multisensor
-    variables:
-      - room: bathroom
+  - type: entities
+    entities:
+      - type: custom:decluttering-card
+        template: multisensor
+        variables:
+          - room: bathroom
+      - type: custom:button-card
+        color_type: label-card
+        color: rgb(44, 109, 214)
+        name: "Ensuite"
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: switch.ensuite_heater
+            icon: >-
+              [[[
+                if (entity.state == 'off')
+                  return 'mdi:thermometer-off';
+                else
+                  return 'mdi:thermometer-chevron-up';
+              ]]]
+          - type: custom:button-card
+            color_type: blank-card
