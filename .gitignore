@@ -17,6 +17,8 @@ assets
 floor_plan
 cam_captures
 unifi
+zigbee2mqtt
+mosquitto
 __pycache__
 
 # Ignore files
