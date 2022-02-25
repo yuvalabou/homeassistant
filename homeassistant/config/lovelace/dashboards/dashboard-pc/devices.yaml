@@ -71,6 +71,9 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: "https://repository-images.githubusercontent.com/128636610/931edaa7-774b-4e12-8df1-4971a00e07b5"
       - name: "Coordinator"
         entity: sensor.cc2531_bridge
       - name: "Permit join"
