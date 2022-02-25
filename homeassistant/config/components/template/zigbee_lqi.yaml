@@ -34,3 +34,37 @@
       {% else %}
         mdi:signal-off
       {% endif %}
+
+  - name: "Living room window linkquality percent"
+    unique_id: a0b7a1bd-a457-45d6-85fe-8463a26d8205
+    unit_of_measurement: "%"
+    state: >-
+      {{ ((states('sensor.living_room_window_linkquality') | int(0) / 255) * 100) | round (1) }}
+    icon: >-
+      {% set lqi = states('sensor.living_room_window_linkquality_percent') %}
+      {% if lqi <= '35' %}
+        mdi:signal-cellular-1
+      {% elif lqi <= '65' %}
+        mdi:signal-cellular-2
+      {% elif lqi <= '100' %}
+        mdi:signal-cellular-3
+      {% else %}
+        mdi:signal-off
+      {% endif %}
+
+  - name: "Bathroom door linkquality percent"
+    unique_id: 1bd3b357-a7d5-4908-851d-4f4efbf87075
+    unit_of_measurement: "%"
+    state: >-
+      {{ ((states('sensor.bathroom_door_linkquality') | int(0) / 255) * 100) | round (1) }}
+    icon: >-
+      {% set lqi = states('sensor.bathroom_door_linkquality_percent') %}
+      {% if lqi <= '35' %}
+        mdi:signal-cellular-1
+      {% elif lqi <= '65' %}
+        mdi:signal-cellular-2
+      {% elif lqi <= '100' %}
+        mdi:signal-cellular-3
+      {% else %}
+        mdi:signal-off
+      {% endif %}
