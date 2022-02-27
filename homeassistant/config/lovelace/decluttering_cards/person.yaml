@@ -15,23 +15,3 @@ person:
         style:
           top: 10%
           right: -10%
-      - type: state-label
-        entity: sensor.[[name]]_geocoded_location
-        attribute: Thoroughfare
-        style:
-          bottom: 8%
-          right: -18%
-          weight: 200px
-          color: white
-          font-weight: 300
-          font-size: 16px
-      - type: state-label
-        entity: sensor.[[name]]_geocoded_location
-        attribute: Locality
-        style:
-          bottom: 3%
-          right: -12.5%
-          weight: 200px
-          color: white
-          font-weight: 300
-          font-size: 12px

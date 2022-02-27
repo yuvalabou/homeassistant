@@ -12,6 +12,7 @@ exclude:
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.tts
+    - sensor.load_5m
 
     - automation.waze_update_dynamic_sensors
   entity_globs:

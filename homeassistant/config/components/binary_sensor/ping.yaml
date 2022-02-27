@@ -1,17 +1,17 @@
 ---
 
-# - platform: ping
-#   host: !secret vacuum
-#   name: "Vacuum"
-#   count: 2
-# - platform: ping
-#   host: !secret laptop
-#   name: "Laptop"
-#   count: 2
-# - platform: ping
-#   host: !secret tv
-#   name: "TV"
-#   count: 2
+- platform: ping
+  host: !secret vacuum
+  name: "Vacuum"
+  count: 2
+- platform: ping
+  host: !secret laptop
+  name: "Laptop"
+  count: 2
+- platform: ping
+  host: !secret tv
+  name: "TV"
+  count: 2
 
 # # Sensibo
 # - platform: ping

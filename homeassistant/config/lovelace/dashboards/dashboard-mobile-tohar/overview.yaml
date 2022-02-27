@@ -151,12 +151,6 @@ cards:
       - switch.night_light_override
 
   - type: entities
-    show_header_toggle: false
-    entities:
-      - entity: cover.living_room_shutter
-        name: "Shutter"
-
-  - type: entities
     entities:
       - type: custom:vacuum-card
         entity: vacuum.mi_vacuum
@@ -164,24 +158,24 @@ cards:
         map-refresh: 10
         stats:
           default:
-            - attribute: filter_left
+            - entity_id: sensor.vacuum_filter_left
               unit: hours
               subtitle: "Filter"
-            - attribute: side_brush_left
+            - entity_id: sensor.vacuum_side_brush_left
               unit: hours
               subtitle: "Side brush"
-            - attribute: main_brush_left
+            - entity_id: sensor.vacuum_main_brush_left
               unit: hours
               subtitle: "Main brush"
-            - attribute: sensor_dirty_left
+            - entity_id: sensor.vacuum_sensor_dirty_left
               unit: hours
-              subtitle: Sensors
+              subtitle: "Sensors"
           cleaning:
-            - attribute: cleaned_area
+            - entity_id: sensor.vacuum_current_clean_area
               unit: m2
               subtitle: "Cleaning area"
-            - attribute: cleaning_time
-              unit: minutes
+            - entity_id: sensor.vacuum_current_clean_suration
+              unit: s
               subtitle: "Cleaning time"
         # actions:
       - type: custom:hui-element
@@ -189,7 +183,7 @@ cards:
         entity_id: vacuum.mi_vacuum
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ states('sensor.vacuum_last_clean_area') }} meters.
+          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:

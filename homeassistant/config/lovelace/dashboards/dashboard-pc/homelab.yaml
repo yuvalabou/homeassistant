@@ -17,7 +17,7 @@ cards:
       - type: custom:decluttering-card
         template: system_monitor
         variables:
-          - cpu_usage: processor_use_percent
+          - cpu_usage: processor_use
           - cpu_temps: processor_temperature
           - ram_usage: memory_use_percent
       - type: custom:bar-card

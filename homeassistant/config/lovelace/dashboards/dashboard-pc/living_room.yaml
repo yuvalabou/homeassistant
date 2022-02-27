@@ -37,18 +37,18 @@ cards:
         map-refresh: 10
         stats:
           default:
-            - attribute: filter_left
+            - entity_id: sensor.vacuum_filter_left
               unit: hours
               subtitle: "Filter"
-            - attribute: side_brush_left
+            - entity_id: sensor.vacuum_side_brush_left
               unit: hours
               subtitle: "Side brush"
-            - attribute: main_brush_left
+            - entity_id: sensor.vacuum_main_brush_left
               unit: hours
               subtitle: "Main brush"
-            - attribute: sensor_dirty_left
+            - entity_id: sensor.vacuum_sensor_dirty_left
               unit: hours
-              subtitle: Sensors
+              subtitle: "Sensors"
           cleaning:
             - entity_id: sensor.vacuum_current_clean_area
               unit: m2
