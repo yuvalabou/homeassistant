@@ -8,7 +8,7 @@ import feedparser
 from paho.mqtt import client as mqtt
 
 RSS = "https://ims.gov.il/sites/default/files/ims_data/rss/forecast_country/rssForecastCountry_he.xml"
-BROKER = "10.0.0.238"
+BROKER = "10.0.0.2"
 FEED = task.executor(feedparser.parse, RSS)
 
 client = mqtt.Client()
@@ -101,7 +101,7 @@ def get_attributes() -> dict:
         {
             "short_term": short_term_forecast(),
             "long_term": long_term_forecast(),
-            "link": FEED.feed.link,
+            "link": FEED.feed.link or None,
             "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
         },
         ensure_ascii=False,
@@ -115,6 +115,8 @@ def ims_sensor():
     client.connect(BROKER)
     log.info(f"Connected")
 
+    log.debug(state())
+    log.debug(get_attributes())
     client.publish("homeassistant/ims", state())
     client.publish("homeassistant/ims/attrs", get_attributes())
     log.info(f"Published")
