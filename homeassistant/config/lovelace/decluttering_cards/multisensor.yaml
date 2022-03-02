@@ -46,7 +46,7 @@ multisensor:
         entities:
           - entity: binary_sensor.[[room]]_motion
             name: "Motion"
-          - entity: sensor.[[room]]_comfort_scale
+          - entity: sensor.[[room]]_thermal_comfort_perception
             name: "Comfort scale"
           - entity: sensor.[[room]]_illuminance
             name: "Light"
