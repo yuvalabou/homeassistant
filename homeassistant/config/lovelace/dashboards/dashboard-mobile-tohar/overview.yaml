@@ -187,14 +187,14 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:decluttering-card
-        template: multisensor
-        variables:
-          - room: ensuite
       - type: custom:button-card
         color_type: label-card
         color: rgb(44, 109, 214)
         name: "Ensuite"
+      - type: custom:decluttering-card
+        template: multisensor
+        variables:
+          - room: ensuite
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:
@@ -209,7 +209,6 @@ cards:
               ]]]
           - type: custom:button-card
             color_type: blank-card
-
 
   - type: entities
     show_header_toggle: false

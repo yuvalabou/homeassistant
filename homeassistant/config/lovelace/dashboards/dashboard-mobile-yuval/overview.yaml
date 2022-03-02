@@ -226,29 +226,29 @@ cards:
     variables:
       - room: living_room
 
-  - type: vertical-stack
-    cards:
-      - type: custom:simple-thermostat
-        layout:
-          step: row
-        entity: climate.slvn
-        step_size: 1
-        name: false
-        decimals: 0
-        hide:
-          temperature: true
-        sensors:
-          - entity: sensor.living_room_temperature
-            name: "Temperature"
-      - type: conditional
-        conditions:
-          - entity: switch.living_room_ac_switch
-            state: 'on'
-        card:
-          type: entities
-          show_header_toggle: false
-          entities:
-            - switch.living_room_ac_switch
+  # - type: vertical-stack
+  #   cards:
+  #     - type: custom:simple-thermostat
+  #       layout:
+  #         step: row
+  #       entity: climate.slvn
+  #       step_size: 1
+  #       name: false
+  #       decimals: 0
+  #       hide:
+  #         temperature: true
+  #       sensors:
+  #         - entity: sensor.living_room_temperature
+  #           name: "Temperature"
+  #     - type: conditional
+  #       conditions:
+  #         - entity: switch.living_room_ac_switch
+  #           state: 'on'
+  #       card:
+  #         type: entities
+  #         show_header_toggle: false
+  #         entities:
+  #           - switch.living_room_ac_switch
 
   - type: entities
     show_header_toggle: false
@@ -302,14 +302,14 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:decluttering-card
-        template: multisensor
-        variables:
-          - room: ensuite
       - type: custom:button-card
         color_type: label-card
         color: rgb(44, 109, 214)
         name: "Ensuite"
+      - type: custom:decluttering-card
+        template: multisensor
+        variables:
+          - room: ensuite
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:
