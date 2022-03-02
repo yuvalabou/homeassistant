@@ -178,18 +178,6 @@ cards:
       - type: custom:button-card
         entity: switch.guest_mode
 
-  - type: horizontal-stack
-    cards:
-      - type: custom:button-card
-        entity: switch.kettle
-        icon: >-
-          [[[
-            if (entity.state == 'off')
-              return 'mdi:kettle-outline';
-            else
-              return 'mdi:kettle-steam-outline';
-          ]]]
-
   - type: custom:auto-entities
     card:
       type: entities
