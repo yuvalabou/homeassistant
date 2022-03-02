@@ -73,16 +73,6 @@ sensor:
       id: ${template_id}_humidity
     address: 0x76
     update_interval: 60s
-  - platform: template
-    name: "${upper_devicename} Dew Point"
-    id: ${template_id}_dewpoint
-    lambda: |-
-      return (243.5 * (log(id(${template_id}_humidity).state/100) + ((17.67 * id(${template_id}_temperature).state) /
-      (243.5 + id(${template_id}_temperature).state))) /
-      (17.67 - log(id(${template_id}_humidity).state/100) - ((17.67 * id(${template_id}_temperature).state) /
-      (243.5 + id(${template_id}_temperature).state))));
-    unit_of_measurement: '°C'
-    icon: mdi:water
 
   - platform: bh1750
     name: "${upper_devicename} Illuminance"
@@ -103,26 +93,6 @@ sensor:
     pm_10_0:
       name: "10µm Particles in the ${upper_devicename}"
     update_interval: 2min
-
-text_sensor:
-  - platform: template
-    name: "${upper_devicename} Comfort scale"
-    lambda: |-
-      if (id(${template_id}_dewpoint).state > 24) {
-        return {"Opressive"};
-      } else if (id(${template_id}_dewpoint).state > 20) {
-        return {"Muggy"};
-      } else if (id(${template_id}_dewpoint).state > 15) {
-        return {"Humid"};
-      } else if (id(${template_id}_dewpoint).state > 10) {
-        return {"Comfortable"};
-      } else if (id(${template_id}_dewpoint).state > 5) {
-        return {"Dry"};
-      } else {
-        return {"Very dry"};
-      }
-    update_interval: 60s
-    icon: mdi:water-percent
 
 switch:
   - platform: restart

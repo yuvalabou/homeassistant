@@ -57,6 +57,7 @@ binary_sensor:
   - platform: ble_presence
     mac_address: FE:7A:A8:35:67:53
     name: "Yuval Mi Band 3"
+
   - platform: ble_presence
     mac_address: F8:71:96:00:C9:D3
     name: "Tohar Amazefit gts"
