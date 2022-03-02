@@ -56,7 +56,7 @@ services:
       - /dev/ttyACM0:/dev/ttyACM0
 
   unifi-controller:
-    image: lscr.io/linuxserver/unifi-controller
+    image: ghcr.io/linuxserver/unifi-controller
     container_name: "unifi-controller"
     volumes:
       - /home/homeassistant/unifi/config:/config
