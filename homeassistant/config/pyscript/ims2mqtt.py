@@ -112,13 +112,15 @@ def get_attributes() -> dict:
 @service
 def ims_sensor():
     """Send IMS data over MQTT."""
+    state = state()
+    log.debug(state)
+    attrs = get_attributes()
+    log.debug(attrs)
+
     client.connect(BROKER)
     log.info(f"Connected")
-
-    log.debug(state())
-    log.debug(get_attributes())
-    client.publish("homeassistant/ims", state())
-    client.publish("homeassistant/ims/attrs", get_attributes())
+    client.publish("homeassistant/ims", state)
+    client.publish("homeassistant/ims/attrs", attrs)
     log.info(f"Published")
 
     sleep(3)
