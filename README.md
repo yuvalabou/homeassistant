@@ -104,6 +104,8 @@
 
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Pyscript](https://github.com/custom-components/pyscript)
+- [ThinQ sensors](https://github.com/ollo69/ha-smartthinq-sensors)
+- [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
 - [Spotcast](https://github.com/fondberg/spotcast)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
