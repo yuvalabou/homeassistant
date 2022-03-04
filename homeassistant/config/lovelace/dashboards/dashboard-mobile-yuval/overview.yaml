@@ -267,38 +267,12 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:vacuum-card
-        entity: vacuum.mi_vacuum
-        map: camera.vacuum_map
-        map-refresh: 10
-        stats:
-          default:
-            - entity_id: sensor.vacuum_filter_left
-              unit: hours
-              subtitle: "Filter"
-            - entity_id: sensor.vacuum_side_brush_left
-              unit: hours
-              subtitle: "Side brush"
-            - entity_id: sensor.vacuum_main_brush_left
-              unit: hours
-              subtitle: "Main brush"
-            - entity_id: sensor.vacuum_sensor_dirty_left
-              unit: hours
-              subtitle: "Sensors"
-          cleaning:
-            - entity_id: sensor.vacuum_current_clean_area
-              unit: m2
-              subtitle: "Cleaning area"
-            - entity_id: sensor.vacuum_current_clean_suration
-              unit: s
-              subtitle: "Cleaning time"
-        # actions:
       - type: custom:hui-element
         card_type: markdown
         entity_id: vacuum.mi_vacuum
         content: |
-          Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.vacuum_last_clean_area') | round(1)) }} meters.
+          Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
+          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:

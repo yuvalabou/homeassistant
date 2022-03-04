@@ -152,38 +152,12 @@ cards:
 
   - type: entities
     entities:
-      - type: custom:vacuum-card
-        entity: vacuum.mi_vacuum
-        map: camera.vacuum_map
-        map-refresh: 10
-        stats:
-          default:
-            - entity_id: sensor.vacuum_filter_left
-              unit: hours
-              subtitle: "Filter"
-            - entity_id: sensor.vacuum_side_brush_left
-              unit: hours
-              subtitle: "Side brush"
-            - entity_id: sensor.vacuum_main_brush_left
-              unit: hours
-              subtitle: "Main brush"
-            - entity_id: sensor.vacuum_sensor_dirty_left
-              unit: hours
-              subtitle: "Sensors"
-          cleaning:
-            - entity_id: sensor.vacuum_current_clean_area
-              unit: m2
-              subtitle: "Cleaning area"
-            - entity_id: sensor.vacuum_current_clean_suration
-              unit: s
-              subtitle: "Cleaning time"
-        # actions:
       - type: custom:hui-element
         card_type: markdown
         entity_id: vacuum.mi_vacuum
         content: |
-          Last cleaned at {{ as_timestamp(states('sensor.vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.vacuum_last_clean_area') | round(1)) }} meters.
+          Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
+          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:
@@ -210,51 +184,51 @@ cards:
           - type: custom:button-card
             color_type: blank-card
 
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.master_bedroom_sensibo_temperature
-                name: "Temperature"
-                show_points: false
-              - entity: sensor.master_bedroom_climate_set_temp
-                color: 'white'
-                show_fill: false
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
-            points_per_hour: 6
-            show:
-              fill: fade
-              points: false
-              labels: true
-              labels_secondary: false
-              legend: false
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.master_bedroom_sensibo_humidity
-                name: "Humidity"
-                color: '#74A4F4'
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            lower_bound: 0
-            upper_bound: 100
-            points_per_hour: 12
-            show:
-              fill: fade
-              points: false
-              labels: false
-              legend: false
+  # - type: entities
+  #   show_header_toggle: false
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: horizontal-stack
+  #       cards:
+  #         - type: custom:mini-graph-card
+  #           entities:
+  #             - entity: sensor.master_bedroom_sensibo_temperature
+  #               name: "Temperature"
+  #               show_points: false
+  #             - entity: sensor.master_bedroom_climate_set_temp
+  #               color: 'white'
+  #               show_fill: false
+  #             - !include ../../resources/graph_card_sun_elevation.yaml
+  #           font_size: 80
+  #           color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+  #           points_per_hour: 6
+  #           show:
+  #             fill: fade
+  #             points: false
+  #             labels: true
+  #             labels_secondary: false
+  #             legend: false
+  #         - type: custom:mini-graph-card
+  #           entities:
+  #             - entity: sensor.master_bedroom_sensibo_humidity
+  #               name: "Humidity"
+  #               color: '#74A4F4'
+  #             - !include ../../resources/graph_card_sun_elevation.yaml
+  #           font_size: 80
+  #           lower_bound: 0
+  #           upper_bound: 100
+  #           points_per_hour: 12
+  #           show:
+  #             fill: fade
+  #             points: false
+  #             labels: false
+  #             legend: false
 
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: light
-        entity: light.yeelight_color_master_bedroom
+  # - type: entities
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: light
+  #       entity: light.yeelight_color_master_bedroom
 
   - type: entities
     entities:
