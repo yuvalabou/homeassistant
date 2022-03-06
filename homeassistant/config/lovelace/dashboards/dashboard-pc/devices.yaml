@@ -42,7 +42,7 @@ cards:
       #     - device: doorbell
       #     - device_name: "Doorbell"
       # - switch.restart_living_room
-      - switch.restart_ensuite
+      - button.restart_ensuite
       # - switch.restart_doorbell
 
   # - type: entities
