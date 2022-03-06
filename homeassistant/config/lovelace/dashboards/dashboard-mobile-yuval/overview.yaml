@@ -75,7 +75,7 @@ cards:
         cards:
           - type: glance
             entities:
-              - entity: sensor.wind_scale_friendly
+              - entity: sensor.wind_scale
                 name: Wind scale
           - type: glance
             entities:
