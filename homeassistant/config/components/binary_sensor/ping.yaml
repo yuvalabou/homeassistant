@@ -9,9 +9,13 @@
   name: "Laptop"
   count: 2
 - platform: ping
-  host: !secret tv
-  name: "TV"
+  host: !secret mibox_host
+  name: "Mi Box"
   count: 2
+# - platform: ping
+#   host: !secret tv
+#   name: "TV"
+#   count: 2
 
 # # Sensibo
 # - platform: ping
