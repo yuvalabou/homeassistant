@@ -26,7 +26,7 @@
     icon: mdi:map-marker
 
   - name: "Count Entities"
-    unique_id: 73d9ce53-3f50-4cfe-ad18-9927fd969e6e
+    unique_id: 696270c1-8fbe-45e6-9b1f-35e3ce62a960
     state: >-
       {{ states | count }}
     icon: mdi:format-list-bulleted-square

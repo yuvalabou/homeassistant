@@ -10,7 +10,7 @@
     state: >-
       {{
         ((as_timestamp(
-          states('sensor.tohar_next_alarm')
+          states('sensor.tohar_next_alarm'), 'Not ready'
         ) | int(0)) + ( 15*60 )) | timestamp_custom('%H:%M')
       }}
     icon: mdi:alarm
@@ -20,7 +20,7 @@
     state: >-
       {{
         ((as_timestamp(
-          states('sensor.yuval_next_alarm')
+          states('sensor.yuval_next_alarm'), 'Not ready'
         ) | int(0)) + ( 15*60 )) | timestamp_custom('%H:%M')
       }}
     icon: mdi:alarm
