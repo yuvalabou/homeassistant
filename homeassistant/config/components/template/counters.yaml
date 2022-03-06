@@ -13,6 +13,12 @@
       {{ states.binary_sensor | count }}
     icon: mdi:unfold-more-horizontal
 
+  - name: "Count Buttons"
+    unique_id: 722c7c02-cbb6-4ef2-89f2-f987a53595da
+    state: >-
+      {{ states.button | count }}
+    icon: mdi:gesture-tap
+
   - name: "Count Climates"
     unique_id: 0f28d0e5-2947-4131-816a-174e9da286de
     state: >-
