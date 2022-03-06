@@ -37,3 +37,58 @@ cards:
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
           It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
+
+  - type: entities
+    entities:
+      - type: custom:button-card
+        color_type: label-card
+        color: rgb(44, 109, 214)
+        name: "Dishwasher"
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - entity: binary_sensor.400090386855001425_bsh_common_status_doorstate
+            name: "Door"
+          - entity: binary_sensor.400090386855001425_connected
+            name: "Connected"
+          - entity: sensor.400090386855001425_bsh_common_status_operationstate
+            name: "OP state"
+      # - type: entities
+      #   show_header_toggle: false
+      #   entities:
+      #     - type: custom:hui-element
+      #       card_type: horizontal-stack
+      #       cards:
+      #         - type: custom:mini-graph-card
+      #           entities:
+      #             - entity: sensor.[[room]]_temperature
+      #               name: "Temperature"
+      #               show_points: false
+      #             - !include ../resources/graph_card_sun_elevation.yaml
+      #           font_size: 80
+      #           color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
+      #           points_per_hour: 3
+      #           show:
+      #             fill: fade
+      #             points: false
+      #             labels: false
+      #             labels_secondary: false
+      #             legend: false
+      #             extrema: true
+      #         - type: custom:mini-graph-card
+      #           entities:
+      #             - entity: sensor.[[room]]_humidity
+      #               name: "Humidity"
+      #               color: '#74A4F4'
+      #             - !include ../resources/graph_card_sun_elevation.yaml
+      #           font_size: 80
+      #           lower_bound: 0
+      #           upper_bound: 100
+      #           points_per_hour: 3
+      #           show:
+      #             fill: fade
+      #             points: false
+      #             labels: false
+      #             labels_secondary: false
+      #             legend: false
+      #             extrema: true
