@@ -49,8 +49,8 @@ cards:
         entities:
           - entity: binary_sensor.400090386855001425_bsh_common_status_doorstate
             name: "Door"
-          - entity: binary_sensor.400090386855001425_connected
-            name: "Connected"
+          - entity: sensor.400090386855001425_bsh_common_setting_powerstate
+            name: "Power state"
           - entity: sensor.400090386855001425_bsh_common_status_operationstate
             name: "OP state"
       # - type: entities
