@@ -14,3 +14,13 @@
     service: switch.turn_off
     data:
       entity_id: switch.ensuite_heater
+
+- alias: "Climate - Turn off Ensuite heater when reaching time or temp"
+  id: bb829a6e-f2ce-4d09-b7e4-312f8ddd7a89
+  trigger:
+    - platform: time
+      at: '06:00:00'
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.ensuite_heater
