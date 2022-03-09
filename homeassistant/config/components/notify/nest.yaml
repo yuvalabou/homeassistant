@@ -3,4 +3,4 @@
 - name: "Nest mini"
   platform: tts
   tts_service: tts.microsoft_say
-  media_player: media_player.googlehome3668
+  media_player: media_player.living_room

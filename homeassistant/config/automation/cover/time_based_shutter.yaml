@@ -4,7 +4,7 @@
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   trigger:
     platform: time
-    at: '06:10:00'
+    at: '06:15:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
   action:
