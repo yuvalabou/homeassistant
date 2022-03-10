@@ -10,5 +10,5 @@
       {% if states('sensor.living_room_shutter_position') | int > 70 %}
         mdi:window-shutter-open
       {% else %}
-        mdi:window-shutter-close
+        mdi:window-shutter
       {% endif %}
