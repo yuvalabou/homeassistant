@@ -1,0 +1,11 @@
+---
+
+- sensor:
+  - name: "DELTACO SH-P02 Energy"
+    unique_id: deltaco_sh_p02_energy
+    unit_of_measurement: 'Wh'
+    device_class: energy
+    state_class: measurement
+    state: >-
+      {{ states('sensor.deltaco_sh_p02_power') }}
+    icon: mdi:current-dc

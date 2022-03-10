@@ -1,0 +1,14 @@
+---
+
+- sensor:
+  - name: "Living room shutter position"
+    unique_id: 2a40d17f-1fd1-48ad-bb14-2021250a6362
+    unit_of_measurement: '%'
+    state: >-
+      {{ state_attr('cover.living_room_shutter', 'current_position') }}
+    icon: >-
+      {% if states('sensor.living_room_shutter_position') | int > 70 %}
+        mdi:window-shutter-open
+      {% else %}
+        mdi:window-shutter-close
+      {% endif %}
