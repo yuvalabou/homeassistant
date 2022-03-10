@@ -1,0 +1,10 @@
+---
+
+- alias: "Cover - Stop cover on collision"
+  id: 0750f648-3986-41b0-9022-964440fdd012
+  trigger:
+    - platform: event
+  action:
+    service: cover.stop
+    target:
+      device_id: 182e26f6c4cae7c966762eeb23f0754a

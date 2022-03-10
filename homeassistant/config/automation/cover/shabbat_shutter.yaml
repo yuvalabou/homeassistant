@@ -1,0 +1,14 @@
+---
+
+- alias: "Cover - Close living room shutter on Shabbat night"
+  id: 67d159ff-76fd-4ea6-9134-8e2237032966
+  trigger:
+    - platform: time
+      at: input_datetime.shabbat_lights_off_time
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    service: cover.close_cover
+    target:
+      device_id: 182e26f6c4cae7c966762eeb23f0754a
