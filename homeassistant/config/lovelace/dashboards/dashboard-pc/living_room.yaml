@@ -28,6 +28,7 @@ cards:
     entities:
       - entity: cover.living_room_shutter
         name: "Shutter"
+      - entity: sensor.living_room_shutter_position
 
   - type: entities
     entities:

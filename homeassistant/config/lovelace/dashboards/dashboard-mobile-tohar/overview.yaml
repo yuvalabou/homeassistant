@@ -151,6 +151,13 @@ cards:
       - switch.night_light_override
 
   - type: entities
+    show_header_toggle: false
+    entities:
+      - entity: cover.living_room_shutter
+        name: "Shutter"
+      - entity: sensor.living_room_shutter_position
+
+  - type: entities
     entities:
       - type: custom:hui-element
         card_type: markdown
