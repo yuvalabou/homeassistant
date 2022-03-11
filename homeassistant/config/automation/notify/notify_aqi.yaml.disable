@@ -15,7 +15,7 @@
         minutes: 10
   condition: "{{ is_state('binary_sensor.bathroom_door', 'off') }}"
   action:
-    service: notify.mobile_app_yuval_phone
+    service: notify.mobile_app_yuval
     data:
       title: "אויר לא נקי בסלון"
       message: "כדאי לאוורר את הבית"
