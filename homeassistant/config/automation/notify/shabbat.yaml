@@ -23,10 +23,10 @@
           - condition: trigger
             id: '30_min'
           sequence:
-            - service: notify.mobile_app_yuval_phone
+            - service: notify.mobile_app_yuval
               data:
                 title: "שבת שלום!"
-                message: "זכרת להכין מיחם ונרות?"
+                message:  "מיחם, נרות ומקרר"
             - service: script.notify_for_shabbat
         - conditions:
           - condition: trigger
