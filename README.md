@@ -32,22 +32,24 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 441 |
-| **[Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/sensor)** | 236 |
-| **[Binary Sensors](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/binary_sensor)** | 48 |
-| **[Switches](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/switch)** | 21 |
-| **[Scripts](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/script)** | 19 |
-| **[Automations](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/automation)** | 64 |
+| **Entities** | 347 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 179 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 38 |
+| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 15 |
+| **[Buttons]()** | 9 |
+| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 9 |
+| **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 64 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 24376 |
-| Yaml | 5463 |
+| Python | 167786 |
+| Yaml | 5448 |
 
 -----
 
-## [Lovelace](https://github.com/yuvalabou/HomeAssistant-Config/tree/master/lovelace/ui-lovelace)
+## [Lovelace](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/lovelace)
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
@@ -68,14 +70,14 @@
 | CC2531 (HUB) | Aqara button | Aqara Door and Window sensor |
 |:------------:|:------------:|
 |<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width = 100>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width = 100>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width = 100>|
-|1             |2             |2                             |
+|1             |(2)           |3                             |
 
 
 ### Custom devices designed by me
 
-| BLE Hub | Multisensor | WLED Strip |
-|:-------:|:-----------:|:----------:|
-|1        |2            |2           |
+| Multisensor | WLED Strip |
+|:-----------:|:----------:|
+|1            |(2)         |
 
 -----
 
@@ -84,8 +86,10 @@
 | NanoPi NEO3      |
 |:----------------:|
 | HomeAssistant    |
+| ESPHome          |
 | Mosquitto broker |
 | zigbee2mqtt      |
+| Unifi Controller |
 
 -----
 
@@ -104,10 +108,11 @@
 
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Pyscript](https://github.com/custom-components/pyscript)
-- [ThinQ sensors](https://github.com/ollo69/ha-smartthinq-sensors)
+- [ThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
+- [Home connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
-- [Spotcast](https://github.com/fondberg/spotcast)
-- [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
+<!-- - [Spotcast](https://github.com/fondberg/spotcast) -->
+<!-- - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) -->
 
 ### Lovelace-UI Enhancements
 
