@@ -109,3 +109,8 @@ cards:
         entity: sensor.bathroom_door_battery
       - name: "Bathroom door link quality"
         entity: sensor.bathroom_door_linkquality_percent
+      - type: custom:battery-entity-row
+        name: "Ensuite door battery"
+        entity: sensor.ensuite_door_battery
+      - name: "Ensuite door link quality"
+        entity: sensor.ensuite_door_linkquality_percent

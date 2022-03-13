@@ -68,3 +68,20 @@
       {% else %}
         mdi:signal-off
       {% endif %}
+
+  - name: "Ensuite door linkquality percent"
+    unique_id: 1005f3f6-7c23-44ef-a164-31a9d657cd41
+    unit_of_measurement: "%"
+    state: >-
+      {{ ((states('sensor.ensuite_door_linkquality') | int(0) / 255) * 100) | round (1) }}
+    icon: >-
+      {% set lqi = states('sensor.ensuite_door_linkquality_percent') %}
+      {% if lqi <= '35' %}
+        mdi:signal-cellular-1
+      {% elif lqi <= '65' %}
+        mdi:signal-cellular-2
+      {% elif lqi <= '100' %}
+        mdi:signal-cellular-3
+      {% else %}
+        mdi:signal-off
+      {% endif %}
