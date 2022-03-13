@@ -53,6 +53,7 @@
       entity_id: light.public_lights
       transition: 120
       brightness_pct: 70
+      kelvin: 3600
 
 - alias: "Lights - Shabbat morning dining lights"
   id: d2980177-8560-43f1-9fc4-26afd6406e73
@@ -68,3 +69,4 @@
       entity_id: light.dining_lights
       transition: 60
       brightness_pct: 100
+      kelvin: 3800
