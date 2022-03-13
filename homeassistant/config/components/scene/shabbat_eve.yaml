@@ -5,8 +5,8 @@
   entities:
     switch.shabbat_mode:
       state: 'on'
-    light.room_lights:
-      state: 'off'
+    # light.room_lights:
+    #   state: 'off'
     light.living_room_lights:
       state: 'on'
       brightness_pct: 90
@@ -15,6 +15,6 @@
       state: 'on'
       brightness_pct: 70
       kelvin: 4000
-    light.kids_ambient_lights:
-      state: 'on'
-      effect: 'Colortwinkles'
+    # light.kids_ambient_lights:
+    #   state: 'on'
+    #   effect: 'Colortwinkles'

@@ -5,14 +5,14 @@
   entities:
     switch.shabbat_mode:
       state: 'off'
-    light.room_lights:
-      state: 'off'
+    # light.room_lights:
+    #   state: 'off'
     light.living_room_lights:
       state: 'on'
       brightness_pct: 80
       kelvin: 3200
-    light.importent_lights:
-      state: 'off'
-    light.kids_ambient_lights:
-      state: 'on'
-      effect: 'Colortwinkles'
+    # light.importent_lights:
+    #   state: 'off'
+    # light.kids_ambient_lights:
+    #   state: 'on'
+    #   effect: 'Colortwinkles'
