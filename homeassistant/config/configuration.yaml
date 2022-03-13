@@ -104,7 +104,7 @@ tts:
     api_key: !secret azure_tts
     language: he-il
     type: HilaNeural
-updater:
+    base_url: !secret base_url
 utility_meter: !include_dir_merge_named components/sensor/utility_meter
 zone: !include_dir_merge_list components/zone
 
