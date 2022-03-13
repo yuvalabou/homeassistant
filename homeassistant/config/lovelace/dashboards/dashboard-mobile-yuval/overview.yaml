@@ -180,15 +180,15 @@ cards:
 
   - type: horizontal-stack
     cards:
-      - type: custom:button-card
-        entity: switch.kettle
-        icon: >-
-          [[[
-            if (entity.state == 'off')
-              return 'mdi:kettle-outline';
-            else
-              return 'mdi:kettle-steam-outline';
-          ]]]
+      # - type: custom:button-card
+      #   entity: switch.kettle
+      #   icon: >-
+      #     [[[
+      #       if (entity.state == 'off')
+      #         return 'mdi:kettle-outline';
+      #       else
+      #         return 'mdi:kettle-steam-outline';
+      #     ]]]
       - type: custom:button-card
         entity: switch.shabbat_plate
         name: "Oven"
@@ -257,6 +257,9 @@ cards:
       - type: custom:hui-element
         card_type: light
         entity: light.living_room_lights
+      - type: custom:hui-element
+        card_type: light
+        entity: light.living_room_ceiling_light
       - type: custom:hui-element
         card_type: horizontal-stack
         cards:

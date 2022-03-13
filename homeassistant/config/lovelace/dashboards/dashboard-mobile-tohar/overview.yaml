@@ -142,6 +142,9 @@ cards:
         card_type: light
         entity: light.living_room_lights
       - type: custom:hui-element
+        card_type: light
+        entity: light.living_room_ceiling_light
+      - type: custom:hui-element
         card_type: horizontal-stack
         cards:
           - type: light
