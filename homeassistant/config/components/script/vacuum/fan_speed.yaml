@@ -1,0 +1,37 @@
+---
+
+vacuum_set_silent:
+  alias: "Set Silent"
+  icon: mdi:fan
+  sequence:
+    service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.mi_vacuum
+      fan_speed: 38
+
+vacuum_set_standard:
+  alias: "Set Standard"
+  icon: mdi:fan
+  sequence:
+    service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.mi_vacuum
+      fan_speed: 60
+
+vacuum_set_turbo:
+  alias: "Set Turbo"
+  icon: mdi:fan
+  sequence:
+    service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.mi_vacuum
+      fan_speed: 75
+
+vacuum_set_max:
+  alias: "Set Max"
+  icon: mdi:fan
+  sequence:
+    service: vacuum.set_fan_speed
+    data:
+      entity_id: vacuum.mi_vacuum
+      fan_speed: 100
