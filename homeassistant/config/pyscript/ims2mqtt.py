@@ -101,7 +101,6 @@ def get_attributes() -> dict:
         {
             "short_term": short_term_forecast(),
             "long_term": long_term_forecast(),
-            "link": FEED.feed.link or None,
             "last_fetched": str(dt.now().strftime("%d/%m %H:%M")),
         },
         ensure_ascii=False,
