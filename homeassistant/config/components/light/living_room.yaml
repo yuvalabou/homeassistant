@@ -3,5 +3,6 @@
 - platform: group
   name: "Living room lights"
   entities:
+    - light.living_room_ceiling_light
     - light.wall_light_right
     - light.wall_light_left

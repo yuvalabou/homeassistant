@@ -1,6 +1,0 @@
----
-
-- platform: group
-  name: "Ceiling lights"
-  entities:
-    - light.yeelight_color_master_bedroom
