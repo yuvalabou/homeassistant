@@ -1,7 +1,0 @@
----
-
-- sensor:
-  - name: "Dishwasher finish time"
-    unique_id: f87fcb15-fb82-48bd-bbd9-99041485bf39
-    state: >-
-      {{ as_timestamp(states('sensor.400090386855001425_bsh_common_option_remainingprogramtime')) | timestamp_custom('%H:%M') }}

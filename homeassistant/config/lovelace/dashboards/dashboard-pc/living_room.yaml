@@ -57,6 +57,15 @@ cards:
             name: "Power state"
           - entity: sensor.400090386855001425_bsh_common_status_operationstate
             name: "OP state"
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.400090386855001425_bsh_common_option_remainingprogramtimeisestimated
+            state: 'on'
+        row:
+          entity: sensor.400090386855001425_bsh_common_option_remainingprogramtime
+          format: relative
+          name: "Remaining time"
+
       # - type: entities
       #   show_header_toggle: false
       #   entities:
