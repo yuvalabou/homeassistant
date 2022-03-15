@@ -6,3 +6,4 @@ decluttering_templates:
 title: "Yuval Dashboard"
 views:
   - !include dashboard-mobile-yuval/overview.yaml
+  - !include dashboard-mobile-yuval/home_office.yaml
