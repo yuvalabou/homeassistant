@@ -74,7 +74,6 @@ sensor:
     name: "${upper_devicename} Illuminance"
     id: ${template_id}_illuminance
     address: 0x23
-    measurement_duration: 69
     update_interval: 60s
   - platform: template
     name: "${upper_devicename} Percieved Brightness"
