@@ -36,6 +36,10 @@ cards:
   - type: entities
     entities:
       - type: custom:hui-element
+        card_type: picture-entity
+        entity: vacuum.mi_vacuum
+        camera_image: camera.vacuum_map
+      - type: custom:hui-element
         card_type: markdown
         entity_id: vacuum.mi_vacuum
         content: |

@@ -1,0 +1,14 @@
+---
+
+- platform: xiaomi_cloud_map_extractor
+  name: "Vacuum map"
+  host: !secret vacuum
+  token: !secret vacuum_token
+  username: !secret xiaomi_cloud_username
+  password: !secret xiaomi_cloud_password
+  country: 'sg'
+  scan_interval: 30
+  draw:
+    - charger
+    - path
+    - vacuum_position
