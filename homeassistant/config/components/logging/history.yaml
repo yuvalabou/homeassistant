@@ -3,7 +3,6 @@
 exclude:
   entities:
     - sensor.season
-    - sensor.track_steam_playtime
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.ims_daily
@@ -18,14 +17,12 @@ exclude:
     - sensor.jewish_calendar_*
     - sensor.count_*
     - sensor.skin_type_*
-    - sensor.*_formatted
     - sensor.openweathermap_forecast_*
 
     - binary_sensor.is_*
   domains:
     - camera
     - automation
-    - updater
     - sun
     - script
     - switch

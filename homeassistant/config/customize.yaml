@@ -5,35 +5,8 @@ person.yuval:
 person.tohar:
   entity_picture: "/local/assets/tohar.jpg"
 
-binary_sensor.yuval_laptop:
-  device_class: connectivity
-  icon: mdi:laptop
-binary_sensor.tv:
-  device_class: connectivity
-  icon: mdi:television-classic
-binary_sensor.vacuum:
-  device_class: connectivity
-  icon: mdi:robot-vacuum
-# binary_sensor.nanopi_neo2:
-#   device_class: connectivity
-#   icon: mdi:raspberry-pi
-# binary_sensor.rpi2:
-#   device_class: connectivity
-#   icon: mdi:raspberry-pi
-
-sensor.track_tv_usage:
-  icon: mdi:chart-timeline-variant
-sensor.track_netflix_watch_time:
-  icon: mdi:netflix
-sensor.track_youtube_watch_time:
-  icon: mdi:youtube
-# sensor.track_steam_playtime:
-#   icon: mdi:steam
-
 sensor.myip:
   icon: mdi:ip-network
-# sensor.pihole_status:
-#   icon: mdi:pi-hole
 
 # sensor.bathroom_mold_indicator:
 #   icon: mdi:water-percent-alert

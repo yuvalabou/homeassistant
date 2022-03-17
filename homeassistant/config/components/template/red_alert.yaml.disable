@@ -3,7 +3,7 @@
 - binary_sensor:
   - name: "RED ALERT"
     unique_id: 719a0391-dc35-44bc-985f-d2ed5d352614
-    state: "{{ 'פתח תקווה' in states('sensor.pakar_alerts') }}"
+    state: "{{ 'טלמון' in states('sensor.pakar_alerts') }}"
     attributes:
       locations: "{{ states('sensor.pakar_alerts') }}"
     icon: >-

@@ -8,52 +8,52 @@ cards:
 #    variables:
 #      - room: master_bedroom
 
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.master_bedroom_sensibo_temperature
-                name: "Temperature"
-                show_points: false
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
-            points_per_hour: 6
-            show:
-              fill: fade
-              points: false
-              labels: true
-              labels_secondary: false
-              legend: false
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.master_bedroom_sensibo_humidity
-                name: "Humidity"
-                color: '#74A4F4'
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            lower_bound: 0
-            upper_bound: 100
-            points_per_hour: 12
-            show:
-              fill: fade
-              points: false
-              labels: false
-              legend: false
+  # - type: entities
+  #   show_header_toggle: false
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: horizontal-stack
+  #       cards:
+  #         - type: custom:mini-graph-card
+  #           entities:
+  #             - entity: sensor.master_bedroom_sensibo_temperature
+  #               name: "Temperature"
+  #               show_points: false
+  #             - !include ../../resources/graph_card_sun_elevation.yaml
+  #           font_size: 80
+  #           color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+  #           points_per_hour: 6
+  #           show:
+  #             fill: fade
+  #             points: false
+  #             labels: true
+  #             labels_secondary: false
+  #             legend: false
+  #         - type: custom:mini-graph-card
+  #           entities:
+  #             - entity: sensor.master_bedroom_sensibo_humidity
+  #               name: "Humidity"
+  #               color: '#74A4F4'
+  #             - !include ../../resources/graph_card_sun_elevation.yaml
+  #           font_size: 80
+  #           lower_bound: 0
+  #           upper_bound: 100
+  #           points_per_hour: 12
+  #           show:
+  #             fill: fade
+  #             points: false
+  #             labels: false
+  #             legend: false
 
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: light
-        entity: light.yeelight_color_master_bedroom
+  # - type: entities
+  #   entities:
+  #     - type: custom:hui-element
+  #       card_type: light
+  #       entity: light.yeelight_color_master_bedroom
 
-  - type: entities
-    entities:
-      - media_player.tv_master_bedroom
+  # - type: entities
+  #   entities:
+  #     - media_player.tv_master_bedroom
 
   - type: entities
     entities:

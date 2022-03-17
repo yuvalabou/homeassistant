@@ -12,7 +12,7 @@
     service: notify.family
     data:
       title: "צבע אדום"
-      message: "פתח תקווה"
+      message: "טלמון"
       data:
         timeout: 120
         priority: high
