@@ -1,5 +1,0 @@
----
-
-deltaco_sh_p02_energy:
-  source: sensor.deltaco_sh_p02_power
-  cycle: hourly
