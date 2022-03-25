@@ -3,10 +3,86 @@
 title: "Living Room"
 icon: mdi:sofa
 cards:
-  - type: custom:decluttering-card
-    template: multisensor_full
-    variables:
-      - room: living_room
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_temperature
+                name: "Temperature"
+                show_points: false
+              - entity: sensor.living_room_climate_set_temp
+                color: 'white'
+                show_fill: false
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - entity: binary_sensor.kitchen_motion
+            name: "Motion"
+          - entity: sensor.living_room_comfort_scale
+            name: "Comfort scale"
+          - entity: sensor.living_room_illuminance
+            name: "Light"
+      - type: custom:hui-element
+        card_type: glance
+        entities:
+          - entity: binary_sensor.main_door
+            name: "Door"
+          - entity: binary_sensor.living_room_window_contact
+            name: "Window"
+      - type: custom:mini-graph-card
+        points_per_hour: 3
+        entities:
+          - entity: sensor.2_5um_particles_in_the_kitchen
+            name: 2.5um
+            show_state: true
+          - entity: sensor.10um_particles_in_the_kitchen
+            name: 10um
+            show_state: true
+          - !include ../../resources/graph_card_sun_elevation.yaml
+        show:
+          points: false
+          fill: false
+          name: false
+      # - type: custom:hui-element
+      #   card_type: light
+      #   entity: light.kitchen_led_strip
+      - type: custom:hui-element
+        card_type: picture-entity
+        entity: binary_sensor.kitchen
+        camera_image: camera.kitchen_camera
+
 
   - type: entities
     show_header_toggle: false
@@ -59,6 +135,13 @@ cards:
             name: "Door"
           - entity: sensor.400090386855001425_bsh_common_setting_powerstate
             name: "Power state"
+            tap_action:
+              action: call-service
+              service: select.select_option
+              data:
+                option: 'on'
+              target:
+                entity_id: select.400090386855001425_bsh_common_setting_powerstate
           - entity: sensor.400090386855001425_bsh_common_status_operationstate
             name: "OP state"
       - type: conditional

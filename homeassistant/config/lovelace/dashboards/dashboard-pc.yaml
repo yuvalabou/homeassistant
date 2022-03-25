@@ -17,4 +17,3 @@ views:
   - !include dashboard-pc/system.yaml
   - !include dashboard-pc/homelab.yaml
   - !include dashboard-pc/devices.yaml
-  # - !include dashboard-pc/doorbell.yaml
