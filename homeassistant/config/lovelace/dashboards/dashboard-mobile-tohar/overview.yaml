@@ -138,9 +138,7 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
-      - type: custom:hui-element
-        card_type: light
-        entity: light.living_room_lights
+      - entity: light.living_room_lights
       - type: custom:hui-element
         card_type: light
         entity: light.living_room_ceiling_light
