@@ -5,7 +5,7 @@
   trigger:
     platform: state
     entity_id: person.yuval
-    from: 'Yuval work'
+    from: 'Hirsh'
     to: 'away'
   condition: "{{ is_state('person.tohar', 'home') }}"
   action:
