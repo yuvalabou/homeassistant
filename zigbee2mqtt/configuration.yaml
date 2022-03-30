@@ -1,0 +1,16 @@
+homeassistant: false
+frontend:
+  port: 8080
+permit_join: true
+mqtt:
+  base_topic: zigbee2mqtt
+  server: mqtt://10.0.0.2
+serial:
+  port: /dev/ttyACM0
+devices:
+  '0x54ef4410002c18d8':
+    friendly_name: Bathroom Door
+  '0x54ef441000293ac7':
+    friendly_name: Living room Window
+  '0x54ef4410002bc269':
+    friendly_name: Ensuite Door

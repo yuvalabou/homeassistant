@@ -16,9 +16,9 @@ tts
 assets
 floor_plan
 cam_captures
-unifi
-zigbee2mqtt
-mosquitto
+zigbee2mqtt/*.json
+mosquitto/data
+mosquitto/log
 __pycache__
 
 # Ignore files
