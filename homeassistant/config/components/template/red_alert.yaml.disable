@@ -7,8 +7,6 @@
     attributes:
       locations: "{{ states('sensor.pakar_alerts') }}"
     icon: >-
-      {% if is_state('binary_sensor.red_alert', 'on') %}
-        mdi:alert
-      {% else %}
-        mdi:alert-outline
-      {% endif %}
+      {{
+        'mdi:alert' if is_state('binary_sensor.red_alert', 'on') else 'mdi:alert-outline'
+      }}

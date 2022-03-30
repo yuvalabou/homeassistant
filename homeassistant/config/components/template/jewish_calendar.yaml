@@ -7,11 +7,7 @@
     state: >-
       {{ is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 5) }}
     icon: >-
-      {% if is_state('binary_sensor.tzom', 'on') %}
-        mdi:food-off
-      {% else %}
-        mdi:food
-      {% endif %}
+      {{ 'mdi:food-off' if is_state('binary_sensor.tzom', 'on') else 'mdi:food' }}
 
   - name: "Is Omer"
     unique_id: d8d1e7d8-455a-4c67-919f-850c09e5ef13

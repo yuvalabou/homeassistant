@@ -4,21 +4,21 @@
   - name: "Warmer or colder outside"
     unique_id: 8c57f5ee-d766-49d5-8121-5604d704481c
     state: >-
-      {% if states('sensor.openweathermap_temperature') <
-            states('sensor.living_room_temperature')
-      %}
-        Cooler outside
-      {% else %}
-        Warmer outside
-      {% endif %}
+      {{
+        'Cooler outside'
+        if
+        states('sensor.openweathermap_temperature') < states('sensor.living_room_temperature') 
+        else
+        'Warmer outside'
+      }}
     icon: >-
-      {% if states('sensor.openweathermap_temperature') <
-            states('sensor.living_room_temperature')
-      %}
-        mdi:thermometer-chevron-up
-      {% else %}
-        mdi:thermometer-chevron-down
-      {% endif %}
+      {{
+        'mdi:thermometer-chevron-up'
+        if
+        states('sensor.openweathermap_temperature') < states('sensor.living_room_temperature') 
+        else
+        'mdi:thermometer-chevron-down'
+      }}
     attributes:
       temperature_inside: >-
         {{ states('sensor.living_room_temperature') }}

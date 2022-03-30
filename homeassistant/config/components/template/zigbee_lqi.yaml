@@ -1,39 +1,39 @@
 ---
 
 - sensor:
-  - name: "Aqara button 1 linkquality percent"
-    unique_id: 843110c2-96d0-43be-bfb6-e70920b465ec
-    unit_of_measurement: "%"
-    state: >-
-      {{ ((states('sensor.aqara_button_1_linkquality') | int(0) / 255) * 100) | round (1) }}
-    icon: >-
-      {% set lqi = states('sensor.aqara_button_1_linkquality_percent') %}
-      {% if lqi <= '35' %}
-        mdi:signal-cellular-1
-      {% elif lqi <= '65' %}
-        mdi:signal-cellular-2
-      {% elif lqi <= '100' %}
-        mdi:signal-cellular-3
-      {% else %}
-        mdi:signal-off
-      {% endif %}
+  # - name: "Aqara button 1 linkquality percent"
+  #   unique_id: 843110c2-96d0-43be-bfb6-e70920b465ec
+  #   unit_of_measurement: "%"
+  #   state: >-
+  #     {{ ((states('sensor.aqara_button_1_linkquality') | int(0) / 255) * 100) | round (1) }}
+  #   icon: >-
+  #     {% set lqi = states('sensor.aqara_button_1_linkquality_percent') %}
+  #     {% if lqi <= '35' %}
+  #       mdi:signal-cellular-1
+  #     {% elif lqi <= '65' %}
+  #       mdi:signal-cellular-2
+  #     {% elif lqi <= '100' %}
+  #       mdi:signal-cellular-3
+  #     {% else %}
+  #       mdi:signal-off
+  #     {% endif %}
 
-  - name: "Aqara button 2 linkquality percent"
-    unique_id: ffe1dc41-fd3b-4503-9470-6bf69c6af942
-    unit_of_measurement: "%"
-    state: >-
-      {{ ((states('sensor.aqara_button_2_linkquality') | int(0) / 255) * 100) | round (1) }}
-    icon: >-
-      {% set lqi = states('sensor.aqara_button_2_linkquality_percent') %}
-      {% if lqi <= '35' %}
-        mdi:signal-cellular-1
-      {% elif lqi <= '65' %}
-        mdi:signal-cellular-2
-      {% elif lqi <= '100' %}
-        mdi:signal-cellular-3
-      {% else %}
-        mdi:signal-off
-      {% endif %}
+  # - name: "Aqara button 2 linkquality percent"
+  #   unique_id: ffe1dc41-fd3b-4503-9470-6bf69c6af942
+  #   unit_of_measurement: "%"
+  #   state: >-
+  #     {{ ((states('sensor.aqara_button_2_linkquality') | int(0) / 255) * 100) | round (1) }}
+  #   icon: >-
+  #     {% set lqi = states('sensor.aqara_button_2_linkquality_percent') %}
+  #     {% if lqi <= '35' %}
+  #       mdi:signal-cellular-1
+  #     {% elif lqi <= '65' %}
+  #       mdi:signal-cellular-2
+  #     {% elif lqi <= '100' %}
+  #       mdi:signal-cellular-3
+  #     {% else %}
+  #       mdi:signal-off
+  #     {% endif %}
 
   - name: "Living room window linkquality percent"
     unique_id: a0b7a1bd-a457-45d6-85fe-8463a26d8205
