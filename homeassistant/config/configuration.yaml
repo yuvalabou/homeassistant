@@ -77,8 +77,8 @@ google:
   client_secret: !secret google_cal_secret
 group: !include_dir_merge_named components/group
 home_connect_alt:
-  client_id: !secret client_id
-  client_secret: !secret client_secret
+  client_id: !secret hc_client_id
+  client_secret: !secret hc_client_secret
 input_boolean: !include_dir_merge_named components/input_boolean
 input_datetime: !include_dir_merge_named components/input_datetime
 input_number: !include_dir_merge_named components/input_number
