@@ -8,5 +8,6 @@
     - light.living_room_ceiling_light
     - light.wall_light_right
     - light.wall_light_left
+    - light.corridor_light
     # - light.wled_harel_bed
     # - light.wled_rotem_bed

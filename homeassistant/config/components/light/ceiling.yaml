@@ -5,3 +5,4 @@
   entities:
     - light.kitchen_ceiling_light
     - light.living_room_ceiling_light
+    - light.corridor_light
