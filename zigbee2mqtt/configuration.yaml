@@ -1,4 +1,4 @@
-homeassistant: false
+homeassistant: true
 frontend:
   port: 8080
 permit_join: true
