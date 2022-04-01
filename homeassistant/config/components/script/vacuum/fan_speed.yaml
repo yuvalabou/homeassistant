@@ -7,7 +7,7 @@ vacuum_set_silent:
     service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.mi_vacuum
-      fan_speed: 38
+      fan_speed: Silent
 
 vacuum_set_standard:
   alias: "Set Standard"
@@ -16,22 +16,22 @@ vacuum_set_standard:
     service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.mi_vacuum
-      fan_speed: 60
+      fan_speed: Standard
 
-vacuum_set_turbo:
+vacuum_set_medium:
   alias: "Set Turbo"
   icon: mdi:fan
   sequence:
     service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.mi_vacuum
-      fan_speed: 75
+      fan_speed: Medium
 
-vacuum_set_max:
+vacuum_set_turbo:
   alias: "Set Max"
   icon: mdi:fan
   sequence:
     service: vacuum.set_fan_speed
     data:
       entity_id: vacuum.mi_vacuum
-      fan_speed: 100
+      fan_speed: Turbo
