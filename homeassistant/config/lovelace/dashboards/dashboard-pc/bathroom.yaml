@@ -8,6 +8,6 @@ cards:
     variables:
       - room: bathroom
 
-  - type: entities
-    entities:
-      - sensor.bathroom_mold_indicator
+  # - type: entities
+  #   entities:
+  #     - sensor.bathroom_mold_indicator
