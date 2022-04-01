@@ -1,7 +1,7 @@
 ---
 
 - binary_sensor:
-  - name: "is Sunday"
+  - name: "Is Sunday"
     unique_id: acf804e6-56a3-434a-9fc6-42571f9e13b7
     state: >-
       {{ now().weekday() == 6 }}
