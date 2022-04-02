@@ -8,5 +8,5 @@
       {{ state_attr('cover.living_room_shutter', 'current_position') }}
     icon: >-
       {{
-        'mdi:window-shutter-open' if (states('sensor.living_room_shutter_position') | int > 70) else 'mdi:window-shutter'
+        'mdi:window-shutter-open' if (states('sensor.living_room_shutter_position') | int(default=0) > 70) else 'mdi:window-shutter'
       }}

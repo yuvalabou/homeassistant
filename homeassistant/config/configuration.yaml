@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202202            #
+#            Yuval Aboulafia - 202204            #
 ##################################################
 
 ##################################################
@@ -26,7 +26,7 @@ mobile_app:
 frontend:
   themes: !include_dir_merge_named themes
   extra_module_url:
-  - /local/thermal_comfort_icons.js
+    - /hacsfiles/thermal_comfort_icons/thermal_comfort_icons.js
 lovelace:
   mode: yaml
   resources: !include lovelace/resources/resources.yaml
