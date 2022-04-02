@@ -7,8 +7,8 @@ cards:
     name: "Temperature"
     hours_to_show: 84
     entities:
-      # - entity: sensor.living_room_temperature
-      #   show_points: false
+      - entity: sensor.living_room_temperature
+        show_points: false
       # - entity: sensor.master_bedroom_sensibo_temperature
       #   show_points: false
       # - entity: sensor.bathroom_temperature

@@ -50,7 +50,7 @@ cards:
         entities:
           - entity: binary_sensor.kitchen_motion
             name: "Motion"
-          - entity: sensor.living_room_comfort_scale
+          - entity: sensor.living_room_thermal_comfort_perception
             name: "Comfort scale"
           - entity: sensor.living_room_illuminance
             name: "Light"
@@ -149,6 +149,15 @@ cards:
           entity: sensor.400090386855001425_bsh_common_option_remainingprogramtime
           format: relative
           name: "Remaining time"
+      - type: conditional
+        conditions:
+          - entity: binary_sensor.400090386855001425_bsh_common_option_remainingprogramtimeisestimated
+            state: 'on'
+        row:
+          entity: sensor.400090386855001425_bsh_common_option_programprogress
+          type: custom:bar-card
+          entity_row: true
+          name: "Progress"
 
       # - type: entities
       #   show_header_toggle: false
