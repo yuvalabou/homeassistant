@@ -18,10 +18,13 @@
 - alias: "Climate - Turn on Ensuite heater in the morning"
   id: 0341d100-4828-43bc-9839-fdca34f0e121
   trigger:
-    - platform: time
-      at: '06:00:00'
+    platform: time
+    at: '06:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
+    - condition: numeric_state
+      entity_id: sensor.ensuite_temperature
+      below: 18
   action:
     service: switch.turn_on
     data:
