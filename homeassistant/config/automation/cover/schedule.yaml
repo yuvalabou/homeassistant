@@ -9,8 +9,8 @@
     - "{{ is_state('group.person', 'home') }}"
   action:
     service: cover.open_cover
-    target:
-      device_id: 182e26f6c4cae7c966762eeb23f0754a
+    data:
+      entity_id: cover.living_room_shutter
 
 - alias: "Cover - Evening Cover"
   id: dee66d89-f22f-4b21-ba18-92bbb15efb83
@@ -21,5 +21,5 @@
     - "{{ is_state('group.person', 'home') }}"
   action:
     service: cover.close_cover
-    target:
-      device_id: 182e26f6c4cae7c966762eeb23f0754a
+    data:
+      entity_id: cover.living_room_shutter
