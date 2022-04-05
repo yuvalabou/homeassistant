@@ -1,0 +1,27 @@
+---
+
+- alias: "Vent - bathroom humidity is ok"
+  id: 7d57c758-0175-46ff-a266-a8dd5670f71e
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bathroom_humidity
+    below: 60
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.vent
+
+- alias: "Vent - bathroom humidity is ok"
+  id: 7d57c758-0175-46ff-a266-a8dd5670f71e
+  trigger:
+    platform: state
+    entity_id: switch.bathroom_light
+    to: 'off'
+  condition:
+    condition: numeric_state
+    entity_id: sensor.bathroom_humidity
+    below: 60
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.vent

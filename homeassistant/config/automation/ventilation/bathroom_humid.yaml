@@ -1,0 +1,12 @@
+---
+
+- alias: "Vent - bathroom is humid"
+  id: d7cc516e-958e-44fc-85b6-8e60bd533f96
+  trigger:
+    platform: numeric_state
+    entity_id: sensor.bathroom_humidity
+    above: 70
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.vent

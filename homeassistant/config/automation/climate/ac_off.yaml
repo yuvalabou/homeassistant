@@ -9,7 +9,7 @@
   action:
     service: climate.turn_off
     data:
-      entity_id: climate.slvn
+      entity_id: climate.living_room
 
 - alias: "Climate - Turn off when away"
   id: ae0c5bd5-96f8-4cde-ba22-9d46167c1a6b
@@ -23,18 +23,4 @@
   action:
     service: climate.turn_off
     data:
-      entity_id: climate.slvn
-
-- alias: "Climate - Turn off when away - master bedroom"
-  id: d7a2e86c-2519-4396-870a-e7d979cf516a
-  trigger:
-    platform: state
-    entity_id: group.person
-    to: 'not_home'
-  condition:
-    - "{{ not is_state('climate.shynh', 'off') }}"
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
-  action:
-    service: climate.turn_off
-    data:
-      entity_id: climate.shynh
+      entity_id: climate.living_room
