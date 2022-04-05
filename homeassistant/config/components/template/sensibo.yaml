@@ -5,12 +5,15 @@
     unique_id: 8347de3b-0607-493b-8088-8e14f5ccee37
     state: >-
       {{ state_attr('climate.living_room', 'current_temperature') | float }}
+    unit_of_measurement: '°C'
   - name: "Living room humidity"
     unique_id: 0b248940-9fb7-48d9-bb07-c7a0713550d4
     state: >-
       {{ state_attr('climate.living_room', 'current_humidity') | float }}
+    unit_of_measurement: '%'
 
   - name: "Living room set temp"
     unique_id: 0b248940-9fb7-48d9-bb07-c7a0713550d4
     state: >-
       {{ state_attr('climate.living_room', 'temperature') | int }}
+    unit_of_measurement: '°C'
