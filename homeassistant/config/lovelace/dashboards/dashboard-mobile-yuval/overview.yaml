@@ -417,10 +417,25 @@ cards:
   #               entity: light.wled_rotem_bed
   #               colors: !include ../../resources/rgb_colors_rotem.yaml
 
-  # - type: custom:decluttering-card
-  #   template: multisensor
-  #   variables:
-  #     - room: bathroom
+  - type: entities
+    entities:
+      - type: custom:decluttering-card
+        template: multisensor
+        variables:
+          - room: bathroom
+      - type: custom:hui-element
+        card_type: horizontal-stack
+        cards:
+          - type: custom:button-card
+            entity: switch.vent
+            icon: 'mdi:fan'
+            state:
+              - value: 'on'
+                spin: true
+              - value: 'off'
+                spin: false
+          - type: custom:button-card
+            color_type: blank-card
 
   # - type: entities
   #   entities:
