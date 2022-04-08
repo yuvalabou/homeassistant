@@ -13,7 +13,7 @@
     unit_of_measurement: '%'
 
   - name: "Living room set temp"
-    unique_id: 0b248940-9fb7-48d9-bb07-c7a0713550d4
+    unique_id: 806d1cef-b238-4754-bb40-49af6e5c540f
     state: >-
       {{ state_attr('climate.living_room', 'temperature') | int }}
     unit_of_measurement: '°C'
