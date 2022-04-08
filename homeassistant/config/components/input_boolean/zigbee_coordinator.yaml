@@ -1,6 +1,0 @@
----
-
-zigbee2mqtt_permit_join:
-  name: "Allow zigbee devices to join"
-  initial: off
-  icon: mdi:signal

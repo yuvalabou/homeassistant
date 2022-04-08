@@ -72,7 +72,9 @@ ssdp:
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list components/binary_sensor
 blueprint:
+button:
 camera: !include_dir_merge_list components/camera
+counter:
 energy:
 google:
   client_id: !secret google_cal_id
@@ -81,8 +83,10 @@ group: !include_dir_merge_named components/group
 home_connect_alt:
   client_id: !secret hc_client_id
   client_secret: !secret hc_client_secret
-input_boolean: !include_dir_merge_named components/input_boolean
+input_boolean:
+input_datetime:
 input_number: !include_dir_merge_named components/input_number
+input_select:
 input_text: !include_dir_merge_named components/input_text
 jewish_calendar:
   language: hebrew
@@ -98,6 +102,7 @@ sun:
 switch: !include_dir_merge_list components/switch
 system_health:
 template: !include_dir_merge_list components/template
+timer:
 tts:
   - platform: microsoft
     api_key: !secret azure_tts

@@ -1,9 +1,0 @@
----
-
-cleaned_today:
-  name: "Cleaned today"
-  icon: mdi:broom
-
-disable_auto_clean:
-  name: "Disable automatic cleaning"
-  icon: mdi:shield-half-full
