@@ -6,6 +6,8 @@
     platform: state
     entity_id: light.bathroom_light
     to: 'on'
+  condition:
+    - "{{ is_state('binary_sensor.issur_melacha_is_effect', 'off') }}"
   action:
     service: switch.turn_on
     data:
