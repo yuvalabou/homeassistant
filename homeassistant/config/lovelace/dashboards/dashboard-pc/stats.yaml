@@ -119,7 +119,7 @@ cards:
       - entity: switch.ensuite_heater
         show_points: false
         color: '#E0101A'
-      - entity: switch.ensuite_heater
+      - entity: switch.vent
         show_points: false
         color: '#FCF2E8'
       # - entity: switch.deltaco_sh_p02_socket_1

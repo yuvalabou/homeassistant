@@ -19,7 +19,7 @@
         'mdi:lightbulb-group' if is_state('binary_sensor.living_room_lights_is_on', 'on') else 'mdi:lightbulb-group-off'
       }}
 
-  - name: "Bathroom Lights is on"
+  - name: "Bathroom Light is on"
     unique_id: 875af736-7f95-441d-b79b-b3d7ece02718
     state: >-
       {{ is_state('light.bathroom_light', 'on') }}

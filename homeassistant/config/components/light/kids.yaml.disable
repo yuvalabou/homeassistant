@@ -1,7 +1,0 @@
----
-
-- platform: group
-  name: "Kids ambient lights"
-  entities:
-    - light.wled_harel_bed
-    - light.wled_rotem_bed

@@ -1,7 +1,0 @@
----
-
-- platform: group
-  name: "Wall lights"
-  entities:
-    - light.wall_light_right
-    - light.wall_light_left

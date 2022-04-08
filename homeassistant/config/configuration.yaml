@@ -72,7 +72,6 @@ ssdp:
 automation: !include_dir_merge_list automation
 binary_sensor: !include_dir_merge_list components/binary_sensor
 blueprint:
-button:
 camera: !include_dir_merge_list components/camera
 counter:
 energy:
@@ -98,7 +97,6 @@ sensor: !include_dir_merge_list components/sensor
 # spotify:
 #   client_id: !secret spotify_id
 #   client_secret: !secret spotify_secret
-sun:
 switch: !include_dir_merge_list components/switch
 system_health:
 template: !include_dir_merge_list components/template

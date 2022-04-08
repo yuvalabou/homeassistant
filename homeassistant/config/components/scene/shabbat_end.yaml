@@ -11,7 +11,7 @@
       state: 'on'
       brightness_pct: 80
       kelvin: 3200
-    # light.importent_lights:
+    # light.important_lights:
     #   state: 'off'
     # light.kids_ambient_lights:
     #   state: 'on'

@@ -54,8 +54,8 @@
         script.vacuum_set_silent
       {% elif trigger.to_state.state == 'Standard' %}
         script.vacuum_set_standard
+      {% elif trigger.to_state.state == 'Medium' %}
+        script.vacuum_set_medium
       {% elif trigger.to_state.state == 'Turbo' %}
         script.vacuum_set_turbo
-      {% elif trigger.to_state.state == 'Max' %}
-        script.vacuum_set_max
       {% endif %}

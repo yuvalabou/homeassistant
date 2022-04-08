@@ -1,8 +1,0 @@
----
-
-- platform: group
-  name: "Room lights"
-  entities:
-    - light.yeelight_color_master_bedroom
-    - light.wled_harel_bed
-    - light.wled_rotem_bed

@@ -2,7 +2,6 @@
 
 exclude:
   entities:
-    - sensor.season
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.ims_daily

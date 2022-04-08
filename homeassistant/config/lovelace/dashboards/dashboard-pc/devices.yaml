@@ -3,17 +3,17 @@
 title: "Devices"
 icon: mdi:devices
 cards:
-  # - type: entities
-  #   show_header_toggle: false
-  #   entities:
-  #     - type: custom:hui-element
-  #       card_type: picture
-  #       image: 'https://cdn.shopify.com/s/files/1/1669/6891/t/29/assets/logo.png?v=397554563567565171'
-  #     - type: custom:decluttering-card
-  #       template: uptime_card
-  #       variables:
-  #         - device: living_room_sensibo
-  #         - device_name: "Living room Sensibo"
+  - type: entities
+    show_header_toggle: false
+    entities:
+      - type: custom:hui-element
+        card_type: picture
+        image: 'https://cdn.shopify.com/s/files/1/1669/6891/t/29/assets/logo.png?v=397554563567565171'
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: living_room_sensibo
+          - device_name: "Living room Sensibo"
   #     - type: custom:decluttering-card
   #       template: uptime_card
   #       variables:

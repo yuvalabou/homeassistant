@@ -14,7 +14,7 @@ cards:
               - entity: sensor.living_room_temperature
                 name: "Temperature"
                 show_points: false
-              - entity: sensor.living_room_climate_set_temp
+              - entity: sensor.living_room_set_temp
                 color: 'white'
                 show_fill: false
               - !include ../../resources/graph_card_sun_elevation.yaml

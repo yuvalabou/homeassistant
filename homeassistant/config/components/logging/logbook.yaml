@@ -7,7 +7,6 @@ exclude:
     - binary_sensor.random_boolean
 
     - sensor.random_number
-    - sensor.season
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.tts

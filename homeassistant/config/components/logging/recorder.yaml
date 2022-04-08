@@ -8,7 +8,6 @@ exclude:
     - sensor.time
     - sensor.date
     - sensor.date_time
-    - sensor.season
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.ims_daily
