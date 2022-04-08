@@ -11,3 +11,16 @@
       title: "Home Assistant Startup"
       message: >-
         At {{now().strftime("%m/%d/%Y %H:%M:%S")}} Home Assistant has started.
+
+- alias: "Home Assistant update notification"
+  id: 52cbbc12-add7-4634-bd64-14888a23f357
+  description: "Send a notification when there's an update availiable for Home Assistant"
+  trigger:
+    platform: state
+    entity_id: binary_sensor.home_assistant_website_update_available
+    to: "on"
+  action:
+    - service: notify.mobile_app_yuval
+      data:
+        title: "Upgrade time!"
+        message: "Home Assistant {{ states('sensor.home_assistant_website_version') }} is available"
