@@ -4,7 +4,7 @@
   id: 9b100fdf-a569-4c1c-bb3c-a5c5270e2a5c
   trigger:
     platform: state
-    entity_id: switch.bathroom_light
+    entity_id: light.bathroom_light
     to: 'on'
   action:
     service: switch.turn_on
