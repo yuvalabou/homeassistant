@@ -18,15 +18,16 @@
       - conditions:
         - condition: trigger
           id: 'on'
-          sequence:
-            - delay: 1
-            - service: light.turn_off
-              data:
-                entity_id: light.bathroom_light
+        sequence:
+          - delay: 1
+          - service: light.turn_off
+            data:
+              entity_id: light.bathroom_light
+      - conditions:
         - condition: trigger
           id: 'off'
-          sequence:
-            - delay: 1
-            - service: light.turn_on
-              data:
-                entity_id: light.bathroom_light
+        sequence:
+          - delay: 1
+          - service: light.turn_on
+            data:
+              entity_id: light.bathroom_light
