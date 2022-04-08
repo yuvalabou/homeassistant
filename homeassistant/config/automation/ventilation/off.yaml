@@ -12,7 +12,7 @@
       entity_id: switch.vent
 
 - alias: "Vent - bathroom humidity is ok"
-  id: 7d57c758-0175-46ff-a266-a8dd5670f71e
+  id: fcc2ce0e-823b-4659-92ba-d053433ad1fa
   trigger:
     platform: state
     entity_id: switch.bathroom_light
