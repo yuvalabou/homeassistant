@@ -10,3 +10,15 @@
     service: switch.turn_off
     data:
       entity_id: switch.vent
+
+- alias: "Vent - Turn off after time has passed"
+  id: ac975e09-9643-495c-8ab0-3364d8e67ab8
+  trigger:
+    platform: state
+    entity_id: light.bathroom_light
+    to: 'on'
+    for: '00:30:00'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.vent
