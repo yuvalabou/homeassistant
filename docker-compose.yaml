@@ -55,6 +55,19 @@ services:
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
 
+  # sshwifty:
+  #   image: niruix/sshwifty:latest
+  #   container_name: "sshwifty"
+  #   hostname: sshwifty
+  #   environment:
+  #     - TZ=Asia/Jerusalem
+  #     - SSHWIFTY_CONFIG=/etc/sshwifty/sshwifty.conf.json
+  #   volumes:
+  #     - /home/homeassistant/sshwifty/sshwifty.conf.json:/etc/sshwifty/sshwifty.conf.json
+  #   ports:
+  #     - 8182:8182
+  #   restart: unless-stopped
+
   # unifi-controller:
   #   image: ghcr.io/linuxserver/unifi-controller
   #   container_name: "unifi-controller"
