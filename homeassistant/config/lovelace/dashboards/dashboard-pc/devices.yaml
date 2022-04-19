@@ -36,6 +36,11 @@ cards:
         variables:
           - device: ensuite
           - device_name: "Ensuite multisensor"
+      - type: custom:decluttering-card
+        template: uptime_card
+        variables:
+          - device: bathroom
+          - device_name: "Bathroom multisensor"
       # - type: custom:decluttering-card
       #   template: uptime_card
       #   variables:
@@ -43,6 +48,7 @@ cards:
       #     - device_name: "Doorbell"
       # - switch.restart_living_room
       - button.restart_ensuite
+      - button.restart_bathroom
       # - switch.restart_doorbell
 
   # - type: entities
