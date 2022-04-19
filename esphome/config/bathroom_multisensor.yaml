@@ -1,9 +1,9 @@
 ---
 
 substitutions:
-  devicename: ensuite-multisensor
-  upper_devicename: "Ensuite"
-  template_id: ensuite
+  devicename: "bathroom-multisensor"
+  upper_devicename: "Bathroom"
+  template_id: bathroom
 
 esphome:
   name: $devicename
@@ -14,7 +14,7 @@ wifi:
   ssid: !secret ssid
   password: !secret wifi_passwd
   manual_ip:
-    static_ip: !secret static_ensuite
+    static_ip: !secret static_bathroom
     gateway: !secret gateway
     subnet: 255.255.255.0
   ap:
