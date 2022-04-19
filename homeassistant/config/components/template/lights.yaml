@@ -20,7 +20,7 @@
       }}
 
   - name: "Bathroom Light is on"
-    unique_id: 875af736-7f95-441d-b79b-b3d7ece02718
+    unique_id: 369c23bc-90a8-4a79-a218-33277c4adec6
     state: >-
       {{ is_state('light.bathroom_light', 'on') }}
     icon: >-
