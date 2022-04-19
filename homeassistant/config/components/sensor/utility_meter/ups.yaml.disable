@@ -1,5 +1,0 @@
----
-
-ups_energy_usage_hourly:
-  source: sensor.ups_load_watts
-  cycle: hourly

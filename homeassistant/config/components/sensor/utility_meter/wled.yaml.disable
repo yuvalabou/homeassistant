@@ -1,9 +1,0 @@
----
-
-wled_harel_energy_usage_hourly:
-  source: sensor.wled_harel_w
-  cycle: hourly
-
-wled_rotem_energy_usage_hourly:
-  source: sensor.wled_rotem_w
-  cycle: hourly
