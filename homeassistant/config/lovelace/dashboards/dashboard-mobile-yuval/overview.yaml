@@ -307,7 +307,6 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
-      - entity: light.living_room_lights
       - type: custom:hui-element
         card_type: light
         entity: light.living_room_ceiling_light
@@ -318,7 +317,6 @@ cards:
             entity: light.wall_light_right
           - type: light
             entity: light.wall_light_left
-      - switch.night_light_override
 
   - type: entities
     entities:
