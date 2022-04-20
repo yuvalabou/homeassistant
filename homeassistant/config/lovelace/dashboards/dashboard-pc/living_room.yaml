@@ -3,11 +3,31 @@
 title: "Living Room"
 icon: mdi:sofa
 cards:
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: horizontal-stack
+  - type: custom:room-card
+    title: Living room
+    entity: light.living_room_lights
+    tap_action:
+      action: toggle
+    icon: mdi:lightbulb-outline
+    info_entities:
+      - entity: binary_sensor.living_room_motion
+        show_icon: true
+      - entity: binary_sensor.main_door
+        show_icon: true
+        icon:
+          state_on: mdi:door-open
+          state_off: mdi:door-closed
+      - entity: binary_sensor.living_room_window_contact
+        show_icon: true
+        icon:
+          state_on: mdi:door-open
+          state_off: mdi:door-closed
+      - entity: sensor.living_room_shutter_position
+        show_icon: true
+      - sensor.living_room_illuminance
+      - sensor.motion_sensor_temperature
+    cards:
+      - type: horizontal-stack
         cards:
           - type: custom:mini-graph-card
             entities:
@@ -45,8 +65,13 @@ cards:
               labels_secondary: false
               legend: false
               extrema: true
-      - type: custom:hui-element
-        card_type: glance
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: cover.living_room_shutter
+            name: "Shutter"
+      - type: glance
+        columns: 4
         entities:
           - entity: binary_sensor.kitchen_motion
             name: "Motion"
@@ -54,13 +79,6 @@ cards:
             name: "Comfort scale"
           - entity: sensor.living_room_illuminance
             name: "Light"
-      - type: custom:hui-element
-        card_type: glance
-        entities:
-          - entity: binary_sensor.main_door
-            name: "Door"
-          - entity: binary_sensor.living_room_window_contact
-            name: "Window"
       # - type: custom:mini-graph-card
       #   points_per_hour: 3
       #   entities:
@@ -86,7 +104,6 @@ cards:
   - type: entities
     show_header_toggle: false
     entities:
-      - entity: light.living_room_lights
       - type: custom:hui-element
         card_type: light
         entity: light.living_room_ceiling_light
@@ -97,14 +114,6 @@ cards:
             entity: light.wall_light_right
           - type: light
             entity: light.wall_light_left
-      - switch.night_light_override
-  
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - entity: cover.living_room_shutter
-        name: "Shutter"
-      - entity: sensor.living_room_shutter_position
 
   - type: entities
     entities:
@@ -158,43 +167,3 @@ cards:
           type: custom:bar-card
           entity_row: true
           name: "Progress"
-
-      # - type: entities
-      #   show_header_toggle: false
-      #   entities:
-      #     - type: custom:hui-element
-      #       card_type: horizontal-stack
-      #       cards:
-      #         - type: custom:mini-graph-card
-      #           entities:
-      #             - entity: sensor.[[room]]_temperature
-      #               name: "Temperature"
-      #               show_points: false
-      #             - !include ../resources/graph_card_sun_elevation.yaml
-      #           font_size: 80
-      #           color_thresholds: !include ../resources/graph_card_temperature_thresholds.yaml
-      #           points_per_hour: 3
-      #           show:
-      #             fill: fade
-      #             points: false
-      #             labels: false
-      #             labels_secondary: false
-      #             legend: false
-      #             extrema: true
-      #         - type: custom:mini-graph-card
-      #           entities:
-      #             - entity: sensor.[[room]]_humidity
-      #               name: "Humidity"
-      #               color: '#74A4F4'
-      #             - !include ../resources/graph_card_sun_elevation.yaml
-      #           font_size: 80
-      #           lower_bound: 0
-      #           upper_bound: 100
-      #           points_per_hour: 3
-      #           show:
-      #             fill: fade
-      #             points: false
-      #             labels: false
-      #             labels_secondary: false
-      #             legend: false
-      #             extrema: true

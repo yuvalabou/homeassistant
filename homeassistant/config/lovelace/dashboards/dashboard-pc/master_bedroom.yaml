@@ -78,7 +78,11 @@ cards:
         color: rgb(44, 109, 214)
         name: "Ensuite"
       - type: custom:decluttering-card
-        template: multisensor
+        template: env
+        variables:
+          - room: ensuite
+      - type: custom:decluttering-card
+        template: room_multisensor
         variables:
           - room: ensuite
       - type: custom:hui-element
@@ -86,12 +90,11 @@ cards:
         cards:
           - type: custom:button-card
             entity: switch.ensuite_heater
-            icon: >-
-              [[[
-                if (entity.state == 'off')
-                  return 'mdi:thermometer-off';
-                else
-                  return 'mdi:thermometer-chevron-up';
-              ]]]
+            state:
+              - value: 'on'
+                icon: mdi:thermometer-chevron-up
+                color: '#F75C04'
+              - value: 'off'
+                icon: mdi:thermometer-off
           - type: custom:button-card
             color_type: blank-card

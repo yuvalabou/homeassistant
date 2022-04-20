@@ -180,15 +180,6 @@ cards:
 
   - type: horizontal-stack
     cards:
-      # - type: custom:button-card
-      #   entity: switch.kettle
-      #   icon: >-
-      #     [[[
-      #       if (entity.state == 'off')
-      #         return 'mdi:kettle-outline';
-      #       else
-      #         return 'mdi:kettle-steam-outline';
-      #     ]]]
       - type: custom:button-card
         entity: switch.shabbat_plate
         name: "Oven"
@@ -215,41 +206,103 @@ cards:
       exclude:
         - entity_id: '*lights'
 
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - entity: cover.living_room_shutter
-        name: "Shutter"
+  - type: custom:room-card
+    title: Living room
+    entity: light.living_room_lights
+    tap_action:
+      action: toggle
+    icon: mdi:lightbulb-outline
+    info_entities:
+      - entity: binary_sensor.living_room_motion
+        show_icon: true
+      - entity: binary_sensor.main_door
+        show_icon: true
+        icon:
+          state_on: mdi:door-open
+          state_off: mdi:door-closed
+      - entity: binary_sensor.living_room_window_contact
+        show_icon: true
+        icon:
+          state_on: mdi:door-open
+          state_off: mdi:door-closed
       - entity: sensor.living_room_shutter_position
-
-  - type: custom:decluttering-card
-    template: multisensor
-    variables:
-      - room: living_room
-
-  # - type: vertical-stack
-  #   cards:
-  #     - type: custom:simple-thermostat
-  #       layout:
-  #         step: row
-  #       entity: climate.slvn
-  #       step_size: 1
-  #       name: false
-  #       decimals: 0
-  #       hide:
-  #         temperature: true
-  #       sensors:
-  #         - entity: sensor.living_room_temperature
-  #           name: "Temperature"
-  #     - type: conditional
-  #       conditions:
-  #         - entity: switch.living_room_ac_switch
-  #           state: 'on'
-  #       card:
-  #         type: entities
-  #         show_header_toggle: false
-  #         entities:
-  #           - switch.living_room_ac_switch
+        show_icon: true
+      - sensor.living_room_illuminance
+      - sensor.motion_sensor_temperature
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_temperature
+                name: "Temperature"
+                show_points: false
+              - entity: sensor.living_room_set_temp
+                color: 'white'
+                show_fill: false
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.living_room_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+      - type: entities
+        show_header_toggle: false
+        entities:
+          - entity: cover.living_room_shutter
+            name: "Shutter"
+      - type: glance
+        columns: 4
+        entities:
+          - entity: binary_sensor.kitchen_motion
+            name: "Motion"
+          - entity: sensor.living_room_thermal_comfort_perception
+            name: "Comfort scale"
+          - entity: sensor.living_room_illuminance
+            name: "Light"
+      # - type: custom:mini-graph-card
+      #   points_per_hour: 3
+      #   entities:
+      #     - entity: sensor.2_5um_particles_in_the_kitchen
+      #       name: 2.5um
+      #       show_state: true
+      #     - entity: sensor.10um_particles_in_the_kitchen
+      #       name: 10um
+      #       show_state: true
+      #     - !include ../../resources/graph_card_sun_elevation.yaml
+      #   show:
+      #     points: false
+      #     fill: false
+      #     name: false
+      # - type: custom:hui-element
+      #   card_type: light
+      #   entity: light.kitchen_led_strip
+      # - type: custom:hui-element
+      #   card_type: picture-entity
+      #   entity: binary_sensor.kitchen
+      #   camera_image: camera.kitchen_camera
 
   - type: entities
     show_header_toggle: false
@@ -287,7 +340,11 @@ cards:
         color: rgb(44, 109, 214)
         name: "Ensuite"
       - type: custom:decluttering-card
-        template: multisensor
+        template: env
+        variables:
+          - room: ensuite
+      - type: custom:decluttering-card
+        template: room_multisensor
         variables:
           - room: ensuite
       - type: custom:hui-element
@@ -295,13 +352,12 @@ cards:
         cards:
           - type: custom:button-card
             entity: switch.ensuite_heater
-            icon: >-
-              [[[
-                if (entity.state == 'off')
-                  return 'mdi:thermometer-off';
-                else
-                  return 'mdi:thermometer-chevron-up';
-              ]]]
+            state:
+              - value: 'on'
+                icon: mdi:thermometer-chevron-up
+                color: '#F75C04'
+              - value: 'off'
+                icon: mdi:thermometer-off
           - type: custom:button-card
             color_type: blank-card
 
@@ -349,52 +405,6 @@ cards:
   #   show_header_toggle: false
   #   entities:
   #     - type: custom:hui-element
-  #       card_type: horizontal-stack
-  #       cards:
-  #         - type: custom:mini-graph-card
-  #           entities:
-  #             - entity: sensor.master_bedroom_sensibo_temperature
-  #               name: "Temperature"
-  #               show_points: false
-  #             - entity: sensor.master_bedroom_climate_set_temp
-  #               color: 'white'
-  #               show_fill: false
-  #             - !include ../../resources/graph_card_sun_elevation.yaml
-  #           font_size: 80
-  #           color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
-  #           points_per_hour: 6
-  #           show:
-  #             fill: fade
-  #             points: false
-  #             labels: true
-  #             labels_secondary: false
-  #             legend: false
-  #         - type: custom:mini-graph-card
-  #           entities:
-  #             - entity: sensor.master_bedroom_sensibo_humidity
-  #               name: "Humidity"
-  #               color: '#74A4F4'
-  #             - !include ../../resources/graph_card_sun_elevation.yaml
-  #           font_size: 80
-  #           lower_bound: 0
-  #           upper_bound: 100
-  #           points_per_hour: 12
-  #           show:
-  #             fill: fade
-  #             points: false
-  #             labels: false
-  #             legend: false
-
-  # - type: entities
-  #   entities:
-  #     - type: custom:hui-element
-  #       card_type: light
-  #       entity: light.yeelight_color_master_bedroom
-
-  # - type: entities
-  #   show_header_toggle: false
-  #   entities:
-  #     - type: custom:hui-element
   #       card_type: light
   #       entity: light.kids_ambient_lights
   #     - type: custom:hui-element
@@ -420,7 +430,7 @@ cards:
   - type: entities
     entities:
       - type: custom:decluttering-card
-        template: multisensor
+        template: room_multisensor
         variables:
           - room: bathroom
       - type: custom:hui-element

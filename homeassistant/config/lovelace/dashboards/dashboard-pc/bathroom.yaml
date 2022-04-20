@@ -6,7 +6,7 @@ cards:
   - type: entities
     entities:
       - type: custom:decluttering-card
-        template: multisensor
+        template: room_multisensor
         variables:
           - room: bathroom
       - type: custom:hui-element
