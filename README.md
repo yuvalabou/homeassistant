@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2022.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.4.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.4.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 [![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
@@ -32,20 +32,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 343 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 180 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 38 |
+| **Entities** | 407 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 208 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 52 |
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 15 |
-| **[Buttons]()** | 9 |
-| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 9 |
+| **[Buttons]()** | 16 |
+| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 11 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 43 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 52 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 167786 |
-| Yaml | 5433 |
+| Python | 144436 |
+| Yaml | 5614 |
 
 -----
 
@@ -53,16 +53,16 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |4           |12     |24         |
+|YAML           |4           |12     |25         |
 
 -----
 
 ### Devices
 
-| Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Tuya generic outlet | Shelly 2.5 | Shelly 1PM |
-|:---------:|:------------:|:-------------------:|:-------------------:|:----------:|:----------:|
+| Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Tuya ceiling light |
+|:---------:|:------------:|:-------------------:|:-------------------:|:----------:|:----------:|:------------------:|
 |<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width = 100>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width = 100>|<img src="https://shelly.cloud/wp-content/uploads/2021/09/shelly1pm-comparision.png" width = 100> |
-|1          |1             |3                    |3                    |1           |1           |
+|1          |1             |3                    |2                    |1           |4           |2                   |
 
 
 ### Zigbee devices
@@ -77,7 +77,7 @@
 
 | Multisensor | WLED Strip |
 |:-----------:|:----------:|
-|1            |(2)         |
+|2            |(2)         |
 
 -----
 
@@ -89,7 +89,6 @@
 | ESPHome          |
 | Mosquitto broker |
 | zigbee2mqtt      |
-| Unifi Controller |
 
 -----
 
@@ -111,8 +110,7 @@
 - [ThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Home connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
-<!-- - [Spotcast](https://github.com/fondberg/spotcast) -->
-<!-- - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) -->
+- [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
 ### Lovelace-UI Enhancements
 
@@ -125,6 +123,7 @@
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [Room Card](https://github.com/marcokreeft87/room-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
