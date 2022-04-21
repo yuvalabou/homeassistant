@@ -11,6 +11,8 @@
       - light.living_room_ceiling_light
       - light.wall_light_right
       - light.wall_light_left
+      - light.bathroom_light
+      - light.corridor_light
       # - light.wled_harel_bed
       # - light.wled_rotem_bed
     to: 'unavailable'
@@ -19,5 +21,22 @@
     service: persistent_notification.create
     data_template:
       title: "Bulb Offline"
+      message: >-
+        the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
+
+- alias: 'Notify - Unavailable devices notification'
+  id: 58a57846-29da-4bb1-b40e-4926049b6f1c
+  mode: restart
+  trigger:
+    platform: state
+    entity_id:
+      - switch.vent
+      - switch.ensuite_heater
+    to: 'unavailable'
+    for: '00:05:00'
+  action:
+    service: persistent_notification.create
+    data_template:
+      title: "Device Offline"
       message: >-
         the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
