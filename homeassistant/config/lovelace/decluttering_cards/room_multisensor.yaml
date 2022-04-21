@@ -11,13 +11,12 @@ room_multisensor:
     info_entities:
       - entity: binary_sensor.[[room]]_motion
         show_icon: true
-      - entity: binary_sensor.[[room]]_door
+      - entity: binary_sensor.[[room]]_door_contact
         show_icon: true
         icon:
           state_on: mdi:door-open
           state_off: mdi:door-closed
       - sensor.[[room]]_illuminance
-      - sensor.motion_sensor_temperature
     cards:
       - type: custom:decluttering-card
         template: env
