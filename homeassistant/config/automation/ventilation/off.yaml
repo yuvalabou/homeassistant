@@ -10,7 +10,7 @@
     - "{{ is_state('binary_sensor.bathroom_light_is_on', 'off') }}"
     - condition: numeric_state
       entity_id: sensor.bathroom_humidity
-      below: 60
+      below: 70
   action:
     service: switch.turn_off
     data:

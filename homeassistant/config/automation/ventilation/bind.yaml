@@ -12,3 +12,14 @@
     service: switch.turn_on
     data:
       entity_id: switch.vent
+
+- alias: "Vent - bind to light"
+  id: bc13b8f0-e6c4-4135-bf55-cc386a838f29
+  trigger:
+    platform: state
+    entity_id: light.bathroom_light
+    to: 'off'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.vent
