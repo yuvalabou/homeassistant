@@ -20,10 +20,6 @@
         'mdi:thermometer-chevron-down'
       }}
     attributes:
-      temperature_inside: >-
-        {{ states('sensor.living_room_temperature') }}
-      temperature_outside: >-
-        {{ states('sensor.openweathermap_temperature') }}
       temperature_difference: >-
         {{
           (
