@@ -67,6 +67,7 @@
     - condition: time
       weekday:
         - sat
+    - "{{ not is_state('input_datetime.shabbat_lights_off_time', '00:00:00') }}"
   action:
     service: switch.turn_off
     data:
