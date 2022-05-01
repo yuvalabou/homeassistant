@@ -55,12 +55,10 @@ cards:
   - type: entities
     entities:
       - type: custom:sun-card
-      - type: custom:weather-card
+      - type: custom:hui-element
+        card_type: weather-forecast
         entity: weather.openweathermap
-        current: true
-        details: true
-        hourly_forecast: true
-        number_of_forecasts: 5
+        show_forecast: true
       - type: custom:hui-element
         card_type: markdown
         content: >-

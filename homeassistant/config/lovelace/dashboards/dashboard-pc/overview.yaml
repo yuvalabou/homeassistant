@@ -58,7 +58,8 @@ cards:
   - type: entities
     entities:
       - type: custom:sun-card
-      - type: weather-forecast
+      - type: custom:hui-element
+        card_type: weather-forecast
         entity: weather.openweathermap
         show_forecast: true
         # current: true
