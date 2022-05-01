@@ -73,6 +73,7 @@ automation: !include_dir_merge_list automation
 backup:
 binary_sensor: !include_dir_merge_list components/binary_sensor
 blueprint:
+button:
 camera: !include_dir_merge_list components/camera
 counter:
 energy:
@@ -108,7 +109,7 @@ tts:
     language: he-il
     type: HilaNeural
     base_url: !secret base_url
-utility_meter: !include_dir_merge_named components/sensor/utility_meter
+utility_meter:
 zone: !include_dir_merge_list components/zone
 
 ##################################################
