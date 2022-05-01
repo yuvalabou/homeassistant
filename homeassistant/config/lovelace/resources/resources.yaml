@@ -46,7 +46,5 @@
   type: module
 - url: /hacsfiles/vacuum-card/vacuum-card.js
   type: module
-- url: /hacsfiles/weather-card/weather-card.js
-  type: module
 - url: /hacsfiles/thermal_comfort_icons/thermal_comfort_icons.js
   type: js
