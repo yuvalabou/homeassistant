@@ -26,3 +26,4 @@ exclude:
     - script
     - switch
     - timer
+    - button

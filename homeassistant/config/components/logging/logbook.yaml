@@ -12,7 +12,6 @@ exclude:
     - sensor.tts
     - sensor.load_5m
 
-    # - automation.waze_update_dynamic_sensors
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*

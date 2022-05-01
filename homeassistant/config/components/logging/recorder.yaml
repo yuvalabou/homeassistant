@@ -1,6 +1,5 @@
 ---
 
-# db_url: !secret postgres_addr
 purge_keep_days: 30
 exclude:
   entities:
@@ -29,3 +28,5 @@ exclude:
     - sun
     - timer
     - weather
+    - camera
+    - button
