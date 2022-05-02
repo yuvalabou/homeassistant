@@ -28,3 +28,11 @@
         'mdi:lightbulb' if is_state('binary_sensor.bathroom_light_is_on', 'on') else 'mdi:lightbulb-off'
       }}
 
+  - name: "Corridor Light is on"
+    unique_id: a9f6d18c-7441-4721-8a17-b01a1e886fee
+    state: >-
+      {{ is_state('light.corridor_light', 'on') }}
+    icon: >-
+      {{
+        'mdi:lightbulb' if is_state('binary_sensor.corridor_light_is_on', 'on') else 'mdi:lightbulb-off'
+      }}

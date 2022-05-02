@@ -15,6 +15,8 @@ cards:
       #   show_points: false
       - entity: sensor.ensuite_temperature
         show_points: false
+      - entity: sensor.bathroom_temperature
+        show_points: false
       - entity: sensor.openweathermap_temperature
         name: "Outside"
         show_points: false
@@ -49,6 +51,9 @@ cards:
       - entity: binary_sensor.ensuite_motion
         show_points: false
         color: '#C4BAB0'
+      - entity: binary_sensor.bathroom_motion
+        show_points: false
+        color: '#C4BAB0'
       - !include ../../resources/graph_card_day_bool.yaml
     state_map:
       - value: 'off'
@@ -72,6 +77,9 @@ cards:
         show_points: false
         color: '#7FB1CF'
       - entity: binary_sensor.bathroom_light_is_on
+        show_points: false
+        color: '#7FB1CF'
+      - entity: binary_sensor.corridor_light_is_on
         show_points: false
         color: '#7FB1CF'
       # - entity: binary_sensor.master_bedroom_light_is_on
