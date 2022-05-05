@@ -176,19 +176,6 @@ cards:
       - type: custom:button-card
         entity: switch.guest_mode
 
-  - type: horizontal-stack
-    cards:
-      - type: custom:button-card
-        entity: switch.shabbat_plate
-        name: "Oven"
-        icon: >-
-          [[[
-            if (entity.state == 'off')
-              return 'mdi:microwave-off';
-            else
-              return 'mdi:microwave';
-          ]]]
-
   - type: custom:auto-entities
     card:
       type: entities
@@ -327,7 +314,7 @@ cards:
         entity_id: vacuum.mi_vacuum
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
+          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int(default=0)) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:

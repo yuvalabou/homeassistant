@@ -126,7 +126,7 @@ cards:
         entity_id: vacuum.mi_vacuum
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int) / 60) | round(0) }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
+          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int(default=0)) / 60) | round(0) }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:
