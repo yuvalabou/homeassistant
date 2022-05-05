@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2022.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.4.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.5%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 [![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
@@ -32,20 +32,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 407 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 208 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 52 |
-| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 15 |
+| **Entities** | 412 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 207 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 53 |
+| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 16 |
 | **[Buttons]()** | 16 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 11 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 52 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 54 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 144436 |
-| Yaml | 5614 |
+| Python | 144250 |
+| Yaml | 5658 |
 
 -----
 
@@ -107,29 +107,33 @@
 
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Pyscript](https://github.com/custom-components/pyscript)
-- [ThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
+- [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Home connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
+- [Watchman](https://github.com/dummylabs/thewatchman)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
 
 ### Lovelace-UI Enhancements
 
+- [Airvisual Card](https://github.com/dnguyen800/air-visual-card)
 - [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
+- [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod) - Apply CSS styles to any card
+- [Compass Card](https://github.com/tomvanswam/compass-card)
+- [Decluttering Card](https://github.com/custom-cards/decluttering-card)
+- [Elapsed time Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [RGB light Card](https://github.com/bokub/rgb-light-card)
 - [Room Card](https://github.com/marcokreeft87/room-card)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
-- [Time-elapsed Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
-- [Vacuum Card](https://github.com/denysdovhan/vacuum-card)
-- [Weather Card](https://github.com/bramkragten/weather-card)
