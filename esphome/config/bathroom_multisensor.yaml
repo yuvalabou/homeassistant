@@ -23,7 +23,6 @@ wifi:
 
 captive_portal:
 logger:
-  level: VERBOSE
 api:
 ota:
 
@@ -33,26 +32,16 @@ i2c:
   scan: True
   frequency: 400kHz
 
-mcp23017:
-  - id: mcp23017_hub
-
 binary_sensor:
   - platform: gpio
     pin:
       number: D6
+      mode: INPUT_PULLUP
     name: "${upper_devicename} Motion"
     device_class: motion
     filters:
       - delayed_on: 500ms
       - delayed_off: 30s
-  # - platform: gpio
-  #   name: "${upper_devicename} Door"
-  #   device_class: door
-  #   pin:
-  #     mcp23xxx: mcp23017_hub
-  #     number: 8
-  #     mode: INPUT_PULLUP
-  #     inverted: false
   - platform: status
     name: "${upper_devicename}"
 
