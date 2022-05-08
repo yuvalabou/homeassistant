@@ -1,7 +1,7 @@
 ---
 
-- alias: "Vent - bind to light"
-  id: 9b100fdf-a569-4c1c-bb3c-a5c5270e2a5c
+- alias: "Vent - bind to light-on"
+  id: 954e3adf-5ebf-49c3-b112-1adab2df757e
   trigger:
     platform: state
     entity_id: light.bathroom_light
@@ -13,8 +13,8 @@
     data:
       entity_id: switch.vent
 
-- alias: "Vent - bind to light"
-  id: bc13b8f0-e6c4-4135-bf55-cc386a838f29
+- alias: "Vent - bind to light-off"
+  id: f36fc2be-3f7c-4d70-8391-edfda7504a18
   trigger:
     platform: state
     entity_id: light.bathroom_light

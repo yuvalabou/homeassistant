@@ -15,6 +15,7 @@
 - alias: "Home Assistant update notification"
   id: 52cbbc12-add7-4634-bd64-14888a23f357
   description: "Send a notification when there's an update availiable for Home Assistant"
+  mode: single
   trigger:
     platform: state
     entity_id: binary_sensor.docker_hub_core_update_available
