@@ -8,6 +8,7 @@ exclude:
     - sensor.hacs
     - sensor.random_number
     - sensor.openweathermap_weather_code
+    - sensor.watchman_last_updated
 
     - binary_sensor.random_boolean
     - binary_sensor.day
