@@ -54,7 +54,7 @@ panel_iframe:
 ##################################################
 #                     PERSONS                    #
 ##################################################
-person: !include_dir_merge_list components/person
+person:
 device_tracker: !include_dir_merge_list components/device_tracker
 
 ##################################################
