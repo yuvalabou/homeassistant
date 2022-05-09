@@ -1,0 +1,15 @@
+---
+
+- alias: "Cover - Open on arrival"
+  id: c5c5bc9b-4297-4ddd-b789-fb2211d11fab
+  trigger:
+    - platform: state
+      entity_id: person.yuval
+      to: 'home'
+    - platform: state
+      entity_id: person.yuval
+      to: 'home'
+  action:
+    service: cover.open_cover
+    data:
+      entity_id: cover.living_room_shutter
