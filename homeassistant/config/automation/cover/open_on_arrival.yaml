@@ -7,7 +7,7 @@
       entity_id: person.yuval
       to: 'home'
     - platform: state
-      entity_id: person.yuval
+      entity_id: person.tohar
       to: 'home'
   action:
     service: cover.open_cover
