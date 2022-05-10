@@ -11,7 +11,7 @@ esphome:
   board: nodemcuv2
 
 wifi:
-  ssid: !secret ssid
+  ssid: !secret wifi_ssid
   password: !secret wifi_passwd
   manual_ip:
     static_ip: !secret static_ensuite
