@@ -54,3 +54,19 @@ services:
       - TZ=Asia/Jerusalem
     devices:
       - /dev/ttyACM0:/dev/ttyACM0
+
+  unifi-controller:
+    image: lscr.io/linuxserver/unifi-controller:latest
+    container_name: "unifi-controller"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MEM_LIMIT=1024 #optional
+    volumes:
+      - /home/homeassistant/unifi/:/config
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+    restart: unless-stopped
