@@ -4,9 +4,3 @@ person.yuval:
   entity_picture: "/local/assets/yuval.jpg"
 person.tohar:
   entity_picture: "/local/assets/tohar.jpg"
-
-sensor.myip:
-  icon: mdi:ip-network
-
-# sensor.bathroom_mold_indicator:
-#   icon: mdi:water-percent-alert
