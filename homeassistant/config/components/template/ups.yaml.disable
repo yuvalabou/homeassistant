@@ -21,11 +21,3 @@
         (states('sensor.ups_load')|int * 0.01 * states('sensor.ups_nominal_power')|int * 0.8) | round(1)
       }}
     icon: mdi:current-dc
-
-  - name: "UPS energy Wh"
-    unique_id: 590a431f-170c-4ce9-accd-0b14765facf8
-    state_class: measurement
-    device_class: energy
-    unit_of_measurement: 'Wh'
-    state: >-
-      {{ states('sensor.ups_energy_usage_hourly') | float(0) }}
