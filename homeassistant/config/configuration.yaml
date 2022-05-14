@@ -84,9 +84,9 @@ home_connect_alt:
   client_secret: !secret hc_client_secret
 input_boolean:
 input_datetime:
-input_number: !include_dir_merge_named components/input_number
+input_number:
 input_select:
-input_text: !include_dir_merge_named components/input_text
+input_text:
 jewish_calendar:
   language: hebrew
 light: !include_dir_merge_list components/light
@@ -108,7 +108,7 @@ tts:
     type: HilaNeural
     base_url: !secret base_url
 utility_meter:
-zone: !include_dir_merge_list components/zone
+zone:
 
 ##################################################
 #                  LOG COMPONENTS                #
