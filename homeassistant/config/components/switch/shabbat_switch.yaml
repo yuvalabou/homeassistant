@@ -21,9 +21,9 @@
           data:
             entity_id: switch.ensuite_shabbat_select
       turn_off:
-      #   - service: input_boolean.turn_off
-      #     data:
-      #       entity_id: input_boolean.shabbat_mode
+        - service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.shabbat_mode
       #   - service: switch.turn_off
       #     data:
       #       entity_id: switch.living_room_shabbat_select
