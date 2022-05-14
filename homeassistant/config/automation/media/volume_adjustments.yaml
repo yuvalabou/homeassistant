@@ -1,0 +1,29 @@
+---
+
+- alias: "Nest - Adjust volume based on time"
+  id: 601a5853-78e9-4d45-b9c8-e7fe41895166
+  trigger:
+    - platform: time
+      at: '19:00:00'
+      id: 'quiet'
+    - platform: time
+      at: '09:00:00'
+      id: 'loud'
+  action:
+    - choose:
+      - conditions:
+        - condition: trigger
+          id: 'quiet'
+        sequence:
+          service: media_player.volume_set
+          entity_id: media_player.living_room
+          data:
+            volume_level: 0.3
+      - conditions:
+        - condition: trigger
+          id: 'loud'
+        sequence:
+          service: media_player.volume_set
+          entity_id: media_player.living_room
+          data:
+            volume_level: 0.7
