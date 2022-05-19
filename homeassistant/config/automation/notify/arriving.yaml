@@ -1,6 +1,6 @@
 ---
 
-- alias: "Yuval has left work"
+- alias: "Notify - Yuval has left work"
   description: "Notify at home that Yuval has left work, and arrive in x minutes"
   trigger:
     platform: state
@@ -11,4 +11,4 @@
   action:
     service: notify.nest_mini
     data:
-      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_current_location_to_home') }} דקות"
+      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות"
