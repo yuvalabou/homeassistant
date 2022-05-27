@@ -6,7 +6,11 @@
     platform: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'on'
-  condition: "{{ is_state('group.person', 'home') }}"
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+    - condition: numeric_state
+      entity_id: sensor.living_room_temperature
+      above: 25
   action:
     - service: climate.turn_on
       data:
@@ -14,7 +18,7 @@
     - delay: 2
     - service: climate.set_temperature
       data:
-        temperature: 25
+        temperature: 23
         hvac_mode: cool
       target:
         entity_id: climate.living_room
@@ -35,7 +39,6 @@
   trigger:
     platform: time
     at:
-      - '07:00:00'
       - '14:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
@@ -47,7 +50,7 @@
     - delay: 2
     - service: climate.set_temperature
       data:
-        temperature: 25
+        temperature: 23
         hvac_mode: cool
       target:
         entity_id: climate.living_room
