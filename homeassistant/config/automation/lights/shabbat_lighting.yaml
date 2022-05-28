@@ -37,7 +37,6 @@
     service: light.turn_off
     data:
       entity_id: light.public_lights
-      transition: 300
 
 - alias: "Lights - Shabbat morning lights"
   id: 3ac9405a-dde0-41f2-850b-413cb15a708d
@@ -51,22 +50,5 @@
     service: light.turn_on
     data:
       entity_id: light.public_lights
-      transition: 120
       brightness_pct: 70
       kelvin: 3600
-
-# - alias: "Lights - Shabbat morning dining lights"
-#   id: d2980177-8560-43f1-9fc4-26afd6406e73
-#   trigger:
-#     platform: time
-#     at: '09:30:00'
-#   condition:
-#     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-#     - "{{ is_state('group.person', 'home') }}"
-#   action:
-#     service: light.turn_on
-#     data:
-#       entity_id: light.dining_lights
-#       transition: 60
-#       brightness_pct: 100
-#       kelvin: 3800

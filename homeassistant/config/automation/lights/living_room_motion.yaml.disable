@@ -45,7 +45,6 @@
         entity_id:
           - light.wall_light_right
           - light.wall_light_left
-        transition: 30
 
 - alias: "Lights - Reset night light override"
   id: 1a225ce8-4fdd-4036-a8cc-ead0639719fc
