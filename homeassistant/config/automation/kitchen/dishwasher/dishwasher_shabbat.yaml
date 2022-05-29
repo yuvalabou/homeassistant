@@ -1,0 +1,25 @@
+---
+
+- alias: "Dishwasher - start at shabbat afternoon"
+  id: 3dcfc7f1-ee04-403f-b6a2-0ed67af48336
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-03:00:00'
+  condition:
+    - condition: time
+      weekday:
+        - sat
+  action:
+    - service: select.select_option
+      entity_id: select.400090386855001425_bsh_common_setting_powerstate
+      data:
+        option: 'BSH.Common.EnumType.PowerState.On'
+    - delay: 2
+    - service: select.select_option
+      entity_id: select.400090386855001425_programs
+      data:
+        option: 'Dishcare.Dishwasher.Program.Auto2'
+    - delay: 2
+    - service: button.press
+      entity_id: button.400090386855001425_start_pause
