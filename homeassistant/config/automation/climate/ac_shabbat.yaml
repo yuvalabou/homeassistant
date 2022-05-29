@@ -12,21 +12,9 @@
       entity_id: sensor.living_room_temperature
       above: 25
   action:
-    - service: climate.turn_on
+    - service: script.turn_on
       data:
-        entity_id: climate.living_room
-    - delay: 2
-    - service: climate.set_hvac_mode
-      data:
-        hvac_mode: cool
-      target:
-        entity_id: climate.living_room
-    - delay: 2
-    - service: climate.set_temperature
-      data:
-        temperature: 23
-      target:
-        entity_id: climate.living_room
+        entity_id: script.ac_cool
 
 - alias: "Climate - Turn off Living-room climate at Shabbat night"
   id: c7396673-d257-4267-a72f-060ee4d43603
@@ -49,18 +37,23 @@
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    - service: climate.turn_on
+    - service: script.turn_on
       data:
-        entity_id: climate.living_room
-    - delay: 2
-    - service: climate.set_hvac_mode
+        entity_id: script.ac_cool
+
+- alias: "Climate - Turn on when door is closed"
+  id: fe96ab5c-d38d-4617-9032-59f481ef98aa
+  trigger:
+    platform: time_pattern
+    minutes: 5
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    - condition: time
+      after: '14:00:00'
+    - "{{ is_state('binary_sensor.random_boolean', 'on')}}"
+    - "{{ is_state('binary_sensor.living_room_window_contact', 'off')}}"
+    - "{{ is_state('climate.living_room', 'off')}}"
+  action:
+    - service: script.turn_on
       data:
-        hvac_mode: cool
-      target:
-        entity_id: climate.living_room
-    - delay: 2
-    - service: climate.set_temperature
-      data:
-        temperature: 23
-      target:
-        entity_id: climate.living_room
+        entity_id: script.ac_cool

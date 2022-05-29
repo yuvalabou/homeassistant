@@ -24,3 +24,16 @@
     service: climate.turn_off
     data:
       entity_id: climate.living_room
+
+- alias: "Climate - Turn off when door is open"
+  id: 3e15ca2c-43bc-469e-958a-ce74bfb07502
+  trigger:
+    platform: state
+    entity_id: binary_sensor.random_boolean
+  condition:
+    - "{{ is_state('binary_sensor.living_room_window_contact', 'on')}}"
+    - "{{ not is_state('climate.living_room', 'off')}}"
+  action:
+    service: climate.turn_off
+    data:
+      entity_id: climate.living_room
