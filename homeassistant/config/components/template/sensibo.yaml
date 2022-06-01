@@ -17,3 +17,9 @@
     state: >-
       {{ state_attr('climate.living_room', 'temperature') | int(default=0) }}
     unit_of_measurement: '°C'
+
+- binary_sensor:
+  - name: "AC is on"
+    unique_id: 3aa3dbdd-b082-4cb5-a02c-743c1debf27a
+    state: >-
+      {{ not is_state('climate.living_room', 'off') }}
