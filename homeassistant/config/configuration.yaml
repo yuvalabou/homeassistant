@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202205            #
+#            Yuval Aboulafia - 202206            #
 ##################################################
 #                      CORE                      #
 ##################################################
@@ -75,9 +75,6 @@ button:
 camera: !include_dir_merge_list components/camera
 counter:
 energy:
-google:
-  client_id: !secret google_cal_id
-  client_secret: !secret google_cal_secret
 group: !include_dir_merge_named components/group
 home_connect_alt:
   client_id: !secret hc_client_id
