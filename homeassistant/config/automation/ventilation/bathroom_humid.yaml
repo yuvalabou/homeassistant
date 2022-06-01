@@ -5,7 +5,7 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.bathroom_humidity
-    above: 70
+    above: 80
   action:
     service: switch.turn_on
     data:
