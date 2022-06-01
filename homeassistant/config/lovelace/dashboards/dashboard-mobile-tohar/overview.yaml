@@ -62,9 +62,11 @@ cards:
       - type: custom:hui-element
         card_type: markdown
         content: >-
+          {% if states.sensor.israel_weather_forecast %}
           {{
             states.sensor.israel_weather_forecast.attributes.entries[0].summary
           }}
+          {% endif %}
       - type: custom:air-visual-card
         hide_title: true
         air_pollution_level: sensor.u_s_air_pollution_level
