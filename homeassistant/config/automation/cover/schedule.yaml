@@ -19,6 +19,7 @@
     at: '23:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: cover.close_cover
     data:
