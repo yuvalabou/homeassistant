@@ -44,15 +44,14 @@
 - alias: "Climate - Turn on when door is closed"
   id: fe96ab5c-d38d-4617-9032-59f481ef98aa
   trigger:
-    platform: time_pattern
-    minutes: 5
+    platform: state
+    entity_id: binary_sensor.random_boolean
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - condition: time
       after: '14:00:00'
-    - "{{ is_state('binary_sensor.random_boolean', 'on')}}"
-    - "{{ is_state('binary_sensor.living_room_window_contact', 'off')}}"
-    - "{{ is_state('climate.living_room', 'off')}}"
+    - "{{ is_state('binary_sensor.living_room_window_contact', 'off') }}"
+    - "{{ is_state('climate.living_room', 'off') }}"
   action:
     - service: script.turn_on
       data:

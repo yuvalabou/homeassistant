@@ -31,8 +31,8 @@
     platform: state
     entity_id: binary_sensor.random_boolean
   condition:
-    - "{{ is_state('binary_sensor.living_room_window_contact', 'on')}}"
-    - "{{ not is_state('climate.living_room', 'off')}}"
+    - "{{ is_state('binary_sensor.living_room_window_contact', 'on') }}"
+    - "{{ not is_state('climate.living_room', 'off') }}"
   action:
     service: climate.turn_off
     data:
