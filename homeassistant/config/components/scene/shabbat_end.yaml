@@ -9,8 +9,7 @@
     #   state: 'off'
     light.living_room_lights:
       state: 'on'
-      brightness_pct: 80
-      kelvin: 3200
+      brightness: 200
     # light.important_lights:
     #   state: 'off'
     # light.kids_ambient_lights:
