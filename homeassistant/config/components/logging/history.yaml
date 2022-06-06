@@ -28,3 +28,4 @@ exclude:
     - switch
     - timer
     - button
+    - select
