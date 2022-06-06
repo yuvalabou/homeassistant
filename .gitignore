@@ -15,6 +15,7 @@ deps
 tts
 assets
 floor_plan
+image
 cam_captures
 zigbee2mqtt/*.json
 mosquitto/data
