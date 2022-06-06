@@ -31,8 +31,7 @@
     state: >-
       {{
         as_timestamp(
-        states('sensor.jewish_calendar_upcoming_candle_lighting'), 'Not ready'
-        ) |
+        states('sensor.jewish_calendar_upcoming_candle_lighting')) |
         timestamp_custom('%H:%M') == (now().strftime("%s") |
         float(default=0) + (10*60) - (10800) ) |
         timestamp_custom("%H:%M")
@@ -43,8 +42,7 @@
     state: >-
       {{
         as_timestamp(
-          states('sensor.jewish_calendar_upcoming_candle_lighting'), 'Not ready'
-        ) |
+          states('sensor.jewish_calendar_upcoming_candle_lighting')) |
         timestamp_custom('%H:%M') == (now().strftime("%s") |
         float(default=0) + (30*60) - (10800) ) |
         timestamp_custom("%H:%M")
