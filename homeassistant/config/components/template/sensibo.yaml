@@ -6,17 +6,20 @@
     state: >-
       {{ state_attr('climate.living_room', 'current_temperature') | float(default=0.0) }}
     unit_of_measurement: '°C'
+    icon: mdi:thermometer
   - name: "Living room humidity"
     unique_id: 0b248940-9fb7-48d9-bb07-c7a0713550d4
     state: >-
       {{ state_attr('climate.living_room', 'current_humidity') | float(default=0.0) }}
     unit_of_measurement: '%'
+    icon: mdi:water-percent
 
   - name: "Living room set temp"
     unique_id: 806d1cef-b238-4754-bb40-49af6e5c540f
     state: >-
       {{ state_attr('climate.living_room', 'temperature') | int(default=0) }}
     unit_of_measurement: '°C'
+    icon: mdi:thermometer
 
 - binary_sensor:
   - name: "AC is on"

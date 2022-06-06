@@ -4,7 +4,7 @@ title: "Living Room"
 icon: mdi:sofa
 cards:
   - type: custom:room-card
-    title: Living room
+    title: "Living room"
     entity: light.living_room_lights
     tap_action:
       action: toggle
@@ -24,8 +24,7 @@ cards:
           state_off: mdi:door-closed
       - entity: sensor.living_room_shutter_position
         show_icon: true
-      - sensor.living_room_illuminance
-      - sensor.motion_sensor_temperature
+      - entity: sensor.living_room_illuminance
     cards:
       - type: horizontal-stack
         cards:
@@ -65,6 +64,11 @@ cards:
               labels_secondary: false
               legend: false
               extrema: true
+      - type: custom:simple-thermostat
+        entity: climate.living_room
+        header: false
+        layout:
+          step: row
       - type: entities
         show_header_toggle: false
         entities:
@@ -73,12 +77,8 @@ cards:
       - type: glance
         columns: 4
         entities:
-          - entity: binary_sensor.kitchen_motion
-            name: "Motion"
           - entity: sensor.living_room_thermal_comfort_perception
             name: "Comfort scale"
-          - entity: sensor.living_room_illuminance
-            name: "Light"
       # - type: custom:mini-graph-card
       #   points_per_hour: 3
       #   entities:
@@ -114,9 +114,6 @@ cards:
             entity: light.wall_light_right
           - type: light
             entity: light.wall_light_left
-
-  - type: custom:simple-thermostat
-    entity: climate.living_room
 
   - type: entities
     entities:

@@ -194,7 +194,7 @@ cards:
         - entity_id: '*lights'
 
   - type: custom:room-card
-    title: Living room
+    title: "Living room"
     entity: light.living_room_lights
     tap_action:
       action: toggle
@@ -214,8 +214,7 @@ cards:
           state_off: mdi:door-closed
       - entity: sensor.living_room_shutter_position
         show_icon: true
-      - sensor.living_room_illuminance
-      - sensor.motion_sensor_temperature
+      - entity: sensor.living_room_illuminance
     cards:
       - type: horizontal-stack
         cards:
@@ -255,6 +254,11 @@ cards:
               labels_secondary: false
               legend: false
               extrema: true
+      - type: custom:simple-thermostat
+        entity: climate.living_room
+        header: false
+        layout:
+          step: row
       - type: entities
         show_header_toggle: false
         entities:
@@ -263,12 +267,8 @@ cards:
       - type: glance
         columns: 4
         entities:
-          - entity: binary_sensor.kitchen_motion
-            name: "Motion"
           - entity: sensor.living_room_thermal_comfort_perception
             name: "Comfort scale"
-          - entity: sensor.living_room_illuminance
-            name: "Light"
       # - type: custom:mini-graph-card
       #   points_per_hour: 3
       #   entities:
@@ -305,9 +305,6 @@ cards:
           - type: light
             entity: light.wall_light_left
 
-  - type: custom:simple-thermostat
-    entity: climate.living_room
-
   - type: entities
     entities:
       - type: custom:hui-element
@@ -320,6 +317,96 @@ cards:
         content: |
           Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
           It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int(default=0)) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
+
+  - type: entities
+    entities:
+      - type: custom:button-card
+        color_type: label-card
+        color: rgb(44, 109, 214)
+        name: "Master bedroom"
+      # - type: custom:decluttering-card
+      #   template: env
+      #   variables:
+      #     - room: master_bedroom
+      - type: custom:decluttering-card
+        template: room_multisensor
+        variables:
+          - room: master_bedroom
+      # - type: custom:hui-element
+      #   card_type: horizontal-stack
+      #   cards:
+      #     - type: custom:button-card
+      #       entity: switch.ensuite_heater
+      #       state:
+      #         - value: 'on'
+      #           icon: mdi:thermometer-chevron-up
+      #           color: '#F75C04'
+      #         - value: 'off'
+      #           icon: mdi:thermometer-off
+      #     - type: custom:button-card
+      #       color_type: blank-card
+
+  - type: custom:room-card
+    title: "Master bedroom"
+    entity: light.master_bedroom_light
+    tap_action:
+      action: toggle
+    icon: mdi:lightbulb-outline
+    info_entities:
+      - entity: binary_sensor.master_bedroom_motion
+        show_icon: true
+      - entity: binary_sensor.master_bedroom_door_contact
+        show_icon: true
+        icon:
+          state_on: mdi:door-open
+          state_off: mdi:door-closed
+      - sensor.master_bedroom_illuminance
+      - sensor.master_bedroom_motion
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_temperature
+                name: "Temperature"
+                show_points: false
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+          - type: custom:mini-graph-card
+            entities:
+              - entity: sensor.master_bedroom_humidity
+                name: "Humidity"
+                color: '#74A4F4'
+              - !include ../../resources/graph_card_sun_elevation.yaml
+            font_size: 80
+            lower_bound: 0
+            upper_bound: 100
+            points_per_hour: 3
+            show:
+              fill: fade
+              points: false
+              labels: false
+              labels_secondary: false
+              legend: false
+              extrema: true
+      - type: glance
+        columns: 4
+        entities:
+          - entity: binary_sensor.master_bedroom_motion
+            name: "Motion"
+          - entity: sensor.master_bedroom_thermal_comfort_perception
+            name: "Comfort scale"
+          - entity: sensor.master_bedroom_illuminance
+            name: "Light"
 
   - type: entities
     entities:
