@@ -88,6 +88,7 @@ jewish_calendar:
   language: hebrew
 light: !include_dir_merge_list components/light
 media_source:
+mqtt: !include_dir_merge_list components/mqtt
 notify: !include_dir_merge_list components/notify
 scene: !include_dir_merge_list components/scene
 script: !include_dir_merge_named scripts
