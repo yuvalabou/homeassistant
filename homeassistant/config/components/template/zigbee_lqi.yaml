@@ -86,7 +86,7 @@
         mdi:signal-off
       {% endif %}
 
-  - name: "Ensuite door linkquality percent"
+  - name: "Master bedroom door linkquality percent"
     unique_id: 1c4d4000-84b3-456a-80de-400ff02e0101
     unit_of_measurement: "%"
     state: >-
