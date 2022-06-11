@@ -53,7 +53,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|YAML           |4           |12     |25         |
+|YAML           |4           |12     |26         |
 
 -----
 
@@ -70,7 +70,7 @@
 | CC2531 (HUB) | Aqara button | Aqara Door and Window sensor |
 |:------------:|:------------:|:----------------------------:|
 |<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width = 100>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width = 100>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width = 100>|
-|1             |(2)           |3                             |
+|1             |(2)           |4                             |
 
 
 ### Custom devices designed by me
@@ -89,7 +89,7 @@
 | ESPHome          |
 | Mosquitto broker |
 | zigbee2mqtt      |
-~~| Unifi-Controller |~~
+| Unifi-Controller |
 
 -----
 
@@ -132,6 +132,7 @@
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [RGB light Card](https://github.com/bokub/rgb-light-card)
 - [Room Card](https://github.com/marcokreeft87/room-card)
+- [Sankey Chart](https://github.com/MindFreeze/ha-sankey-chart)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
