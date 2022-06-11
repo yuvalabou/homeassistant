@@ -6,7 +6,6 @@
     platform: time_pattern
     minutes: 5
   condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
     - "{{ is_state('binary_sensor.bathroom_light_is_on', 'off') }}"
     - condition: numeric_state
       entity_id: sensor.bathroom_humidity
