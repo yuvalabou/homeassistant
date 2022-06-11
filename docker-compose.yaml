@@ -24,6 +24,7 @@ services:
     #   - /dev/ttyUSB0:/dev/ttyUSB0
     environment:
       - TZ=Asia/Jerusalem
+      - ESPHOME_DASHBOARD_USE_PING=true
     ports:
       - 6052:6052
     restart: unless-stopped
