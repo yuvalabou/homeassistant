@@ -6,6 +6,8 @@
     platform: numeric_state
     entity_id: sensor.bathroom_humidity
     above: 80
+  condition:
+    - "{{ not is_state('group.person', 'home') }}"
   action:
     service: switch.turn_on
     data:
