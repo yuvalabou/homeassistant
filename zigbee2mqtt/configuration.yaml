@@ -16,3 +16,5 @@ devices:
     friendly_name: Ensuite Door
   '0x54ef4410002b73e4':
     friendly_name: Master Bedroom Door
+  '0x54ef4410002c05e4':
+    friendly_name: Gas Meter
