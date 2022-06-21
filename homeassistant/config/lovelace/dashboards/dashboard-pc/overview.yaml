@@ -196,3 +196,26 @@ cards:
           state: 'unavailable'
       exclude:
         - entity_id: '*lights'
+
+  - type: custom:sankey-chart
+    show_names: true
+    unit_prefix: k
+    wide: true
+    round: 2
+    sections:
+      - entities:
+        - entity_id: sensor.total_energy
+          children:
+            - sensor.bathroom_light_energy
+            - sensor.corridor_light_energy
+            - sensor.deltaco_energy
+            - sensor.ensuite_heater_energy
+            - sensor.living_room_shutter_energy
+            - sensor.vent_energy
+      - entities:
+        - sensor.bathroom_light_energy
+        - sensor.corridor_light_energy
+        - sensor.deltaco_energy
+        - sensor.ensuite_heater_energy
+        - sensor.living_room_shutter_energy
+        - sensor.vent_energy
