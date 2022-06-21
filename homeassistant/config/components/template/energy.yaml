@@ -1,0 +1,49 @@
+---
+
+- sensor:
+  - name: "Total Energy"
+    unique_id: eabefa5e-f655-45d5-bcf7-54f187eb570a
+    state: >-
+      {{
+        [
+          states('sensor.phase_a_energy'),
+          states('sensor.phase_b_energy'),
+          states('sensor.phase_c_energy'),
+        ] | map('float') | sum
+      }}
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    attributes:
+      last_reset: "1970-01-01T00:00:00+00:00"
+    availability: >-
+      {{
+        [
+          states('sensor.phase_a_energy'),
+          states('sensor.phase_b_energy'),
+          states('sensor.phase_c_energy'),
+        ] | map('is_number') | min
+      }}
+  - name: "Total Energy returned"
+    unique_id: 96944c88-5e61-4039-8703-9945e02711d4
+    state: >-
+      {{
+        [
+          states('sensor.phase_a_energy_returned'),
+          states('sensor.phase_b_energy_returned'),
+          states('sensor.phase_c_energy_returned'),
+        ] | map('float') | sum
+      }}
+    unit_of_measurement: "kWh"
+    device_class: energy
+    state_class: total_increasing
+    attributes:
+      last_reset: "1970-01-01T00:00:00+00:00"
+    availability: >-
+        {{
+          [
+            states('sensor.phase_a_energy_returned'),
+            states('sensor.phase_b_energy_returned'),
+            states('sensor.phase_c_energy_returned'),
+          ] | map('is_number') | min
+        }}
