@@ -1,14 +1,14 @@
 """ Implement the Select entities of this implementation """
 from __future__ import annotations
 import logging
-from home_connect_async import Appliance, HomeConnect, HomeConnectError, Events
+from home_connect_async import Appliance, HomeConnect, HomeConnectError, Events, ConditionalLogger as CL
 from homeassistant.components.select import SelectEntity
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType
 
-from .common import InteractiveEntityBase, EntityManager
+from .common import InteractiveEntityBase, EntityManager, is_boolean_enum
 from .const import DEVICE_ICON_MAP, DOMAIN, SPECIAL_ENTITIES
 
 _LOGGER = logging.getLogger(__name__)
@@ -34,10 +34,11 @@ async def async_setup_entry(hass:HomeAssistant , config_entry:ConfigType, async_
                             device = OptionSelect(appliance, option.key)
                             entity_manager.add(device)
 
-        for setting in appliance.settings.values():
-            if setting.key not in SPECIAL_ENTITIES['ignore'] and setting.allowedvalues and len(setting.allowedvalues)>1:
-                device = SettingsSelect(appliance, setting.key)
-                entity_manager.add(device)
+        if appliance.settings:
+            for setting in appliance.settings.values():
+                if setting.key not in SPECIAL_ENTITIES['ignore'] and setting.allowedvalues and len(setting.allowedvalues)>1 and not is_boolean_enum(setting.allowedvalues):
+                    device = SettingsSelect(appliance, setting.key)
+                    entity_manager.add(device)
 
         entity_manager.register()
 
@@ -89,16 +90,21 @@ class ProgramSelect(InteractiveEntityBase, SelectEntity):
     @property
     def current_option(self) -> str:
         """Return the selected entity option to represent the entity state."""
-        apl = self._appliance
-        key = apl.startonly_program.key if apl.startonly_program else apl.selected_program.key if apl.selected_program else None
-        if key in self._appliance.available_programs:
-            # The API sometimes returns programs which are not one of the avilable programs so we ignore it
-            return key
+        current_program = self._appliance.get_applied_program()
+        if current_program:
+            if self._appliance.available_programs and current_program.key in self._appliance.available_programs:
+                # The API sometimes returns programs which are not one of the avilable programs so we ignore it
+                CL.debug(_LOGGER, CL.LogMode.VERBOSE, "Current selected program is %s", current_program.key)
+                return current_program.key
+            else:
+                CL.debug(_LOGGER, CL.LogMode.VERBOSE, "Current program %s is not in available_programs", current_program.key)
+        else:
+            CL.debug(_LOGGER, CL.LogMode.VERBOSE, "Current program is None")
         return None
 
     async def async_select_option(self, option: str) -> None:
         try:
-            await self._appliance.async_select_program(key=option)
+            await self._appliance.async_select_program(program_key=option)
         except HomeConnectError as ex:
             if ex.error_description:
                 raise HomeAssistantError(f"Failed to set the selected program: {ex.error_description} ({ex.code} - {self._key}={option})")
@@ -148,7 +154,7 @@ class OptionSelect(InteractiveEntityBase, SelectEntity):
         option = self._appliance.get_applied_program_available_option(self._key)
         if option:
             vals = option.allowedvalues.copy()
-            vals.append('')
+            #vals.append('')
             return vals
 
         return []
@@ -158,14 +164,12 @@ class OptionSelect(InteractiveEntityBase, SelectEntity):
         """Return the selected entity option to represent the entity state."""
         # if self._appliance.selected_program.options[self._key].value not in self.options:
         #     _LOGGER.debug("The current option is not in the list of available options")
-        if self.program_option_available:
-            if self._appliance.selected_program.options[self._key].value == '':
-                _LOGGER.error("Returning empty option value for %s", self._key)
-            #_LOGGER.info("Current value for %s : %s", self._key, self._appliance.selected_program.options[self._key].value)
-            return self._appliance.selected_program.options[self._key].value
-        else:
-            #_LOGGER.info("Current value for %s : %s", self._key, None)
-            return None
+        option = self._appliance.get_applied_program_option(self._key)
+        if option:
+            CL.debug(_LOGGER, CL.LogMode.VERBOSE, "Option %s current value: %s", self._key, option.value)
+            return option.value
+        CL.debug(_LOGGER, CL.LogMode.VERBOSE, "Option %s current value is None", self._key)
+        return None
 
     async def async_select_option(self, option: str) -> None:
         if option == '':
@@ -250,7 +254,7 @@ class DelayedStartSelect(InteractiveEntityBase, SelectEntity):
         available = super().program_option_available
         if not available:
             self._current = '0:00'
-            self._appliance.clear_start_option(self._key)
+            self._appliance.clear_startonly_option(self._key)
         return available
 
     @property
@@ -266,7 +270,7 @@ class DelayedStartSelect(InteractiveEntityBase, SelectEntity):
                 options.append(f"{int(t/2)}:{(t%2)*30:02}")
         else:
             self._current = '0:00'
-            self._appliance.clear_start_option(self._key)
+            self._appliance.clear_startonly_option(self._key)
         return options
 
     @property
@@ -276,11 +280,11 @@ class DelayedStartSelect(InteractiveEntityBase, SelectEntity):
     async def async_select_option(self, option: str) -> None:
         self._current = option
         if option == '0:00':
-            self._appliance.clear_start_option(self._key)
+            self._appliance.clear_startonly_option(self._key)
             return
         parts = option.split(':')
         delay = int(parts[0])*3600 + int(parts[1])*60
-        self._appliance.set_start_option(self._key, delay)
+        self._appliance.set_startonly_option(self._key, delay)
 
     async def async_on_update(self, appliance:Appliance, key:str, value) -> None:
         if key == Events.PROGRAM_FINISHED:

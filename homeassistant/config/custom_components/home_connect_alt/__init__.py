@@ -6,7 +6,7 @@ import logging
 from datetime import datetime
 
 import voluptuous as vol
-from home_connect_async import Appliance, HomeConnect, HomeConnectError, Events
+from home_connect_async import Appliance, HomeConnect, Events, ConditionalLogger
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, Platform
 from homeassistant.core import Event, HomeAssistant, HomeAssistantError
@@ -18,6 +18,7 @@ from homeassistant.helpers import storage
 from homeassistant.helpers.typing import ConfigType
 
 from . import api, config_flow
+from .common import Configuration
 from .const import *
 from .services import Services
 
@@ -32,7 +33,9 @@ CONFIG_SCHEMA = vol.Schema(
                 vol.Optional(CONF_SIMULATE, default=False): cv.boolean,
                 vol.Optional(CONF_CACHE, default=True): cv.boolean,
                 vol.Optional(CONF_LANG, default=None): vol.Any(str, None),
-                vol.Optional(CONF_SENSORS_TRANSLATION, default=None): vol.Any(str, None)
+                vol.Optional(CONF_SENSORS_TRANSLATION, default=None): vol.Any(str, None),
+                vol.Optional(CONF_NAME_TEMPLATE, default=None): vol.Any(str, None),
+                vol.Optional(CONF_LOG_MODE, default=None): vol.Any(int, None)
             }
         )
     },
@@ -85,6 +88,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     lang = conf[CONF_LANG] # if conf[CONF_LANG] != "" else None
     host = SIM_HOST if simulate else API_HOST
     use_cache = conf[CONF_CACHE]
+    logmode = conf[CONF_LOG_MODE] if conf[CONF_LOG_MODE] else ConditionalLogger.LogMode.REQUESTS
+    Configuration.set_global_config(conf)
 
     # If using an aiohttp-based API lib
     auth = api.AsyncConfigEntryAuth(
@@ -102,6 +107,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     #     except HomeConnectError as ex:
     #         _LOGGER.warning("Failed to create the HomeConnect object", exc_info=ex)
     #         return False
+    ConditionalLogger.mode(logmode)
     homeconnect = await HomeConnect.async_create(auth, delayed_load=True, lang=lang)
 
     conf[entry.entry_id] = auth
@@ -258,6 +264,15 @@ def register_services(hass:HomeAssistant, homeconnect:HomeConnect) -> Services:
     )
     hass.services.async_register(DOMAIN, "stop_program", services.async_stop_program, schema=stop_program_schema)
 
+    set_program__option_scema = vol.Schema(
+        {
+            vol.Required('device_id'): cv.string,
+            vol.Required('key'): cv.string,
+            vol.Required('value'): vol.Any(str, int, float, bool)
+        }
+    )
+    hass.services.async_register(DOMAIN, "set_program_option", services.async_set_program_option, schema=set_program__option_scema)
+
     return services
 
 
@@ -279,7 +294,7 @@ def register_events_publisher(hass:HomeAssistant, homeconnect:HomeConnect):
             hass.bus.async_fire(f"{DOMAIN}_event", event_data)
             _LOGGER.debug("Published event to Home Assistant event bus: %s = %s", key, str(value))
         else:
-            _LOGGER.debug("Skipped published of duplicate event to Home Assistant event bus: %s = %s", key, str(value))
+            _LOGGER.debug("Skipped publishing of duplicate event to Home Assistant event bus: %s = %s", key, str(value))
 
 
     def register_appliance(appliance:Appliance):
