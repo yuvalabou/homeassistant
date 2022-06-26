@@ -1,0 +1,57 @@
+---
+
+i2c:
+  sda: D2
+  scl: D1
+  scan: True
+  frequency: 400kHz
+
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: D6
+      mode: INPUT_PULLUP
+    name: "${upper_devicename} Motion"
+    device_class: motion
+    filters:
+      - delayed_on: 500ms
+      - delayed_off: 30s
+  - platform: status
+    name: "${upper_devicename}"
+
+sensor:
+  - platform: bme280
+    temperature:
+      name: "${upper_devicename} Temperature"
+      id: ${template_id}_temperature
+      oversampling: 16x
+    pressure:
+      name: "${upper_devicename} Pressure"
+    humidity:
+      name: "${upper_devicename} Humidity"
+      id: ${template_id}_humidity
+    address: 0x76
+    update_interval: 60s
+
+  - platform: bh1750
+    name: "${upper_devicename} Illuminance"
+    id: ${template_id}_illuminance
+    address: 0x23
+    update_interval: 60s
+  - platform: template
+    name: "${upper_devicename} Percieved Brightness"
+    id: ${template_id}_percieved_brightness
+    unit_of_measurement: "%"
+    lambda: |-
+      return ((log10(id(${template_id}_illuminance).state) / 5) * 100);
+
+button:
+  - platform: restart
+    name: "Restart ${upper_devicename}"
+
+switch:
+  - platform: gpio
+    name: "${upper_devicename} Shabbat Select"
+    pin:
+      number: D5
+      inverted: yes
