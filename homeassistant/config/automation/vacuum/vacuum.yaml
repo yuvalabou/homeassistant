@@ -19,12 +19,13 @@
         entity_id: vacuum.mi_vacuum
     - service: notify.family
       data:
+        message: "Vacuum has started the daily cleaning"
         title: "Cleaning started"
         data:
           image: '/local/assets/notification_images/here_i_go_killing_again.jpg'
-        actions:
-          - action: 'CANCEL'
-            title: "Cancel cleaning"
+          actions:
+            - action: CANCEL
+              title: Cancel cleaning
 
 - alias: "Vacuum - Cancel on response"
   id: d6b1aa9c-fcc3-427a-bfa1-372f76612011
@@ -40,6 +41,7 @@
     - service: notify.family
       data:
         title: "Cleaning stopped"
+        message: "Cleaning stopped"
 
 - alias: "Vacuum - Return to dock if error for 1 hr"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
