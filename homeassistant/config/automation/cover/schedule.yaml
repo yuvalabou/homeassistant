@@ -6,7 +6,7 @@
     platform: time
     at: '06:15:00'
   condition:
-    - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('zone.home', 0) }}"
   action:
     service: cover.open_cover
     data:
@@ -18,7 +18,7 @@
     platform: time
     at: '23:00:00'
   condition:
-    - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('zone.home', 0) }}"
     - "{{ not is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: cover.close_cover

@@ -7,7 +7,7 @@
     entity_id: binary_sensor.red_alert
     to: 'on'
   condition:
-    - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('zone.home', 0) }}"
   action:
     service: notify.family
     data:

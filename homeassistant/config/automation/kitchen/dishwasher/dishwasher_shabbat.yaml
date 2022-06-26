@@ -10,6 +10,7 @@
     - condition: time
       weekday:
         - sat
+    - "{{ not is_state('zone.home', 0) }}"
   action:
     - service: select.select_option
       entity_id: select.400090386855001425_bsh_common_setting_powerstate

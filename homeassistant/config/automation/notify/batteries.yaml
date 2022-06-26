@@ -38,7 +38,7 @@
       - conditions:
         - condition: trigger
           id: 'tablet'
-        - "{{ is_state('gruop.person', 'home') }}"
+        - "{{ not is_state('zone.home', 0) }}"
         sequence:
           service: notify.nest_mini
           data:

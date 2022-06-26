@@ -7,7 +7,7 @@
     at: '06:10:00'
   condition:
     - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"
-    - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('zone.home', 0) }}"
   action:
     service: light.turn_on
     data:
