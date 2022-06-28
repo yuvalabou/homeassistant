@@ -1,5 +1,7 @@
 ---
 
+- url: hacsfiles/lovelace-mushroom/mushroom.js
+  type: module
 - url: /hacsfiles/air-visual-card/air-visual-card.js
   type: js
 - url: /hacsfiles/bar-card/bar-card.js
