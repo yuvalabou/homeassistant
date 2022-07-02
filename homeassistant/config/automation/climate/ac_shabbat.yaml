@@ -11,7 +11,7 @@
     - condition: numeric_state
       entity_id: sensor.living_room_temperature
       above: 25
-    - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer Outside') }}"
+    - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer outside') }}"
   action:
     - service: script.turn_on
       data:
@@ -41,7 +41,7 @@
     - "{{ is_state('binary_sensor.living_room_window_contact', 'off') }}"
     - "{{ is_state('climate.living_room', 'off') }}"
     - "{{ not is_state('zone.home', 0) }}"
-    - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer Outside') }}"
+    - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer outside') }}"
   action:
     - service: script.turn_on
       data:

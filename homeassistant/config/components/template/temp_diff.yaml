@@ -5,7 +5,7 @@
     unique_id: 8c57f5ee-d766-49d5-8121-5604d704481c
     state: >-
       {{
-        'Cooler outside'
+        'Colder outside'
         if
         states('sensor.openweathermap_temperature') < states('sensor.living_room_temperature')
         else
