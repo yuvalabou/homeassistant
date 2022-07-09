@@ -2,59 +2,6 @@
 
 title: "Overview"
 cards:
-  - type: horizontal-stack
-    cards:
-      - type: custom:decluttering-card
-        template: person
-        variables:
-          - name: yuval
-      - type: custom:decluttering-card
-        template: person
-        variables:
-          - name: tohar
-
-  - type: entities
-    title: "זמני היום"
-    show_header_toggle: false
-    entities:
-      - entity: sensor.jewish_calendar_date
-        name: "תאריך"
-      - type: conditional
-        conditions:
-          - entity: binary_sensor.tzom
-            state: 'on'
-        row:
-          entity: binary_sensor.tzom
-      - type: conditional
-        conditions:
-          - entity: binary_sensor.is_omer
-            state: 'on'
-        row:
-          entity: sensor.jewish_calendar_day_of_the_omer
-          name: "ספירת העומר"
-      - type: divider
-      - entity: sensor.jewish_calendar_parshat_hashavua
-        name: "פרשת השבוע"
-      - entity: sensor.jewish_calendar_upcoming_candle_lighting
-        type: custom:multiple-entity-row
-        name: "הדלקת נרות"
-        format: relative
-        entities:
-          - entity: sensor.jewish_calendar_upcoming_candle_lighting
-            format: time
-            name: false
-      - entity: sensor.jewish_calendar_upcoming_havdalah
-        type: custom:multiple-entity-row
-        name: "הבדלה"
-        format: relative
-        entities:
-          - entity: sensor.jewish_calendar_upcoming_havdalah
-            format: time
-            name: false
-      - type: divider
-      - entity: sensor.jewish_calendar_daf_yomi
-        name: "דף יומי"
-
   - type: entities
     entities:
       - type: custom:sun-card
@@ -169,15 +116,6 @@ cards:
             name: inside
             align_controls: right
 
-  - type: horizontal-stack
-    cards:
-      - type: custom:button-card
-        entity: switch.night_light_override
-      - type: custom:button-card
-        entity: switch.disable_auto_clean
-      - type: custom:button-card
-        entity: switch.guest_mode
-
   - type: custom:auto-entities
     card:
       type: entities
@@ -193,82 +131,6 @@ cards:
       exclude:
         - entity_id: '*lights'
 
-  - type: custom:room-card
-    title: "Living room"
-    entity: light.living_room_lights
-    tap_action:
-      action: toggle
-    icon: mdi:lightbulb-outline
-    info_entities:
-      - entity: binary_sensor.living_room_motion
-        show_icon: true
-      - entity: binary_sensor.main_door
-        show_icon: true
-        icon:
-          state_on: mdi:door-open
-          state_off: mdi:door-closed
-      - entity: binary_sensor.living_room_window_contact
-        show_icon: true
-        icon:
-          state_on: mdi:door-open
-          state_off: mdi:door-closed
-      - entity: sensor.living_room_shutter_position
-        show_icon: true
-      - entity: sensor.living_room_illuminance
-    cards:
-      - type: horizontal-stack
-        cards:
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.living_room_temperature
-                name: "Temperature"
-                show_points: false
-              - entity: sensor.living_room_set_temp
-                color: 'white'
-                show_fill: false
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            color_thresholds: !include ../../resources/graph_card_temperature_thresholds.yaml
-            points_per_hour: 3
-            show:
-              fill: fade
-              points: false
-              labels: false
-              labels_secondary: false
-              legend: false
-              extrema: true
-          - type: custom:mini-graph-card
-            entities:
-              - entity: sensor.living_room_humidity
-                name: "Humidity"
-                color: '#74A4F4'
-              - !include ../../resources/graph_card_sun_elevation.yaml
-            font_size: 80
-            lower_bound: 0
-            upper_bound: 100
-            points_per_hour: 3
-            show:
-              fill: fade
-              points: false
-              labels: false
-              labels_secondary: false
-              legend: false
-              extrema: true
-      - type: custom:simple-thermostat
-        entity: climate.living_room
-        header: false
-        layout:
-          step: row
-      - type: entities
-        show_header_toggle: false
-        entities:
-          - entity: cover.living_room_shutter
-            name: "Shutter"
-      - type: glance
-        columns: 4
-        entities:
-          - entity: sensor.living_room_thermal_comfort_perception
-            name: "Comfort scale"
       # - type: custom:mini-graph-card
       #   points_per_hour: 3
       #   entities:
@@ -304,19 +166,6 @@ cards:
             entity: light.wall_light_right
           - type: light
             entity: light.wall_light_left
-
-  - type: entities
-    entities:
-      - type: custom:hui-element
-        card_type: picture-entity
-        entity: vacuum.mi_vacuum
-        camera_image: camera.vacuum_map
-      - type: custom:hui-element
-        card_type: markdown
-        entity_id: vacuum.mi_vacuum
-        content: |
-          Last cleaned at {{ as_timestamp(states('sensor.mi_vacuum_last_clean_end')) | timestamp_custom('%A at %H:%M')}}
-          It took {{ ((states('sensor.mi_vacuum_last_clean_duration') | int(default=0)) / 60) | int }} minutes to clean {{ (states('sensor.mi_vacuum_last_clean_area') | round(1)) }} meters.
 
   - type: entities
     entities:
@@ -501,26 +350,6 @@ cards:
   #             - type: custom:rgb-light-card
   #               entity: light.wled_rotem_bed
   #               colors: !include ../../resources/rgb_colors_rotem.yaml
-
-  - type: entities
-    entities:
-      - type: custom:decluttering-card
-        template: room_multisensor
-        variables:
-          - room: bathroom
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: custom:button-card
-            entity: switch.vent
-            icon: 'mdi:fan'
-            state:
-              - value: 'on'
-                spin: true
-              - value: 'off'
-                spin: false
-          - type: custom:button-card
-            color_type: blank-card
 
   # - type: entities
   #   entities:

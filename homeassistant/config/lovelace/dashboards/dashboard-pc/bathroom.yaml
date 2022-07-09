@@ -22,7 +22,3 @@ cards:
                 spin: false
           - type: custom:button-card
             color_type: blank-card
-
-  # - type: entities
-  #   entities:
-  #     - sensor.bathroom_mold_indicator
