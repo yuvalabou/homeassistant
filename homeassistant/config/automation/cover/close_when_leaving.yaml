@@ -3,11 +3,9 @@
 - alias: "Cover - Close when leaving"
   id: 2fe7cf5a-c7a3-4cfb-b1cb-ec9f2728b498
   trigger:
-    platform: numeric_state
-    entity_id: zone.home
-    below: 1
+    platform: template
+    value_template: "{{ is_state('zone.home', 0) }}"
   condition:
-    - "{{ not is_state('zone.home', 1) }}"
     - "{{ not is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: cover.close_cover
