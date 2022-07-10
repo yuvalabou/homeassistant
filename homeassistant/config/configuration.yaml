@@ -5,11 +5,6 @@
 #                      CORE                      #
 ##################################################
 homeassistant:
-  name: Aboulafia
-  latitude: !secret home_lat
-  longitude: !secret home_lon
-  elevation: !secret elevation
-  time_zone: Asia/Jerusalem
   customize: !include customize.yaml
   allowlist_external_dirs:
     - /config
@@ -75,9 +70,6 @@ button:
 camera: !include_dir_merge_list components/camera
 counter:
 group: !include_dir_merge_named components/group
-home_connect_alt:
-  client_id: !secret hc_client_id
-  client_secret: !secret hc_client_secret
 input_boolean:
 input_datetime:
 input_number:
@@ -105,6 +97,14 @@ tts:
     base_url: !secret base_url
 utility_meter:
 zone:
+
+##################################################
+#              CUSTOM INTEGRATIONS               #
+##################################################
+home_connect_alt:
+  client_id: !secret hc_client_id
+  client_secret: !secret hc_client_secret
+powercalc:
 
 ##################################################
 #                  LOG COMPONENTS                #
