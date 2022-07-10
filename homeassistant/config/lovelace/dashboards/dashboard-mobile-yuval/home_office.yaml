@@ -3,11 +3,6 @@
 title: "Home Office"
 icon: mdi:desk
 cards:
-#  - type: custom:decluttering-card
-#    template: multisensor
-#    variables:
-#      - room: home_office
-
   # - type: entities
   #   entities:
   #     - sensor.steam_76561198173612681
