@@ -116,21 +116,6 @@ cards:
             name: inside
             align_controls: right
 
-  - type: custom:auto-entities
-    card:
-      type: entities
-      title: "Active Lights"
-      show_header_toggle: false
-    show_empty: false
-    filter:
-      include:
-        - domain: light
-          state: 'on'
-        - domain: light
-          state: 'unavailable'
-      exclude:
-        - entity_id: '*lights'
-
       # - type: custom:mini-graph-card
       #   points_per_hour: 3
       #   entities:
@@ -152,46 +137,6 @@ cards:
       #   card_type: picture-entity
       #   entity: binary_sensor.kitchen
       #   camera_image: camera.kitchen_camera
-
-  - type: entities
-    entities:
-      - type: custom:button-card
-        color_type: label-card
-        color: rgb(44, 109, 214)
-        name: "Dishwasher"
-      - type: custom:hui-element
-        card_type: glance
-        entities:
-          - entity: binary_sensor.400090386855001425_bsh_common_status_doorstate
-            name: "Door"
-          - entity: sensor.400090386855001425_bsh_common_setting_powerstate
-            name: "Power state"
-            tap_action:
-              action: call-service
-              service: select.select_option
-              data:
-                option: 'on'
-              target:
-                entity_id: select.400090386855001425_bsh_common_setting_powerstate
-          - entity: sensor.400090386855001425_bsh_common_status_operationstate
-            name: "OP state"
-      - type: conditional
-        conditions:
-          - entity: binary_sensor.400090386855001425_bsh_common_option_remainingprogramtimeisestimated
-            state: 'on'
-        row:
-          entity: sensor.400090386855001425_bsh_common_option_remainingprogramtime
-          format: relative
-          name: "Remaining time"
-      - type: conditional
-        conditions:
-          - entity: binary_sensor.400090386855001425_bsh_common_option_remainingprogramtimeisestimated
-            state: 'on'
-        row:
-          entity: sensor.400090386855001425_bsh_common_option_programprogress
-          type: custom:bar-card
-          entity_row: true
-          name: "Progress"
 
   # - type: entities
   #   show_header_toggle: false
