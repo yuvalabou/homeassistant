@@ -5,15 +5,17 @@
   trigger:
     platform: device
     domain: mqtt
-    device_id: 4932ca0195f7b92a0bb922d9ea12bd70
+    device_id: c60828dc2c9515b14dda7f88c21dc961
     type: action
     subtype: hold
-    discovery_id: 0x00158d0006d0a9bd action_hold
+    discovery_id: 0x00158d0006d0a9eb action_hold
   condition:
     condition: time
     after: '20:00:00'
   action:
-    - delay: 2
     - service: light.turn_off
       data:
         entity_id: light.all_lights
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living_room_shutter
