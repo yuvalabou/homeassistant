@@ -18,3 +18,5 @@ devices:
     friendly_name: Master Bedroom Door
   '0x54ef4410002c05e4':
     friendly_name: Gas Meter
+  '0x00158d0006d0a9eb':
+    friendly_name: Master bedroom button
