@@ -10,7 +10,7 @@
     - "{{ not is_state('zone.home', 0) }}"
     - condition: numeric_state
       entity_id: sensor.living_room_temperature
-      above: 25
+      above: 23
     - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer outside') }}"
   action:
     - service: script.turn_on
@@ -36,12 +36,11 @@
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - condition: time
-      after: '09:00:00'
+      after: '10:00:00'
       before: input_datetime.shabbat_lights_off_time
     - "{{ is_state('binary_sensor.living_room_window_contact', 'off') }}"
     - "{{ is_state('climate.living_room', 'off') }}"
     - "{{ not is_state('zone.home', 0) }}"
-    - "{{ is_state('sensor.warmer_or_colder_outside', 'Warmer outside') }}"
   action:
     - service: script.turn_on
       data:

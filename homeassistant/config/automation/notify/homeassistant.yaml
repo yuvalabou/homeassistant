@@ -22,5 +22,5 @@
   action:
     - service: notify.mobile_app_yuval
       data:
-        title: "Upgrade time!"
+        title: "Upgrade available"
         message: "Home Assistant {{ states('sensor.docker_hub_core_version') }} is available"

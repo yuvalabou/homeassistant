@@ -7,7 +7,7 @@
     platform: state
     entity_id: person.yuval
     from: 'Hirsh'
-    to: 'away'
+    to: 'Away'
   condition: "{{ is_state('person.tohar', 'home') }}"
   action:
     service: notify.nest_mini
