@@ -107,9 +107,9 @@
 ### Integrations
 
 - [FeedParser](https://github.com/custom-components/feedparser)
-- [Pyscript](https://github.com/custom-components/pyscript)
-- [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Home connect Alternative](https://github.com/ekutner/home-connect-hass)
+- [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
+- [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
 - [Watchman](https://github.com/dummylabs/thewatchman)
 - [Xiaomi cloud map extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor)
