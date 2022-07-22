@@ -28,11 +28,6 @@ lovelace:
       icon: mdi:desktop-mac-dashboard
       mode: yaml
       filename: lovelace/dashboards/dashboard-pc.yaml
-    dashboard-mobile-yuval:
-      title: "Yuval dashboard"
-      icon: mdi:cellphone
-      mode: yaml
-      filename: lovelace/dashboards/dashboard-mobile-yuval.yaml
     dashboard-mobile-tohar:
       title: "Tohar dashboard"
       icon: mdi:cellphone
