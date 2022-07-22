@@ -12,10 +12,8 @@
         - sat
     - "{{ not is_state('zone.home', 0) }}"
   action:
-    - service: select.select_option
-      entity_id: select.400090386855001425_bsh_common_setting_powerstate
-      data:
-        option: 'BSH.Common.EnumType.PowerState.On'
+    - service: switch.turn_on
+      entity_id: switch.400090386855001425_bsh_common_setting_powerstate
     - delay: 2
     - service: select.select_option
       entity_id: select.400090386855001425_programs
