@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2022.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.7.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 [![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
@@ -32,20 +32,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 418 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 208 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 51 |
-| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 16 |
-| **[Buttons]()** | 16 |
+| **Entities** | 479 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 249 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 68 |
+| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 18 |
+| **[Buttons]()** | 19 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 11 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 58 |
-| **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 16 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 57 |
+| **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 169801 |
-| Yaml | 5745 |
+| Python | 167739 |
+| Yaml | 4953 |
 
 -----
 
@@ -70,7 +70,7 @@
 | CC2531 (HUB) | Aqara button | Aqara Door and Window sensor |
 |:------------:|:------------:|:----------------------------:|
 |<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width = 100>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width = 100>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width = 100>|
-|1             |(2)           |4                             |
+|1             |1           |4                             |
 
 
 ### Custom devices designed by me
@@ -81,15 +81,15 @@
 
 -----
 
-### HomeLab
+### The server
 
-| NanoPi NEO3      |
-|:----------------:|
-| HomeAssistant    |
-| ESPHome          |
-| Mosquitto broker |
-| zigbee2mqtt      |
-| Unifi-Controller |
+| NanoPi NEO3                                          |
+|:----------------------------------------------------:|
+| HomeAssistant                                        |
+| ESPHome                                              |
+| Mosquitto broker                                     |
+| [zigbee2mqtt](https://github.com/Koenkk/zigbee2mqtt) |
+| Unifi-Controller                                     |
 
 -----
 
@@ -130,6 +130,7 @@
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
+- [Mushroom-cards](https://github.com/piitaya/lovelace-mushroom)
 - [RGB light Card](https://github.com/bokub/rgb-light-card)
 - [Room Card](https://github.com/marcokreeft87/room-card)
 - [Sankey Chart](https://github.com/MindFreeze/ha-sankey-chart)
