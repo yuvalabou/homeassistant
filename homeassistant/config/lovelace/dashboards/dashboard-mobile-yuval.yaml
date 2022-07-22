@@ -1,9 +1,0 @@
----
-
-decluttering_templates:
-  !include_dir_merge_named ../decluttering_cards
-
-title: "Yuval Dashboard"
-views:
-  - !include dashboard-mobile-yuval/overview.yaml
-  - !include dashboard-mobile-yuval/home_office.yaml
