@@ -6,7 +6,7 @@
     platform: homeassistant
     event: start
   action:
-  - service: persistent_notification.create
+    service: persistent_notification.create
     data_template:
       title: "Home Assistant Startup"
       message: >-
@@ -20,7 +20,7 @@
     entity_id: binary_sensor.docker_hub_core_update_available
     to: "on"
   action:
-    - service: notify.mobile_app_yuval
-      data:
-        title: "Upgrade available"
-        message: "Home Assistant {{ states('sensor.docker_hub_core_version') }} is available"
+    service: notify.mobile_app_yuval
+    data:
+      title: "Upgrade available"
+      message: "Home Assistant {{ states('sensor.docker_hub_core_version') }} is available"

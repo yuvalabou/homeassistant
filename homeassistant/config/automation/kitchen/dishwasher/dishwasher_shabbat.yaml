@@ -10,7 +10,7 @@
     - condition: time
       weekday:
         - sat
-    - "{{ not is_state('zone.home', 0) }}"
+    - "{{ is_state('group.person', 'home') }}"
   action:
     - service: switch.turn_on
       entity_id: switch.400090386855001425_bsh_common_setting_powerstate

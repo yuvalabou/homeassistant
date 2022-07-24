@@ -16,7 +16,7 @@
     - condition: time
       weekday:
         - fri
-    - "{{ not is_state('zone.home', 0) }}"
+    - "{{ is_state('group.person', 'home') }}"
   action:
     - choose:
         - conditions:

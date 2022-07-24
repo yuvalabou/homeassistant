@@ -6,8 +6,8 @@
   trigger:
     platform: state
     entity_id: person.yuval
-    from: 'Hirsh'
-    to: 'Away'
+    from: 'hirsh'
+    to: 'away'
   condition: "{{ is_state('person.tohar', 'home') }}"
   action:
     service: notify.nest_mini

@@ -35,11 +35,11 @@
   action:
     - choose:
       - conditions:
-          - "{{ is_state('zone.home', 0) }}"
+          - "{{ is_state('group.person', 'not_home') }}"
           - "{{ is_state('input_boolean.guest_mode', 'off') }}"
         sequence:
           service: script.vacuum_set_turbo
-      - conditions: "{{ not is_state('zone.home', 0) }}"
+      - conditions: "{{ is_state('group.person', 'home') }}"
         sequence:
           service: script.vacuum_set_silent
 
