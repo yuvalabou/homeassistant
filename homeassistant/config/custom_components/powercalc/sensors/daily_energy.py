@@ -28,9 +28,10 @@ from homeassistant.helpers.entity import async_generate_entity_id
 from homeassistant.helpers.event import async_track_time_interval
 from homeassistant.helpers.restore_state import RestoreEntity
 from homeassistant.helpers.template import Template
+from homeassistant.helpers.typing import ConfigType
 
-from custom_components.powercalc.common import SourceEntity
-from custom_components.powercalc.const import (
+from ..common import SourceEntity
+from ..const import (
     CONF_DAILY_FIXED_ENERGY,
     CONF_ENERGY_SENSOR_CATEGORY,
     CONF_ENERGY_SENSOR_PRECISION,
@@ -43,12 +44,10 @@ from custom_components.powercalc.const import (
     CONF_VALUE,
     UnitPrefix,
 )
-from custom_components.powercalc.migrate import async_migrate_entity_id
-from custom_components.powercalc.sensors.power import create_virtual_power_sensor
-
+from ..migrate import async_migrate_entity_id
 from .abstract import generate_energy_sensor_entity_id, generate_energy_sensor_name
 from .energy import EnergySensor
-from .power import VirtualPowerSensor
+from .power import VirtualPowerSensor, create_virtual_power_sensor
 
 ENERGY_ICON = "mdi:lightning-bolt"
 ENTITY_ID_FORMAT = SENSOR_DOMAIN + ".{}"
@@ -72,7 +71,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def create_daily_fixed_energy_sensor(
-    hass: HomeAssistant, sensor_config: dict
+    hass: HomeAssistant, sensor_config: ConfigType
 ) -> DailyEnergySensor:
     mode_config: dict = sensor_config.get(CONF_DAILY_FIXED_ENERGY)
 
@@ -91,6 +90,13 @@ async def create_daily_fixed_energy_sensor(
         entity_id,
         sensor_config.get(CONF_UNIQUE_ID),
     )
+
+    if CONF_ON_TIME in mode_config:
+        on_time = mode_config.get(CONF_ON_TIME)
+        if not isinstance(on_time, timedelta):
+            on_time = timedelta(seconds=on_time)
+    else:
+        on_time = timedelta(days=1)
 
     return DailyEnergySensor(
         hass,
@@ -167,7 +173,7 @@ class DailyEnergySensor(RestoreEntity, SensorEntity, EnergySensor):
 
     def set_native_unit_of_measurement(self):
         """Set the native unit of measurement"""
-        unit_prefix = self._sensor_config.get(CONF_ENERGY_SENSOR_UNIT_PREFIX)
+        unit_prefix = self._sensor_config.get(CONF_ENERGY_SENSOR_UNIT_PREFIX) or UnitPrefix.KILO
         if unit_prefix == UnitPrefix.KILO:
             self._attr_native_unit_of_measurement = ENERGY_KILO_WATT_HOUR
         elif unit_prefix == UnitPrefix.NONE:
