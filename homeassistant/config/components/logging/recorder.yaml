@@ -9,7 +9,6 @@ exclude:
     - sensor.date_time
     - sensor.israel_weather_forecast
     - sensor.myip
-    - sensor.ims_daily
     - sensor.openweathermap_weather_code
     - sensor.random_number
     - sensor.hacs

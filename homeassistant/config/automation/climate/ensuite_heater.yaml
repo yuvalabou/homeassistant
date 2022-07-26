@@ -21,7 +21,7 @@
     platform: time
     at: '06:00:00'
   condition:
-    - "{{ is_state('input_boolean.at_home', 'on') }}"
+    - "{{ is_state('group.person', 'home') }}"
     - condition: numeric_state
       entity_id: sensor.ensuite_temperature
       below: 18
