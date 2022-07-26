@@ -34,18 +34,13 @@ lovelace:
       mode: yaml
       filename: lovelace/dashboards/dashboard-mobile-tohar.yaml
 map:
-panel_iframe:
-  zigbee2mqtt:
-    title: "Zigbee2mqtt"
-    url: !secret zigbee2mqtt_addr
-    icon: mdi:zigbee
 system_health:
 
 ##################################################
 #                     PERSONS                    #
 ##################################################
 person:
-device_tracker: !include_dir_merge_list components/device_tracker
+device_tracker:
 
 ##################################################
 #                   DISCOVERY                    #
