@@ -4,10 +4,6 @@
   host: !secret laptop
   name: "Laptop"
   count: 2
-- platform: ping
-  host: !secret mibox_host
-  name: "Mi Box"
-  count: 2
 
 # Sensibo
 - platform: ping
