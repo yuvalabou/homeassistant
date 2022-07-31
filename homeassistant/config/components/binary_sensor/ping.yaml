@@ -1,10 +1,5 @@
 ---
 
-- platform: ping
-  host: !secret laptop
-  name: "Laptop"
-  count: 2
-
 # Sensibo
 - platform: ping
   host: !secret sensibo_living_room

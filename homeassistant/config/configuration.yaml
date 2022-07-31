@@ -61,6 +61,7 @@ camera: !include_dir_merge_list components/camera
 counter:
 group: !include_dir_merge_named components/group
 input_boolean:
+input_button:
 input_datetime:
 input_number:
 input_select:
