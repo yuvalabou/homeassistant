@@ -1,4 +1,7 @@
 """Errors for the power component."""
+
+from __future__ import annotations
+
 from homeassistant.exceptions import HomeAssistantError
 
 
@@ -13,7 +16,9 @@ class SensorConfigurationError(PowercalcSetupError):
 class SensorAlreadyConfiguredError(SensorConfigurationError):
     """Raised when power sensors has already been configured before for the entity"""
 
-    def __init__(self, source_entity_id: str, existing_entities: list = []):
+    def __init__(self, source_entity_id: str, existing_entities: list | None = None):
+        if existing_entities is None:
+            existing_entities = []
         self.existing_entities = existing_entities
         super().__init__(
             f"{source_entity_id}: This entity has already configured a power sensor. When you want to configure it twice make sure to give it a unique_id"

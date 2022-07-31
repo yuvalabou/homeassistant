@@ -197,10 +197,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     def __init__(self):
         """Initialize options flow."""
         self.sensor_config: dict[str, Any] = dict()
-        self.selected_sensor_type: str = None
-        self.name: str = None
-        self.source_entity: SourceEntity = None
-        self.source_entity_id: str = None
+        self.selected_sensor_type: str | None = None
+        self.name: str | None = None
+        self.source_entity: SourceEntity | None = None
+        self.source_entity_id: str | None = None
 
     @staticmethod
     @callback
@@ -424,8 +424,8 @@ class OptionsFlowHandler(OptionsFlow):
         self.sensor_type: SensorType = (
             self.current_config.get(CONF_SENSOR_TYPE) or SensorType.VIRTUAL_POWER
         )
-        self.source_entity_id: str = self.current_config.get(CONF_ENTITY_ID)
-        self.source_entity: SourceEntity = None
+        self.source_entity_id: str | None = self.current_config.get(CONF_ENTITY_ID)
+        self.source_entity: SourceEntity | None = None
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -516,18 +516,6 @@ class OptionsFlowHandler(OptionsFlow):
         )
         return data_schema
 
-    def get_current_strategy_options(self, strategy: str) -> dict[str, Any]:
-        strategy_options: dict[str, Any] = self.current_config.get(strategy)
-        if (
-            strategy == CalculationStrategy.LINEAR
-            and CONF_CALIBRATE in strategy_options
-        ):
-            calibrate_options: dict = strategy_options[CONF_CALIBRATE]
-            strategy_options[CONF_CALIBRATE] = {
-                int(key): value for (key, value) in calibrate_options.items()
-            }
-        return strategy_options
-
 
 def _create_strategy_object(
     hass: HomeAssistant, strategy: str, config: dict, source_entity: SourceEntity
@@ -552,7 +540,6 @@ def _get_strategy_schema(strategy: str, source_entity_id: str) -> vol.Schema:
         return SCHEMA_POWER_WLED
     if strategy == CalculationStrategy.LUT:
         return vol.Schema({})
-    return SCHEMA_POWER_FIXED
 
 
 def _create_group_schema(hass: HomeAssistant, base_schema: vol.Schema) -> vol.Schema:
@@ -580,9 +567,9 @@ def _validate_group_input(user_input: dict[str, str] = None) -> dict:
     errors = {}
 
     if (
-        not CONF_SUB_GROUPS in user_input
-        and not CONF_GROUP_POWER_ENTITIES in user_input
-        and not CONF_GROUP_ENERGY_ENTITIES in user_input
+        CONF_SUB_GROUPS not in user_input
+        and CONF_GROUP_POWER_ENTITIES not in user_input
+        and CONF_GROUP_ENERGY_ENTITIES not in user_input
     ):
         errors["base"] = "group_mandatory"
 
@@ -666,7 +653,7 @@ def _validate_daily_energy_input(user_input: dict[str, str] = None) -> dict:
         return {}
     errors = {}
 
-    if not CONF_VALUE in user_input and not CONF_VALUE_TEMPLATE in user_input:
+    if CONF_VALUE not in user_input and CONF_VALUE_TEMPLATE not in user_input:
         errors["base"] = "daily_energy_mandatory"
 
     return errors
@@ -677,17 +664,16 @@ def _fill_schema_defaults(data_schema: vol.Schema, options: dict[str, str]):
     schema = {}
     for key, val in data_schema.schema.items():
         new_key = key
-        if key in options:
-            if isinstance(key, vol.Marker):
-                if (
-                    isinstance(key, vol.Optional)
-                    and callable(key.default)
-                    and key.default()
-                ):
-                    new_key = vol.Optional(key.schema, default=options.get(key))
-                else:
-                    new_key = copy.copy(key)
-                    new_key.description = {"suggested_value": options.get(key)}
+        if key in options and isinstance(key, vol.Marker):
+            if (
+                isinstance(key, vol.Optional)
+                and callable(key.default)
+                and key.default()
+            ):
+                new_key = vol.Optional(key.schema, default=options.get(key))
+            else:
+                new_key = copy.copy(key)
+                new_key.description = {"suggested_value": options.get(key)}
         schema[new_key] = val
     data_schema = vol.Schema(schema)
     return data_schema

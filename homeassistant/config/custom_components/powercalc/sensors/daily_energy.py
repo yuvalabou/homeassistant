@@ -106,7 +106,7 @@ async def create_daily_fixed_energy_sensor(
         mode_config.get(CONF_UNIT_OF_MEASUREMENT),
         mode_config.get(CONF_UPDATE_FREQUENCY),
         sensor_config,
-        on_time=mode_config.get(CONF_ON_TIME),
+        on_time=on_time,
         start_time=mode_config.get(CONF_START_TIME),
         rounding_digits=sensor_config.get(CONF_ENERGY_SENSOR_PRECISION),
     )
@@ -169,11 +169,15 @@ class DailyEnergySensor(RestoreEntity, SensorEntity, EnergySensor):
         self._rounding_digits = rounding_digits
         self._attr_unique_id = sensor_config.get(CONF_UNIQUE_ID)
         self.entity_id = entity_id
+        self._last_updated: float = dt_util.utcnow().timestamp()
+        self._last_delta_calculate: float | None = None
         self.set_native_unit_of_measurement()
 
     def set_native_unit_of_measurement(self):
         """Set the native unit of measurement"""
-        unit_prefix = self._sensor_config.get(CONF_ENERGY_SENSOR_UNIT_PREFIX) or UnitPrefix.KILO
+        unit_prefix = (
+            self._sensor_config.get(CONF_ENERGY_SENSOR_UNIT_PREFIX) or UnitPrefix.KILO
+        )
         if unit_prefix == UnitPrefix.KILO:
             self._attr_native_unit_of_measurement = ENERGY_KILO_WATT_HOUR
         elif unit_prefix == UnitPrefix.NONE:
@@ -186,9 +190,8 @@ class DailyEnergySensor(RestoreEntity, SensorEntity, EnergySensor):
 
         if state := await self.async_get_last_state():
             self._state = Decimal(state.state)
-            delta = self.calculate_delta(
-                round(datetime.now().timestamp() - state.last_changed.timestamp())
-            )
+            self._last_updated = state.last_changed.timestamp()
+            delta = self.calculate_delta()
             self._state = self._state + delta
             self.async_schedule_update_ha_state()
         else:
@@ -197,37 +200,48 @@ class DailyEnergySensor(RestoreEntity, SensorEntity, EnergySensor):
         _LOGGER.debug(f"{self.entity_id}: Restoring state: {self._state}")
 
         @callback
-        def refresh(event_time=None):
+        def refresh(now: datetime):
             """Update the energy sensor state."""
-            self._state = self._state + self.calculate_delta(self._update_frequency)
-            _LOGGER.debug(
-                f"{self.entity_id}: Updating daily_fixed_energy sensor: {round(self._state, 4)}"
-            )
-            self.async_schedule_update_ha_state()
+            delta = self.calculate_delta(self._update_frequency)
+            if delta > 0:
+                self._state = self._state + delta
+                _LOGGER.debug(
+                    f"{self.entity_id}: Updating daily_fixed_energy sensor: {round(self._state, 4)}"
+                )
+                self.async_schedule_update_ha_state()
+                self._last_updated = dt_util.now().timestamp()
 
         self._timer = async_track_time_interval(
             self.hass, refresh, timedelta(seconds=self._update_frequency)
         )
 
-    def calculate_delta(self, elapsedSeconds: int) -> Decimal:
+    def calculate_delta(self, elapsed_seconds: int = 0) -> Decimal:
+        if self._last_delta_calculate is None:
+            self._last_delta_calculate = self._last_updated
+
+        elapsed_seconds = (
+            self._last_delta_calculate - self._last_updated
+        ) + elapsed_seconds
+        self._last_delta_calculate = dt_util.utcnow().timestamp()
+
         value = self._value
         if isinstance(value, Template):
             value.hass = self.hass
             value = value.async_render()
 
         if self._user_unit_of_measurement == ENERGY_KILO_WATT_HOUR:
-            whPerDay = value * 1000
+            wh_per_day = value * 1000
         elif self._user_unit_of_measurement == POWER_WATT:
-            whPerDay = value * (self._on_time.total_seconds() / 3600)
+            wh_per_day = value * (self._on_time.total_seconds() / 3600)
 
         # Convert Wh to the native measurement unit
-        energyPerDay = whPerDay
+        energy_per_day = wh_per_day
         if self._attr_native_unit_of_measurement == ENERGY_KILO_WATT_HOUR:
-            energyPerDay = whPerDay / 1000
+            energy_per_day = wh_per_day / 1000
         elif self._attr_native_unit_of_measurement == ENERGY_MEGA_WATT_HOUR:
-            energyPerDay = whPerDay / 1000000
+            energy_per_day = wh_per_day / 1000000
 
-        return Decimal((energyPerDay / 86400) * elapsedSeconds)
+        return Decimal((energy_per_day / 86400) * elapsed_seconds)
 
     @property
     def native_value(self):

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import json
 import logging
 import os
@@ -42,7 +44,7 @@ class LightModel:
         self._model = self._model.replace("#slash#", "/")
         self._custom_model_directory = custom_model_directory
         self._hass = hass
-        self._directory: str = None
+        self._directory: str | None = None
         self._profile_library: ProfileLibrary = ProfileLibrary(hass)
         self.load_model_manifest()
 
