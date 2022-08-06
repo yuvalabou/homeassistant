@@ -41,10 +41,12 @@ CONF_ENERGY_SENSOR_FRIENDLY_NAMING = "energy_sensor_friendly_naming"
 CONF_ENERGY_SENSOR_PRECISION = "energy_sensor_precision"
 CONF_ENERGY_SENSOR_UNIT_PREFIX = "energy_sensor_unit_prefix"
 CONF_FIXED = "fixed"
+CONF_FORCE_UPDATE_FREQUENCY = "force_update_frequency"
 CONF_GROUP = "group"
 CONF_GROUP_POWER_ENTITIES = "group_power_entities"
 CONF_GROUP_ENERGY_ENTITIES = "group_energy_entities"
 CONF_GAMMA_CURVE = "gamma_curve"
+CONF_HIDE_MEMBERS = "hide_members"
 CONF_IGNORE_UNAVAILABLE_STATE = "ignore_unavailable_state"
 CONF_INCLUDE = "include"
 CONF_LINEAR = "linear"
@@ -113,7 +115,7 @@ ENTITY_CATEGORIES = [
     ENTITY_CATEGORY_SYSTEM,
 ]
 
-DEFAULT_SCAN_INTERVAL = timedelta(minutes=10)
+DEFAULT_UPDATE_FREQUENCY = timedelta(minutes=10)
 DEFAULT_POWER_NAME_PATTERN = "{} power"
 DEFAULT_POWER_SENSOR_PRECISION = 2
 DEFAULT_ENERGY_INTEGRATION_METHOD = ENERGY_INTEGRATION_METHOD_TRAPEZODIAL

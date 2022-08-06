@@ -25,6 +25,7 @@ from homeassistant.const import (
     STATE_UNKNOWN,
 )
 from homeassistant.core import HomeAssistant, State, callback
+from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.helpers.restore_state import RestoreEntity
 
@@ -35,6 +36,7 @@ from ..const import (
     CONF_ENERGY_SENSOR_UNIT_PREFIX,
     CONF_GROUP_ENERGY_ENTITIES,
     CONF_GROUP_POWER_ENTITIES,
+    CONF_HIDE_MEMBERS,
     CONF_POWER_SENSOR_PRECISION,
     CONF_SUB_GROUPS,
     DOMAIN,
@@ -242,6 +244,24 @@ class GroupedSensor(RestoreEntity, SensorEntity):
 
         async_track_state_change_event(self.hass, self._entities, self.on_state_change)
 
+        self._async_hide_members()
+
+    @callback
+    def _async_hide_members(self) -> None:
+        """Hide or unhide group members."""
+        registry = er.async_get(self.hass)
+        for entity_id in self._entities:
+            registry_entry = registry.async_get(entity_id)
+            if not registry_entry:
+                continue
+
+            if self._sensor_config.get(CONF_HIDE_MEMBERS):
+                registry.async_update_entity(
+                    entity_id, hidden_by=er.RegistryEntryHider.INTEGRATION
+                )
+            elif registry_entry.hidden_by == er.RegistryEntryHider.INTEGRATION:
+                registry.async_update_entity(entity_id, hidden_by=None)
+
     @callback
     def on_state_change(self, event):
         """Triggered when one of the group entities changes state"""
@@ -256,6 +276,10 @@ class GroupedSensor(RestoreEntity, SensorEntity):
         # Maybe we will convert these units in the future
         for state in available_states:
             unit_of_measurement = state.attributes.get(ATTR_UNIT_OF_MEASUREMENT)
+            if (
+                unit_of_measurement is None
+            ):  # No unit of measurement, probably sensor has been reset
+                continue
             if unit_of_measurement != self._attr_native_unit_of_measurement:
                 _LOGGER.error(
                     f"Group member '{state.entity_id}' has another unit of measurement '{unit_of_measurement}' than the group '{self.entity_id}' which has '{self._attr_native_unit_of_measurement}', this is not supported yet. Removing this entity from the total sum."
@@ -263,9 +287,15 @@ class GroupedSensor(RestoreEntity, SensorEntity):
                 available_states.remove(state)
                 self._entities.remove(state.entity_id)
 
+        if not available_states:
+            self._attr_available = False
+            self.async_schedule_update_ha_state(True)
+            return
+
         summed = sum(Decimal(state.state) for state in available_states)
 
         self._attr_native_value = round(summed, self._rounding_digits)
+        self._attr_available = True
         self.async_schedule_update_ha_state(True)
 
 
