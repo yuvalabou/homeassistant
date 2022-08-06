@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202207            #
+#            Yuval Aboulafia - 202208            #
 ##################################################
 #                      CORE                      #
 ##################################################
@@ -25,7 +25,7 @@ lovelace:
   dashboards:
     pc-dashboard:
       title: "PC dashboard"
-      icon: mdi:desktop-mac-dashboard
+      icon: mdi:monitor-dashboard
       mode: yaml
       filename: lovelace/dashboards/dashboard-pc.yaml
     dashboard-mobile-tohar:
