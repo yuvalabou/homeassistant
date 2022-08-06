@@ -35,7 +35,7 @@
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - condition: time
-      after: '10:00:00'
+      after: '08:00:00'
       before: input_datetime.shabbat_lights_off_time
     - "{{ is_state('binary_sensor.living_room_window_contact', 'off') }}"
     - "{{ is_state('climate.living_room', 'off') }}"
