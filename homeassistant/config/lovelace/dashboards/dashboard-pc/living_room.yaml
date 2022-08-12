@@ -64,11 +64,6 @@ cards:
               labels_secondary: false
               legend: false
               extrema: true
-      - type: custom:simple-thermostat
-        entity: climate.living_room
-        header: false
-        layout:
-          step: row
       - type: entities
         show_header_toggle: false
         entities:

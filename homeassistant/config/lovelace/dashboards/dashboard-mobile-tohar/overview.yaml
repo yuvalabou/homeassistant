@@ -149,9 +149,6 @@ cards:
           - type: light
             entity: light.wall_light_left
 
-  - type: custom:simple-thermostat
-    entity: climate.living_room
-
   - type: entities
     entities:
       - type: custom:hui-element
