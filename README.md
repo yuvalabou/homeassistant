@@ -53,7 +53,7 @@
 
 | Lovelace Mode | Dashboards | Views | Resources |
 |:-------------:|:----------:|:-----:|:---------:|
-|Mixed          |4           |12     |26         |
+|Mixed          |4           |12     |25         |
 
 -----
 
@@ -133,7 +133,6 @@
 - [Mushroom-cards](https://github.com/piitaya/lovelace-mushroom)
 - [RGB light Card](https://github.com/bokub/rgb-light-card)
 - [Room Card](https://github.com/marcokreeft87/room-card)
-- [Sankey Chart](https://github.com/MindFreeze/ha-sankey-chart)
 - [Simple Thermostat](https://github.com/nervetattoo/simple-thermostat)
 - [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
