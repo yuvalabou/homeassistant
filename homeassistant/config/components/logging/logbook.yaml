@@ -5,14 +5,12 @@ exclude:
     - binary_sensor.day
     - binary_sensor.night
     - binary_sensor.random_boolean
-
     - sensor.random_number
     - sensor.israel_weather_forecast
     - sensor.myip
     - sensor.tts
     - sensor.load_5m
     - sensor.watchman_last_updated
-
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*

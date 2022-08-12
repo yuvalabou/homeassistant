@@ -9,7 +9,6 @@ exclude:
     - sensor.random_number
     - sensor.openweathermap_weather_code
     - sensor.watchman_last_updated
-
     - binary_sensor.random_boolean
     - binary_sensor.day
     - binary_sensor.night
@@ -18,7 +17,6 @@ exclude:
     - sensor.count_*
     - sensor.skin_type_*
     - sensor.openweathermap_forecast_*
-
     - binary_sensor.is_*
   domains:
     - camera
