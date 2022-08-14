@@ -20,3 +20,6 @@
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
+    - service: climate.turn_off
+      data:
+        entity_id: climate.living_room

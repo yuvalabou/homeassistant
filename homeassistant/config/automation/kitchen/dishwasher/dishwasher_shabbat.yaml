@@ -15,10 +15,5 @@
     - service: switch.turn_on
       entity_id: switch.400090386855001425_bsh_common_setting_powerstate
     - delay: 2
-    - service: select.select_option
-      entity_id: select.400090386855001425_programs
-      data:
-        option: 'Dishcare.Dishwasher.Program.Auto2'
-    - delay: 2
     - service: button.press
       entity_id: button.400090386855001425_start_pause

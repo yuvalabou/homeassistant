@@ -41,7 +41,7 @@
   id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
   trigger:
     platform: time
-    at: '08:00:00'
+    at: '07:30:00'
   condition:
     - condition: time
       weekday:

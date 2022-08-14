@@ -27,18 +27,13 @@
     data:
       entity_id: climate.living_room
 
-- alias: "Climate - Turn on when door is closed"
+- alias: "Climate - Shabbat day AC"
   id: fe96ab5c-d38d-4617-9032-59f481ef98aa
   trigger:
-    platform: time_pattern
-    minutes: 5
+    platform: time
+    at: '08:00:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-    - condition: time
-      after: '08:00:00'
-      before: input_datetime.shabbat_lights_off_time
-    - "{{ is_state('binary_sensor.living_room_window_contact', 'off') }}"
-    - "{{ is_state('climate.living_room', 'off') }}"
     - "{{ is_state('group.person', 'home') }}"
   action:
     service: script.turn_on

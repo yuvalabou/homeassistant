@@ -1,0 +1,27 @@
+---
+
+- alias: "Leaving Home"
+  id: b53f7fa0-502e-42dc-ba0a-0599f2de3c16
+  trigger:
+    platform: state
+    entity_id: group.person
+    to: 'not_home'
+  condition:
+    - "{{ is_state('input_boolean.guest_mode', 'off') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+  action:
+    - service: climate.turn_off
+      data:
+        entity_id: climate.living_room
+    - service: light.turn_off
+      data:
+        entity_id: light.all_lights
+    - service: cover.close_cover
+      data:
+        entity_id: cover.living_room_shutter
+    - delay: 30
+    - service: notify.family
+      data:
+        title: "Closed everything for you"
+        message: >-
+          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
