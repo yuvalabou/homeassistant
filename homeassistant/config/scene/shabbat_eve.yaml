@@ -10,6 +10,9 @@
     light.living_room_lights:
       state: 'on'
       brightness: 230
+    light.kitchen_ceiling_light:
+      state: 'on'
+      brightness: 230
     light.bathroom_light:
       state: 'on'
     light.corridor_light:

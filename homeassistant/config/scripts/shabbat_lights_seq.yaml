@@ -29,5 +29,3 @@ shabbat_chag_end_lighting_sequence:
       data:
         entity_id: light.wall_lights
         effect: Stop
-    - service: scene.turn_on
-      entity_id: scene.shabbat_end

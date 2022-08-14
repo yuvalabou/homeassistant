@@ -74,7 +74,7 @@ mobile_app:
 mqtt: !include_dir_merge_named components/mqtt
 my:
 notify: !include_dir_merge_list components/notify
-scene: !include_dir_merge_list components/scene
+scene: !include_dir_merge_list scene
 script: !include_dir_merge_named scripts
 sensor: !include_dir_merge_list components/sensor
 switch: !include_dir_merge_list components/switch
