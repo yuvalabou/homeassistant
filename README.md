@@ -32,11 +32,11 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 479 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 249 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 68 |
-| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 18 |
-| **[Buttons]()** | 19 |
+| **Entities** | 474 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 253 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 64 |
+| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 17 |
+| **[Buttons]()** | 20 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 11 |
 | **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 57 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
@@ -44,16 +44,8 @@
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 168951 |
-| Yaml | 4776 |
-
------
-
-## [Lovelace](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/lovelace)
-
-| Lovelace Mode | Dashboards | Views | Resources |
-|:-------------:|:----------:|:-----:|:---------:|
-|Mixed          |4           |12     |24         |
+| Python | 169033 |
+| Yaml | 4789 |
 
 -----
 
