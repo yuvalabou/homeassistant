@@ -18,7 +18,8 @@
   trigger:
     platform: state
     entity_id: binary_sensor.docker_hub_core_update_available
-    to: "on"
+    from: 'off'
+    to: 'on'
   action:
     service: notify.mobile_app_yuval
     data:
