@@ -3,7 +3,6 @@
 [![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2022.8.6%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
-[![Discord](https://img.shields.io/discord/:702447199681904720.svg??style=plasticr)](https://discord.gg/ayZ3Kkg)
 
 <h2 align =
     "center">
@@ -51,10 +50,10 @@
 
 ### Devices
 
-| Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Tuya ceiling light |
-|:---------:|:------------:|:-------------------:|:-------------------:|:----------:|:----------:|:------------------:|
-|<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width = 100>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width = 100>|<img src="https://shelly.cloud/wp-content/uploads/2021/09/shelly1pm-comparision.png" width = 100> |
-|1          |1             |3                    |2                    |1           |4           |2                   |
+| Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Tuya ceiling light | Sonoff IFan04 |
+|:---------:|:------------:|:-------------------:|:-------------------:|:----------:|:----------:|:------------------:|:-------------:|
+|<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width = 100>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width = 100>|<img src="https://shelly.cloud/wp-content/uploads/2021/09/shelly1pm-comparision.png" width = 100> |<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://www.megateh.eu/files/products/00/60/69/sonoff-ifan04.jpg" width = 100>
+|1          |1             |3                    |2                    |1           |4           |2                   |(1)            |
 
 
 ### Zigbee devices
@@ -67,9 +66,9 @@
 
 ### Custom devices designed by me
 
-| Multisensor | WLED Strip |
-|:-----------:|:----------:|
-|2            |(2)         |
+| Multisensor | WLED Strip | Hot water sensor |
+|:-----------:|:----------:|:----------------:|
+|2            |(2)         |(1)               |
 
 -----
 
@@ -113,13 +112,13 @@
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Button Card](https://github.com/custom-cards/button-card)
-- [Card Mod](https://github.com/thomasloven/lovelace-card-mod) - Apply CSS styles to any card
+- [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Compass Card](https://github.com/tomvanswam/compass-card)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Elapsed time Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
-- [Hui-Element](https://github.com/thomasloven/lovelace-hui-element) - The most versatile of them all.
-- [Mini Graph Card](https://github.com/kalkih/mini-graph-card) - This one is probably one of the more powerful cards out there.
+- [Hui-Element](https://github.com/thomasloven/lovelace-hui-element)
+- [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
 - [Mini Media Player](https://github.com/kalkih/mini-media-player)
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom-cards](https://github.com/piitaya/lovelace-mushroom)
