@@ -16,6 +16,9 @@
     - service: light.turn_off
       data:
         entity_id: light.all_lights
+    - service: media_player.turn_off
+      data:
+        entity_id: media_player.tv
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
@@ -24,4 +27,4 @@
       data:
         title: "Closed everything for you"
         message: >-
-          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
+          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }}, TV is {{ states('media_player.tv') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
