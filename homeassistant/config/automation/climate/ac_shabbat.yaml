@@ -40,27 +40,27 @@
     data:
       entity_id: script.ac_cool
 
-- alias: "Climate - Shabbat Night climate"
-  id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2
-  trigger:
-    platform: time_pattern
-    minutes: 30
-  condition:
-    - condition: time
-      after: '01:00:00'
-      before: '07:00:00'
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-    - "{{ is_state('group.person', 'home') }}"
-  action:
-    - if:
-        condition: state
-        entity_id: climate.living_room
-        state: 'off'
-      then:
-        service: script.turn_on
-        data:
-          entity_id: script.ac_cool
-      else:
-        service: climate.turn_off
-        data:
-          entity_id: climate.living_room
+# - alias: "Climate - Shabbat Night climate"
+#   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2
+#   trigger:
+#     platform: time_pattern
+#     minutes: 30
+#   condition:
+#     - condition: time
+#       after: '01:00:00'
+#       before: '07:00:00'
+#     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+#     - "{{ is_state('group.person', 'home') }}"
+#   action:
+#     - if:
+#         condition: state
+#         entity_id: climate.living_room
+#         state: 'off'
+#       then:
+#         service: script.turn_on
+#         data:
+#           entity_id: script.ac_cool
+#       else:
+#         service: climate.turn_off
+#         data:
+#           entity_id: climate.living_room
