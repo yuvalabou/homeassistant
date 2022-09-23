@@ -4,7 +4,6 @@ exclude:
   entities:
     - sensor.israel_weather_forecast
     - sensor.myip
-    - sensor.ims_daily
     - sensor.hacs
     - sensor.random_number
     - sensor.openweathermap_weather_code
