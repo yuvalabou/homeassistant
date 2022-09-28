@@ -28,11 +28,6 @@ lovelace:
       icon: mdi:monitor-dashboard
       mode: yaml
       filename: lovelace/dashboards/dashboard-pc.yaml
-    dashboard-mobile-tohar:
-      title: "Tohar dashboard"
-      icon: mdi:cellphone
-      mode: yaml
-      filename: lovelace/dashboards/dashboard-mobile-tohar.yaml
 map:
 system_health:
 

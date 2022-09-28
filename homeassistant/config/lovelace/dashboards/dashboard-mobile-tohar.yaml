@@ -1,8 +1,0 @@
----
-
-decluttering_templates:
-  !include_dir_merge_named ../decluttering_cards
-
-title: "Tohar Dashboard"
-views:
-  - !include dashboard-mobile-tohar/overview.yaml
