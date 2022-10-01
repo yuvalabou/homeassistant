@@ -38,8 +38,6 @@
   type: module
 - url: /hacsfiles/rgb-light-card/card.js
   type: module
-- url: /hacsfiles/room-card/room-card.js
-  type: module
 - url: /hacsfiles/timer-bar-card/timer-bar-card.js
   type: module
 - url: /hacsfiles/uptime-card/uptime-card.js
