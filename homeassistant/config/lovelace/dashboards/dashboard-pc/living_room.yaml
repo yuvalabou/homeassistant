@@ -95,17 +95,3 @@ cards:
       #   card_type: picture-entity
       #   entity: binary_sensor.kitchen
       #   camera_image: camera.kitchen_camera
-
-  - type: entities
-    show_header_toggle: false
-    entities:
-      - type: custom:hui-element
-        card_type: light
-        entity: light.living_room_ceiling_light
-      - type: custom:hui-element
-        card_type: horizontal-stack
-        cards:
-          - type: light
-            entity: light.wall_light_right
-          - type: light
-            entity: light.wall_light_left

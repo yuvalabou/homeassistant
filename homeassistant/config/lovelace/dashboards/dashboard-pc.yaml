@@ -9,5 +9,4 @@ views:
   - !include dashboard-pc/living_room.yaml
   - !include dashboard-pc/master_bedroom.yaml
   # - !include dashboard-pc/kids_room.yaml
-  - !include dashboard-pc/stats.yaml
   - !include dashboard-pc/homelab.yaml

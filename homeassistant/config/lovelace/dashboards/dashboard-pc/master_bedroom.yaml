@@ -3,11 +3,6 @@
 title: "Master Bedroom"
 icon: mdi:bed-king-outline
 cards:
-#  - type: custom:decluttering-card
-#    template: multisensor
-#    variables:
-#      - room: master_bedroom
-
   # - type: entities
   #   show_header_toggle: false
   #   entities:
@@ -44,12 +39,6 @@ cards:
   #             points: false
   #             labels: false
   #             legend: false
-
-  # - type: entities
-  #   entities:
-  #     - type: custom:hui-element
-  #       card_type: light
-  #       entity: light.yeelight_color_master_bedroom
 
   # - type: entities
   #   entities:
