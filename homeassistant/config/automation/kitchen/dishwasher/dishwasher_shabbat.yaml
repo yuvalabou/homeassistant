@@ -9,7 +9,7 @@
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
-    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'type', 'YOM_KIPPUR') }}"
+    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', 'yom_kippur') }}"
   action:
     - service: switch.turn_on
       entity_id: switch.400090386855001425_bsh_common_setting_powerstate
