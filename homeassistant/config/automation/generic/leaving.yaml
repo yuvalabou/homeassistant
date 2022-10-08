@@ -19,9 +19,6 @@
     - service: media_player.turn_off
       data:
         entity_id: media_player.tv
-    - service: cover.close_cover
-      data:
-        entity_id: cover.living_room_shutter
     - service: fan.turn_off
       data:
         entity_id: fan.master_bedroom_fan
