@@ -1,0 +1,23 @@
+---
+
+- alias: "Lights - Sukkah lights on"
+  id: 72cdbac3-f4ad-477a-acdf-21dd3e57e7e3
+  trigger:
+    platform: sun
+    event: sunset
+    offset: '-02:00:00'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.pergola_ceiling_light
+
+- alias: "Lights - Sukkah lights off"
+  id: cb5d1a69-5d83-4218-b583-9189d7abbb46
+  trigger:
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.pergola_ceiling_light
