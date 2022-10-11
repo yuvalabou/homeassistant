@@ -31,20 +31,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 477 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 253 |
+| **Entities** | 481 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 256 |
 | **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 64 |
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 17 |
-| **[Buttons]()** | 20 |
-| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 11 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 57 |
+| **[Buttons]()** | 18 |
+| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 14 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 59 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 169391 |
-| Yaml | 4803 |
+| Python | 169601 |
+| Yaml | 3967 |
 
 -----
 
