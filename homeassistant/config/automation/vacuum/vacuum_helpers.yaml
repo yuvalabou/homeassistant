@@ -3,25 +3,30 @@
 - alias: "Vacuum - Set to 'cleaned today'"
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
-    platform: state
-    entity_id: vacuum.mi_vacuum
-    to: 'cleaning'
-    for: '00:10:00'
+    - platform: state
+      entity_id: vacuum.mi_vacuum
+      to: 'cleaning'
+      for: '00:10:00'
+      id: 'set'
+    - platform: time
+      at: '00:00:00'
+      id: 'reset'
   action:
-    service: input_boolean.turn_on
-    data:
-      entity_id: input_boolean.cleaned_today
-
-- alias: "Vacuum - Reset 'cleaned today'"
-  id: a4801806-74ca-46ca-abdd-f5cf47ebedc2
-  initial_state: on
-  trigger:
-    platform: time
-    at: '00:00:00'
-  action:
-    service: input_boolean.turn_off
-    data:
-      entity_id: input_boolean.cleaned_today
+    choose:
+      - conditions:
+          condition: trigger
+          id: 'set'
+        sequence:
+          service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.cleaned_today
+      - conditions:
+          condition: trigger
+          id: 'reset'
+        sequence:
+          service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.cleaned_today
 
 - alias: "Vacuum - Intelligent mode switch"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
@@ -29,17 +34,22 @@
     - platform: state
       entity_id: group.person
       to: 'not_home'
+      id: 'turbo'
     - platform: state
       entity_id: group.person
       to: 'home'
+      id: 'silent'
   action:
-    - choose:
+    choose:
       - conditions:
-          - "{{ is_state('group.person', 'not_home') }}"
+          - condition: trigger
+            id: 'turbo'
           - "{{ is_state('input_boolean.guest_mode', 'off') }}"
         sequence:
           service: script.vacuum_set_turbo
-      - conditions: "{{ is_state('group.person', 'home') }}"
+      - conditions:
+        - condition: trigger
+          id: 'silent'
         sequence:
           service: script.vacuum_set_silent
 

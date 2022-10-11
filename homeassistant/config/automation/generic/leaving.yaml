@@ -10,18 +10,13 @@
     - "{{ is_state('input_boolean.guest_mode', 'off') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
-    - service: climate.turn_off
+    - service: homeassistant.turn_off
       data:
-        entity_id: climate.living_room
-    - service: light.turn_off
-      data:
-        entity_id: light.all_lights
-    - service: media_player.turn_off
-      data:
-        entity_id: media_player.tv
-    - service: fan.turn_off
-      data:
-        entity_id: fan.master_bedroom_fan
+        entity_id:
+          - climate.living_room
+          - light.all_lights
+          - media_player.tv
+          - fan.master_bedroom_fan
     - delay: 30
     - service: notify.family
       data:

@@ -10,9 +10,9 @@
     platform: sun
     event: sunset
   condition:
-    - condition: time
-      weekday:
-        - fri
+    condition: time
+    weekday:
+      - fri
   action:
     service: switch.turn_on
     data:

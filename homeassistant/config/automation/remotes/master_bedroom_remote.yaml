@@ -14,12 +14,11 @@
     after: '20:00:00'
     before: '02:00:00'
   action:
-    - service: light.turn_off
+    - service: homeassistant.turn_off
       data:
-        entity_id: light.all_lights
+        entity_id:
+          - light.all_lights
+          - climate.living_room
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
-    - service: climate.turn_off
-      data:
-        entity_id: climate.living_room

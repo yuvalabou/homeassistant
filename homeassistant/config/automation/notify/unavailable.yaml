@@ -6,7 +6,7 @@
   trigger:
     platform: state
     entity_id:
-      # - light.yeelight_color_master_bedroom
+      - light.master_bedroom_light
       - light.kitchen_ceiling_light
       - light.living_room_ceiling_light
       - light.wall_light_right

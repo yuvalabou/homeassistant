@@ -19,7 +19,7 @@
   id: ac975e09-9643-495c-8ab0-3364d8e67ab8
   trigger:
     platform: state
-    entity_id: light.bathroom_light
+    entity_id: switch.nent
     to: 'on'
     for: '00:30:00'
   action:

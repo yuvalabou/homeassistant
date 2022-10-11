@@ -1,16 +1,15 @@
 ---
 
-- alias: "Lights - Turn on Living-room lights in workday morning"
+- alias: "Lights - Turn on Wall lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
     platform: time
-    at: '06:10:00'
+    at: sensor.yuval_next_alarm
   condition:
-    - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
   action:
     service: light.turn_on
     data:
       entity_id: light.wall_lights
       kelvin: 3800
-      brightness_pct: 80
+      brightness_pct: 100
