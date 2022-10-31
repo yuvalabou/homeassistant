@@ -14,12 +14,13 @@
       data:
         entity_id:
           - climate.living_room
+          - switch.boiler
           - light.all_lights
           - media_player.tv
           - fan.master_bedroom_fan
     - delay: 30
     - service: notify.family
       data:
-        title: "Closed everything for you"
+        title: "I'll be missing you."
         message: >-
-          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }}, TV is {{ states('media_player.tv') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
+          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }}, TV is {{ states('media_player.tv') }}, Boiler is {{ states('switch.boiler') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
