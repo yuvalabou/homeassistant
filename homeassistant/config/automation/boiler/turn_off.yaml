@@ -1,0 +1,13 @@
+---
+
+- alias: "Boiler - Turn off Boiler when reaching time"
+  id: 4fc58857-73d2-4938-acf8-5952bf3de671
+  trigger:
+    - platform: state
+      entity_id: switch.boiler
+      to: 'on'
+      for: '00:30:00'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.boiler
