@@ -2,17 +2,6 @@
 
 title: "Overview"
 cards:
-  - type: horizontal-stack
-    cards:
-      - type: custom:decluttering-card
-        template: person
-        variables:
-          - name: yuval
-      - type: custom:decluttering-card
-        template: person
-        variables:
-          - name: tohar
-
   # - type: custom:mini-media-player
   #   entity: media_player.googlehome3668
   #   group: false
