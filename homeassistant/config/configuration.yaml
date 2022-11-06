@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202209            #
+#            Yuval Aboulafia - 202211            #
 ##################################################
 #                      CORE                      #
 ##################################################
@@ -30,6 +30,7 @@ lovelace:
       filename: lovelace/dashboards/dashboard-pc.yaml
 map:
 system_health:
+homeassistant_alerts:
 
 ##################################################
 #                     PERSONS                    #
