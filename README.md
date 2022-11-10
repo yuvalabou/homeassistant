@@ -98,7 +98,7 @@
 ### Integrations
 
 - [FeedParser](https://github.com/custom-components/feedparser)
-- [Home connect Alternative](https://github.com/ekutner/home-connect-hass)
+- [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
 - [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
@@ -113,6 +113,7 @@
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Button Card](https://github.com/custom-cards/button-card)
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
+- [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Compass Card](https://github.com/tomvanswam/compass-card)
 - [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Elapsed time Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
