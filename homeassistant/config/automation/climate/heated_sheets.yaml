@@ -1,0 +1,26 @@
+---
+
+- alias: "Climate - Turn on kids sheet heaters"
+  id: bbd85c59-0fd0-441c-8404-7ca7b6e3fc85
+  trigger:
+    platform: time
+    at: '18:00:00'
+  condition: "{{ is_state('group.person', 'home') }}"
+  action:
+    service: switch.turn_on
+    data:
+      entity_id:
+        - switch.deltaco_sh_p02_socket_1
+        - switch.deltaco_sh_p02_socket_2
+
+- alias: "Climate - Turn off kids sheet heaters"
+  id: f35f18e5-71f4-4842-bd1d-4c5339598f42
+  trigger:
+    platform: time
+    at: '00:00:00'
+  action:
+    service: switch.turn_off
+    data:
+      entity_id:
+        - switch.deltaco_sh_p02_socket_1
+        - switch.deltaco_sh_p02_socket_2
