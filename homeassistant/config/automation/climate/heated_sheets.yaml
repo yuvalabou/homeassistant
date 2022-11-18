@@ -14,7 +14,7 @@
     - conditions:
       - condition: trigger
         id: 'on'
-      - condition: "{{ is_state('group.person', 'home') }}"
+      - "{{ is_state('group.person', 'home') }}"
       sequence:
         service: switch.turn_on
         data:
