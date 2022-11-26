@@ -36,7 +36,7 @@
   trigger:
     platform: sun
     event: sunset
-    offset: '-03:30:00'
+    offset: '-02:00:00'
   condition:
     - condition: time
       weekday:
