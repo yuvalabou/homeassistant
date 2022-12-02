@@ -6,7 +6,7 @@
     platform: time_pattern
     minutes: 5
   condition:
-    - "{{ is_state('binary_sensor.bathroom_light_is_on', 'off') }}"
+    - "{{ is_state('light.bathroom_light', 'off') }}"
     - condition: numeric_state
       entity_id: sensor.bathroom_humidity
       below: 70
@@ -19,7 +19,7 @@
   id: ac975e09-9643-495c-8ab0-3364d8e67ab8
   trigger:
     platform: state
-    entity_id: switch.nent
+    entity_id: switch.vent
     to: 'on'
     for: '00:30:00'
   action:
