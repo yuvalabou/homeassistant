@@ -43,8 +43,8 @@
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 171364 |
-| Yaml | 4319 |
+| Python | 33172 |
+| Yaml | 3725 |
 
 -----
 
