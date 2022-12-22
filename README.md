@@ -31,20 +31,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 498 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 261 |
+| **Entities** | 500 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 263 |
 | **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 69 |
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 19 |
 | **[Buttons]()** | 13 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 14 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 63 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 65 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 171209 |
-| Yaml | 3670 |
+| Python | 171364 |
+| Yaml | 4319 |
 
 -----
 
@@ -52,16 +52,16 @@
 
 | Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Tuya ceiling light | Sonoff IFan04 |
 |:---------:|:------------:|:-------------------:|:-------------------:|:----------:|:----------:|:------------------:|:-------------:|
-|<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width = 100>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width = 100>|<img src="https://poood.ru/img/goods/yeelight_lampa_xiaomi_led_bulb_color_1700k-6500k_yldp06yl_5.jpg" width=100>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width = 100>|<img src="https://shelly.cloud/wp-content/uploads/2021/09/shelly1pm-comparision.png" width = 100> |<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=100>|<img src="https://www.megateh.eu/files/products/00/60/69/sonoff-ifan04.jpg" width = 100>
-|1          |1             |3                    |2                    |1           |5           |2                   |1              |
+|<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width=75>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width=75>|<img src="https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1616606687.68573462.jpg" width=75>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width=75>|<img src="https://store-wc.athom.com/wp-content/uploads/2022/03/shellyplus1pm-comparision.png" width=75> |<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://ae01.alicdn.com/kf/H87b6845fe6bd493c8f4cc8faed9547efE/SONOFF-iFan04-L-iFan03-Wifi-RF.jpg_Q90.jpg_.webp" width=75>
+|1          |1             |2+(1)                |2                    |1           |5           |2                   |1              |
 
 
 ### Zigbee devices
 
-| CC2531 (HUB) | Aqara button | Aqara Contact sensor |
-|:------------:|:------------:|:--------------------:|
-|<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width = 100>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width = 100>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width = 100>|
-|1             |1             |4                     |
+| CC2531 (HUB) | Aqara button | Aqara Contact sensor | Aqara Temp and Humidity sensor |
+|:------------:|:------------:|:--------------------:|:------------------------------:|
+|<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width=75>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width=75>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width=75>|<img src="https://miot-global.com/uploads/CatalogueImage/pvm_aqara-temperature-and-humidity-sensor-03_15762_1506340175.jpg" width=75>|
+|1             |1             |4                     |(4) Ordered                     |
 
 
 ### Custom devices designed by me
@@ -84,7 +84,7 @@
 
 -----
 
-## HACS custom components
+## HACS and custom components
 
 <img src =
     "https://avatars2.githubusercontent.com/u/56713226?s=200&v=4"
@@ -115,7 +115,6 @@
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Compass Card](https://github.com/tomvanswam/compass-card)
-- [Decluttering Card](https://github.com/custom-cards/decluttering-card)
 - [Elapsed time Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element)
