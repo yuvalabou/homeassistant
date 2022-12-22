@@ -1,0 +1,17 @@
+---
+
+- alias: "Notify - Door state has changed for no reason"
+  id: 34344b9b-1e8e-449c-b6ec-f51cf5cd175d
+  trigger:
+    platform: state
+    entity_id:
+      - binary_sensor.bathroom_door_contact
+      - binary_sensor.living_room_window_contact
+      - binary_sensor.ensuite_door_contact
+      - binary_sensor.master_bedroom_door_contact
+  condition: "{{ is_state('group.person', 'not_home') }}"
+  action:
+    service: notify.mobile_app_yuval
+    data:
+      title: "Door changed!"
+      message: "A door has changed state for no appearent reason"
