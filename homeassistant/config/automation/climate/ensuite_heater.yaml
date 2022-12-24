@@ -6,10 +6,10 @@
     - platform: state
       entity_id: switch.ensuite_heater
       to: 'on'
-      for: '00:25:00'
+      for: '00:20:00'
     - platform: numeric_state
       entity_id: sensor.ensuite_temperature
-      above: 21
+      above: 25
   action:
     service: switch.turn_off
     data:

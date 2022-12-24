@@ -14,7 +14,7 @@
   action:
     service: script.turn_on
     data:
-      entity_id: script.ac_cool
+      entity_id: script.ac_heat
 
 - alias: "Climate - Turn off Living-room climate at Shabbat night"
   id: c7396673-d257-4267-a72f-060ee4d43603
@@ -38,7 +38,7 @@
   action:
     service: script.turn_on
     data:
-      entity_id: script.ac_cool
+      entity_id: script.ac_heat
 
 # - alias: "Climate - Shabbat Night climate"
 #   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2

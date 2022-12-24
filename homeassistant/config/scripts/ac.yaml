@@ -22,7 +22,7 @@ ac_cool:
 
 ac_heat:
   alias: "Heat"
-  icon: mdi:thermometer
+  icon: mdi:fire
   sequence:
     - service: climate.turn_on
       data:

@@ -13,4 +13,5 @@
     data:
       title: "Dishwasher Finished"
       data:
+        message: "Dishwasher finished"
         image: '/local/assets/notification_images/dishwasher.jpg'
