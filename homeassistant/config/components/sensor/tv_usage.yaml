@@ -1,0 +1,9 @@
+---
+
+- platform: history_stats
+  name: "Time spent on Netflix"
+  entity_id: sensor.media_playing
+  state: "Netflix"
+  type: time
+  start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+  end: "{{ now() }}"
