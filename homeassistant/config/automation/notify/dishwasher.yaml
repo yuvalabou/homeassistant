@@ -12,5 +12,5 @@
     service: notify.family
     data:
       message: "Dishwasher finished"
-      date:
+      data:
         image: '/local/assets/notification_images/dishwasher.jpg'
