@@ -54,7 +54,7 @@ services:
     environment:
       - TZ=Asia/Jerusalem
     devices:
-      - /dev/ttyACM0:/dev/ttyACM0
+      - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
   unifi-controller:
     image: lscr.io/linuxserver/unifi-controller:latest
