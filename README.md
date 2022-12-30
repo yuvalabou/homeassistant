@@ -108,7 +108,6 @@
 ### Lovelace-UI Enhancements
 
 - [Airvisual Card](https://github.com/dnguyen800/air-visual-card)
-- [Auto Entities](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Button Card](https://github.com/custom-cards/button-card)
@@ -124,7 +123,6 @@
 - [Mushroom-cards](https://github.com/piitaya/lovelace-mushroom)
 - [RGB light Card](https://github.com/bokub/rgb-light-card)
 - [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
-- [Template Entity Row](https://github.com/thomasloven/lovelace-template-entity-row)
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
