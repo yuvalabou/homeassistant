@@ -13,3 +13,4 @@
       entity_id: light.wall_lights
       kelvin: 3800
       brightness_pct: 100
+      transition: 60

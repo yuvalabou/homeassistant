@@ -17,9 +17,7 @@
   description: "Send a notification when there's an update availiable for Home Assistant"
   trigger:
     platform: state
-    entity_id: binary_sensor.docker_hub_core_update_available
-    from: 'off'
-    to: 'on'
+    entity_id: sensor.docker_hub_core_version
   action:
     service: notify.mobile_app_yuval
     data:

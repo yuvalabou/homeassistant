@@ -14,8 +14,8 @@
       data:
         entity_id:
           - climate.living_room
-          - switch.boiler
-          - light.all_lights
+          - switch
+          - light
           - media_player.tv
           - fan.master_bedroom_fan
     - service: cover.close_cover

@@ -9,9 +9,10 @@
       - binary_sensor.living_room_window_contact
       - binary_sensor.ensuite_door_contact
       - binary_sensor.master_bedroom_door_contact
+    for: '00:00:05'
   condition: "{{ is_state('group.person', 'not_home') }}"
   action:
     service: notify.mobile_app_yuval
     data:
       title: "Door changed!"
-      message: "A door has changed state for no appearent reason"
+      message: "The state of {{ friendly_name(trigger.entity_id) }} has changed for no apparent reason"

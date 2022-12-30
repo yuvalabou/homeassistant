@@ -40,7 +40,7 @@
   id: 3ac9405a-dde0-41f2-850b-413cb15a708d
   trigger:
     platform: time
-    at: '08:00:00'
+    at: '07:55:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
@@ -50,3 +50,4 @@
       entity_id: light.public_lights
       brightness_pct: 80
       kelvin: 3600
+      transition: 300
