@@ -8,31 +8,19 @@
       value_template: >-
         {{ states('input_boolean.shabbat_mode') }}
       turn_on:
-        - service: input_boolean.turn_on
+        - service: homeassistant.turn_on
           data:
-            entity_id: input_boolean.shabbat_mode
-      #   - service: switch.turn_on
-      #     data:
-      #       entity_id: switch.living_room_shabbat_select
-        - service: switch.turn_on
-          data:
-            entity_id: switch.bathroom_shabbat_select
-        - service: switch.turn_on
-          data:
-            entity_id: switch.ensuite_shabbat_select
+            entity_id:
+              - input_boolean.shabbat_mode
+              - switch.bathroom_shabbat_select
+              - switch.ensuite_shabbat_select
       turn_off:
-        - service: input_boolean.turn_off
+        - service: homeassistant.turn_off
           data:
-            entity_id: input_boolean.shabbat_mode
-      #   - service: switch.turn_off
-      #     data:
-      #       entity_id: switch.living_room_shabbat_select
-        - service: switch.turn_off
-          data:
-            entity_id: switch.bathroom_shabbat_select
-        - service: switch.turn_off
-          data:
-            entity_id: switch.ensuite_shabbat_select
+            entity_id:
+              - input_boolean.shabbat_mode
+              - switch.bathroom_shabbat_select
+              - switch.ensuite_shabbat_select
       icon_template: >-
         {% if is_state('switch.shabbat_mode', 'on') %}
           mdi:motion-sensor-off

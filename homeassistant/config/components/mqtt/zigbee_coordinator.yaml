@@ -1,6 +1,6 @@
 ---
 
 sensor:
-  - name: "CC2531 Bridge"
+  - name: "ZB Dongle"
     state_topic: zigbee2mqtt/bridge/state
     icon: mdi:router-wireless
