@@ -31,20 +31,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 500 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 263 |
+| **Entities** | 527 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 286 |
 | **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 69 |
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 19 |
 | **[Buttons]()** | 13 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 14 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 65 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 68 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 14 |
 
 ### Lines of code
 | Type | Lines |
 |:----:|:-----:|
-| Python | 33172 |
-| Yaml | 3725 |
+| Python | 33620 |
+| Yaml | 4422 |
 
 -----
 
@@ -58,17 +58,17 @@
 
 ### Zigbee devices
 
-| CC2531 (HUB) | Aqara button | Aqara Contact sensor | Aqara Temp and Humidity sensor |
-|:------------:|:------------:|:--------------------:|:------------------------------:|
-|<img src="https://images-na.ssl-images-amazon.com/images/I/51l1ARtFNYL._AC_SL1000_.jpg" width=75>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width=75>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width=75>|<img src="https://miot-global.com/uploads/CatalogueImage/pvm_aqara-temperature-and-humidity-sensor-03_15762_1506340175.jpg" width=75>|
-|1             |1             |4                     |(4) Ordered                     |
+| Zigbee Dongle-P(HUB) | Aqara button | Aqara Contact sensor | Aqara Temp and Humidity sensor |
+|:--------------------:|:------------:|:--------------------:|:------------------------------:|
+|<img src="https://i0.wp.com/sonoff.tech/wp-content/uploads/2022/07/dongle-p.jpg?fit=1000%2C1000&ssl=1" width=75>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width=75>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width=75>|<img src="https://miot-global.com/uploads/CatalogueImage/pvm_aqara-temperature-and-humidity-sensor-03_15762_1506340175.jpg" width=75>|
+|1             |1             |4                     |4                               |
 
 
 ### Custom devices designed by me
 
-| Multisensor (ESPHome) | WLED Strip          | Hot water sensor (ESPHome) |
-|:---------------------:|:-------------------:|:--------------------------:|
-|2                      |(2 - Not implemented)|(1 - Not implemented)       |
+| Multisensor (ESPHome) | WLED Strip          | Hot water sensor |
+|:---------------------:|:-------------------:|:----------------:|
+|2                      |(2 - Not implemented)|(1 - Not implemented)|
 
 -----
 
