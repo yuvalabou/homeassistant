@@ -1,0 +1,26 @@
+---
+
+- sensor:
+  - name: "Total Power"
+    unique_id: 0bff1afc-c957-4075-92ec-a5fc8c2589e9
+    state: >-
+      {{
+        [
+          states('sensor.phase_a_power'),
+          states('sensor.phase_b_power'),
+          states('sensor.phase_c_power'),
+        ] | map('float') | sum
+      }}
+    unit_of_measurement: "kW"
+    device_class: power
+    state_class: measurement
+    attributes:
+      last_reset: "1970-01-01T00:00:00+00:00"
+    availability: >-
+      {{
+        [
+          states('sensor.phase_a_power'),
+          states('sensor.phase_b_power'),
+          states('sensor.phase_c_power'),
+        ] | map('is_number') | min
+      }}
