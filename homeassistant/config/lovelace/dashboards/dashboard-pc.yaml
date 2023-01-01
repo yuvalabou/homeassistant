@@ -7,4 +7,3 @@ title: "Aboulafia Home"
 views:
   - !include dashboard-pc/overview.yaml
   - !include dashboard-pc/master_bedroom.yaml
-  - !include dashboard-pc/homelab.yaml

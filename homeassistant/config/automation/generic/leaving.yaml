@@ -26,4 +26,9 @@
       data:
         title: "I'll be missing you."
         message: >-
-          "Your lights are {{ states('light.all_lights') }}, AC is {{ states('climate.living_room') }}, TV is {{ states('media_player.tv') }}, Boiler is {{ states('switch.boiler') }} and the shutter is now {{ states('cover.living_room_shutter') }}"
+          "The current state of your Devices is:
+          Lights: {{ states('light.all_lights') }}
+          AC: {{ states('climate.living_room') }}
+          TV: {{ states('media_player.tv') }}
+          Boiler: {{ states('switch.boiler') }}
+          Shutter: {{ states('cover.living_room_shutter') }}"

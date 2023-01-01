@@ -7,7 +7,7 @@ notify_for_shabbat:
     - service: media_player.volume_set
       entity_id: media_player.living_room
       data:
-        volume_level: 0.8
+        volume_level: 0.9
     - delay: 3
     - service: notify.nest_mini
       data:

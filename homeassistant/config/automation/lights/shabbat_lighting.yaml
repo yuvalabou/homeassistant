@@ -48,6 +48,6 @@
     service: light.turn_on
     data:
       entity_id: light.public_lights
-      brightness_pct: 80
+      brightness_pct: 100
       kelvin: 3600
       transition: 300

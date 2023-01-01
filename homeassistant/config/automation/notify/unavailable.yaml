@@ -20,7 +20,7 @@
   action:
     service: persistent_notification.create
     data_template:
-      title: "Bulb Offline"
+      title: "Light Offline"
       message: >-
         the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
 

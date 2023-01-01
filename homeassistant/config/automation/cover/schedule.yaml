@@ -3,15 +3,27 @@
 - alias: "Cover - Morning Cover"
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   trigger:
-    platform: time
-    at: '06:15:00'
+    - platform: time
+      at: '06:15:00'
+    - platform: time
+      at: '07:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
-    service: cover.open_cover
-    data:
-      entity_id: cover.living_room_shutter
+    - choose:
+      - conditions:
+          - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+          - "{{ not is_state('cover.living_room_shutter', 'open') }}"
+        sequence:
+          service: cover.open_cover
+          data:
+            entity_id: cover.living_room_shutter
+      - conditions:
+          - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+        sequence:
+          service: cover.open_cover
+          data:
+            entity_id: cover.living_room_shutter
 
 - alias: "Cover - Evening Cover"
   id: dee66d89-f22f-4b21-ba18-92bbb15efb83
