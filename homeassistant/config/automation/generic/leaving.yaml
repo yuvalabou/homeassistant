@@ -14,8 +14,10 @@
       data:
         entity_id:
           - climate.living_room
-          - switch
-          - light
+          - switch.boiler
+          - switch.deltaco_sh_p02_socket_1
+          - switch.deltaco_sh_p02_socket_2
+          - light.all_lights
           - media_player.tv
           - fan.master_bedroom_fan
     - service: cover.close_cover
