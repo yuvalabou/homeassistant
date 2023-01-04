@@ -4,3 +4,8 @@
   host: !secret sensibo_living_room
   name: "Living room Sensibo"
   count: 2
+
+- platform: ping
+  host: !secret fan
+  name: "Fan"
+  count: 2

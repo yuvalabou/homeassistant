@@ -4,8 +4,9 @@
   - name: "Master bedroom button linkquality percent"
     unique_id: 843110c2-96d0-43be-bfb6-e70920b465ec
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.master_bedroom_button_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.master_bedroom_button_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.master_bedroom_button_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -38,8 +39,9 @@
   - name: "Living room window linkquality percent"
     unique_id: a0b7a1bd-a457-45d6-85fe-8463a26d8205
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.living_room_window_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.living_room_window_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.living_room_window_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -55,8 +57,9 @@
   - name: "Bathroom door linkquality percent"
     unique_id: 1bd3b357-a7d5-4908-851d-4f4efbf87075
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.bathroom_door_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.bathroom_door_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.bathroom_door_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -72,8 +75,9 @@
   - name: "Ensuite door linkquality percent"
     unique_id: 1005f3f6-7c23-44ef-a164-31a9d657cd41
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.ensuite_door_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.ensuite_door_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.ensuite_door_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -89,8 +93,9 @@
   - name: "Master bedroom door linkquality percent"
     unique_id: 1c4d4000-84b3-456a-80de-400ff02e0101
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.master_bedroom_door_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.master_bedroom_door_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.master_bedroom_door_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -106,8 +111,9 @@
   - name: "Master bedroom H&T linkquality percent"
     unique_id: a01137aa-db54-46c5-928e-a84d3e14f39e
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.master_bedroom_h_t_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.master_bedroom_h_t_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.master_bedroom_h_t_linkquality_percent') %}
       {% if lqi <= '35' %}
@@ -123,10 +129,29 @@
   - name: "Living room H&T linkquality percent"
     unique_id: e8a2ba26-bff6-430a-947b-389a47bfaf5b
     unit_of_measurement: "%"
+    state_class: measurement
     state: >-
-      {{ ((states('sensor.living_room_h_t_linkquality') | int(0) / 255) * 100) | round (1) }}
+      {{ ((states('sensor.living_room_h_t_linkquality') | int(default=1) / 255) * 100) | round (1) }}
     icon: >-
       {% set lqi = states('sensor.living_room_h_t_linkquality_percent') %}
+      {% if lqi <= '35' %}
+        mdi:signal-cellular-1
+      {% elif lqi <= '65' %}
+        mdi:signal-cellular-2
+      {% elif lqi <= '100' %}
+        mdi:signal-cellular-3
+      {% else %}
+        mdi:signal-off
+      {% endif %}
+
+  - name: "Kids room H&T linkquality percent"
+    unique_id: c5ea099d-5a6c-4bb5-bf83-c5dd786968f4
+    unit_of_measurement: "%"
+    state_class: measurement
+    state: >-
+      {{ ((states('sensor.kids_bedroom_h_t_linkquality') | int(default=1) / 255) * 100) | round (1) }}
+    icon: >-
+      {% set lqi = states('sensor.kids_bedroom_h_t_linkquality_percent') %}
       {% if lqi <= '35' %}
         mdi:signal-cellular-1
       {% elif lqi <= '65' %}

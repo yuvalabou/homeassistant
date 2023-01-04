@@ -1,8 +1,8 @@
 ---
 
 - binary_sensor:
-    # Does not return true on Kippur as it is a Holiday
   - name: "Tzom"
+    # Does not return true on Kippur as it is a Holiday
     unique_id: a184d22d-221a-45e3-8065-e4c824d2b959
     state: >-
       {{ is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 5) }}
@@ -12,19 +12,11 @@
   - name: "Is Omer"
     unique_id: d8d1e7d8-455a-4c67-919f-850c09e5ef13
     state: >-
-      {{ (states('sensor.jewish_calendar_day_of_the_omer') | int(0)) > 0 }}
-
-  - name: "Issur melacha eve"
-    state: >-
-      {{
-        now().weekday() == 4
-        or
-        is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 2)
-      }}
+      {{ (states('sensor.jewish_calendar_day_of_the_omer') | int(default=0)) > 0 }}
 
 # Shabbat notification triggers
 # FIXME: These sensors have hardcoded timezone offset.
-# // Help needed to fix this
+# Help needed to fix this
 # 10800s for +3hrs offset, 7200s for +2hrs offset.
   - name: "Shabbat 10 min Notification trigger"
     unique_id: 892d219d-1f2e-4904-96a3-152390eadaa9

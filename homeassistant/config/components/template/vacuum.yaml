@@ -4,9 +4,9 @@
   - name: "Vacuum status"
     unique_id: b453c3bd-560b-4235-9aa2-b25b116820b5
     state: >-
-      {{ state_attr('vacuum.mi_vacuum', 'status') }}
+      {{ state_attr('vacuum.mi_vacuum', 'status') | default='unknown' }}
     icon: >-
-      {% set status = state_attr('vacuum.mi_vacuum', 'status') %}
+      {% set status = state_attr('vacuum.mi_vacuum', 'status') | default='unknown' %}
       {% if status == 'Charging' %}
         mdi:battery-charging
       {% elif status == 'Cleaning' %}
@@ -24,7 +24,7 @@
   - name: "Vacuum Fan speed"
     unique_id: c5efde29-c48f-4faa-9363-9c514204bb60
     state: >-
-      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') %}
+      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') | default='unknown' %}
       {% if speed == 'Silent' %}
         Silent
       {% elif speed == 'Standard' %}
@@ -37,7 +37,7 @@
         unknown
       {% endif %}
     icon: >-
-      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') %}
+      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') | default='unknown' %}
       {% if speed == 'Silent' %}
         mdi:fan-speed-1
       {% elif speed == 'Standard' %}
@@ -53,7 +53,9 @@
   - name: "Vacuum Battery"
     unique_id: b6713b14-05ac-4f66-8e46-fa6ae1ef5304
     unit_of_measurement: '%'
+    state_class: measurement
+    device_class: battery
     state: >-
-      {{ state_attr('vacuum.mi_vacuum', 'battery_level') }}
+      {{ state_attr('vacuum.mi_vacuum', 'battery_level') | default='unknown' }}
     icon: >-
-      {{ state_attr('vacuum.mi_vacuum', 'battery_icon') }}
+      {{ state_attr('vacuum.mi_vacuum', 'battery_icon') | default='unknown' }}

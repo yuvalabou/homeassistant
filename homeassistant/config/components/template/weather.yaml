@@ -4,7 +4,7 @@
   - name: "Wind Scale"
     unique_id: 3bf1562c-4704-48e2-8b60-5a2f06c318e3
     state: >-
-      {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
+      {% set speed = (states('sensor.openweathermap_wind_speed') | float(default=-1) * 3600 / 1000) %}
       {% if speed >= 118 %}
         Hurricane force
       {% elif speed >= 103 %}
@@ -35,7 +35,7 @@
         unknown
       {% endif %}
     icon: >-
-      {% set speed = (states('sensor.openweathermap_wind_speed') | float(-1) * 3600 / 1000) %}
+      {% set speed = (states('sensor.openweathermap_wind_speed') | float(default=-1) * 3600 / 1000) %}
       {% if speed >= 75 %}
         mdi:weather-tornado
       {% elif speed >= 39 %}

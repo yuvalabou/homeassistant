@@ -31,7 +31,7 @@
             entity_id: timer.zigbee2mqtt_permit_join
       icon_template: >-
         {% if is_state('switch.zigbee2mqtt_permit_join', 'on') %}
-          mdi:signal
+          mdi:shield-off
         {% else %}
-          mdi:signal-off
+          mdi:shield
         {% endif %}

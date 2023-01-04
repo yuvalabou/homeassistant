@@ -9,4 +9,6 @@
           {% set app = state_attr('media_player.tv', 'app_name') %}
           {% if app == 'Netflix' %}
             mdi:netflix
+          {% elif app == 'com.disneyplus.mea' %}
+            mdi:castle
           {% endif %}
