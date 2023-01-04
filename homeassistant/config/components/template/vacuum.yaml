@@ -4,9 +4,9 @@
   - name: "Vacuum status"
     unique_id: b453c3bd-560b-4235-9aa2-b25b116820b5
     state: >-
-      {{ state_attr('vacuum.mi_vacuum', 'status', default='unknown') }}
+      {{ state_attr('vacuum.mi_vacuum', 'status') if states('vacuum.mi_vacuum') else "unknown" }}
     icon: >-
-      {% set status = state_attr('vacuum.mi_vacuum', 'status', default='unknown') %}
+      {% set status = state_attr('vacuum.mi_vacuum', 'status') if states('vacuum.mi_vacuum') else "unknown" %}
       {% if status == 'Charging' %}
         mdi:battery-charging
       {% elif status == 'Cleaning' %}
@@ -17,6 +17,8 @@
         mdi:dots-horizontal
       {% elif status == 'Paused' %}
         mdi:pause-circle
+      {% elif status == 'Charger disconnected' %}
+        mdi:power-plug-off-outline
       {% else %}
         mdi:help-circle
       {% endif %}
@@ -24,7 +26,7 @@
   - name: "Vacuum Fan speed"
     unique_id: c5efde29-c48f-4faa-9363-9c514204bb60
     state: >-
-      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed', default='unknown') %}
+      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') if states('vacuum.mi_vacuum') else "unknown" %}
       {% if speed == 'Silent' %}
         Silent
       {% elif speed == 'Standard' %}
@@ -34,10 +36,10 @@
       {% elif speed == 'Turbo' %}
         Turbo
       {% else %}
-        unknown
+        "unknown"
       {% endif %}
     icon: >-
-      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed', default='unknown') %}
+      {% set speed = state_attr('vacuum.mi_vacuum', 'fan_speed') if states('vacuum.mi_vacuum') else "unknown" %}
       {% if speed == 'Silent' %}
         mdi:fan-speed-1
       {% elif speed == 'Standard' %}
@@ -56,6 +58,6 @@
     state_class: measurement
     device_class: battery
     state: >-
-      {{ state_attr('vacuum.mi_vacuum', 'battery_level', default='unknown') }}
+      {{ state_attr('vacuum.mi_vacuum', 'battery_level') if states('vacuum.mi_vacuum') else "unknown" }}
     icon: >-
-      {{ state_attr('vacuum.mi_vacuum', 'battery_icon', default='unknown') }}
+      {{ state_attr('vacuum.mi_vacuum', 'battery_icon') if states('vacuum.mi_vacuum') else 'mdi:help-circle' }}

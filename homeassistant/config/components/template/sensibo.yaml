@@ -8,6 +8,6 @@
     icon: mdi:thermometer
 
 - binary_sensor:
-  - name: "AC is on"
+  - name: "AC"
     unique_id: 3aa3dbdd-b082-4cb5-a02c-743c1debf27a
-    state: "{{ not is_state('climate.living_room', 'off', default='unknown') }}"
+    state: "{{ not is_state('climate.living_room', ['off', 'unknown']) }}"
