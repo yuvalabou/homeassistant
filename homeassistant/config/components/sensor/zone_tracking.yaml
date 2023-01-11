@@ -1,17 +1,17 @@
 ---
 
 - platform: history_stats
-  name: "Time spent on Netflix"
-  entity_id: sensor.media_playing
-  state: "Netflix"
+  name: "Yuval - Time at work"
+  entity_id: person.yuval
+  state: "Hirsh"
   type: time
   start: "{{ now().replace(hour=0, minute=0, second=0) }}"
   end: "{{ now() }}"
 
 - platform: history_stats
-  name: "Time spent on Disney"
-  entity_id: sensor.media_playing
-  state: "com.disneyplus.mea"
+  name: "Tohar - Time at gym"
+  entity_id: person.tohar
+  state: "gym"
   type: time
   start: "{{ now().replace(hour=0, minute=0, second=0) }}"
   end: "{{ now() }}"

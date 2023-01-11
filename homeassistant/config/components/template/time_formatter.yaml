@@ -1,0 +1,23 @@
+
+---
+
+- sensor:
+  - name: "Yuval - time at work formatted"
+    unique_id: 7b6420cc-087e-4296-8709-6c5c61fd6a6d
+    unit_of_measurement: "hours"
+    state_class: total
+    state: >-
+      {% set hours = states('sensor.yuval_time_at_work') | float %}
+      {% set minutes = ((hours % 1) * 60) | int %}
+      {% set hours = (hours - (hours % 1)) | int %}
+      {{ float('%02i.%02i'%(hours, minutes)) }}
+
+  - name: "Tohar - time at gym formatted"
+    unique_id: a4589b8e-750d-4b19-bb2b-019a24cc5f7d
+    unit_of_measurement: "hours"
+    state_class: total
+    state: >-
+      {% set hours = states('sensor.tohar_time_at_gym') | float %}
+      {% set minutes = ((hours % 1) * 60) | int %}
+      {% set hours = (hours - (hours % 1)) | int %}
+      {{ float('%02i.%02i'%(hours, minutes)) }}
