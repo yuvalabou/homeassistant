@@ -14,6 +14,9 @@
     entity_id: sensor.living_room_shutter_position
     below: 50
   action:
-    service: cover.open_cover
-    data:
-      entity_id: cover.living_room_shutter
+    - service: cover.open_cover
+      data:
+        entity_id: cover.living_room_shutter
+    - service: alarm_control_panel.alarm_arm_home
+      data:
+        entity_id: alarm_control_panel.home
