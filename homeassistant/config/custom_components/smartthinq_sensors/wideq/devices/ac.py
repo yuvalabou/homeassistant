@@ -4,21 +4,7 @@ from __future__ import annotations
 from enum import Enum
 import logging
 
-from ..const import (
-    FEAT_ENERGY_CURRENT,
-    FEAT_FILTER_MAIN_LIFE,
-    FEAT_HOT_WATER_TEMP,
-    FEAT_HUMIDITY,
-    FEAT_LIGHTING_DISPLAY,
-    FEAT_MODE_AIRCLEAN,
-    FEAT_MODE_AWHP_SILENT,
-    FEAT_MODE_JET,
-    FEAT_ROOM_TEMP,
-    FEAT_WATER_IN_TEMP,
-    FEAT_WATER_OUT_TEMP,
-    UNIT_TEMP_CELSIUS,
-    UNIT_TEMP_FAHRENHEIT,
-)
+from ..const import AirConditionerFeatures, TemperatureUnit
 from ..core_async import ClientAsync
 from ..core_exceptions import InvalidRequestError
 from ..core_util import TempUnitConversion
@@ -78,7 +64,11 @@ STATE_LIGHTING_DISPLAY = ["DisplayControl", "airState.lightingState.displayContr
 
 FILTER_TYPES = [
     [
-        FEAT_FILTER_MAIN_LIFE,
+        [
+            AirConditionerFeatures.FILTER_MAIN_LIFE,
+            AirConditionerFeatures.FILTER_MAIN_USE,
+            AirConditionerFeatures.FILTER_MAIN_MAX,
+        ],
         [STATE_FILTER_V1_USE, "airState.filterMngStates.useTime"],
         [STATE_FILTER_V1_MAX, "airState.filterMngStates.maxTime"],
         None,
@@ -263,14 +253,17 @@ class AirConditionerDevice(Device):
     """A higher-level interface for a AC."""
 
     def __init__(
-        self, client: ClientAsync, device_info: DeviceInfo, temp_unit=UNIT_TEMP_CELSIUS
+        self,
+        client: ClientAsync,
+        device_info: DeviceInfo,
+        temp_unit=TemperatureUnit.CELSIUS,
     ):
         """Initialize AirConditionerDevice object."""
         super().__init__(client, device_info, AirConditionerStatus(self))
         self._temperature_unit = (
-            UNIT_TEMP_FAHRENHEIT
-            if temp_unit == UNIT_TEMP_FAHRENHEIT
-            else UNIT_TEMP_CELSIUS
+            TemperatureUnit.FAHRENHEIT
+            if temp_unit == TemperatureUnit.FAHRENHEIT
+            else TemperatureUnit.CELSIUS
         )
         self._is_air_to_water = None
         self._is_water_heater_supported = None
@@ -290,20 +283,20 @@ class AirConditionerDevice(Device):
         self._current_power = None
         self._current_power_supported = True
 
-        self._filter_status = {}
+        self._filter_status = None
         self._filter_status_supported = True
 
         self._unit_conv = TempUnitConversion()
 
     def _f2c(self, value):
         """Convert Fahrenheit to Celsius temperatures for this device if required."""
-        if self._temperature_unit == UNIT_TEMP_CELSIUS:
+        if self._temperature_unit == TemperatureUnit.CELSIUS:
             return value
         return self._unit_conv.f2c(value, self.model_info)
 
     def conv_temp_unit(self, value):
         """Convert Celsius to Fahrenheit temperatures for this device if required."""
-        if self._temperature_unit == UNIT_TEMP_CELSIUS:
+        if self._temperature_unit == TemperatureUnit.CELSIUS:
             return float(value)
         return self._unit_conv.c2f(value, self.model_info)
 
@@ -843,36 +836,35 @@ class AirConditionerDevice(Device):
         try:
             value = await self._get_config(STATE_POWER_V1)
             return value[STATE_POWER_V1]
-        except (ValueError, InvalidRequestError):
+        except (ValueError, InvalidRequestError) as exc:
             # Device does not support whole unit instant power usage
+            _LOGGER.debug("Error calling get_power methods: %s", exc)
             self._current_power_supported = False
             return None
 
     async def get_filter_state(self):
         """Get information about the filter."""
         if not self._filter_status_supported:
-            return {}
+            return None
         try:
             return await self._get_config(STATE_FILTER_V1)
-        except (ValueError, InvalidRequestError):
+        except (ValueError, InvalidRequestError) as exc:
             # Device does not support filter status
+            _LOGGER.debug("Error calling get_filter_state methods: %s", exc)
             self._filter_status_supported = False
-            return {}
+            return None
 
     async def get_filter_state_v2(self):
         """Get information about the filter."""
         if not self._filter_status_supported:
-            return {}
+            return None
         try:
-            _LOGGER.info("Entering GetFilerStatus V2")
-            result = await self._get_config_v2(CTRL_FILTER_V2, "Get")
-            _LOGGER.info("GetFilerStatus V2: %s", result)
-            return result
-        except (ValueError, InvalidRequestError) as ex:
+            return await self._get_config_v2(CTRL_FILTER_V2, "Get")
+        except (ValueError, InvalidRequestError) as exc:
             # Device does not support filter status
-            _LOGGER.info("GetFilerStatus V2 error: %s", ex)
+            _LOGGER.debug("Error calling get_filter_state_v2 methods: %s", exc)
             self._filter_status_supported = False
-            return {}
+            return None
 
     async def set(
         self, ctrl_key, command, *, key=None, value=None, data=None, ctrl_path=None
@@ -914,7 +906,8 @@ class AirConditionerDevice(Device):
         Override in specific device to call requested methods.
         """
         # this commands is to get filter status on V2 device
-        await self.get_filter_state_v2()
+        if not self.is_air_to_water:
+            self._filter_status = await self.get_filter_state_v2()
 
     async def poll(self) -> AirConditionerStatus | None:
         """Poll the device's current state."""
@@ -925,15 +918,21 @@ class AirConditionerDevice(Device):
         )
         if not res:
             return None
+
+        # update power for ACv1
         if self._should_poll and not self.is_air_to_water:
             if self._current_power is not None:
                 res[STATE_POWER_V1] = self._current_power
-            if self._filter_status:
-                res.update(self._filter_status)
 
         self._status = AirConditionerStatus(self, res)
+        # adjust temperature step
         if self._temperature_step == TEMP_STEP_WHOLE:
             self._adjust_temperature_step(self._status.target_temp)
+        # update filter status
+        if self._filter_status:
+            if not self._status.update_filter_status(self._filter_status):
+                self._filter_status = None
+                self._filter_status_supported = False
 
         # manage duct devices, does nothing if not ducted
         try:
@@ -951,6 +950,7 @@ class AirConditionerStatus(DeviceStatus):
         """Initialize device status."""
         super().__init__(device, data)
         self._operation = None
+        self._filter_use_time_inverted = True
 
     def _str_to_temp(self, str_temp):
         """Convert a string to either an `int` or a `float` temperature."""
@@ -971,6 +971,34 @@ class AirConditionerStatus(DeviceStatus):
             return ACOp(self._operation)
         except ValueError:
             return None
+
+    def update_filter_status(self, values: dict) -> bool:
+        """Update device filter status."""
+        self._filter_use_time_inverted = False
+
+        if not self.is_info_v2:
+            self._data.update(values)
+            return True
+
+        # ACv2 could return filter value in the payload
+        # if max_time key is in the payload <> 0, we don't update
+        updated = False
+        for filters in FILTER_TYPES:
+            max_key = self._get_state_key(filters[2])  # this is the max_time key
+            cur_val = self.to_int_or_none(self._data.get(max_key, 0))
+            if cur_val:
+                continue
+            for index in range(1, 3):
+                upd_key = self._get_state_key(filters[index])
+                if upd_key in values:
+                    self._data[upd_key] = values[upd_key]
+                    updated = True
+
+        # for models that return use_time directly in the payload,
+        # the value actually represent remaining time
+        self._filter_use_time_inverted = not updated
+
+        return updated
 
     def update_status(self, key, value):
         """Update device status."""
@@ -1067,7 +1095,7 @@ class AirConditionerStatus(DeviceStatus):
         """Return current temperature."""
         key = self._get_state_key(STATE_CURRENT_TEMP)
         value = self._str_to_temp(self._data.get(key))
-        return self._update_feature(FEAT_ROOM_TEMP, value, False)
+        return self._update_feature(AirConditionerFeatures.ROOM_TEMP, value, False)
 
     @property
     def target_temp(self):
@@ -1098,7 +1126,7 @@ class AirConditionerStatus(DeviceStatus):
             new_value = self.to_int_or_none(value)
             if new_value and new_value <= 50:
                 value = 5.0
-        return self._update_feature(FEAT_ENERGY_CURRENT, value, False)
+        return self._update_feature(AirConditionerFeatures.ENERGY_CURRENT, value, False)
 
     @property
     def humidity(self):
@@ -1108,7 +1136,7 @@ class AirConditionerStatus(DeviceStatus):
             return None
         if value >= 100:
             value = value / 10
-        return self._update_feature(FEAT_HUMIDITY, value, False)
+        return self._update_feature(AirConditionerFeatures.HUMIDITY, value, False)
 
     @property
     def mode_airclean(self):
@@ -1119,7 +1147,7 @@ class AirConditionerStatus(DeviceStatus):
         if (value := self.lookup_enum(key, True)) is None:
             return None
         status = value == MODE_AIRCLEAN_ON
-        return self._update_feature(FEAT_MODE_AIRCLEAN, status, False)
+        return self._update_feature(AirConditionerFeatures.MODE_AIRCLEAN, status, False)
 
     @property
     def mode_jet(self):
@@ -1133,7 +1161,7 @@ class AirConditionerStatus(DeviceStatus):
             status = JetMode(value) != JetMode.OFF
         except ValueError:
             status = False
-        return self._update_feature(FEAT_MODE_JET, status, False)
+        return self._update_feature(AirConditionerFeatures.MODE_JET, status, False)
 
     @property
     def lighting_display(self):
@@ -1142,7 +1170,9 @@ class AirConditionerStatus(DeviceStatus):
         if (value := self.to_int_or_none(self._data.get(key))) is None:
             return None
         return self._update_feature(
-            FEAT_LIGHTING_DISPLAY, str(value) == LIGHTING_DISPLAY_ON, False
+            AirConditionerFeatures.LIGHTING_DISPLAY,
+            str(value) == LIGHTING_DISPLAY_ON,
+            False,
         )
 
     @property
@@ -1151,10 +1181,17 @@ class AirConditionerStatus(DeviceStatus):
         result = {}
 
         for filter_def in FILTER_TYPES:
-            status = self._get_filter_life(filter_def[1], filter_def[2])
+            status = self._get_filter_life(
+                filter_def[1],
+                filter_def[2],
+                use_time_inverted=self._filter_use_time_inverted,
+            )
             if status is not None:
-                self._update_feature(filter_def[0], status, False)
-                result[filter_def[0]] = status
+                for index, feat in enumerate(filter_def[0]):
+                    if index >= len(status):
+                        break
+                    self._update_feature(feat, status[index], False)
+                    result[feat] = status[index]
 
         return result
 
@@ -1165,7 +1202,7 @@ class AirConditionerStatus(DeviceStatus):
             return None
         key = self._get_state_key(STATE_WATER_IN_TEMP)
         value = self._str_to_temp(self._data.get(key))
-        return self._update_feature(FEAT_WATER_IN_TEMP, value, False)
+        return self._update_feature(AirConditionerFeatures.WATER_IN_TEMP, value, False)
 
     @property
     def water_out_current_temp(self):
@@ -1174,7 +1211,7 @@ class AirConditionerStatus(DeviceStatus):
             return None
         key = self._get_state_key(STATE_WATER_OUT_TEMP)
         value = self._str_to_temp(self._data.get(key))
-        return self._update_feature(FEAT_WATER_OUT_TEMP, value, False)
+        return self._update_feature(AirConditionerFeatures.WATER_OUT_TEMP, value, False)
 
     @property
     def water_target_min_temp(self):
@@ -1201,7 +1238,9 @@ class AirConditionerStatus(DeviceStatus):
         if (value := self.lookup_enum(key, True)) is None:
             return None
         status = value == MODE_ON
-        return self._update_feature(FEAT_MODE_AWHP_SILENT, status, False)
+        return self._update_feature(
+            AirConditionerFeatures.MODE_AWHP_SILENT, status, False
+        )
 
     @property
     def hot_water_current_temp(self):
@@ -1210,7 +1249,7 @@ class AirConditionerStatus(DeviceStatus):
             return None
         key = self._get_state_key(STATE_HOT_WATER_TEMP)
         value = self._str_to_temp(self._data.get(key))
-        return self._update_feature(FEAT_HOT_WATER_TEMP, value, False)
+        return self._update_feature(AirConditionerFeatures.HOT_WATER_TEMP, value, False)
 
     @property
     def hot_water_target_temp(self):

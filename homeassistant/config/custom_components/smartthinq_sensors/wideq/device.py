@@ -7,7 +7,6 @@ from __future__ import annotations
 import asyncio
 import base64
 from datetime import datetime
-from enum import Enum
 import json
 import logging
 from numbers import Number
@@ -16,16 +15,7 @@ from typing import Any
 import aiohttp
 
 from . import core_exceptions as core_exc
-from .const import (
-    BIT_OFF,
-    BIT_ON,
-    STATE_OPTIONITEM_NONE,
-    STATE_OPTIONITEM_OFF,
-    STATE_OPTIONITEM_ON,
-    STATE_OPTIONITEM_UNKNOWN,
-    UNIT_TEMP_CELSIUS,
-    UNIT_TEMP_FAHRENHEIT,
-)
+from .const import BIT_OFF, BIT_ON, StateOptions
 from .core_async import ClientAsync
 from .device_info import DeviceInfo, PlatformType
 from .model_info import ModelInfo
@@ -34,17 +24,17 @@ LABEL_BIT_OFF = "@CP_OFF_EN_W"
 LABEL_BIT_ON = "@CP_ON_EN_W"
 
 LOCAL_LANG_PACK = {
-    BIT_OFF: STATE_OPTIONITEM_OFF,
-    BIT_ON: STATE_OPTIONITEM_ON,
-    LABEL_BIT_OFF: STATE_OPTIONITEM_OFF,
-    LABEL_BIT_ON: STATE_OPTIONITEM_ON,
-    "CLOSE": STATE_OPTIONITEM_OFF,
-    "OPEN": STATE_OPTIONITEM_ON,
-    "UNLOCK": STATE_OPTIONITEM_OFF,
-    "LOCK": STATE_OPTIONITEM_ON,
-    "INITIAL_BIT_OFF": STATE_OPTIONITEM_OFF,
-    "INITIAL_BIT_ON": STATE_OPTIONITEM_ON,
-    "IGNORE": STATE_OPTIONITEM_NONE,
+    BIT_OFF: StateOptions.OFF,
+    BIT_ON: StateOptions.ON,
+    LABEL_BIT_OFF: StateOptions.OFF,
+    LABEL_BIT_ON: StateOptions.ON,
+    "CLOSE": StateOptions.OFF,
+    "OPEN": StateOptions.ON,
+    "UNLOCK": StateOptions.OFF,
+    "LOCK": StateOptions.ON,
+    "INITIAL_BIT_OFF": StateOptions.OFF,
+    "INITIAL_BIT_ON": StateOptions.ON,
+    "IGNORE": StateOptions.NONE,
     "NOT_USE": "Not Used",
 }
 
@@ -57,13 +47,6 @@ SLEEP_BETWEEN_RETRIES = 2  # seconds
 MONITOR_RESTART_SECONDS = 0  # 0 to disable
 
 _LOGGER = logging.getLogger(__name__)
-
-
-class UnitTempModes(Enum):
-    """Define possible temperature units."""
-
-    Celsius = UNIT_TEMP_CELSIUS
-    Fahrenheit = UNIT_TEMP_FAHRENHEIT
 
 
 class Monitor:
@@ -559,7 +542,7 @@ class Device:
             )
 
     async def _get_config_v2(
-        self, ctrl_key, command, *, key=None, value=None, data=None, ctrl_path=None
+        self, ctrl_key, command, *, key=None, value=None, ctrl_path=None
     ):
         """
         Look up a device's V2 configuration for a given value.
@@ -567,7 +550,7 @@ class Device:
         if self._should_poll or self.client.emulation:
             return None
 
-        return await self._client.session.device_v2_controls(
+        payload = await self._client.session.device_v2_controls(
             self._device_info.device_id,
             ctrl_key,
             command,
@@ -576,13 +559,19 @@ class Device:
             ctrl_path=ctrl_path,
         )
 
+        result = payload.get("result")
+        if not result or "data" not in result:
+            return None
+        return result["data"]
+
     async def _get_config(self, key):
         """
         Look up a device's configuration for a given value.
         The response is parsed as base64-encoded JSON.
         """
         if not self._should_poll:
-            return
+            return None
+
         data = await self._client.session.get_device_config(
             self._device_info.device_id, key
         )
@@ -593,7 +582,8 @@ class Device:
     async def _get_control(self, key):
         """Look up a device's control value."""
         if not self._should_poll:
-            return
+            return None
+
         data = await self._client.session.get_device_config(
             self._device_info.device_id,
             key,
@@ -650,13 +640,13 @@ class Device:
             try:
                 await self._pre_update_v2()
             except Exception as exc:  # pylint: disable=broad-except
-                _LOGGER.debug("Error %s calling pre_update function", exc)
+                _LOGGER.debug("Error calling pre_update function: %s", exc)
 
         return await self._mon.refresh(query_device)
 
     async def _additional_poll(self, poll_interval: int):
         """Perform dedicated additional device poll with a slower rate."""
-        if poll_interval <= 0 or self.client.emulation:
+        if poll_interval <= 0:
             return
         call_time = datetime.utcnow()
         if self._last_additional_poll is None:
@@ -670,12 +660,12 @@ class Device:
             try:
                 await self._get_device_info()
             except Exception as exc:  # pylint: disable=broad-except
-                _LOGGER.debug("Error %s calling additional poll V1 methods", exc)
+                _LOGGER.debug("Error calling additional poll V1 methods: %s", exc)
         else:
             try:
                 await self._get_device_info_v2()
             except Exception as exc:  # pylint: disable=broad-except
-                _LOGGER.debug("Error %s calling additional poll V2 methods", exc)
+                _LOGGER.debug("Error calling additional poll V2 methods: %s", exc)
 
     async def _device_poll(
         self,
@@ -753,7 +743,7 @@ class Device:
     def get_enum_text(self, enum_name):
         """Get the text associated to an enum value from language pack."""
         if not enum_name:
-            return STATE_OPTIONITEM_NONE
+            return StateOptions.NONE
 
         text_value = LOCAL_LANG_PACK.get(enum_name)
         if not text_value and self._model_lang_pack:
@@ -827,6 +817,8 @@ class DeviceStatus:
         max_time_status: str | list,
         filter_types: list | None = None,
         support_key: str | None = None,
+        *,
+        use_time_inverted=False,
     ):
         """Get filter status filtering by type if required."""
         if filter_types and support_key:
@@ -855,11 +847,20 @@ class DeviceStatus:
         )
         if use_time is None:
             return None
-        if max_time < use_time:
-            return None
+        # for models that return use_time directly in the payload,
+        # the value actually represent remaining time
+        if use_time_inverted:
+            try:
+                use_time = max(max_time - use_time, 0)
+            except ValueError:
+                return None
 
         try:
-            return int((use_time / max_time) * 100)
+            return [
+                int(((max_time - min(use_time, max_time)) / max_time) * 100),
+                use_time,
+                max_time,
+            ]
         except ValueError:
             return None
 
@@ -915,7 +916,7 @@ class DeviceStatus:
                 status_type,
             )
 
-        return STATE_OPTIONITEM_UNKNOWN
+        return StateOptions.UNKNOWN
 
     def update_status(self, key, value) -> bool:
         """Update the status key to a specific value."""
@@ -957,6 +958,16 @@ class DeviceStatus:
             value = str(int(value))
 
         return self._device.model_info.enum_name(curr_key, value)
+
+    def lookup_enum_bool(self, key):
+        """Lookup value for a specific key of type enum checking for bool type."""
+        value = self.lookup_enum(key, True)
+        if value and isinstance(value, str):
+            if value.endswith("_ON_W"):
+                return BIT_ON
+            if value.endswith("_OFF_W"):
+                return BIT_OFF
+        return value
 
     def lookup_range(self, key):
         """Lookup value for a specific key of type range."""
@@ -1001,10 +1012,10 @@ class DeviceStatus:
         enum_val = self.lookup_bit_enum(key)
         if enum_val is None:
             return None
-        bit_val = LOCAL_LANG_PACK.get(enum_val, STATE_OPTIONITEM_OFF)
-        if bit_val == STATE_OPTIONITEM_ON:
-            return STATE_OPTIONITEM_ON
-        return STATE_OPTIONITEM_OFF
+        bit_val = LOCAL_LANG_PACK.get(enum_val, StateOptions.OFF)
+        if bit_val == StateOptions.ON:
+            return StateOptions.ON
+        return StateOptions.OFF
 
     def _update_feature(
         self, key, status, get_text=True, item_key=None, *, allow_none=False
@@ -1014,9 +1025,9 @@ class DeviceStatus:
             return None
 
         if status is None and not allow_none:
-            status = STATE_OPTIONITEM_NONE
+            status = StateOptions.NONE
 
-        if status == STATE_OPTIONITEM_NONE:
+        if status == StateOptions.NONE:
             get_text = False
 
         if status is None or not get_text:
