@@ -3,8 +3,6 @@
 - name: "Shabbat eve"
   icon: mdi:candle
   entities:
-    switch.shabbat_mode:
-      state: 'on'
     # light.room_lights:
     #   state: 'off'
     light.living_room_lights:

@@ -48,10 +48,3 @@ sensor:
 button:
   - platform: restart
     name: "Restart ${upper_devicename}"
-
-switch:
-  - platform: gpio
-    name: "${upper_devicename} Shabbat Select"
-    pin:
-      number: D5
-      inverted: yes
