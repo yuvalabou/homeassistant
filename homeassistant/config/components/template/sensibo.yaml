@@ -10,4 +10,4 @@
 - binary_sensor:
   - name: "AC"
     unique_id: 3aa3dbdd-b082-4cb5-a02c-743c1debf27a
-    state: "{{ not is_state('climate.living_room', ['off', 'unknown']) }}"
+    state: "{{ not is_state('climate.living_room', ['off', 'unavailable']) }}"
