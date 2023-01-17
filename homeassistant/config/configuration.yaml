@@ -6,6 +6,7 @@
 ##################################################
 homeassistant:
   customize: !include customize.yaml
+  internal_url: !secret internal_url
   allowlist_external_dirs:
     - /config
 config:
@@ -51,7 +52,6 @@ ssdp:
 automation: !include_dir_merge_list automation
 backup:
 binary_sensor: !include_dir_merge_list components/binary_sensor
-blueprint:
 button:
 camera: !include_dir_merge_list components/camera
 counter:
@@ -61,14 +61,12 @@ input_button:
 input_datetime:
 input_number:
 input_select:
-input_text:
 jewish_calendar:
   language: hebrew
 light: !include_dir_merge_list components/light
 media_source:
 mobile_app:
 mqtt: !include_dir_merge_named components/mqtt
-my:
 notify: !include_dir_merge_list components/notify
 schedule:
 scene: !include_dir_merge_list scene
@@ -82,7 +80,6 @@ tts:
     api_key: !secret azure_tts
     language: he-il
     type: HilaNeural
-    base_url: !secret base_url
 utility_meter:
 zone:
 
