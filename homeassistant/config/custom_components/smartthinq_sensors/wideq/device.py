@@ -35,6 +35,7 @@ LOCAL_LANG_PACK = {
     "INITIAL_BIT_OFF": StateOptions.OFF,
     "INITIAL_BIT_ON": StateOptions.ON,
     "IGNORE": StateOptions.NONE,
+    "NONE": StateOptions.NONE,
     "NOT_USE": "Not Used",
 }
 
@@ -792,7 +793,7 @@ class DeviceStatus:
             return None
         try:
             return int(value)
-        except ValueError:
+        except (TypeError, ValueError):
             return None
 
     @staticmethod
