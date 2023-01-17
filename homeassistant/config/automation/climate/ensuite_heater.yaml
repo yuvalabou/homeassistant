@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Turn off Ensuite heater when reaching time or temp"
+- alias: "Climate - Turn-off Ensuite heater when reaching time or temp"
   id: bb829a6e-f2ce-4d09-b7e4-312f8ddd7a89
   trigger:
     - platform: state
@@ -15,7 +15,7 @@
     data:
       entity_id: switch.ensuite_heater
 
-- alias: "Climate - Turn on Ensuite heater in the morning"
+- alias: "Climate - Turn-on Ensuite heater in the morning"
   id: 0341d100-4828-43bc-9839-fdca34f0e121
   trigger:
     platform: time

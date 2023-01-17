@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Turn off Living-room climate at night"
+- alias: "Climate - Turn-off Living-room climate at night"
   id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
   trigger:
     platform: time
@@ -11,7 +11,7 @@
     data:
       entity_id: climate.living_room
 
-- alias: "Climate - Turn off when door is open"
+- alias: "Climate - Turn-off when door is open"
   id: 3e15ca2c-43bc-469e-958a-ce74bfb07502
   trigger:
     platform: state

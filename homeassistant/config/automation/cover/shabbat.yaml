@@ -1,6 +1,6 @@
 ---
 
-- alias: "Cover - Close living room shutter on Shabbat night"
+- alias: "Cover - Close living-room shutter on Shabbat night"
   id: 67d159ff-76fd-4ea6-9134-8e2237032966
   trigger:
     platform: time

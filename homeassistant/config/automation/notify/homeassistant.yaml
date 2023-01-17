@@ -1,6 +1,6 @@
 ---
 
-- alias: "Home Assistant Startup"
+- alias: "Notify - Home Assistant Startup"
   id: c1dca5f3-6594-4c78-9681-8e50a1648c30
   trigger:
     platform: homeassistant
@@ -12,7 +12,7 @@
       message: >-
         At {{now().strftime("%m/%d/%Y %H:%M:%S")}} Home Assistant has started.
 
-- alias: "Home Assistant update notification"
+- alias: "Notify - Home Assistant update available"
   id: 52cbbc12-add7-4634-bd64-14888a23f357
   description: "Send a notification when there's an update availiable for Home Assistant"
   trigger:
@@ -22,5 +22,5 @@
   action:
     service: notify.mobile_app_yuval
     data:
-      title: "Upgrade available"
+      title: "Update available"
       message: "Home Assistant {{ states('sensor.docker_hub_core_version') }} is available"

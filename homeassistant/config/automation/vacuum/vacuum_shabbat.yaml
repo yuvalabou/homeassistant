@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - clean after morning Kiddush"
+- alias: "Vacuum - Clean after morning Kiddush"
   id: 04c72c58-1815-491d-9c75-d1fcac2c3ab5
   trigger:
     platform: time

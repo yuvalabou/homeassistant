@@ -1,6 +1,6 @@
 ---
 
-- alias: 'Notify - Unavailable lights notification'
+- alias: 'Notify - Unavailable lights'
   id: 26879041-377a-47bb-acdb-e684ba45c5e2
   mode: restart
   trigger:
@@ -24,7 +24,7 @@
       message: >-
         the {{ trigger.entity_id }} went offline at {{ now().strftime("%m/%d/%Y %H:%M:%S") }}
 
-- alias: 'Notify - Unavailable devices notification'
+- alias: 'Notify - Unavailable devices'
   id: 58a57846-29da-4bb1-b40e-4926049b6f1c
   mode: restart
   trigger:

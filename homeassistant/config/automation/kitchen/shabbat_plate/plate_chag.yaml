@@ -22,7 +22,7 @@
       data:
         entity_id: switch.shabbat_plate
 
-- alias: "Plate - Turn off plate on chag eve"
+- alias: "Plate - Turn-off plate on chag eve"
   description: "We don't need the plate for the night in Chag"
   id: ab698dfc-9a41-4f15-bf63-cd95eaf95ee2
   trigger:
@@ -56,7 +56,7 @@
     data:
       entity_id: switch.shabbat_plate
 
-- alias: "Plate - Turn off plate at chag night"
+- alias: "Plate - Turn-off plate at chag night"
   id: 2195b710-0c3a-4c4f-8a6a-961495f470a6
   trigger:
     platform: time

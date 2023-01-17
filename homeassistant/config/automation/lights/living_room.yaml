@@ -1,6 +1,6 @@
 ---
 
-- alias: "Lights - Turn on Wall lights in workday morning"
+- alias: "Lights - Turn-on Wall lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
     platform: time

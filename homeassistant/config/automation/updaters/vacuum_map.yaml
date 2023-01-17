@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - Map camera control"
+- alias: "Vacuum - Map camera"
   id: f9372f4e-0d4f-4004-823a-061d32d7cb74
   trigger:
     - platform: state
@@ -20,6 +20,8 @@
       - conditions:
           - "{{ is_state('vacuum.mi_vacuum', 'docked') }}"
         sequence:
+          - delay:
+              minutes: 5
           - service: camera.turn_off
             target:
               entity_id: camera.vacuum_map

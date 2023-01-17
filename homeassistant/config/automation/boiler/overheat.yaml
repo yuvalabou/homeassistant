@@ -1,6 +1,6 @@
 ---
 
-- alias: "Boiler - set boolean when overheat"
+- alias: "Boiler - Set boolean when overheat"
   id: 9614dc27-4752-4468-a096-409ed6ea1bfc
   trigger:
     platform: state

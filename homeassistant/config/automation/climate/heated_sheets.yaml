@@ -10,7 +10,7 @@
       at: '18:00:00'
       id: 'on'
     - platform: time
-      at: '00:00:00'
+      at: '23:00:00'
       id: 'off'
   action:
     choose:

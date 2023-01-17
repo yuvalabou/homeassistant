@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vent - bathroom humidity is ok"
+- alias: "Vent - Bathroom humidity is OK"
   id: 7d57c758-0175-46ff-a266-a8dd5670f71e
   trigger:
     platform: time_pattern
@@ -15,7 +15,7 @@
     data:
       entity_id: switch.vent
 
-- alias: "Vent - Turn off after time has passed"
+- alias: "Vent - Turn-off after time has passed"
   id: ac975e09-9643-495c-8ab0-3364d8e67ab8
   trigger:
     platform: state
@@ -27,7 +27,7 @@
     data:
       entity_id: switch.vent
 
-- alias: "Vent - turn off on arrival"
+- alias: "Vent - Turn-off on arrival"
   id: 5b178ad8-c0b0-41d8-9934-0576f3429dcd
   trigger:
     - platform: zone
