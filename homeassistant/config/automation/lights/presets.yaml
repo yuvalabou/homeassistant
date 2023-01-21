@@ -1,0 +1,18 @@
+---
+
+- alias: "Light - Set scene"
+  id: 8db9bb26-06a4-4315-a70b-72acfb0a5171
+  trigger:
+    platform: state
+    entity_id: input_select.color_temp_presets
+  action:
+    service: >-
+      {% if trigger.to_state.state == 'Warm' %}
+        script.light_set_warm
+      {% elif trigger.to_state.state == 'Daylight' %}
+        script.light_set_daylight
+      {% elif trigger.to_state.state == 'Date Night' %}
+        script.light_set_date_night
+      {% elif trigger.to_state.state == 'Morning' %}
+        script.light_set_morning
+      {% endif %}

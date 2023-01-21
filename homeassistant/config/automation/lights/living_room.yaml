@@ -8,9 +8,4 @@
   condition:
     - "{{ is_state('group.person', 'home') }}"
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.wall_lights
-      kelvin: 3800
-      brightness_pct: 100
-      transition: 60
+    service: script.light_set_morning
