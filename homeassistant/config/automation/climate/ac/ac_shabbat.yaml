@@ -9,8 +9,8 @@
   condition:
     - "{{ is_state('group.person', 'home') }}"
     - condition: numeric_state
-      entity_id: sensor.living_room_temperature
-      above: 24
+      entity_id: sensor.living_room_h_t_temperature
+      below: 20
   action:
     service: script.turn_on
     data:
