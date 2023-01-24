@@ -15,4 +15,4 @@
     service: notify.mobile_app_yuval
     data:
       title: "Door changed!"
-      message: "The state of {{ state_attr('trigger.entity_id', 'friendly_name') }} has changed for no apparent reason"
+      message: "The state of {{ state_attr('trigger.entity_id', 'name') }} has changed for no apparent reason"
