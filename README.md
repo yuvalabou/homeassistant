@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2023.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.1.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.2.0%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -99,6 +99,7 @@
 
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
+- [Local-Tuya](https://github.com/rospogrigio/localtuya)
 - [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
 - [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
