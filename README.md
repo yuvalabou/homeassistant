@@ -99,7 +99,6 @@
 
 - [FeedParser](https://github.com/custom-components/feedparser)
 - [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
-- [Local-Tuya](https://github.com/rospogrigio/localtuya)
 - [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
 - [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Thermal comfort](https://github.com/dolezsa/thermal_comfort)
