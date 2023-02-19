@@ -9,8 +9,11 @@
         "VERSION": "master"
     },
     "aliases": [
-        "9290011370"
+        "929003045301",
+        "929003047401",
+        "929003047501",
+        "929003045401"
     ],
-    "name": "Hue white A60 bulb E27/B22",
-    "standby_power": 0.4
+    "name": "Hue Centura",
+    "standby_power": 0.25
 }
