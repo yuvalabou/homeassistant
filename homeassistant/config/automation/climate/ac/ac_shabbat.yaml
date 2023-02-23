@@ -27,11 +27,24 @@
     data:
       entity_id: climate.living_room
 
+- alias: "Climate - Turn-off Living-room climate at Shabbat"
+  id: bbc33586-9312-4013-87dd-beee81e8a425
+  trigger:
+    platform: time
+    at: '10:30:00'
+  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    service: climate.turn_off
+    data:
+      entity_id: climate.living_room
+
 - alias: "Climate - Shabbat day AC"
   id: fe96ab5c-d38d-4617-9032-59f481ef98aa
   trigger:
-    platform: time
-    at: '08:00:00'
+    - platform: time
+      at: '07:00:00'
+    - platform: time
+      at: '16:00:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
