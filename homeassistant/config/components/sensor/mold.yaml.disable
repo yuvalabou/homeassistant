@@ -4,12 +4,12 @@
   name: "Bathroom Mold Indicator"
   indoor_temp_sensor: sensor.bathroom_temperature
   indoor_humidity_sensor: sensor.bathroom_humidity
-  outdoor_temp_sensor: sensor.openweathermap_temperature
+  outdoor_temp_sensor: sensor.outdoor_h_t_temperature
   calibration_factor: 2.0
 
 - platform: mold_indicator
   name: "Ensuite Mold Indicator"
   indoor_temp_sensor: sensor.ensuite_temperature
   indoor_humidity_sensor: sensor.ensuite_humidity
-  outdoor_temp_sensor: sensor.openweathermap_temperature
+  outdoor_temp_sensor: sensor.outdoor_h_t_temperature
   calibration_factor: 2.0

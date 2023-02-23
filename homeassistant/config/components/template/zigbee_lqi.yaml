@@ -161,3 +161,21 @@
       {% else %}
         mdi:signal-off
       {% endif %}
+
+  - name: "Outdoor H&T linkquality percent"
+    unique_id: 3799b0c4-a35d-475d-833a-a8b2ddcdae46
+    unit_of_measurement: "%"
+    state_class: measurement
+    state: >-
+      {{ ((states('sensor.outdoor_h_t_linkquality') | int(default=1) / 255) * 100) | round (1) }}
+    icon: >-
+      {% set lqi = states('sensor.outdoor_h_t_linkquality_percent') %}
+      {% if lqi <= '35' %}
+        mdi:signal-cellular-1
+      {% elif lqi <= '65' %}
+        mdi:signal-cellular-2
+      {% elif lqi <= '100' %}
+        mdi:signal-cellular-3
+      {% else %}
+        mdi:signal-off
+      {% endif %}
