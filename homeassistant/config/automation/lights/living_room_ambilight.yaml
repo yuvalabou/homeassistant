@@ -1,0 +1,12 @@
+---
+
+- alias: "Lights - Turn off ambilight"
+  id: c008e73d-a014-4fa2-9097-4b14b65866d5
+  trigger:
+    platform: state
+    entity_id: light.living_room_ceiling_light
+    to: 'on'
+  action:
+    - service: light.turn_off
+      data:
+        entity_id: light.living_room_ceiling_light_ambilight
