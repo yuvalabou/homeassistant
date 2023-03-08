@@ -1,16 +1,17 @@
 {
     "calculation_strategy": "lut",
     "measure_description": "Measured with utils/measure script",
-    "measure_device": "TP-Link Kasa KP115",
+    "measure_device": "Shelly 1PM",
     "measure_method": "script",
     "measure_settings": {
         "SAMPLE_COUNT": 2,
         "SLEEP_TIME": 3,
-        "VERSION": "v1.3.0:docker"
+        "VERSION": "master"
     },
-    "name": "TP-Link Kasa KL135(US)",
-    "standby_power": 0.2,
+    "name": "Hue Centris 3-Spot Cross Ceiling Light",
+    "standby_power": 0.4,
     "aliases": [
-        "KL135(US)"
+        "5060830P7_01",
+        "5060831P7_01"
     ]
 }
