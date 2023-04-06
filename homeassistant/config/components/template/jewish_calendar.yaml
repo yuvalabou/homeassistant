@@ -25,7 +25,7 @@
         as_timestamp(
         states('sensor.jewish_calendar_upcoming_candle_lighting'), default=0) |
         timestamp_custom('%H:%M') == (now().strftime("%s") |
-        float(default=0) + (10*60) - (7200) ) |
+        float(default=0) + (10*60) - (10800) ) |
         timestamp_custom("%H:%M")
       }}
 
@@ -36,6 +36,6 @@
         as_timestamp(
           states('sensor.jewish_calendar_upcoming_candle_lighting'), default=0) |
         timestamp_custom('%H:%M') == (now().strftime("%s") |
-        float(default=0) + (30*60) - (7200) ) |
+        float(default=0) + (30*60) - (10800) ) |
         timestamp_custom("%H:%M")
       }}
