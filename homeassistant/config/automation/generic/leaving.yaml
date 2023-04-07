@@ -23,18 +23,14 @@
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
-    - service: alarm_control_panel.alarm_arm_away
-      data:
-        entity_id: alarm_control_panel.home
     - delay: 30
     - service: notify.family
       data:
         title: "I'll be missing you."
         message: >-
-          "The current state of your honme is:
+          "The current state of your home is:
           Lights: {{ states('light.all_lights') }}
           AC: {{ states('climate.living_room') }}
           TV: {{ states('media_player.tv') }}
           Boiler: {{ states('switch.boiler') }}
           Shutter: {{ states('cover.living_room_shutter') }}
-          Alarm: {{ states('alarm_control_panel.home') }}"
