@@ -4,29 +4,31 @@
   id: 0ea02e72-2e51-46ed-8643-24ecf7eff2fe
   trigger:
     - platform: time
-      at: input_datetime.shabbat_lights_off_time
+      at:
+        - input_datetime.shabbat_lights_off_time
+        - '12:30:00'
+      id: 'on'
     - platform: time
-      at: '13:00:00'
-  condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-    - "{{ is_state('group.person', 'home') }}"
-  action:
-    service: fan.turn_on
-    data:
-      entity_id:
-        - fan.master_bedroom_fan
-
-- alias: "Climate - Shabbat fan"
-  id: 01a26200-230c-4dfa-ab75-233b82b45ed9
-  trigger:
-    - platform: time
-      at: '09:00:00'
-    - platform: time
-      at: '17:00:00'
+      at:
+        - '09:00:00'
+        - '18:00:00'
+      id: 'off'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: fan.turn_off
-    data:
-      entity_id:
-        - fan.master_bedroom_fan
+    choose:
+    - conditions:
+      - condition: trigger
+        id: 'on'
+      - "{{ is_state('group.person', 'home') }}"
+      sequence:
+        service: fan.turn_on
+        data:
+          entity_id: fan.master_bedroom_fan
+    - conditions:
+      - condition: trigger
+        id: 'off'
+      sequence:
+        service: fan.turn_off
+        data:
+          entity_id: fan.master_bedroom_fan

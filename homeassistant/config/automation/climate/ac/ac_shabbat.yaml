@@ -14,24 +14,15 @@
   action:
     service: script.turn_on
     data:
-      entity_id: script.ac_heat
+      entity_id: script.ac_cool
 
-- alias: "Climate - Turn-off Living-room climate at Shabbat night"
+- alias: "Climate - Turn-off Living-room climate at Shabbat"
   id: c7396673-d257-4267-a72f-060ee4d43603
   trigger:
     platform: time
-    at: input_datetime.shabbat_lights_off_time
-  condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-  action:
-    service: climate.turn_off
-    data:
-      entity_id: climate.living_room
-
-- alias: "Climate - Turn-off Living-room climate at Shabbat"
-  id: bbc33586-9312-4013-87dd-beee81e8a425
-  trigger:
-    platform: time
-    at: '10:30:00'
+    at:
+      - input_datetime.shabbat_lights_off_time
+      - '10:30:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
@@ -51,7 +42,7 @@
   action:
     service: script.turn_on
     data:
-      entity_id: script.ac_heat
+      entity_id: script.ac_cool
 
 # - alias: "Climate - Shabbat Night climate"
 #   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2

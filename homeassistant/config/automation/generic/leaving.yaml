@@ -28,7 +28,7 @@
       data:
         title: "I'll be missing you."
         message: >-
-          "The current state of your home is:
+          "The current state is:
           Lights: {{ states('light.all_lights') }}
           AC: {{ states('climate.living_room') }}
           TV: {{ states('media_player.tv') }}
