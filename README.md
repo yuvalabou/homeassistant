@@ -108,6 +108,7 @@
 ### Lovelace-UI Enhancements
 
 - [Airvisual Card](https://github.com/dnguyen800/air-visual-card)
+- [Auto Entities Card](https://github.com/thomasloven/lovelace-auto-entities)
 - [Bar Card](https://github.com/custom-cards/bar-card)
 - [Battery Entity Row](https://github.com/benct/lovelace-battery-entity-row)
 - [Button Card](https://github.com/custom-cards/button-card)

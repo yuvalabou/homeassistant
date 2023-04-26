@@ -1,6 +1,6 @@
 ---
 
-- url: hacsfiles/lovelace-mushroom/mushroom.js
+- url: hacsfiles/lovelace-auto-entities/auto-entities.js
   type: module
 - url: /hacsfiles/air-visual-card/air-visual-card.js
   type: js
@@ -25,6 +25,8 @@
 - url: /hacsfiles/lovelace-hui-element/hui-element.js
   type: module
 - url: /hacsfiles/lovelace-multiple-entity-row/multiple-entity-row.js
+  type: module
+- url: hacsfiles/lovelace-mushroom/mushroom.js
   type: module
 - url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js
   type: module
