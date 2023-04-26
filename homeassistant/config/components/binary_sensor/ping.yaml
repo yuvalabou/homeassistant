@@ -6,6 +6,11 @@
   count: 2
 
 - platform: ping
-  host: !secret fan
+  host: sensor.master_bedroom_fan_ip
   name: "Fan"
+  count: 2
+
+- platform: ping
+  host: sensor.shabbat_plate_ip
+  name: "Shabbat Plate"
   count: 2
