@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2023.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.4.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.5.2%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -53,7 +53,7 @@
 | Nest mini | Roborock S50 | YEELIGHT (YLDP06YL) | YEELIGHT 450S | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Tuya ceiling light | Sonoff IFan04 |
 |:---------:|:------------:|:-------------------:|:-------------:|:-------------------:|:----------:|:----------:|:------------------:|:-------------:|
 |<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width=75>|<img src="https://www.lior-electric.co.il/wp-content/uploads/2019/06/46947609c.gif.jpeg" width=75>|<img src="https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1616606687.68573462.jpg" width=75>|<img src="https://yeelight-shop-us.s3.us-west-2.amazonaws.com/wp-content/uploads/2021/10/08012341/yeelight-arwen-ceiling-light-s.webp" width=75>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://cdn2.botland.store/74788-large_default/shelly-25-double-relay-switch-and-roller-shutter-andoid-ios-application.jpg" width=75>|<img src="https://store-wc.athom.com/wp-content/uploads/2022/03/shellyplus1pm-comparision.png" width=75> |<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://ae01.alicdn.com/kf/H87b6845fe6bd493c8f4cc8faed9547efE/SONOFF-iFan04-L-iFan03-Wifi-RF.jpg_Q90.jpg_.webp" width=75>
-|1          |1             |2+(1)                |1              |2                    |1           |5           |1                   |1              |
+|1          |1             |2+(1)                |1              |2                    |1           |5           |1                   |(1)            |
 
 
 ### Zigbee devices
