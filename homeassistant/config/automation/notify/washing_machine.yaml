@@ -3,7 +3,7 @@
 - alias: "Notify - Washing complete"
   id: 2e8e8a2d-5d76-41ab-808c-5bb7d0302c88
   trigger:
-    entity_id: sensor.washing_maching_is_running
+    entity_id: binary_sensor.washing_machine_is_running
     platform: state
     to: 'off'
     for:
