@@ -94,7 +94,7 @@ powercalc:
 ##################################################
 #                  LOG COMPONENTS                #
 ##################################################
-history: !include components/logging/history.yaml
+history:
 logbook: !include components/logging/logbook.yaml
 recorder: !include components/logging/recorder.yaml
 logger:
