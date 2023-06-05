@@ -8,10 +8,8 @@ exclude:
     - sensor.date
     - sensor.date_time
     - sensor.israel_weather_forecast
-    - sensor.myip
     - sensor.openweathermap_weather_code
     - sensor.random_number
-    - sensor.hacs
     - sensor.watchman_last_updated
   entity_globs:
     - binary_sensor.is_*
