@@ -19,18 +19,6 @@
       {{ states.button | count }}
     icon: mdi:gesture-tap
 
-  - name: "Count Climates"
-    unique_id: 0f28d0e5-2947-4131-816a-174e9da286de
-    state: >-
-      {{ states.climate | count }}
-    icon: mdi:air-conditioner
-
-  - name: "Count Device Trackers"
-    unique_id: c323af5d-77da-42a2-b15a-32004e0f7cdd
-    state: >-
-      {{ states.device_tracker | count }}
-    icon: mdi:map-marker
-
   - name: "Count Entities"
     unique_id: 696270c1-8fbe-45e6-9b1f-35e3ce62a960
     state: >-
