@@ -89,7 +89,6 @@ zone:
 home_connect_alt:
   client_id: !secret hc_client_id
   client_secret: !secret hc_client_secret
-powercalc:
 
 ##################################################
 #                  LOG COMPONENTS                #
