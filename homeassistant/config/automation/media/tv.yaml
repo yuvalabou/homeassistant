@@ -4,12 +4,12 @@
   id: b4c1775b-0974-462b-bbdd-dd6ffc2eee56
   trigger:
     platform: state
-    entity_id: media_player.tv
+    entity_id: remote.2021_uhd_android_tv
     from: 'off'
     for:
       seconds: 20
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: media_player.turn_off
+    service: remote.turn_off
     data:
-      entity_id: media_player.tv
+      entity_id: remote.2021_uhd_android_tv

@@ -13,4 +13,4 @@
     data:
       message: "Dishwasher finished"
       data:
-        image: '/local/assets/notification_images/dishwasher.jpg'
+        image: 'https://i.imgflip.com/3w51e9.jpg'

@@ -18,8 +18,9 @@
           # - switch.deltaco_sh_p02_socket_1
           # - switch.deltaco_sh_p02_socket_2
           - light.all_lights
-          # - media_player.tv
           - fan.master_bedroom_fan
+          - fan.kids_bedroom_fan
+          - remote.2021_uhd_android_tv
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
