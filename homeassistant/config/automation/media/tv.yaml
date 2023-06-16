@@ -4,7 +4,7 @@
   id: b4c1775b-0974-462b-bbdd-dd6ffc2eee56
   trigger:
     platform: state
-    entity_id: remote.2021_uhd_android_tv
+    entity_id: remote.tv
     from: 'off'
     for:
       seconds: 20
@@ -12,4 +12,4 @@
   action:
     service: remote.turn_off
     data:
-      entity_id: remote.2021_uhd_android_tv
+      entity_id: remote.tv

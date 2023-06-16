@@ -4,13 +4,13 @@
   id: d7059c18-8b48-4ee9-8eb4-cbd2e793de8b
   trigger:
     platform: state
-    entity_id: vacuum.mi_vacuum
+    entity_id: vacuum.roborock_s7
     from: 'cleaning'
     to: 'returning'
   action:
     service: notify.family
     data:
       title: "Finished cleaning"
-      message: "It took me {{ ((states('sensor.mi_vacuum_last_clean_duration') | int(default=1)) / 60) | round(0) }} minutes"
+      message: "It took me {{ states('sensor.roborock_s7_cleaning_time') }} minutes"
       data:
         image: '/local/assets/notification_images/great_success.jpg'

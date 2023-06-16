@@ -16,7 +16,7 @@
   action:
     - service: vacuum.start
       data:
-        entity_id: vacuum.mi_vacuum
+        entity_id: vacuum.roborock_s7
     - service: notify.family
       data:
         message: "Vacuum has started the daily cleaning"
@@ -37,7 +37,7 @@
   action:
     - service: vacuum.stop
       data:
-        entity_id: vacuum.mi_vacuum
+        entity_id: vacuum.roborock_s7
     - service: notify.family
       data:
         title: "Cleaning stopped"
@@ -47,14 +47,14 @@
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state
-    entity_id: vacuum.mi_vacuum
+    entity_id: vacuum.roborock_s7
     from: 'cleaning'
     to: 'error'
     for: '01:00:00'
   action:
     - service: vacuum.return_to_base
       data:
-        entity_id: vacuum.mi_vacuum
+        entity_id: vacuum.roborock_s7
     - service: notify.family
       data:
         title: "Returning to Dock"

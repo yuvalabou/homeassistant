@@ -9,7 +9,7 @@ services:
     environment:
       - TZ=Asia/Jerusalem
     volumes:
-      - /home/homeassistant/homeassistant/config:/config
+      - /root/homeassistant/homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
     # devices:
     #    - /dev/i2c-0:/dev/i2c-0
@@ -17,27 +17,27 @@ services:
       - 8123:8123
     restart: always
 
-  esphome:
-    container_name: "esphome"
-    image: esphome/esphome
-    # devices:
-    #   - /dev/ttyUSB0:/dev/ttyUSB0
-    environment:
-      - TZ=Asia/Jerusalem
-      - ESPHOME_DASHBOARD_USE_PING=true
-    ports:
-      - 6052:6052
-    restart: unless-stopped
-    volumes:
-      - /home/homeassistant/esphome/config:/config
+#  esphome:
+#    container_name: "esphome"
+#    image: esphome/esphome
+#    # devices:
+#    #   - /dev/ttyUSB0:/dev/ttyUSB0
+#    environment:
+#      - TZ=Asia/Jerusalem
+#      - ESPHOME_DASHBOARD_USE_PING=true
+#    ports:
+#      - 6052:6052
+#    restart: unless-stopped
+#    volumes:
+#      - /home/homeassistant/esphome/config:/config
 
   mqtt:
     image: library/eclipse-mosquitto:latest
     restart: unless-stopped
     volumes:
-      - /home/homeassistant/mosquitto/config/:/mosquitto/config
-      - /home/homeassistant/mosquitto/data:/mosquitto/data
-      - /home/homeassistant/mosquitto/log:/mosquitto/log
+      - /root/homeassistant/mosquitto/config/:/mosquitto/config
+      - /root/homeassistant/mosquitto/data:/mosquitto/data
+      - /root/homeassistant/mosquitto/log:/mosquitto/log
     ports:
       - 1883:1883
       - 9001:9001
@@ -47,7 +47,7 @@ services:
     restart: unless-stopped
     image: koenkk/zigbee2mqtt
     volumes:
-      - /home/homeassistant/zigbee2mqtt/:/app/data
+      - /root/homeassistant/zigbee2mqtt/:/app/data
       - /run/udev:/run/udev:ro
     ports:
       - 8081:8080
@@ -56,18 +56,18 @@ services:
     devices:
       - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
-  unifi-controller:
-    image: lscr.io/linuxserver/unifi-controller:latest
-    container_name: "unifi-controller"
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - MEM_LIMIT=768 #optional
-    volumes:
-      - /home/homeassistant/unifi/:/config
-    ports:
-      - 8443:8443
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 8080:8080
-    restart: unless-stopped
+#  unifi-controller:
+#    image: lscr.io/linuxserver/unifi-controller:latest
+#    container_name: "unifi-controller"
+#    environment:
+#      - PUID=1000
+#      - PGID=1000
+#      - MEM_LIMIT=768 #optional
+#    volumes:
+#      - /home/homeassistant/unifi/:/config
+#    ports:
+#      - 8443:8443
+#      - 3478:3478/udp
+#      - 10001:10001/udp
+#      - 8080:8080
+#    restart: unless-stopped

@@ -12,4 +12,4 @@
   action:
     service: vacuum.start
     data:
-      entity_id: vacuum.mi_vacuum
+      entity_id: vacuum.roborock_s7

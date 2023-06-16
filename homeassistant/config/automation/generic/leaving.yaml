@@ -20,7 +20,7 @@
           - light.all_lights
           - fan.master_bedroom_fan
           - fan.kids_bedroom_fan
-          - remote.2021_uhd_android_tv
+          - remote.tv
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter

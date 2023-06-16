@@ -4,7 +4,7 @@
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
     - platform: state
-      entity_id: vacuum.mi_vacuum
+      entity_id: vacuum.roborock_s7
       to: 'cleaning'
       for: '00:10:00'
       id: 'set'

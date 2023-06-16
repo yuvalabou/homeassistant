@@ -37,7 +37,6 @@ homeassistant_alerts:
 #                     PERSONS                    #
 ##################################################
 person:
-device_tracker:
 
 ##################################################
 #                   DISCOVERY                    #
@@ -53,8 +52,9 @@ automation: !include_dir_merge_list automation
 backup:
 binary_sensor: !include_dir_merge_list components/binary_sensor
 button:
-camera: !include_dir_merge_list components/camera
+# camera: !include_dir_merge_list components/camera
 counter:
+device_tracker:
 group: !include_dir_merge_named components/group
 input_boolean:
 input_button:
