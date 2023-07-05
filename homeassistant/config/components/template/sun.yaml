@@ -1,9 +1,0 @@
----
-
-- sensor:
-  - name: "Solar elevation"
-    unique_id: c9dea0e7-3a89-4ddd-9d71-140f60494593
-    unit_of_measurement: 'deg'
-    state: >-
-      {{ state_attr('sun.sun', 'elevation') }}
-    icon: mdi:weather-sunny
