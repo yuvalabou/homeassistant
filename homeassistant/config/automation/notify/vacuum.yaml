@@ -11,6 +11,6 @@
     service: notify.family
     data:
       title: "Finished cleaning"
-      message: "It took me {{ states('sensor.roborock_s7_cleaning_time') }} minutes"
+      message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int / 60 ) | int }} minutes"
       data:
         image: '/local/assets/notification_images/great_success.jpg'

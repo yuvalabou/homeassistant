@@ -1,0 +1,12 @@
+---
+
+- alias: "Washing machine - start timer"
+  id: 7b9608a5-cffc-4ba5-b7f5-8a2f8ae6f224
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.washing_machine_is_running
+      to: 'on'
+  action:
+    service: timer.start
+    target:
+      entity_id: timer.washing_machine_working
