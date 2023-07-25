@@ -30,6 +30,8 @@
   type: module
 - url: /hacsfiles/lovelace-time-picker-card/time-picker-card.js
   type: module
+- url: /hacsfiles/lovelace-layout-card/layout-card.js
+  type: module
 - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
   type: module
 - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js

@@ -10,7 +10,7 @@
     - "{{ is_state('group.person', 'home') }}"
     - condition: numeric_state
       entity_id: sensor.living_room_h_t_temperature
-      above: 27
+      above: 25
   action:
     service: script.turn_on
     data:
@@ -22,7 +22,6 @@
     platform: time
     at:
       - input_datetime.shabbat_lights_off_time
-      - '10:30:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off
@@ -34,7 +33,7 @@
   trigger:
     - platform: time
       at:
-        - '11:00:00'
+        - '09:00:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"

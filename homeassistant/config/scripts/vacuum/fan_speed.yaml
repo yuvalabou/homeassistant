@@ -1,22 +1,22 @@
 ---
 
 vacuum_set_silent:
-  alias: "Set Silent"
+  alias: "Set Quiet"
   icon: mdi:fan
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.mi_vacuum
-      fan_speed: Silent
+      entity_id: vacuum.roborock_s7
+      fan_speed: Quiet
 
 vacuum_set_standard:
-  alias: "Set Standard"
+  alias: "Set Balanced"
   icon: mdi:fan
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.mi_vacuum
-      fan_speed: Standard
+      entity_id: vacuum.roborock_s7
+      fan_speed: Balanced
 
 vacuum_set_medium:
   alias: "Set Turbo"
@@ -24,8 +24,8 @@ vacuum_set_medium:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.mi_vacuum
-      fan_speed: Medium
+      entity_id: vacuum.roborock_s7
+      fan_speed: Turbo
 
 vacuum_set_turbo:
   alias: "Set Max"
@@ -33,5 +33,5 @@ vacuum_set_turbo:
   sequence:
     service: vacuum.set_fan_speed
     data:
-      entity_id: vacuum.mi_vacuum
-      fan_speed: Turbo
+      entity_id: vacuum.roborock_s7
+      fan_speed: Max
