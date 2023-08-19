@@ -54,3 +54,17 @@
     service: switch.turn_off
     data:
       entity_id: switch.shabbat_plate
+
+- alias: "Plate - Out for Shabbat morning"
+  id: affe0510-ec83-4794-b7e7-69f7be51ce63
+  trigger:
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition:
+    - "{{ is_state('input_boolean.out_for_shabbat_morning', 'on') }}"
+  action:
+    service: switch.turn_off
+    data:
+      entity_id:
+        - switch.shabbat_plate
+        - input_boolean.out_for_shabbat_morning

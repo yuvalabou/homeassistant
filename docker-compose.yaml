@@ -5,7 +5,7 @@ services:
   homeassistant:
     hostname: homeassistant
     container_name: "homeassistant"
-    image: homeassistant/home-assistant:latest
+    image: ghcr.io/home-assistant/home-assistant:stable
     environment:
       - TZ=Asia/Jerusalem
     volumes:

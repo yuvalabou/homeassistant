@@ -19,9 +19,15 @@ devices:
     friendly_name: Master Bedroom Door
   '0x00158d0006d0a9eb':
     friendly_name: Master bedroom button
-  '0x54ef4410002c05e4':
-    friendly_name: '0x54ef4410002c05e4'
   '0x00158d00092100d1':
     friendly_name: Master Bedroom H&T
   '0x00158d00091de379':
     friendly_name: Living room H&T
+  '0x00158d00091df38a':
+    friendly_name: Outdoor H&T
+  '0x00158d00091df412':
+    friendly_name: Kids Bedroom H&T
+  '0x00158d0006d0a9bd':
+    friendly_name: Living Room Button
+  '0x54ef4410002c05e4':
+    friendly_name: '0x54ef4410002c05e4'
