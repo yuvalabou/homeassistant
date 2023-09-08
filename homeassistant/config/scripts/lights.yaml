@@ -10,7 +10,7 @@ light_set_warm:
     - service: light.turn_on
       data:
         entity_id:
-          - light.living_room_ceiling_light
+          - light.yeelight_ceilb_0x179e0932
           - light.kitchen_ceiling_light
           - light.wall_lights
         brightness_pct: 100
@@ -26,7 +26,7 @@ light_set_daylight:
     - service: light.turn_on
       data:
         entity_id:
-          - light.living_room_ceiling_light
+          - light.yeelight_ceilb_0x179e0932
           - light.kitchen_ceiling_light
           - light.wall_lights
         brightness_pct: 100
@@ -38,7 +38,7 @@ light_set_date_night:
     - service: light.turn_on
       data:
         entity_id:
-          - light.living_room_ceiling_light
+          - light.yeelight_ceilb_0x179e0932
           - light.kitchen_ceiling_light
         brightness_pct: 20
         kelvin: 3600

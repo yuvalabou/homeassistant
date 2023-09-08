@@ -12,11 +12,11 @@
   action:
     - choose:
       - conditions:
-        - "{{ is_state('light.living_room_ceiling_light', 'off') }}"
+        - "{{ is_state('llight.yeelight_ceilb_0x179e0932', 'off') }}"
         sequence:
           service: light.turn_on
           data:
-            entity_id: light.living_room_ceiling_light
+            entity_id: light.yeelight_ceilb_0x179e0932
       - conditions:
         - "{{ is_state('light.kitchen_ceiling_light', 'off') }}"
         sequence:

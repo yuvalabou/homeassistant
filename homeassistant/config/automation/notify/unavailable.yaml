@@ -8,9 +8,9 @@
     entity_id:
       - light.master_bedroom_light
       - light.kitchen_ceiling_light
-      - light.living_room_ceiling_light
-      - light.wall_light_right
-      - light.wall_light_left
+      - light.yeelight_ceilb_0x179e0932
+      - light.yeelight_color_0x12ab4331
+      - light.yeelight_color_0x12bfc0a1
       - light.bathroom_light
       - light.corridor_light
       # - light.wled_harel_bed

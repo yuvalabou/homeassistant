@@ -8,14 +8,14 @@
     to: 'on'
   condition:
     - "{{ is_state('binary_sensor.night', 'on') }}"
-    - "{{ is_state('light.wall_light_right', 'off') }}"
-    - "{{ is_state('light.wall_light_left', 'off') }}"
+    - "{{ is_state('light.yeelight_color_0x12ab4331', 'off') }}"
+    - "{{ is_state('light.yeelight_color_0x12bfc0a1', 'off') }}"
   action:
     service: light.turn_on
     data:
       entity_id:
-        - light.wall_light_right
-        - light.wall_light_left
+        - light.yeelight_color_0x12ab4331
+        - light.yeelight_color_0x12bfc0a1
       kelvin: 3600
       brightness_pct: 2
 
@@ -29,8 +29,8 @@
   condition:
     - "{{ is_state('binary_sensor.night', 'on') }}"
     - "{{ is_state('input_boolean.night_light_override', 'off') }}"
-    - "{{ state_attr('light.wall_light_right', 'brightness') | int < 10 }}"
-    - "{{ state_attr('light.wall_light_left', 'brightness') | int < 10 }}"
+    - "{{ state_attr('light.yeelight_color_0x12ab4331', 'brightness') | int < 10 }}"
+    - "{{ state_attr('light.yeelight_color_0x12bfc0a1', 'brightness') | int < 10 }}"
   action:
     - service: timer.start
       data:
@@ -43,8 +43,8 @@
     - service: light.turn_off
       data:
         entity_id:
-          - light.wall_light_right
-          - light.wall_light_left
+          - light.yeelight_color_0x12ab4331
+          - light.yeelight_color_0x12bfc0a1
 
 - alias: "Lights - Reset night light override"
   id: 1a225ce8-4fdd-4036-a8cc-ead0639719fc

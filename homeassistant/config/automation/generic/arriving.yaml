@@ -15,4 +15,4 @@
         entity_id: cover.living_room_shutter
     - service: light.turn_on
       data:
-        entity_id: light.living_room_ceiling_light_ambilight
+        entity_id: light.yeelight_ceilb_0x179e0932_ambilight
