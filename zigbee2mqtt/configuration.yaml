@@ -4,7 +4,7 @@ frontend:
 permit_join: true
 mqtt:
   base_topic: zigbee2mqtt
-  server: mqtt://10.0.0.2
+  server: mqtt://10.0.0.20
 serial:
   port: >-
     /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0

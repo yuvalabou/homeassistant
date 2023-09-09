@@ -6,7 +6,6 @@ exclude:
     - binary_sensor.night
     - binary_sensor.random_boolean
     - sensor.random_number
-    - sensor.israel_weather_forecast
     - sensor.load_5m
     - sensor.watchman_last_updated
   entity_globs:
