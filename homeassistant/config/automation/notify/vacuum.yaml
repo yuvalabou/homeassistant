@@ -13,4 +13,4 @@
       title: "Finished cleaning"
       message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int / 60 ) | int }} minutes"
       data:
-        image: '/local/assets/notification_images/great_success.jpg'
+        image: 'https://www.bigsquirrel.com/wp-content/uploads/2015/11/14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg'
