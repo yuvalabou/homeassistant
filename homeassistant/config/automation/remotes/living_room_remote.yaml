@@ -12,7 +12,7 @@
   action:
     - choose:
       - conditions:
-        - "{{ is_state('llight.yeelight_ceilb_0x179e0932', 'off') }}"
+        - "{{ is_state('light.yeelight_ceilb_0x179e0932', 'off') }}"
         sequence:
           service: light.turn_on
           data:
