@@ -1,16 +1,16 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202305            #
+#            Yuval Aboulafia - 202309            #
 ##################################################
 #                      CORE                      #
 ##################################################
 homeassistant:
-  customize: !include customize.yaml
   internal_url: !secret internal_url
   allowlist_external_dirs:
     - /config
 config:
 cloud:
+my:
 
 ##################################################
 #                       GUI                      #
@@ -18,17 +18,8 @@ cloud:
 energy:
 frontend:
   themes: !include_dir_merge_named themes
-  extra_module_url:
-    - /hacsfiles/thermal_comfort_icons/thermal_comfort_icons.js
 lovelace:
-  mode: yaml
   resources: !include lovelace/resources/resources.yaml
-  dashboards:
-    pc-dashboard:
-      title: "PC dashboard"
-      icon: mdi:monitor-dashboard
-      mode: yaml
-      filename: lovelace/dashboards/dashboard-pc.yaml
 map:
 system_health:
 homeassistant_alerts:

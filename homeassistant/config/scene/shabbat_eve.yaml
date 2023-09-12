@@ -3,8 +3,8 @@
 - name: "Shabbat eve"
   icon: mdi:candle
   entities:
-    # light.room_lights:
-    #   state: 'off'
+    light.rooms:
+      state: 'off'
     light.living_room_lights:
       state: 'on'
       brightness: 230
@@ -13,8 +13,8 @@
       brightness: 230
     light.bathroom_light:
       state: 'on'
-    light.corridor_light:
-      state: 'off'
+    # light.corridor_light:
+    #   state: 'off'
     # light.important_lights:
     #   state: 'on'
     #   brightness_pct: 70

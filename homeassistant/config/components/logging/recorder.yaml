@@ -7,7 +7,6 @@ exclude:
     - sensor.time
     - sensor.date
     - sensor.date_time
-    - sensor.israel_weather_forecast
     - sensor.random_number
     - sensor.watchman_last_updated
   entity_globs:
