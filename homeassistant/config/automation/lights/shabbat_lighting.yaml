@@ -13,17 +13,21 @@
       to: 'off'
   condition: "{{ is_state('group.person', 'home') }}"
   action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'shabbat_enter'
-        sequence:
-          service: script.shabbat_chag_lighting_sequence
-      - conditions:
-        - condition: trigger
-          id: 'shabbat_exit'
-        sequence:
-          service: script.shabbat_chag_end_lighting_sequence
+    - service: light.turn_on
+      data:
+        entity_id: light.wall_lights
+        effect: Random Loop
+    - delay: '00:00:03'
+    - service: light.turn_on
+      data:
+        entity_id: light.wall_lights
+        effect: Stop
+    - if:
+        condition: trigger
+        id: 'shabbat_enter'
+      then:
+        service: scene.turn_on
+        entity_id: scene.shabbat_eve
 
 - alias: "Lights - Shabbat and Chag lighting off"
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
