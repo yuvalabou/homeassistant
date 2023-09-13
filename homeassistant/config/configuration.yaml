@@ -19,7 +19,6 @@ energy:
 frontend:
   themes: !include_dir_merge_named themes
 lovelace:
-  resources: !include lovelace/resources/resources.yaml
 map:
 system_health:
 homeassistant_alerts:

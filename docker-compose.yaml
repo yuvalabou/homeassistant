@@ -13,15 +13,11 @@ services:
       - ./homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
       - /run/dbus:/run/dbus:ro
-    # devices:
-    #    - /dev/i2c-0:/dev/i2c-0
     restart: always
 
   esphome:
     container_name: "esphome"
     image: esphome/esphome
-    # devices:
-    #   - /dev/ttyUSB0:/dev/ttyUSB0
     environment:
       - TZ=Asia/Jerusalem
       - ESPHOME_DASHBOARD_USE_PING=true
@@ -56,18 +52,17 @@ services:
     devices:
       - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
-  # unifi-controller:
-  #   image: lscr.io/linuxserver/unifi-controller:latest
-  #   container_name: "unifi-controller"
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - MEM_LIMIT=768 #optional
-  #   volumes:
-  #     - ./unifi/:/config
-  #   ports:
-  #     - 8443:8443
-  #     - 3478:3478/udp
-  #     - 10001:10001/udp
-  #     - 8080:8080
-  #   restart: unless-stopped
+  unifi-controller:
+     image: lscr.io/linuxserver/unifi-controller:latest
+     container_name: "unifi-controller"
+     environment:
+       - PUID=1000
+       - PGID=1000
+     volumes:
+       - ./unifi/:/config
+     ports:
+       - 8443:8443
+       - 3478:3478/udp
+       - 10001:10001/udp
+       - 8080:8080
+     restart: unless-stopped
