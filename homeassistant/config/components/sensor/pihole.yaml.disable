@@ -1,8 +1,0 @@
----
-
-- platform: command_line
-  name: "PiHole Status"
-  scan_interval: 20
-  command: !secret pihole_cmd
-  value_template: >-
-    {{ value_json.status }}
