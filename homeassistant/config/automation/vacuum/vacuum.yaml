@@ -22,7 +22,7 @@
         message: "Vacuum has started the daily cleaning"
         title: "Cleaning started"
         data:
-          image: '/local/assets/notification_images/here_i_go_killing_again.jpg'
+          image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg'
           actions:
             - action: CANCEL
               title: Cancel cleaning
@@ -43,14 +43,15 @@
         title: "Cleaning stopped"
         message: "Cleaning stopped"
 
-- alias: "Vacuum - Return to dock if error for 1 hr"
+- alias: "Vacuum - Return to dock if got stuck"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state
     entity_id: vacuum.roborock_s7
     from: 'cleaning'
     to: 'error'
-    for: '01:00:00'
+    for:
+      minutes: 8
   action:
     - service: vacuum.return_to_base
       data:

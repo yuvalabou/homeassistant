@@ -38,7 +38,7 @@
     - platform: state
       entity_id: group.person
       to: 'home'
-      id: 'silent'
+      id: 'quiet'
   action:
     choose:
       - conditions:
@@ -46,26 +46,40 @@
             id: 'turbo'
           - "{{ is_state('input_boolean.guest_mode', 'off') }}"
         sequence:
-          service: script.vacuum_set_turbo
+          service: vacuum.set_fan_speed
+          data:
+            entity_id: vacuum.roborock_s7
+            fan_speed: "Turbo"
       - conditions:
         - condition: trigger
-          id: 'silent'
+          id: 'quiet'
         sequence:
-          service: script.vacuum_set_silent
+          service: vacuum.set_fan_speed
+          data:
+            entity_id: vacuum.roborock_s7
+            fan_speed: "Quiet"
 
-- alias: "Vacuum - Set mode"
-  id: 339c44db-f51b-4174-b396-18e69213b4e7
+
+- alias: "Vacuum - Set Vacuum Fan Speed"
+  id: 6c1cb638-04fb-43c3-bf7a-a062c6289122
   trigger:
-    platform: state
-    entity_id: input_select.vacuum_fan_speed_list
+    - platform: state
+      entity_id: input_select.vacuum_fan_speed_list
   action:
-    service: >-
-      {% if trigger.to_state.state == 'Silent' %}
-        script.vacuum_set_silent
-      {% elif trigger.to_state.state == 'Standard' %}
-        script.vacuum_set_standard
-      {% elif trigger.to_state.state == 'Medium' %}
-        script.vacuum_set_medium
-      {% elif trigger.to_state.state == 'Turbo' %}
-        script.vacuum_set_turbo
-      {% endif %}
+    - service: >
+        {% if is_state("input_select.vacuum_fan_speed_list", "Off") %}
+          vacuum.set_fan_speed
+        {% elif is_state("input_select.vacuum_fan_speed_list", "Quiet") %}
+          vacuum.set_fan_speed
+        {% elif is_state("input_select.vacuum_fan_speed_list", "Balanced") %}
+          vacuum.set_fan_speed
+        {% elif is_state("input_select.vacuum_fan_speed_list", "Turbo") %}
+          vacuum.set_fan_speed
+        {% elif is_state("input_select.vacuum_fan_speed_list", "Max") %}
+          vacuum.set_fan_speed
+        {% elif is_state("input_select.vacuum_fan_speed_list", "Custom") %}
+          vacuum.set_fan_speed
+        {% endif %}
+      data:
+        entity_id: vacuum.roborock_s7
+        fan_speed: "{{ states('input_select.vacuum_fan_speed_list') }}"
