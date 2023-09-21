@@ -7,9 +7,9 @@
     unit_of_measurement: "hours"
     state_class: total
     state: >-
-      {% set hours = states('sensor.yuval_time_at_work') | float %}
-      {% set minutes = ((hours % 1) * 60) | int %}
-      {% set hours = (hours - (hours % 1)) | int %}
+      {% set hours = states('sensor.yuval_time_at_work') | float(default=0.0) %}
+      {% set minutes = ((hours % 1) * 60) | int(default=0) %}
+      {% set hours = (hours - (hours % 1)) | int(default=0) %}
       {{ float('%02i.%02i'%(hours, minutes)) }}
 
   - name: "Tohar - time at work formatted"
@@ -17,9 +17,9 @@
     unit_of_measurement: "hours"
     state_class: total
     state: >-
-      {% set hours = states('sensor.tohar_time_at_work') | float %}
-      {% set minutes = ((hours % 1) * 60) | int %}
-      {% set hours = (hours - (hours % 1)) | int %}
+      {% set hours = states('sensor.tohar_time_at_work') | float(default=0.0) %}
+      {% set minutes = ((hours % 1) * 60) | int(default=0) %}
+      {% set hours = (hours - (hours % 1)) | int(default=0) %}
       {{ float('%02i.%02i'%(hours, minutes)) }}
 
   - name: "Tohar - time at gym formatted"
@@ -27,7 +27,7 @@
     unit_of_measurement: "hours"
     state_class: total
     state: >-
-      {% set hours = states('sensor.tohar_time_at_gym') | float %}
-      {% set minutes = ((hours % 1) * 60) | int %}
-      {% set hours = (hours - (hours % 1)) | int %}
+      {% set hours = states('sensor.tohar_time_at_gym') | float(default=0.0) %}
+      {% set minutes = ((hours % 1) * 60) | int(default=0) %}
+      {% set hours = (hours - (hours % 1)) | int(default=0) %}
       {{ float('%02i.%02i'%(hours, minutes)) }}

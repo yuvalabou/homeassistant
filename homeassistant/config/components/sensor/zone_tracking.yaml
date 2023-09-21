@@ -11,7 +11,9 @@
 - platform: history_stats
   name: "Tohar - Time at work"
   entity_id: person.tohar
-  state: "Melody"
+  state:
+    - "Melody"
+    - "Gelato"
   type: time
   start: "{{ now().replace(hour=0, minute=0, second=0) }}"
   end: "{{ now() }}"
