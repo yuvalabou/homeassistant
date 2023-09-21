@@ -4,15 +4,19 @@
   id: 8db9bb26-06a4-4315-a70b-72acfb0a5171
   trigger:
     platform: state
-    entity_id: input_select.color_temp_presets
+    entity_id: input_select.light_presets
   action:
-    service: >-
-      {% if trigger.to_state.state == 'Warm' %}
-        script.light_set_warm
-      {% elif trigger.to_state.state == 'Daylight' %}
-        script.light_set_daylight
-      {% elif trigger.to_state.state == 'Date Night' %}
-        script.light_set_date_night
-      {% elif trigger.to_state.state == 'Morning' %}
-        script.light_set_morning
-      {% endif %}
+    service: scene.turn_on
+    data:
+      entity_id: >-
+        {% if trigger.to_state.state == 'Romance' %}
+          scene.romance
+        {% elif trigger.to_state.state == 'Morning' %}
+          scene.morning
+        {% elif trigger.to_state.state == 'Evening' %}
+          scene.evening
+        {% elif trigger.to_state.state == 'Shabbat eve' %}
+          scene.shabbat_eve
+        {% elif trigger.to_state.state == 'Shabbat day' %}
+          scene.shabbat_day
+        {% endif %}
