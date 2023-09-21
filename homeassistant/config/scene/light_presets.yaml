@@ -1,0 +1,66 @@
+---
+
+- name: "Romance"
+  icon: mdi:heart
+  entities:
+    light.wall_lights:
+      flowing: true
+      effect: Date Night
+      state: 'on'
+    light.kitchen_ceiling_light:
+      state: 'on'
+      brightness_pct: 50
+
+- name: "Morning"
+  icon: mdi:weather-sunset-up
+  entities:
+    light.wall_lights:
+      state: 'on'
+      effect: Stop
+      brightness_pct: 100
+      color_temp: 300
+
+- name: "Evening"
+  icon: mdi:weather-sunset
+  entities:
+    light.rooms:
+      state: 'off'
+    light.living_room_lights:
+      state: 'on'
+      brightness_pct: 80
+    light.kitchen_ceiling_light:
+      state: 'on'
+      brightness_pct: 60
+      color_temp_kelvin: 4000
+
+- name: "Shabbat eve"
+  icon: mdi:candle
+  entities:
+    light.rooms:
+      state: 'off'
+    light.living_room_lights:
+      state: 'on'
+      brightness_pct: 90
+    light.kitchen_ceiling_light:
+      state: 'on'
+      brightness_pct: 100
+    light.bathroom_light:
+      state: 'on'
+    fan.kids_bedroom_fan:
+      state: 'off'
+    fan.master_bedroom_fan:
+      state: 'off'
+
+- name: "Shabbat day"
+  icon: mdi:candle
+  entities:
+    light.rooms:
+      state: 'off'
+    light.living_room_lights:
+      state: 'on'
+      brightness_pct: 100
+    light.kitchen_ceiling_light:
+      state: 'on'
+      brightness_pct: 100
+    light.bathroom_light:
+      state: 'on'
