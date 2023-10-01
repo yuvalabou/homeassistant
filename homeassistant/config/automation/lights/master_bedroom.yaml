@@ -4,13 +4,11 @@
   id: cb2d8573-74f4-440c-9b2e-23057b5e492c
   trigger:
     platform: time
-    at: '06:45:00'
+    at: '07:00:00'
   condition:
     - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
   action:
     service: light.turn_on
     data:
-      entity_id: light.yeelight_color_master_bedroom
-      kelvin: 3000
-      brightness_pct: 60
+      entity_id: light.master_bedroom_light

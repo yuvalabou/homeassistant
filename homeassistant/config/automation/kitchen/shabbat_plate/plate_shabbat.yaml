@@ -10,9 +10,10 @@
     platform: sun
     event: sunset
   condition:
-    condition: time
-    weekday:
-      - fri
+    - condition: time
+      weekday:
+        - fri
+    - "{{ not is_state('input_boolean.out_for_shabbat_eve', 'on') }}"
   action:
     service: switch.turn_on
     data:
@@ -68,3 +69,20 @@
       entity_id:
         - switch.shabbat_plate
         - input_boolean.out_for_shabbat_morning
+
+- alias: "Plate - Out for Shabbat eve"
+  id: 2e260c86-7c46-4bbb-8190-557c9d66cc8c
+  trigger:
+    platform: time
+    at: '07:00:00'
+  condition:
+    - "{{ is_state('input_boolean.out_for_shabbat_eve', 'on') }}"
+  action:
+    - service: switch.turn_on
+      data:
+        entity_id:
+          - switch.shabbat_plate
+    - service: switch.turn_off
+      data:
+        entity_id:
+          - input_boolean.out_for_shabbat_eve
