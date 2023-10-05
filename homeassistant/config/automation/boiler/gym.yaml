@@ -3,10 +3,11 @@
 - alias: "Boiler - Turn-on when in gym"
   id: e7f1d529-6331-4cdc-94e3-3cc5e3e24142
   trigger:
-    platform: zone
+    platform: state
     entity_id: person.tohar
-    zone: zone.gym
-    event: enter
+    to: gym
+    for:
+      minutes: 10
   action:
     service: switch.turn_on
     data:

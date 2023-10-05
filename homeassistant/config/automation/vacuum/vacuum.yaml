@@ -59,6 +59,7 @@
     - service: notify.family
       data:
         title: "Returning to Dock"
-        message: "You left me in the Dark, So I am Returning Home. Please don't forget to check the brush!"
+        message: >-
+          "{{ states('sensor.roborock_s7_vacuum_error') }} and you left me in the dark, So I am returning home."
         data:
           image: "https://memegenerator.net/img/images/400x/8230737.jpg"
