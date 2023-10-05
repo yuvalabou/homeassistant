@@ -87,4 +87,6 @@ logbook: !include components/logging/logbook.yaml
 recorder: !include components/logging/recorder.yaml
 logger:
   default: warning
+  logs:
+    homeassistant.components.androidtv_remote: error
 system_log:
