@@ -7,62 +7,62 @@
       entity_id: sensor.washing_machine_energy_current
       below: 1
       for:
-        minutes: 5
+        minutes: 20
       id: 'off'
     - platform: numeric_state
       entity_id: sensor.washing_machine_energy_current
-      above: 3.5
+      above: 4.5
       id: 'running'
     - platform: numeric_state
       entity_id: sensor.washing_machine_energy_current
-      above: 1
+      below: 1
       for:
-        minutes: 1
+        minutes: 10
       id: 'finished'
     - platform: numeric_state
       entity_id: sensor.washing_machine_energy_current
       above: 1
-      below: 3
+      below: 5
       for:
         minutes: 1
       id: 'waiting'
   action:
-    - choose:
-        - conditions:
-            - condition: trigger
-              id: 'off'
-          sequence:
-            - service: input_select.select_option
-              target:
-                entity_id: input_select.washing_machine_state
-              data:
-                option: 'Off'
-        - conditions:
-            - condition: trigger
-              id: 'waiting'
-            - "{{ is_state('input_select.washing_machine_state', 'Running') }}"
-          sequence:
-            - service: input_select.select_option
-              target:
-                entity_id: input_select.washing_machine_state
-              data:
-                option: Finished
-        - conditions:
-            - condition: trigger
-              id: 'waiting'
-            - "{{ is_state('input_select.washing_machine_state', 'Off') }}"
-          sequence:
-            - service: input_select.select_option
-              target:
-                entity_id: input_select.washing_machine_state
-              data:
-                option: Waiting
-        - conditions:
-            - condition: trigger
-              id: 'running'
-          sequence:
-            - service: input_select.select_option
-              target:
-                entity_id: input_select.washing_machine_state
-              data:
-                option: Running
+    choose:
+      - conditions:
+          - condition: trigger
+            id: 'off'
+        sequence:
+          - service: input_select.select_option
+            target:
+              entity_id: input_select.washing_machine_state
+            data:
+              option: 'Off'
+      - conditions:
+          - condition: trigger
+            id: 'waiting'
+          - "{{ is_state('input_select.washing_machine_state', 'Running') }}"
+        sequence:
+          - service: input_select.select_option
+            target:
+              entity_id: input_select.washing_machine_state
+            data:
+              option: Finished
+      - conditions:
+          - condition: trigger
+            id: 'waiting'
+          - "{{ is_state('input_select.washing_machine_state', 'Off') }}"
+        sequence:
+          - service: input_select.select_option
+            target:
+              entity_id: input_select.washing_machine_state
+            data:
+              option: Waiting
+      - conditions:
+          - condition: trigger
+            id: 'running'
+        sequence:
+          - service: input_select.select_option
+            target:
+              entity_id: input_select.washing_machine_state
+            data:
+              option: Running

@@ -1,0 +1,29 @@
+---
+
+- alias: "Energy - Change Tariff"
+  id: 4e8dff21-c8d7-4a9f-b0bb-804dc4e886fd
+  trigger:
+    platform: time
+    at: '00:00:00'
+  action:
+    choose:
+      - conditions:
+        - condition: time
+          weekday:
+            - fri
+        sequence:
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.tariff
+            data:
+              value: 0.5463
+      - conditions:
+        - condition: time
+          weekday:
+            - sun
+        sequence:
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.tariff
+            data:
+              value: 0.607
