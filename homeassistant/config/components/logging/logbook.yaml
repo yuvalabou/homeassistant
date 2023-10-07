@@ -15,7 +15,7 @@ exclude:
     - sensor.count_*
     - sensor.skin_type_*
     - sensor.*_formatted
-    - media_player.tv
+    - media_player.tv*
   domains:
     - script
     - sun

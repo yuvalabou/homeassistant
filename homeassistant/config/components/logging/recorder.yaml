@@ -19,5 +19,5 @@ exclude:
     - sun
     - timer
     - weather
-    - camera
     - button
+    - media_player
