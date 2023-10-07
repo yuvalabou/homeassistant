@@ -39,14 +39,14 @@
               option: 'Off'
       - conditions:
           - condition: trigger
-            id: 'waiting'
+            id: 'finished'
           - "{{ is_state('input_select.washing_machine_state', 'Running') }}"
         sequence:
           - service: input_select.select_option
             target:
               entity_id: input_select.washing_machine_state
             data:
-              option: Finished
+              option: 'Finished'
       - conditions:
           - condition: trigger
             id: 'waiting'
@@ -56,7 +56,7 @@
             target:
               entity_id: input_select.washing_machine_state
             data:
-              option: Waiting
+              option: 'Waiting'
       - conditions:
           - condition: trigger
             id: 'running'
@@ -65,4 +65,4 @@
             target:
               entity_id: input_select.washing_machine_state
             data:
-              option: Running
+              option: 'Running'
