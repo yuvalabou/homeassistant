@@ -1,6 +1,17 @@
 ---
 
-- alias: "Shabbat - Do not allow TV"
+- alias: "Shabbat - Turn off TV"
+  id: f8de4acc-431b-4ee0-9c9f-35d1f01cd84c
+  trigger:
+    platform: state
+    entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+    to: 'on'
+  action:
+    service: remote.turn_off
+    data:
+      entity_id: remote.tv
+
+- alias: "Shabbat - Do not allow TV to be turned on"
   id: b4c1775b-0974-462b-bbdd-dd6ffc2eee56
   trigger:
     platform: state

@@ -7,6 +7,6 @@
     entity_id: light.yeelight_ceilb_0x179e0932
     to: 'on'
   action:
-    - service: light.turn_off
-      data:
-        entity_id: light.yeelight_ceilb_0x179e0932_ambilight
+    service: light.turn_off
+    data:
+      entity_id: light.yeelight_ceilb_0x179e0932_ambilight

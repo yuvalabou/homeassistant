@@ -14,22 +14,22 @@
       id: 'off'
   action:
     choose:
-    - conditions:
-      - condition: trigger
-        id: 'on'
-      - "{{ is_state('group.person', 'home') }}"
-      sequence:
-        service: switch.turn_on
-        data:
-          entity_id:
-            - switch.deltaco_sh_p02_socket_1
-            - switch.deltaco_sh_p02_socket_2
-    - conditions:
-      - condition: trigger
-        id: 'off'
-      sequence:
-        service: switch.turn_off
-        data:
-          entity_id:
-            - switch.deltaco_sh_p02_socket_1
-            - switch.deltaco_sh_p02_socket_2
+      - conditions:
+        - condition: trigger
+          id: 'on'
+        - "{{ is_state('group.person', 'home') }}"
+        sequence:
+          service: switch.turn_on
+          data:
+            entity_id:
+              - switch.deltaco_sh_p02_socket_1
+              - switch.deltaco_sh_p02_socket_2
+      - conditions:
+        - condition: trigger
+          id: 'off'
+        sequence:
+          service: switch.turn_off
+          data:
+            entity_id:
+              - switch.deltaco_sh_p02_socket_1
+              - switch.deltaco_sh_p02_socket_2

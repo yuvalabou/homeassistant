@@ -16,3 +16,5 @@
     - service: light.turn_on
       data:
         entity_id: light.yeelight_ceilb_0x179e0932_ambilight
+        effect: Stop
+        color_temp_kelvin: 4000

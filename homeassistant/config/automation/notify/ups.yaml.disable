@@ -14,7 +14,7 @@
       from: 'On Battery'
       to: 'Online'
   action:
-    - choose:
+    choose:
       - conditions:
         - condition: trigger
           id: 'on_battery'

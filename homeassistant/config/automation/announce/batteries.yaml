@@ -15,7 +15,7 @@
       after: '06:00:00'
       before: '22:00:00'
   action:
-    - choose:
+    choose:
       - conditions:
         - condition: trigger
           id: 'yuval'

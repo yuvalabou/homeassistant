@@ -10,7 +10,7 @@
     subtype: single
     discovery_id: 0x00158d0006d0a9bd action_single
   action:
-    - choose:
+    choose:
       - conditions:
         - "{{ is_state('light.yeelight_ceilb_0x179e0932', 'off') }}"
         sequence:

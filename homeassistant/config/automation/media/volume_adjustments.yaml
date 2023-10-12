@@ -10,7 +10,7 @@
       at: '09:00:00'
       id: 'loud'
   action:
-    - choose:
+    choose:
       - conditions:
         - condition: trigger
           id: 'quiet'

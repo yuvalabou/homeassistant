@@ -7,10 +7,10 @@
     at: '19:00:00'
   condition: "{{ is_state('group.person', 'on') }}"
   action:
-    - service: light.turn_on
-      data:
-        entity_id: light.kids_ambient_lights
-        effect: 'Aurora'
+    service: light.turn_on
+    data:
+      entity_id: light.kids_ambient_lights
+      effect: 'Aurora'
 
 - alias: "Lights - Turn off kids ambient lights at the morning"
   id: 5173eb35-3430-4685-9d81-840831adcfdd

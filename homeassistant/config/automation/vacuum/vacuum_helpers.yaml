@@ -66,20 +66,20 @@
     - platform: state
       entity_id: input_select.vacuum_fan_speed_list
   action:
-    - service: >
-        {% if is_state("input_select.vacuum_fan_speed_list", "Off") %}
-          vacuum.set_fan_speed
-        {% elif is_state("input_select.vacuum_fan_speed_list", "Quiet") %}
-          vacuum.set_fan_speed
-        {% elif is_state("input_select.vacuum_fan_speed_list", "Balanced") %}
-          vacuum.set_fan_speed
-        {% elif is_state("input_select.vacuum_fan_speed_list", "Turbo") %}
-          vacuum.set_fan_speed
-        {% elif is_state("input_select.vacuum_fan_speed_list", "Max") %}
-          vacuum.set_fan_speed
-        {% elif is_state("input_select.vacuum_fan_speed_list", "Custom") %}
-          vacuum.set_fan_speed
-        {% endif %}
-      data:
-        entity_id: vacuum.roborock_s7
-        fan_speed: "{{ states('input_select.vacuum_fan_speed_list') }}"
+    service: >
+      {% if is_state("input_select.vacuum_fan_speed_list", "Off") %}
+        vacuum.set_fan_speed
+      {% elif is_state("input_select.vacuum_fan_speed_list", "Quiet") %}
+        vacuum.set_fan_speed
+      {% elif is_state("input_select.vacuum_fan_speed_list", "Balanced") %}
+        vacuum.set_fan_speed
+      {% elif is_state("input_select.vacuum_fan_speed_list", "Turbo") %}
+        vacuum.set_fan_speed
+      {% elif is_state("input_select.vacuum_fan_speed_list", "Max") %}
+        vacuum.set_fan_speed
+      {% elif is_state("input_select.vacuum_fan_speed_list", "Custom") %}
+        vacuum.set_fan_speed
+      {% endif %}
+    data:
+      entity_id: vacuum.roborock_s7
+      fan_speed: "{{ states('input_select.vacuum_fan_speed_list') }}"
