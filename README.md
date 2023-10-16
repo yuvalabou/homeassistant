@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2023.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.5.2%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.10.3%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -123,7 +123,6 @@
 - [Multiple Entity Row](https://github.com/benct/lovelace-multiple-entity-row)
 - [Mushroom-cards](https://github.com/piitaya/lovelace-mushroom)
 - [RGB light Card](https://github.com/bokub/rgb-light-card)
-- [Sun Card](https://github.com/AitorDB/home-assistant-sun-card)
 - [Time Picker Card](https://github.com/GeorgeSG/lovelace-time-picker-card)
 - [Timer Bar Card](https://github.com/rianadon/timer-bar-card)
 - [Uptime Card](https://github.com/dylandoamaral/uptime-card)
