@@ -4,14 +4,22 @@
   id: dd1aa657-f774-4826-9afb-9eaec8c889e1
   trigger:
     platform: state
-    entity_id: binary_sensor.red_alert
+    entity_id: binary_sensor.oref_alert
     to: 'on'
   condition: "{{ is_state('group.person', 'home') }}"
   action:
-    service: notify.family
-    data:
-      title: "צבע אדום"
-      message: "טלמון"
+    - service: light.turn_on
+      entity_id: light.yeelight_ceilb_0x179e0932
+    - service: light.turn_on
       data:
-        timeout: 120
-        priority: high
+        entity_id:
+          - light.yeelight_ceilb_0x179e0932_ambilight
+          - light.wall_lights
+        color: red
+    - service: notify.family
+      data:
+        title: "צבע אדום"
+        message: "טלמון"
+        data:
+          timeout: 300
+          priority: high

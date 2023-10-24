@@ -1,0 +1,50 @@
+{
+    "title": "Oref Alert",
+    "config": {
+        "step": {
+            "user": {
+                "title": "Setup Oref Alert",
+                "data": {
+                    "areas": "Select areas to monitor (Hebrew only)",
+                    "alert_max_age": "Alert's active time period (minutes)",
+                    "poll_interval": "Update frequency (seconds)",
+                    "on_icon": "Active alerts in selected areas icon",
+                    "off_icon": "Normal time icon"
+                }
+            }
+        },
+        "abort": {
+            "single_instance_allowed": "Already configured. Only a single configuration possible."
+        }
+    },
+    "options": {
+        "step": {
+            "init": {
+                "title": "Configure Oref Alert",
+                "data": {
+                    "areas": "Select areas to monitor (Hebrew only)",
+                    "alert_max_age": "Alert's active time period (minutes)",
+                    "poll_interval": "Update frequency (seconds)",
+                    "on_icon": "Active alerts in selected areas icon",
+                    "off_icon": "Normal time icon"
+                }
+            }
+        }
+    },
+    "services": {
+        "add_sensor": {
+            "name": "Add Sensor",
+            "description": "Add a new sensor for selected areas",
+            "fields": {
+                "name": {
+                    "name": "Name",
+                    "description": "The name of the sensor"
+                },
+                "areas": {
+                    "name": "Areas",
+                    "description": "The selected areas (Hebrew only)"
+                }
+            }
+        }
+    }
+}
