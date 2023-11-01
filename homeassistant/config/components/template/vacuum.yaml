@@ -1,63 +1,35 @@
 ---
 
 - sensor:
-  - name: "Vacuum status"
-    unique_id: b453c3bd-560b-4235-9aa2-b25b116820b5
-    state: >-
-      {{ state_attr('vacuum.roborock_s7', 'status') if states('vacuum.roborock_s7') else "unknown" }}
-    icon: >-
-      {% set status = state_attr('vacuum.roborock_s7', 'status') if states('vacuum.roborock_s7') else "unknown" %}
-      {% if status == 'Charging' %}
-        mdi:battery-charging
-      {% elif status == 'Cleaning' %}
-        mdi:move-resize
-      {% elif status == 'Returning home' %}
-        mdi:home-import-outline
-      {% elif status == 'Idle' %}
-        mdi:dots-horizontal
-      {% elif status == 'Paused' %}
-        mdi:pause-circle
-      {% elif status == 'Charger disconnected' %}
-        mdi:power-plug-off-outline
-      {% else %}
-        mdi:help-circle
-      {% endif %}
-
   - name: "Vacuum Fan speed"
     unique_id: c5efde29-c48f-4faa-9363-9c514204bb60
     state: >-
       {% set speed = state_attr('vacuum.roborock_s7', 'fan_speed') if states('vacuum.roborock_s7') else "unknown" %}
-      {% if speed == 'Silent' %}
-        Silent
-      {% elif speed == 'Standard' %}
-        Standard
-      {% elif speed == 'Medium' %}
-        Medium
-      {% elif speed == 'Turbo' %}
+      {% if speed == 'off' %}
+        Off
+      {% elif speed == 'quiet' %}  custom
+        Quiet
+      {% elif speed == 'balanced' %}
+        Balanced
+      {% elif speed == 'turbo' %}
         Turbo
-      {% else %}
-        "unknown"
+      {% elif speed == 'max' %}
+        Max
+      {% elif speed == 'custom' %}
+        Custom
       {% endif %}
     icon: >-
       {% set speed = state_attr('vacuum.roborock_s7', 'fan_speed') if states('vacuum.roborock_s7') else "unknown" %}
-      {% if speed == 'Silent' %}
+      {% if speed == 'off' %}
+        mdi:fan-off
+      {% elif speed == 'quiet' %}
         mdi:fan-speed-1
-      {% elif speed == 'Standard' %}
+      {% elif speed == 'balanced' %}
         mdi:fan-speed-2
-      {% elif speed == 'Medium' %}
+      {% elif speed == 'turbo' %}
         mdi:fan-speed-3
-      {% elif speed == 'Turbo' %}
+      {% elif speed == 'max' %}
         mdi:weather-tornado
       {% else %}
         mdi:alert-circle
       {% endif %}
-
-  - name: "Vacuum Battery"
-    unique_id: b6713b14-05ac-4f66-8e46-fa6ae1ef5304
-    unit_of_measurement: '%'
-    state_class: measurement
-    device_class: battery
-    state: >-
-      {{ state_attr('vacuum.roborock_s7', 'battery_level') if states('vacuum.roborock_s7') else "unknown" }}
-    icon: >-
-      {{ state_attr('vacuum.roborock_s7', 'battery_icon') if states('vacuum.roborock_s7') else 'mdi:help-circle' }}
