@@ -29,13 +29,16 @@ CONF_SENSORS: Final = "sensors"
 DEFAULT_ALERT_MAX_AGE: Final = 10
 DEFAULT_ON_ICON: Final = "mdi:home-alert-outline"
 DEFAULT_OFF_ICON: Final = "mdi:home-outline"
-DEFAULT_POLL_INTERVAL: Final = 5
+DEFAULT_POLL_INTERVAL: Final = 2
 
 ADD_SENSOR_SERVICE: Final = "add_sensor"
 REMOVE_SENSOR_SERVICE: Final = "remove_sensor"
 SYNTHETIC_ALERT_SERVICE: Final = "synthetic_alert"
 OREF_ALERT_UNIQUE_ID: Final = "oref_alert"
+ALL_AREAS_ID_SUFFIX: Final = "all_areas"
+ALL_AREAS_NAME_SUFFIX: Final = "All Areas"
 END_TIME_ID_SUFFIX: Final = "end_time"
 END_TIME_NAME_SUFFIX: Final = "End Time"
 TIME_TO_SHELTER_ID_SUFFIX: Final = "time_to_shelter"
 TIME_TO_SHELTER_NAME_SUFFIX: Final = "Time To Shelter"
+LOCATION_ID_SUFFIX: Final = "location"

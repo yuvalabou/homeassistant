@@ -61,7 +61,7 @@ def _compare_fields(alert: dict[str, Any], area: str, catgoery: int) -> bool:
     return alert["data"] == area and alert["category"] == catgoery
 
 
-class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator):
+class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorData]):
     """Class to manage fetching Oref Alert data."""
 
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry):
@@ -107,9 +107,6 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator):
                         return None
             except Exception as ex:  # pylint: disable=broad-except
                 exc_info = ex
-        LOGGER.warning(
-            "Update failed after %d retries", REQUEST_RETRIES, exc_info=exc_info
-        )
         raise exc_info
 
     def _current_to_history_format(
