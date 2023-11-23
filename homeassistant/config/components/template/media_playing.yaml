@@ -9,7 +9,7 @@
       {{ state_attr('media_player.tv', 'app_name') }}
     icon: >-
       {% if is_state('media_player.tv', 'on') %}
-        {% set app = state_attr('media_player.tv', 'app_name') %}
+        {% set app = state_attr('media_player.tv', 'app_name') | default('unknown') %}
         {% if app == 'Netflix' %}
           mdi:netflix
         {% elif app == 'com.disneyplus.mea' %}

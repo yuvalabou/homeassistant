@@ -3,7 +3,7 @@
 - binary_sensor:
   - name: "Washing Machine Is Running"
     state: >-
-      {{ states('sensor.washing_machine_energy_power') | float(default=0) > 5 }}
+      {{ states('sensor.washing_machine_energy_power') | int(default=0) > 4 }}
     icon: >-
       {{
         'mdi:washing-machine' if is_state('binary_sensor.washing_machine_is_running', 'on') else 'mdi:washing-machine-off'

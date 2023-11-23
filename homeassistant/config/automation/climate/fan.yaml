@@ -38,31 +38,31 @@
               - fan.master_bedroom_fan
               - fan.kids_bedroom_fan
 
-- alias: "Climate - Kids night fan"
-  id: 15136e60-264f-43f2-974f-641b5ce2cf45
-  trigger:
-    - platform: time
-      at:
-        - '19:00:00'
-      id: 'on'
-    - platform: time
-      at: '07:00:00'
-      id: 'off'
-  action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'on'
-        - "{{ is_state('group.person', 'home') }}"
-        sequence:
-          service: fan.turn_on
-          data:
-            entity_id: fan.kids_bedroom_fan
-            percentage: 66
-      - conditions:
-        - condition: trigger
-          id: 'off'
-        sequence:
-          service: fan.turn_off
-          data:
-            entity_id: fan.kids_bedroom_fan
+# - alias: "Climate - Kids night fan"
+#   id: 15136e60-264f-43f2-974f-641b5ce2cf45
+#   trigger:
+#     - platform: time
+#       at:
+#         - '19:00:00'
+#       id: 'on'
+#     - platform: time
+#       at: '07:00:00'
+#       id: 'off'
+#   action:
+#     choose:
+#       - conditions:
+#         - condition: trigger
+#           id: 'on'
+#         - "{{ is_state('group.person', 'home') }}"
+#         sequence:
+#           service: fan.turn_on
+#           data:
+#             entity_id: fan.kids_bedroom_fan
+#             percentage: 66
+#       - conditions:
+#         - condition: trigger
+#           id: 'off'
+#         sequence:
+#           service: fan.turn_off
+#           data:
+#             entity_id: fan.kids_bedroom_fan
