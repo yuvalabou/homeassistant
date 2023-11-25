@@ -2,12 +2,12 @@
 
 - alias: "Climate - Toggle sheet heaters"
   description: >-
-    "This automation turns on the sheet heaters at 6:00 PM if someone is home,
+    "This automation turns on the sheet heaters at 6:30 PM if someone is home,
     and turns them off at midnight every day."
   id: bbd85c59-0fd0-441c-8404-7ca7b6e3fc85
   trigger:
     - platform: time
-      at: '18:00:00'
+      at: '18:30:00'
       id: 'on'
     - platform: time
       at: '23:00:00'
