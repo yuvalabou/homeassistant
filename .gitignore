@@ -20,7 +20,10 @@ cam_captures
 zigbee2mqtt/*.json
 mosquitto/data
 mosquitto/log
+zigbee2mqtt/log
+mongo/
 unifi/
+unifi.old
 __pycache__
 
 # Ignore files

@@ -38,19 +38,19 @@ services:
       - 1883:1883
       - 9001:9001
 
-  zigbee2mqtt:
-    container_name: "z2m"
-    restart: unless-stopped
-    image: koenkk/zigbee2mqtt
-    volumes:
-      - ./zigbee2mqtt/:/app/data
-      - /run/udev:/run/udev:ro
-    ports:
-      - 8081:8080
-    environment:
-      - TZ=Asia/Jerusalem
-    devices:
-      - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
+  # zigbee2mqtt:
+  #   container_name: "z2m"
+  #   restart: unless-stopped
+  #   image: koenkk/zigbee2mqtt
+  #   volumes:
+  #     - ./zigbee2mqtt/:/app/data
+  #     - /run/udev:/run/udev:ro
+  #   ports:
+  #     - 8081:8080
+  #   environment:
+  #     - TZ=Asia/Jerusalem
+  #   devices:
+  #     - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
   unifi-controller:
      image: lscr.io/linuxserver/unifi-controller:latest
@@ -66,3 +66,34 @@ services:
        - 10001:10001/udp
        - 8080:8080
      restart: unless-stopped
+
+  # unifi-db:
+  #   image: docker.io/mongo:4.4.25-focal
+  #   container_name: unifi-db
+  #   volumes:
+  #     - ./mongo/dbcfg:/data/configdb
+  #     - ./mongo/:/data/db
+  #     - ./mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+  #   command:
+  #     mongod --port 27017
+  #   restart: unless-stopped
+
+  # unifi-network-application:
+  #   image: lscr.io/linuxserver/unifi-network-application:latest
+  #   container_name: unifi-network-application
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - MONGO_USER=unifi
+  #     - MONGO_PASS=unifipwd
+  #     - MONGO_HOST=mongo
+  #     - MONGO_PORT=27017
+  #     - MONGO_DBNAME=unifi
+  #   volumes:
+  #     - ./unifi/:/config
+  #   ports:
+  #     - 8443:8443
+  #     - 3478:3478/udp
+  #     - 10001:10001/udp
+  #     - 8080:8080
+  #   restart: unless-stopped
