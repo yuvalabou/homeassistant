@@ -86,3 +86,49 @@
       data:
         entity_id:
           - input_boolean.out_for_shabbat_eve
+
+#############################
+#### Holiday automations ####
+#############################
+
+- alias: "Plate - Chag morning operation"
+  # Will get turned off later by "Shabbat noon" automation
+  id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
+  trigger:
+    platform: time
+    at: '07:00:00'
+  condition:
+    - condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    service: switch.turn_on
+    data:
+      entity_id: switch.shabbat_plate
+
+- alias: "Plate - Turn-off plate at chag night"
+  id: 2195b710-0c3a-4c4f-8a6a-961495f470a6
+  trigger:
+    platform: time
+    at: input_datetime.shabbat_lights_off_time
+  condition:
+    - condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+        - sat
+    - "{{ not is_state('input_datetime.shabbat_lights_off_time', '00:00:00') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    service: switch.turn_off
+    data:
+      entity_id: switch.shabbat_plate

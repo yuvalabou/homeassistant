@@ -11,7 +11,7 @@
       id: 'off'
     - platform: numeric_state
       entity_id: sensor.washing_machine_energy_current
-      above: 4.5
+      above: 3
       id: 'running'
     - platform: numeric_state
       entity_id: sensor.washing_machine_energy_current
@@ -19,13 +19,6 @@
       for:
         minutes: 10
       id: 'finished'
-    - platform: numeric_state
-      entity_id: sensor.washing_machine_energy_current
-      above: 1
-      below: 5
-      for:
-        minutes: 1
-      id: 'waiting'
   action:
     choose:
       - conditions:
@@ -49,16 +42,6 @@
               option: 'Finished'
       - conditions:
           - condition: trigger
-            id: 'waiting'
-          - "{{ is_state('input_select.washing_machine_state', 'Off') }}"
-        sequence:
-          - service: input_select.select_option
-            target:
-              entity_id: input_select.washing_machine_state
-            data:
-              option: 'Waiting'
-      - conditions:
-          - condition: trigger
             id: 'running'
         sequence:
           - service: input_select.select_option
@@ -66,3 +49,14 @@
               entity_id: input_select.washing_machine_state
             data:
               option: 'Running'
+
+- alias: "Washing machine - start timer"
+  id: 7b9608a5-cffc-4ba5-b7f5-8a2f8ae6f224
+  trigger:
+    - platform: state
+      entity_id: input_select.washing_machine_state
+      to: 'Running'
+  action:
+    service: timer.start
+    target:
+      entity_id: timer.washing_machine_working

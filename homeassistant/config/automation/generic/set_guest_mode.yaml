@@ -1,15 +1,5 @@
 ---
 
-# - alias: "Guest - Enable guest mode"
-#   id: fa66cdae-2da4-4a0b-bc3b-cff8a9317719
-#   trigger:
-#     platform: tag
-#     tag_id: 0bc840cb-f408-4fe5-aedf-d78e1b6fdfc6
-#   action:
-#     service: input_boolean.turn_on
-#     data:
-#       entity_id: input_boolean.guest_mode
-
 - alias: "Guest - Disable guest mode"
   id: 9e82409c-df7b-43fd-ad61-aa993570d5c8
   trigger:
