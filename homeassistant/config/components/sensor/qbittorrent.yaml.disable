@@ -1,6 +1,0 @@
----
-
-- platform: qbittorrent
-  url: !secret qbittorrent_host
-  username: !secret qbittorrent_user
-  password: !secret qbittorrent_pass
