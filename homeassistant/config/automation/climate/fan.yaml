@@ -24,19 +24,15 @@
         sequence:
           service: fan.turn_on
           data:
-            entity_id:
-              - fan.master_bedroom_fan
-              - fan.kids_bedroom_fan
-            percentage: 66
+            entity_id: fan.master_bedroom_fan
+            percentage: 33
       - conditions:
         - condition: trigger
           id: 'off'
         sequence:
           service: fan.turn_off
           data:
-            entity_id:
-              - fan.master_bedroom_fan
-              - fan.kids_bedroom_fan
+            entity_id: fan.ceiling_fans
 
 - alias: "Climate - Kids night fan"
   id: 15136e60-264f-43f2-974f-641b5ce2cf45

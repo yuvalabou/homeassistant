@@ -3,7 +3,7 @@
 - alias: "Climate - Toggle sheet heaters"
   description: >-
     "This automation turns on the sheet heaters at 6:30 PM if someone is home,
-    and turns them off at midnight every day."
+    and turns them off later that night."
   id: bbd85c59-0fd0-441c-8404-7ca7b6e3fc85
   trigger:
     - platform: time
@@ -21,15 +21,11 @@
         sequence:
           service: switch.turn_on
           data:
-            entity_id:
-              - switch.deltaco_sh_p02_socket_1
-              - switch.deltaco_sh_p02_socket_2
+            entity_id: switch.kids_socket
       - conditions:
         - condition: trigger
           id: 'off'
         sequence:
           service: switch.turn_off
           data:
-            entity_id:
-              - switch.deltaco_sh_p02_socket_1
-              - switch.deltaco_sh_p02_socket_2
+            entity_id: switch.kids_socket

@@ -15,12 +15,14 @@
         entity_id:
           - climate.living_room
           - switch.boiler
-          # - switch.deltaco_sh_p02_socket_1
-          # - switch.deltaco_sh_p02_socket_2
+          - switch.kids_socket
           - light.all_lights
-          - fan.master_bedroom_fan
-          - fan.kids_bedroom_fan
+          - fan.ceiling_fans
           - remote.tv
+    - service: system_bridge.power_command
+      data:
+        command: shutdown
+        bridge: 5946df1a296aaa3a0ee88fc8d1a73861
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
