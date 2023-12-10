@@ -23,7 +23,8 @@ mosquitto/log
 zigbee2mqtt/log
 mongo/
 unifi/
-unifi.old
+frigate/storage
+frigate/config.yaml
 __pycache__
 
 # Ignore files

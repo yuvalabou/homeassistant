@@ -38,19 +38,19 @@ services:
       - 1883:1883
       - 9001:9001
 
-  # zigbee2mqtt:
-  #   container_name: "z2m"
-  #   restart: unless-stopped
-  #   image: koenkk/zigbee2mqtt
-  #   volumes:
-  #     - ./zigbee2mqtt/:/app/data
-  #     - /run/udev:/run/udev:ro
-  #   ports:
-  #     - 8081:8080
-  #   environment:
-  #     - TZ=Asia/Jerusalem
-  #   devices:
-  #     - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
+  zigbee2mqtt:
+    container_name: "z2m"
+    restart: unless-stopped
+    image: koenkk/zigbee2mqtt
+    volumes:
+      - ./zigbee2mqtt/:/app/data
+      - /run/udev:/run/udev:ro
+    ports:
+      - 8081:8080
+    environment:
+      - TZ=Asia/Jerusalem
+    devices:
+      - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
   unifi-controller:
      image: lscr.io/linuxserver/unifi-controller:latest
@@ -97,3 +97,27 @@ services:
   #     - 10001:10001/udp
   #     - 8080:8080
   #   restart: unless-stopped
+
+  # frigate:
+  #   container_name: frigate
+  #   privileged: true
+  #   restart: unless-stopped
+  #   image: ghcr.io/blakeblackshear/frigate:stable
+  #   shm_size: "64mb"
+  #   devices:
+  #     - /dev/dri/renderD128 # for intel hwaccel, needs to be updated for your hardware
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ./frigate/config.yaml:/config/config.yaml:ro
+  #     - ./frigate/storage:/media/frigate
+  #     - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+  #       target: /tmp/cache
+  #       tmpfs:
+  #         size: 1000000000
+  #   ports:
+  #     - "5000:5000"
+  #     - "8554:8554" # RTSP feeds
+  #     - "8555:8555/tcp" # WebRTC over tcp
+  #     - "8555:8555/udp" # WebRTC over udp
+  #   environment:
+  #     FRIGATE_RTSP_PASSWORD: "password"
