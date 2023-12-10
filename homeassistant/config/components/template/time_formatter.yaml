@@ -12,6 +12,16 @@
       {% set hours = (hours - (hours % 1)) | int(default=0) %}
       {{ float('%02i.%02i'%(hours, minutes)) }}
 
+  - name: "Yuval - time at IDF formatted"
+    unique_id: e4808838-46aa-43d0-abaa-00ced5f3f0b2
+    unit_of_measurement: "hours"
+    state_class: total
+    state: >-
+      {% set hours = states('sensor.yuval_time_at_idf') | float(default=0.0) %}
+      {% set minutes = ((hours % 1) * 60) | int(default=0) %}
+      {% set hours = (hours - (hours % 1)) | int(default=0) %}
+      {{ float('%02i.%02i'%(hours, minutes)) }}
+
   - name: "Tohar - time at work formatted"
     unique_id: db265de4-9927-4284-bfa3-ea981a19f7f6
     unit_of_measurement: "hours"

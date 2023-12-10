@@ -11,7 +11,9 @@
 - platform: history_stats
   name: "Yuval - Time at IDF"
   entity_id: person.yuval
-  state: "Nahshonim"
+  state:
+    - "Nahshonim"
+    - "Front"
   type: time
   start: "{{ now().replace(hour=0, minute=0, second=0) }}"
   end: "{{ now() }}"
