@@ -4,8 +4,6 @@ exclude:
   entities:
     - binary_sensor.day
     - binary_sensor.night
-    - binary_sensor.random_boolean
-    - sensor.random_number
     - sensor.load_5m
     - sensor.watchman_last_updated
     - remote.tv

@@ -5,8 +5,7 @@
   trigger:
     platform: time
     at: sensor.yuval_next_alarm
-  condition:
-    - "{{ is_state('group.person', 'home') }}"
+  condition: "{{ is_state('group.person', 'home') }}"
   action:
     service: scene.turn_on
     data:

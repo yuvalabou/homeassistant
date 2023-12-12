@@ -34,8 +34,12 @@
       - switch.vent
       - switch.ensuite_heater
       - switch.boiler
+      - switch.shabbat_plate
+      - switch.washing_machine
       - fan.kids_bedroom_fan
       - fan.master_bedroom_fan
+      - media_player.tv
+      - remote.tv
     to: 'unavailable'
     for: '00:05:00'
   action:

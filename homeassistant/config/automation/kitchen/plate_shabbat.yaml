@@ -80,12 +80,10 @@
   action:
     - service: switch.turn_on
       data:
-        entity_id:
-          - switch.shabbat_plate
+        entity_id: switch.shabbat_plate
     - service: switch.turn_off
       data:
-        entity_id:
-          - input_boolean.out_for_shabbat_eve
+        entity_id: input_boolean.out_for_shabbat_eve
 
 #############################
 #### Holiday automations ####

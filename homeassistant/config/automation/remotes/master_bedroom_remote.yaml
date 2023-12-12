@@ -5,7 +5,7 @@
   trigger:
     platform: device
     domain: mqtt
-    device_id: c60828dc2c9515b14dda7f88c21dc961
+    device_id: fa81c5b69bfa60ab1e06687bfcbee9d2
     type: action
     subtype: hold
     discovery_id: 0x00158d0006d0a9eb action_hold
@@ -22,3 +22,8 @@
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
+    - service: system_bridge.power_command
+      continue_on_error: true
+      data:
+        command: shutdown
+        bridge: 5946df1a296aaa3a0ee88fc8d1a73861

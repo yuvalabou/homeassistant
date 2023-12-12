@@ -20,8 +20,7 @@
   id: c7396673-d257-4267-a72f-060ee4d43603
   trigger:
     platform: time
-    at:
-      - input_datetime.shabbat_lights_off_time
+    at: input_datetime.shabbat_lights_off_time
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     service: climate.turn_off

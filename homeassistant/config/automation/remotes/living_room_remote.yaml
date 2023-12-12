@@ -1,11 +1,11 @@
 ---
 
-- alias: "Button - Turn-off everything at night"
+- alias: "Button - Turn-on lights"
   id: 44a34975-aa34-4c9c-a8f5-0ccb6d6c3900
   trigger:
     platform: device
     domain: mqtt
-    device_id: 8036249fa716e0723ebb9baa256168f7
+    device_id: 45c6602b986892800c2d5917af458c67
     type: action
     subtype: single
     discovery_id: 0x00158d0006d0a9bd action_single

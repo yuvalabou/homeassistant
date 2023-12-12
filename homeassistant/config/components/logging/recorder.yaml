@@ -3,11 +3,9 @@
 purge_keep_days: 30
 exclude:
   entities:
-    - binary_sensor.random_boolean
     - sensor.time
     - sensor.date
     - sensor.date_time
-    - sensor.random_number
     - sensor.watchman_last_updated
   entity_globs:
     - binary_sensor.is_*
