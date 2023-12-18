@@ -19,7 +19,7 @@
         service: light.turn_on
         data:
           entity_id:
-            - light.living_room_ceiling_light
+            - light.yeelight_ceilb_0x179e0932
             - light.kitchen_ceiling_light
           brightness_pct: 100
       else:
