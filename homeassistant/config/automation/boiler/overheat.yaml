@@ -3,21 +3,27 @@
 - alias: "Boiler - Set boolean when overheat"
   id: 9614dc27-4752-4468-a096-409ed6ea1bfc
   trigger:
-    platform: state
-    entity_id: binary_sensor.boiler_overheating
-    to: 'on'
+    - id: 'overheating'
+      platform: state
+      entity_id: binary_sensor.boiler_overheating
+      to: 'on'
+    - id: 'state_changed'
+      platform: state
+      entity_id: switch.boiler
+      to: 'on'
   action:
-    service: input_boolean.turn_on
-    data:
-      entity_id: input_boolean.boiler_overheated
-
-- alias: "Boiler - unset boolean on turn on"
-  id: 2300e8cc-7e15-4406-99b7-e7d03e2867f2
-  trigger:
-    platform: state
-    entity_id: switch.boiler
-    to: 'on'
-  action:
-    service: input_boolean.turn_off
-    data:
-      entity_id: input_boolean.boiler_overheated
+    choose:
+      - conditions:
+        - condition: trigger
+          id: 'overheating'
+        sequence:
+          service: input_boolean.turn_on
+          data:
+            entity_id: input_boolean.boiler_overheated
+      - conditions:
+        - condition: trigger
+          id: 'state_changed'
+        sequence:
+          service: input_boolean.turn_off
+          data:
+            entity_id: input_boolean.boiler_overheated

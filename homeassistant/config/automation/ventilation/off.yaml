@@ -26,17 +26,3 @@
     service: switch.turn_off
     data:
       entity_id: switch.vent
-
-- alias: "Vent - Turn-off on arrival"
-  id: 5b178ad8-c0b0-41d8-9934-0576f3429dcd
-  trigger:
-    - platform: zone
-      entity_id:
-        - person.yuval
-        - person.tohar
-      zone: zone.home
-      event: enter
-  action:
-    service: switch.turn_off
-    data:
-      entity_id: switch.vent

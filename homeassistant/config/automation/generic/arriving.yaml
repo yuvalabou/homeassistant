@@ -10,11 +10,21 @@
     zone: zone.home
     event: enter
   action:
-    - service: cover.open_cover
+    - service: light.turn_on
       data:
-        entity_id: cover.living_room_shutter
+        entity_id: light.yeelight_ceilb_0x179e0932_ambilight
+        effect: Stop
+        color_temp_kelvin: 4000
     - if:
-        condition: "{{ is_state('binary_sensor.day', 'on')}}"
+        condition: template
+        value_template: "{{ is_state('group.person', 'not_home') }}"
+      then:
+        service: cover.open_cover
+        data:
+          entity_id: cover.living_room_shutter
+    - if:
+        condition: template
+        value_template: "{{ is_state('binary_sensor.day', 'on') }}"
       then:
         service: light.turn_on
         data:
@@ -22,9 +32,10 @@
             - light.yeelight_ceilb_0x179e0932
             - light.kitchen_ceiling_light
           brightness_pct: 100
-      else:
-        service: light.turn_on
+    - if:
+        condition: template
+        value_template: "{{ is_state('switch.vent', 'on') }}"
+      then:
+        service: switch.turn_off
         data:
-          entity_id: light.yeelight_ceilb_0x179e0932_ambilight
-          effect: Stop
-          color_temp_kelvin: 4000
+          entity_id: switch.vent

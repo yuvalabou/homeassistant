@@ -1,0 +1,28 @@
+---
+
+- alias: "Lights - Sukkah lights on"
+  id: 72cdbac3-f4ad-477a-acdf-21dd3e57e7e3
+  trigger:
+    - id: 'sunset'
+      platform: sun
+      event: sunset
+      offset: '-02:00:00'
+    - id: 'off'
+      platform: time
+      at: input_datetime.shabbat_lights_off_time
+  action:
+    choose:
+      - conditions:
+        - condition: trigger
+          id: 'sunset'
+        sequence:
+          service: light.turn_on
+          data:
+            entity_id: light.pergola_ceiling_light
+      - conditions:
+        - condition: trigger
+          id: 'off'
+        sequence:
+          service: light.turn_off
+          data:
+            entity_id: light.pergola_ceiling_light
