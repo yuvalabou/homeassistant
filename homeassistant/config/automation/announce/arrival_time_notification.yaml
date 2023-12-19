@@ -35,4 +35,4 @@
         sequence:
           service: notify.nest_mini
           data:
-            message: "יובל יצא ממשמרת, הוא יגיע בעוד כ {{ states('sensor.yuval_current_location_to home') }} דקות"
+            message: "יובל יצא ממשמרת, הוא יגיע בעוד כ {{ states('sensor.yuval_current_location_to_home') }} דקות"
