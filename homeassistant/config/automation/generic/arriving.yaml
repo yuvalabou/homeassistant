@@ -17,7 +17,7 @@
         color_temp_kelvin: 4000
     - if:
         condition: template
-        value_template: "{{ is_state('group.person', 'not_home') }}"
+        value_template: "{{ is_state('cover.living_room_shutter', 'closed') }}"
       then:
         service: cover.open_cover
         data:
