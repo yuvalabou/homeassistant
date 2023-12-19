@@ -18,11 +18,10 @@ services:
   esphome:
     container_name: "esphome"
     image: esphome/esphome
+    network_mode: host
     environment:
       - TZ=Asia/Jerusalem
       - ESPHOME_DASHBOARD_USE_PING=true
-    ports:
-      - 6052:6052
     restart: unless-stopped
     volumes:
       - ./esphome/config:/config
