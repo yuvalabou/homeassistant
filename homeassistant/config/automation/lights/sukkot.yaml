@@ -10,6 +10,7 @@
     - id: 'off'
       platform: time
       at: input_datetime.shabbat_lights_off_time
+  condition: "{{ is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
   action:
     choose:
       - conditions:

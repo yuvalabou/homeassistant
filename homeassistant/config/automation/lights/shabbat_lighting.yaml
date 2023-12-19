@@ -29,29 +29,33 @@
         service: scene.turn_on
         entity_id: scene.shabbat_eve
 
-- alias: "Lights - Shabbat and Chag lighting off"
+- alias: "Lights - Shabbat and Chag lighting schedule"
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
-    platform: time
-    at: input_datetime.shabbat_lights_off_time
+    - id: 'off'
+      platform: time
+      at: input_datetime.shabbat_lights_off_time
+    - id: 'morning'
+      platform: time
+      at: '07:55:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: light.turn_off
-    data:
-      entity_id: light.public_lights
-
-- alias: "Lights - Shabbat morning lights"
-  id: 3ac9405a-dde0-41f2-850b-413cb15a708d
-  trigger:
-    platform: time
-    at: '07:55:00'
-  condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-    - "{{ is_state('group.person', 'home') }}"
-  action:
-    service: light.turn_on
-    data:
-      entity_id: light.public_lights
-      brightness_pct: 100
-      kelvin: 3600
-      transition: 300
+    choose:
+      - conditions:
+          - condition: trigger
+            id: 'off'
+        sequence:
+          service: light.turn_off
+          data:
+            entity_id: light.public_lights
+      - conditions:
+          - condition: trigger
+            id: 'on'
+          - "{{ is_state('group.person', 'home') }}"
+        sequence:
+          service: light.turn_on
+          data:
+            entity_id: light.public_lights
+            brightness_pct: 100
+            kelvin: 3600
+            transition: 300

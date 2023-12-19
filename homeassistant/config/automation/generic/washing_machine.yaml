@@ -44,19 +44,11 @@
           - condition: trigger
             id: 'running'
         sequence:
+          - service: timer.start
+            target:
+              entity_id: timer.washing_machine_working
           - service: input_select.select_option
             target:
               entity_id: input_select.washing_machine_state
             data:
               option: 'Running'
-
-- alias: "Washing machine - start timer"
-  id: 7b9608a5-cffc-4ba5-b7f5-8a2f8ae6f224
-  trigger:
-    - platform: state
-      entity_id: input_select.washing_machine_state
-      to: 'Running'
-  action:
-    service: timer.start
-    target:
-      entity_id: timer.washing_machine_working

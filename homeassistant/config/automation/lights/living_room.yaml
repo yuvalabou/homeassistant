@@ -3,9 +3,13 @@
 - alias: "Lights - Turn-on Wall lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
-    platform: time
-    at: sensor.yuval_next_alarm
-  condition: "{{ is_state('group.person', 'home') }}"
+    - platform: time
+      at: sensor.yuval_next_alarm
+    - platform: time
+      at: sensor.tohar_next_alarm
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
+    - "{{ not is_state('light.wall_lights', 'on') }}"
   action:
     service: scene.turn_on
     data:
