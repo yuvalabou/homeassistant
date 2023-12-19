@@ -9,8 +9,7 @@
     service: persistent_notification.create
     data_template:
       title: "Home Assistant Startup"
-      message: >-
-        At {{now().strftime("%m/%d/%Y %H:%M:%S")}} Home Assistant has started.
+      message: "Home Assistant has started at {{ now().strftime('%m/%d/%Y %H:%M:%S') }}."
 
 - alias: "Notify - Home Assistant update available"
   id: 52cbbc12-add7-4634-bd64-14888a23f357

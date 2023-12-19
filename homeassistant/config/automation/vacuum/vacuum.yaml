@@ -23,25 +23,6 @@
         title: "Cleaning started"
         data:
           image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg'
-          actions:
-            - action: CANCEL
-              title: Cancel cleaning
-
-- alias: "Vacuum - Cancel on response"
-  id: d6b1aa9c-fcc3-427a-bfa1-372f76612011
-  trigger:
-    platform: event
-    event_type: mobile_app_notification_action
-    event_data:
-      action: 'CANCEL'
-  action:
-    - service: vacuum.stop
-      data:
-        entity_id: vacuum.roborock_s7
-    - service: notify.family
-      data:
-        title: "Cleaning stopped"
-        message: "Cleaning stopped"
 
 - alias: "Vacuum - Return to dock if got stuck"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
@@ -62,4 +43,4 @@
         message: >-
           "{{ states('sensor.roborock_s7_vacuum_error') }} and you left me in the dark, So I am returning home."
         data:
-          image: "https://memegenerator.net/img/images/400x/8230737.jpg"
+          image: "https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-161.jpg"

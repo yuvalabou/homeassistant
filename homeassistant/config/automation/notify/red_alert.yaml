@@ -23,3 +23,22 @@
         data:
           timeout: 300
           priority: high
+    - wait_for_trigger:
+        platform: state
+        entity_id: binary_sensor.oref_alert
+        to: 'off'
+    - if:
+        condition: time
+        before: '07:00:00'
+        after: '21:00:00'
+      then:
+        service: light.turn_off
+        data:
+          entity_id:
+            - light.yeelight_ceilb_0x179e0932_ambilight
+            - light.wall_lights
+      else:
+        service: scene.turn_on
+        data:
+          entity_id: scene.morning
+          transition: 300

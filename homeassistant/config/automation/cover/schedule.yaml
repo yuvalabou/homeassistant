@@ -1,29 +1,62 @@
 ---
 
-- alias: "Cover - Morning Cover"
+- alias: "Cover - Scheduled cover"
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   trigger:
-    - platform: time
+    - id: 'open'
+      platform: time
       at: '06:15:00'
+    - id: 'close'
+      platform: time
+      at: '23:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
   action:
-    service: cover.open_cover
-    data:
-      entity_id: cover.living_room_shutter
+    choose:
+      - conditions:
+        - condition: trigger
+          id: 'open'
+        sequence:
+          service: cover.open_cover
+          data:
+            entity_id: cover.living_room_shutter
+      - conditions:
+        - condition: trigger
+          id: 'close'
+        - "{{ is_state('input_boolean.guest_mode', 'off')}}"
+        - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
+        sequence:
+          service: cover.close_cover
+          data:
+            entity_id: cover.living_room_shutter
 
-- alias: "Cover - Evening Cover"
-  id: dee66d89-f22f-4b21-ba18-92bbb15efb83
+- alias: "Cover - Shabbat scheduled cover"
+  id: 67d159ff-76fd-4ea6-9134-8e2237032966
   trigger:
-    platform: time
-    at: '23:00:00'
+    - id: 'close'
+      platform: time
+      at: input_datetime.shabbat_lights_off_time
+    - id: 'open'
+      platform: time
+      at: '07:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"
-    - "{{ is_state('input_boolean.guest_mode', 'off')}}"
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
-    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['hol_hamoed_sukkot', 'hoshana_raba']) }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: cover.close_cover
-    data:
-      entity_id: cover.living_room_shutter
+    choose:
+      - conditions:
+        - condition: trigger
+          id: 'open'
+        sequence:
+          service: cover.open_cover
+          data:
+            entity_id: cover.living_room_shutter
+      - conditions:
+        - condition: trigger
+          id: 'close'
+        - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
+        sequence:
+          service: cover.close_cover
+          data:
+            entity_id: cover.living_room_shutter
