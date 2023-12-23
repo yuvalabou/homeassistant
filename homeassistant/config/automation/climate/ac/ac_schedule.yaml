@@ -11,7 +11,6 @@
       platform: time
       at: '09:00:00'
   condition:
-    - "{{ not is_state('climate.living_room', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - condition: numeric_state
@@ -31,7 +30,6 @@
     - id: 'shabbat_night'
       platform: time
       at: input_datetime.shabbat_lights_off_time
-  condition: "{{ not is_state('climate.living_room', 'off') }}"
   action:
     choose:
       - conditions:

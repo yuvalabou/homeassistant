@@ -8,7 +8,6 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
     - platform: state
-      id: 'shabbat_exit'
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   condition: "{{ is_state('group.person', 'home') }}"
@@ -50,7 +49,7 @@
             entity_id: light.public_lights
       - conditions:
           - condition: trigger
-            id: 'on'
+            id: 'morning'
           - "{{ is_state('group.person', 'home') }}"
         sequence:
           service: light.turn_on
