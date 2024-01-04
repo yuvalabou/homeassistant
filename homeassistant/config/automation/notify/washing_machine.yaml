@@ -9,8 +9,10 @@
     for:
       minutes: 3
   action:
-    service: notify.family
-    data:
-      message: "Washing machine finished"
+    - service: notify.family
       data:
-        image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg'
+        message: "Washing machine finished"
+        data:
+          image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg'
+    - service: timer.finish
+      entity_id: timer.washing_machine_working

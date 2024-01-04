@@ -52,9 +52,5 @@
             id: 'morning'
           - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: light.turn_on
-          data:
-            entity_id: light.public_lights
-            brightness_pct: 100
-            kelvin: 3600
-            transition: 300
+          service: scene.turn_on
+          entity_id: scene.shabbat_day

@@ -1,38 +1,15 @@
 ---
 
-- alias: "Announce - Yuval has left zone"
-  description: "Notify at home that Yuval has left a zone, and arrive in x minutes"
+- alias: "Announce - Yuval has left work"
+  description: "Notify at home that Yuval has left work, and arrive in x minutes"
   id: 6e439b47-a790-4b1b-aef3-176b030bb7a5
   trigger:
-    - id: 'work'
-      platform: zone
-      entity_id: person.yuval
-      zone: zone.hirsh
-      event: leave
-    - id: 'idf'
-      platform: zone
-      entity_id: person.yuval
-      zone: zone.front
-      event: leave
-    - id: 'idf'
-      platform: zone
-      entity_id: person.yuval
-      zone: zone.nahshonim
-      event: leave
+    platform: zone
+    entity_id: person.yuval
+    zone: zone.hirsh
+    event: leave
   condition: "{{ is_state('person.tohar', 'home') }}"
   action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'work'
-        sequence:
-          service: notify.nest_mini
-          data:
-            message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות"
-      - conditions:
-        - condition: trigger
-          id: 'idf'
-        sequence:
-          service: notify.nest_mini
-          data:
-            message: "יובל יצא ממשמרת, הוא יגיע בעוד כ {{ states('sensor.yuval_current_location_to_home') }} דקות"
+    service: notify.nest_mini
+    data:
+      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות"
