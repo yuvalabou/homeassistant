@@ -1,6 +1,6 @@
-![Maintenance](https://img.shields.io/maintenance/yes/2023.svg?style=plasticr)
+![Maintenance](https://img.shields.io/maintenance/yes/2024.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2023.12.3%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2024.1.0%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
