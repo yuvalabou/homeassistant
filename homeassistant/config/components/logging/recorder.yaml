@@ -8,9 +8,7 @@ exclude:
     - sensor.date_time
     - sensor.watchman_last_updated
   entity_globs:
-    - binary_sensor.is_*
     - sensor.count_*
-    - sensor.skin_type_*
     - sensor.openweathermap_forecast_*
     - persistant_notification.notification_*
   domains:

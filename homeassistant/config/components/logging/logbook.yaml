@@ -4,14 +4,12 @@ exclude:
   entities:
     - binary_sensor.day
     - binary_sensor.night
-    - sensor.load_5m
     - sensor.watchman_last_updated
     - remote.tv
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*
     - sensor.count_*
-    - sensor.skin_type_*
     - sensor.*_formatted
     - media_player.tv*
   domains:
