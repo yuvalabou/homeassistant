@@ -8,29 +8,3 @@
       {{ is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 5) }}
     icon: >-
       {{ 'mdi:food-off' if is_state('binary_sensor.tzom', 'on') else 'mdi:food' }}
-
-# Shabbat notification triggers
-# FIXME: These sensors have hardcoded timezone offset.
-# Help needed to fix this
-# 10800s for +3hrs offset, 7200s for +2hrs offset.
-  - name: "Shabbat 10 min Notification trigger"
-    unique_id: 892d219d-1f2e-4904-96a3-152390eadaa9
-    state: >-
-      {{
-        as_timestamp(
-        states('sensor.jewish_calendar_upcoming_candle_lighting'), default=0) |
-        timestamp_custom('%H:%M') == (now().strftime("%s") |
-        float(default=0) + (10*60) - (10800) ) |
-        timestamp_custom("%H:%M")
-      }}
-
-  - name: "Shabbat 30 min Notification trigger"
-    unique_id: 7802763d-d118-43b0-b97a-e42d9775288f
-    state: >-
-      {{
-        as_timestamp(
-          states('sensor.jewish_calendar_upcoming_candle_lighting'), default=0) |
-        timestamp_custom('%H:%M') == (now().strftime("%s") |
-        float(default=0) + (30*60) - (10800) ) |
-        timestamp_custom("%H:%M")
-      }}

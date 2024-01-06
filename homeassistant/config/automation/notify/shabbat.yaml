@@ -4,18 +4,22 @@
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
   description: "Notify 30 minutes and 10 minutes before Shabbat"
   trigger:
-    - platform: state
+    - platform: template
       id: '30_min'
-      entity_id: binary_sensor.shabbat_30_min_notification_trigger
-      to: 'on'
-    - platform: state
+      value_template: >-
+        {{ now() == states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes=30) }}
+    - platform: template
       id: '10_min'
-      entity_id: binary_sensor.shabbat_10_min_notification_trigger
-      to: 'on'
+      value_template: >-
+        {{ now() == states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes=10) }}
   condition:
-    - condition: time
-      weekday:
-        - fri
+    - or:
+      - condition: time
+        weekday:
+          - fri
+      - condition: template
+        value_template: >-
+          {{ is_state_attr('sensor.jewish_calendar_holiday', 'type_id', 2) }}
     - "{{ is_state('group.person', 'home') }}"
   action:
     choose:
