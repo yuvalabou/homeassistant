@@ -22,11 +22,6 @@
     - service: cover.close_cover
       data:
         entity_id: cover.living_room_shutter
-    - service: system_bridge.power_command
-      continue_on_error: true
-      data:
-        command: shutdown
-        bridge: 5946df1a296aaa3a0ee88fc8d1a73861
     - delay: 30
     - service: notify.family
       data:
