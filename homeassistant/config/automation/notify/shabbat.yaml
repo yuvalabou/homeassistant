@@ -7,19 +7,11 @@
     - platform: template
       id: '30_min'
       value_template: >-
-        {{
-            (as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting') | default(0)) | int - now().timestamp() | int <= 1800)
-            and
-            (as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting') | default(0)) | int - now().timestamp() | int > 1740)
-        }}
+        {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 30) }}
     - platform: template
       id: '10_min'
       value_template: >-
-        {{
-            (as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting') | default(0)) | int - now().timestamp() | int <= 600)
-            and
-            (as_timestamp(states('sensor.jewish_calendar_upcoming_candle_lighting') | default(0)) | int - now().timestamp() | int > 590)
-        }}
+        {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 10) }}
   condition:
     - or:
       - condition: time
