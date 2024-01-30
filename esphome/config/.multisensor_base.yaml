@@ -42,6 +42,7 @@ sensor:
     name: "${upper_devicename} Percieved Brightness"
     id: ${template_id}_percieved_brightness
     unit_of_measurement: "%"
+    state_class: measurement
     lambda: |-
       return ((log10(id(${template_id}_illuminance).state) / 5) * 100);
 
