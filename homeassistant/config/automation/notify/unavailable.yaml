@@ -13,9 +13,6 @@
       - light.yeelight_color_0x12ab4331
       - light.yeelight_color_0x12bfc0a1
       - light.bathroom_light
-      # - light.corridor_light
-      # - light.wled_harel_bed
-      # - light.wled_rotem_bed
     to: 'unavailable'
     for: '00:05:00'
   action:

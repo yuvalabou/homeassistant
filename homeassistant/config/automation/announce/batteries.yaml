@@ -9,6 +9,9 @@
     - platform: template
       id: 'tohar'
       value_template: "{{ is_state('sensor.tohar_battery_level', '100') }}"
+    - platform: template
+      id: 'tablet'
+      value_template: "{{ is_state('sensor.tablet_battery_level', '100') }}"
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
     - condition: time
@@ -32,3 +35,11 @@
           service: notify.nest_mini
           data:
             message: "הסוללה של טוהר טעונה במלואה"
+      - conditions:
+        - condition: trigger
+          id: 'tablet'
+        - "{{ is_state('group.person', 'home') }}"
+        sequence:
+          service: notify.nest_mini
+          data:
+            message: "הסוללה בטאבלט טעונה במלואה"
