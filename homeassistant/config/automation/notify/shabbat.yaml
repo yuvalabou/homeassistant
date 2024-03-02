@@ -6,12 +6,16 @@
   trigger:
     - platform: template
       id: '30_min'
+      # value_template: >-
+      #   {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 30) }}
       value_template: >-
-        {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 30) }}
+        {% set lighting = today_at((states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime | as_local).time()) %}
+        {{ now() - timedelta(minutes = 30) >= lighting }}
     - platform: template
       id: '10_min'
       value_template: >-
-        {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 10) }}
+        {% set lighting = today_at((states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime | as_local).time()) %}
+        {{ now() - timedelta(minutes = 10) >= lighting }}
   condition:
     - or:
       - condition: time

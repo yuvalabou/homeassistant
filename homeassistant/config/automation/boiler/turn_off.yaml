@@ -6,7 +6,7 @@
     - platform: state
       entity_id: switch.boiler
       to: 'on'
-      for: '00:45:00'
+      for: '01:00:00'
   action:
     service: switch.turn_off
     data:

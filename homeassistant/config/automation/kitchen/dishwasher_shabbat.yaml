@@ -3,9 +3,8 @@
 - alias: "Dishwasher - Start at shabbat afternoon"
   id: 3dcfc7f1-ee04-403f-b6a2-0ed67af48336
   trigger:
-    platform: sun
-    event: sunset
-    offset: '-04:00:00'
+    platform: time
+    at: '14:00:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
