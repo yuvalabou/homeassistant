@@ -73,13 +73,6 @@ utility_meter:
 zone:
 
 ##################################################
-#              CUSTOM INTEGRATIONS               #
-##################################################
-home_connect_alt:
-  client_id: !secret hc_client_id
-  client_secret: !secret hc_client_secret
-
-##################################################
 #                  LOG COMPONENTS                #
 ##################################################
 history:
