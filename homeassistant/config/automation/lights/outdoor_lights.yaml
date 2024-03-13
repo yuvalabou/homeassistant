@@ -1,0 +1,18 @@
+---
+
+- alias: "Lights - Turn off outdoor lights when cover is closed"
+  id: ce5e2bb0-ce4b-4e48-92fe-2dd05453047b
+  trigger:
+    platform: state
+    entity_id: cover.living_room_shutter
+    to: 'off'
+    for:
+      minutes: 5
+  condition:
+    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
+  action:
+    service: light.turn_off
+    data:
+      entity_id:
+        - light.pergola_light
+        - light.shed_light
