@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2024.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2024.1.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2024.3.0%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -32,19 +32,19 @@
 | Type | Count |
 |------|:-----:|
 | **Entities** | 552 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 272 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 52 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 274 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 56 |
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 24 |
-| **[Buttons](https://www.home-assistant.io/integrations/button)** | 13 |
-| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 13 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 72 |
+| **[Buttons](https://www.home-assistant.io/integrations/button)** | 16 |
+| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 15 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 62 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 8 |
 
 ### Lines of code
 | Type | Lines |
 |:-:|:-:|
-| Python | 41609 |
-| Yaml | 7334 |
+| Python | 36798 |
+| Yaml | 7211 |
 
 -----
 
@@ -53,7 +53,7 @@
 | Nest mini | Roborock S7 | YEELIGHT (YLDP06YL) | YEELIGHT 450S | Tuya generic outlet | Shelly 2.5 | Shelly 1PM | Shelly 1 Mini | Tuya ceiling light | Sonoff IFan04 | Tasmota Israel Plug |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 |<img src="https://lh3.googleusercontent.com/7pq6Fhyz_qUGO8ORh6y0Bn6g7lRSBg3yHkNBXmt51g-mc2Viuv6LMjk4E0NXZGI7Rk4" width=75>|<img src="https://www.bug.co.il/images/site/products/df06158a-8698-41a7-991f-9db96f074033.jpg" width=75>|<img src="https://i01.appmifile.com/v1/MI_18455B3E4DA706226CF7535A58E875F0267/pms_1616606687.68573462.jpg" width=75>|<img src="https://www.mi-il.co.il/images/site/products/70c69c4d-f5b2-420c-95a8-93123f4f8c5b.jpg" width=75>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://www.shelly.com/_Resources/Persistent/d/d/5/f/dd5fe9b8f37b22729c5a6ed85895b76f5d5d47dd/Shelly_Plus2PM_x1-625x625.webp" width=75>|<img src="https://www.shelly.com/_Resources/Persistent/1/e/8/5/1e85dacf88e912f6be406a18758e59b2149ad82b/Shelly_Plus1PM_x1-625x625.webp" width=75>|<img src="https://www.shelly.com/_Resources/Persistent/8/e/0/2/8e02f439940d8b8d1d16dc2c3c8f0da0cd8fec18/Shelly_Plus_1_Mini_x1%20%281%29-625x625.webp" width=75>|<img src="https://consent.trustarc.com/get?name=tuya_logo2.png" width=75>|<img src="https://ae01.alicdn.com/kf/H87b6845fe6bd493c8f4cc8faed9547efE/SONOFF-iFan04-L-iFan03-Wifi-RF.jpg_Q90.jpg_.webp" width=75>|<img src="https://static.wixstatic.com/media/f83f1a_7ba89a75ba2849e5951e4e5c0de45904~mv2.png/v1/fill/w_500,h_500,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/f83f1a_7ba89a75ba2849e5951e4e5c0de45904~mv2.png" width=75>|
-|1|1|2|1|1|1|1|5|1|2|2|
+|1|1|3|1|1|1|2|5|1|2|2|
 
 ### Zigbee devices
 
@@ -101,6 +101,7 @@ Firebat T8 pro
 ### Integrations
 
 - [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
+- [IEC](https://github.com/GuyKh/iec-custom-component)
 - [Oref Alerts](https://github.com/amitfin/oref_alert)
 - [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
 - [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
