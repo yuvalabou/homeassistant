@@ -20,7 +20,7 @@ binary_sensor:
     name: "${upper_devicename}"
 
 sensor:
-  - platform: bme280
+  - platform: bme280_i2c
     temperature:
       name: "${upper_devicename} Temperature"
       id: ${template_id}_temperature
