@@ -48,17 +48,18 @@
         sequence:
           service: vacuum.set_fan_speed
           data:
+            fan_speed: "turbo"
+          target:
             entity_id: vacuum.roborock_s7
-            fan_speed: "Turbo"
       - conditions:
         - condition: trigger
           id: 'quiet'
         sequence:
           service: vacuum.set_fan_speed
           data:
+            fan_speed: "quiet"
+          target:
             entity_id: vacuum.roborock_s7
-            fan_speed: "Quiet"
-
 
 - alias: "Vacuum - Set Vacuum Fan Speed"
   id: 6c1cb638-04fb-43c3-bf7a-a062c6289122

@@ -41,6 +41,8 @@
       data:
         title: "Returning to Dock"
         message: >-
-          "{{ states('sensor.roborock_s7_vacuum_error') }} and you left me in the dark, So I am returning home."
+          "The Vacuum is in trouble:
+          {{ states('sensor.roborock_s7_current_error') }}
+          Returning home."
         data:
           image: "https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-161.jpg"

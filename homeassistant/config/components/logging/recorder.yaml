@@ -1,6 +1,7 @@
 ---
 
 purge_keep_days: 30
+commit_interval: 10
 exclude:
   entities:
     - sensor.time
