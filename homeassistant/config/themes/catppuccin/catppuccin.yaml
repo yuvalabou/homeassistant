@@ -45,14 +45,15 @@ Catppuccin Latte:
 
   primary-background-color: var(--mantle)
   secondary-background-color: var(--mantle)
+  accent-color: var(--yellow)
 
   # Text
   primary-text-color: var(--text)
   secondary-text-color: var(--subtext1)
   text-primary-color: var(--text)
   divider-color: var(--base)
-  accent-color: var(--sky)
-  disabled-text-color: var(--surface0)
+  disabled-text-color: var(--overlay0)
+  text-accent-color: var(--text)
 
   # Sidebar
   sidebar-background-color: var(--crust)
@@ -114,7 +115,7 @@ Catppuccin Latte:
   table-row-background-color: var(--primary-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
   data-table-background-color: var(--primary-background-color)
-  mdc-checkbox-unchecked-color: var(--surface0)
+  mdc-checkbox-unchecked-color: var(--overlay0)
 
   # Dropdowns
   material-background-color: var(--primary-background-color)
@@ -139,6 +140,12 @@ Catppuccin Latte:
   input-label-ink-color: var(--secondary-text-color)
   input-idle-line-color: var(--primary-text-color)
   input-hover-line-color: var(--accent-color)
+  input-disabled-ink-color: var(--disabled-text-color)
+  input-disabled-line-color: var(--disabled-text-color)
+  input-outlined-idle-border-color: var(--disabled-text-color)
+  input-outlined-hover-border-color: var(--disabled-text-color)
+  input-outlined-disabled-border-color: var(--disabled-text-color)
+  input-disabled-fill-color: rgba(0, 0, 0, 0)
 
   # Toast
   paper-toast-background-color: var(--overlay0)
@@ -196,6 +203,7 @@ Catppuccin Frappe:
   # Main Interface colors
   primary-color: var(--blue)
   light-primary-color: var(--primary-color)
+  accent-color: var(--yellow)
 
   primary-background-color: var(--base)
   secondary-background-color: var(--base)
@@ -205,8 +213,8 @@ Catppuccin Frappe:
   secondary-text-color: var(--subtext1)
   text-primary-color: var(--text)
   divider-color: var(--base)
-  accent-color: var(--sky)
-  disabled-text-color: var(--surface0)
+  disabled-text-color: var(--overlay0)
+  text-accent-color: var(--base)
 
   # Sidebar
   sidebar-background-color: var(--crust)
@@ -255,9 +263,10 @@ Catppuccin Frappe:
 
   # Switches
   switch-checked-button-color: var(--green)
-  switch-checked-track-color: var(--surface0)
+  switch-checked-track-color: var(--surface2)
   switch-unchecked-button-color: rgb(--overlay0)
   switch-unchecked-track-color: rgb(--surface0)
+
   # Toggles
   paper-toggle-button-checked-button-color: var(--switch-checked-button-color)
   paper-toggle-button-checked-bar-color: var(--switch-checked-track-color)
@@ -268,7 +277,7 @@ Catppuccin Frappe:
   table-row-background-color: var(--primary-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
   data-table-background-color: var(--primary-background-color)
-  mdc-checkbox-unchecked-color: var(--surface0)
+  mdc-checkbox-unchecked-color: var(--overlay0)
 
   # Dropdowns
   material-background-color: var(--primary-background-color)
@@ -293,6 +302,12 @@ Catppuccin Frappe:
   input-label-ink-color: var(--secondary-text-color)
   input-idle-line-color: var(--primary-text-color)
   input-hover-line-color: var(--accent-color)
+  input-disabled-ink-color: var(--disabled-text-color)
+  input-disabled-line-color: var(--disabled-text-color)
+  input-outlined-idle-border-color: var(--disabled-text-color)
+  input-outlined-hover-border-color: var(--disabled-text-color)
+  input-outlined-disabled-border-color: var(--disabled-text-color)
+  input-disabled-fill-color: rgba(0, 0, 0, 0)
 
   # Toast
   paper-toast-background-color: var(--overlay0)
@@ -349,6 +364,7 @@ Catppuccin Macchiato:
   # Main Interface colors
   primary-color: var(--blue)
   light-primary-color: var(--primary-color)
+  accent-color: var(--yellow)
 
   primary-background-color: var(--base)
   secondary-background-color: var(--base)
@@ -358,8 +374,8 @@ Catppuccin Macchiato:
   secondary-text-color: var(--subtext1)
   text-primary-color: var(--text)
   divider-color: var(--base)
-  accent-color: var(--sky)
-  disabled-text-color: var(--surface0)
+  disabled-text-color: var(--overlay0)
+  text-accent-color: var(--base)
 
   # Sidebar
   sidebar-background-color: var(--crust)
@@ -408,9 +424,10 @@ Catppuccin Macchiato:
 
   # Switches
   switch-checked-button-color: var(--green)
-  switch-checked-track-color: var(--surface0)
+  switch-checked-track-color: var(--surface2)
   switch-unchecked-button-color: rgb(--overlay0)
   switch-unchecked-track-color: rgb(--surface0)
+
   # Toggles
   paper-toggle-button-checked-button-color: var(--switch-checked-button-color)
   paper-toggle-button-checked-bar-color: var(--switch-checked-track-color)
@@ -421,7 +438,7 @@ Catppuccin Macchiato:
   table-row-background-color: var(--primary-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
   data-table-background-color: var(--primary-background-color)
-  mdc-checkbox-unchecked-color: var(--surface0)
+  mdc-checkbox-unchecked-color: var(--overlay0)
 
   # Dropdowns
   material-background-color: var(--primary-background-color)
@@ -446,6 +463,12 @@ Catppuccin Macchiato:
   input-label-ink-color: var(--secondary-text-color)
   input-idle-line-color: var(--primary-text-color)
   input-hover-line-color: var(--accent-color)
+  input-disabled-ink-color: var(--disabled-text-color)
+  input-disabled-line-color: var(--disabled-text-color)
+  input-outlined-idle-border-color: var(--disabled-text-color)
+  input-outlined-hover-border-color: var(--disabled-text-color)
+  input-outlined-disabled-border-color: var(--disabled-text-color)
+  input-disabled-fill-color: rgba(0, 0, 0, 0)
 
   # Toast
   paper-toast-background-color: var(--overlay0)
@@ -504,6 +527,7 @@ Catppuccin Mocha:
   # Main Interface colors
   primary-color: var(--blue)
   light-primary-color: var(--primary-color)
+  accent-color: var(--yellow)
 
   primary-background-color: var(--base)
   secondary-background-color: var(--base)
@@ -513,8 +537,8 @@ Catppuccin Mocha:
   secondary-text-color: var(--subtext1)
   text-primary-color: var(--text)
   divider-color: var(--base)
-  accent-color: var(--sky)
-  disabled-text-color: var(--surface0)
+  disabled-text-color: var(--overlay0)
+  text-accent-color: var(--crust)
 
   # Sidebar
   sidebar-background-color: var(--crust)
@@ -563,9 +587,10 @@ Catppuccin Mocha:
 
   # Switches
   switch-checked-button-color: var(--green)
-  switch-checked-track-color: var(--surface0)
+  switch-checked-track-color: var(--surface2)
   switch-unchecked-button-color: rgb(--overlay0)
   switch-unchecked-track-color: rgb(--surface0)
+
   # Toggles
   paper-toggle-button-checked-button-color: var(--switch-checked-button-color)
   paper-toggle-button-checked-bar-color: var(--switch-checked-track-color)
@@ -576,7 +601,7 @@ Catppuccin Mocha:
   table-row-background-color: var(--primary-background-color)
   table-row-alternative-background-color: var(--secondary-background-color)
   data-table-background-color: var(--primary-background-color)
-  mdc-checkbox-unchecked-color: var(--surface0)
+  mdc-checkbox-unchecked-color: var(--overlay0)
 
   # Dropdowns
   material-background-color: var(--primary-background-color)
@@ -601,6 +626,12 @@ Catppuccin Mocha:
   input-label-ink-color: var(--secondary-text-color)
   input-idle-line-color: var(--primary-text-color)
   input-hover-line-color: var(--accent-color)
+  input-disabled-ink-color: var(--disabled-text-color)
+  input-disabled-line-color: var(--disabled-text-color)
+  input-outlined-idle-border-color: var(--disabled-text-color)
+  input-outlined-hover-border-color: var(--disabled-text-color)
+  input-outlined-disabled-border-color: var(--disabled-text-color)
+  input-disabled-fill-color: rgba(0, 0, 0, 0)
 
   # Toast
   paper-toast-background-color: var(--overlay0)
@@ -613,4 +644,3 @@ Catppuccin Mocha:
 
   state-on-color: var(--green)
   state-off-color: var(--red)
-
