@@ -9,7 +9,7 @@
       event: enter
       id: "yuval"
     - platform: zone
-      entity_id: person.tohar
+      entity_id: person.yuval
       zone: zone.home
       event: enter
       id: "yuval_home"

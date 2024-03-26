@@ -1,0 +1,54 @@
+---
+
+- alias: "Notify - Appliance Complete"
+  id: f927b3f5-aaea-4d42-b724-ad3b08180512
+  trigger:
+    - platform: state
+      entity_id: sensor.400090386855001425_bsh_common_status_operationstate
+      to:
+        - 'Finished'
+        - 'BSH.Common.EnumType.OperationState.Finished'
+      id: 'dishwasher'
+    - platform: state
+      entity_id: vacuum.roborock_s7
+      from: 'cleaning'
+      to: 'returning'
+      id: 'vacuum'
+    - platform: state
+      entity_id: binary_sensor.washing_machine_is_running
+      to: 'off'
+      for:
+        minutes: 3
+      id: 'washing_machine'
+  action:
+    - choose:
+        - conditions:
+            condition: trigger
+            id: 'dishwasher'
+          sequence:
+            service: notify.family
+            data:
+              message: "Dishwasher finished"
+              data:
+                image: 'https://i.imgflip.com/3w51e9.jpg'
+        - conditions:
+            condition: trigger
+            id: 'vacuum'
+          sequence:
+            service: notify.family
+            data:
+              title: "Finished cleaning"
+              message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int / 60 ) | int }} minutes"
+              data:
+                image: 'https://www.bigsquirrel.com/wp-content/uploads/2015/11/14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg'
+        - conditions:
+            condition: trigger
+            id: 'washing_machine'
+          sequence:
+            - service: notify.family
+              data:
+                message: "Washing machine finished"
+                data:
+                  image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg'
+            - service: timer.finish
+              entity_id: timer.washing_machine_working

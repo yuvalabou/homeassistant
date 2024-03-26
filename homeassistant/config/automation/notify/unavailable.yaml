@@ -8,11 +8,13 @@
     entity_id:
       - light.master_bedroom_light
       - light.kids_bedroom_light
+      - light.bathroom_light
       - light.kitchen_ceiling_light
       - light.yeelight_ceilb_0x179e0932
       - light.yeelight_color_0x12ab4331
       - light.yeelight_color_0x12bfc0a1
-      - light.bathroom_light
+      - light.shed_light
+      - light.pergola_light
     to: 'unavailable'
     for: '00:05:00'
   action:

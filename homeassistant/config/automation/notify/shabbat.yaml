@@ -6,8 +6,6 @@
   trigger:
     - platform: template
       id: '30_min'
-      # value_template: >-
-      #   {{ now() >= states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime - timedelta(minutes = 30) }}
       value_template: >-
         {% set lighting = today_at((states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime | as_local).time()) %}
         {{ now() + timedelta(minutes = 30) >= lighting }}

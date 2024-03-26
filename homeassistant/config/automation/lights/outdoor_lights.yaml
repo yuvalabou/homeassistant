@@ -8,8 +8,6 @@
     to: 'off'
     for:
       minutes: 5
-  condition:
-    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
   action:
     service: light.turn_off
     data:
