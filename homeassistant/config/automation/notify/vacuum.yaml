@@ -1,7 +1,7 @@
 ---
 
-- alias: "Notify - Appliance Complete"
-  id: f927b3f5-aaea-4d42-b724-ad3b08180512
+- alias: "Notify - Vacuum Error"
+  id: f67ed229-d741-4469-9458-bbffc4561c29
   trigger:
     - platform: state
       entity_id: binary_sensor.roborock_s7_water_shortage
