@@ -11,23 +11,34 @@ serial:
 devices:
   '0x54ef4410002c18d8':
     friendly_name: Bathroom Door
+    availability: true
   '0x54ef441000293ac7':
     friendly_name: Living room Window
+    availability: true
   '0x54ef4410002bc269':
     friendly_name: Ensuite Door
+    availability: true
   '0x54ef4410002b73e4':
     friendly_name: Master Bedroom Door
+    availability: true
   '0x00158d0006d0a9eb':
     friendly_name: Master bedroom button
+    availability: true
   '0x00158d00092100d1':
     friendly_name: Master Bedroom H&T
+    availability: true
   '0x00158d00091de379':
     friendly_name: Living room H&T
+    availability: true
   '0x00158d00091df38a':
     friendly_name: Outdoor H&T
+    availability: true
   '0x00158d00091df412':
     friendly_name: Kids Bedroom H&T
+    availability: true
   '0x00158d0006d0a9bd':
     friendly_name: Living Room Button
+    availability: true
   '0x54ef4410002c05e4':
     friendly_name: '0x54ef4410002c05e4'
+    availability: true
