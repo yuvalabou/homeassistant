@@ -17,9 +17,15 @@
         - condition: trigger
           id: 'overheating'
         sequence:
-          service: input_boolean.turn_on
-          data:
-            entity_id: input_boolean.boiler_overheated
+          - service: input_boolean.turn_on
+            data:
+              entity_id: input_boolean.boiler_overheated
+          - service: notify.mobile_app_yuval
+            data:
+              title: "Boiler Overheated"
+              message: >-
+                Temperature is {{ states('sensor.boiler_device_temperature') }}.
+                Let it cooldown before turning on again.
       - conditions:
         - condition: trigger
           id: 'state_changed'

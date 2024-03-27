@@ -19,7 +19,7 @@
   action:
     service: script.turn_on
     data:
-      entity_id: script.ac_heat
+      entity_id: script.ac_cool
 
 - alias: "Climate - Scheduled Turn-off"
   id: 5f250d83-aa9a-4e2a-af61-8ad83f39a75a
@@ -68,7 +68,7 @@
       then:
         service: script.turn_on
         data:
-          entity_id: script.ac_heat
+          entity_id: script.ac_cool
       else:
         service: climate.turn_off
         data:

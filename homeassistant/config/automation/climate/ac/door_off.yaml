@@ -7,7 +7,7 @@
     entity_id: binary_sensor.living_room_window_contact
     to: 'on'
     for:
-      minutes: 5
+      minutes: 3
   condition:
     - "{{ not is_state('climate.living_room', 'off') }}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"

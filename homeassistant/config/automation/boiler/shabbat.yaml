@@ -4,7 +4,7 @@
   id: fb851b88-eac1-47a0-ade9-9aeab311a0b8
   trigger:
     platform: time
-    at: '16:00:00'
+    at: '17:00:00'
   condition:
     - "{{ is_state('group.person', 'home')}}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
