@@ -19,8 +19,8 @@
         entity_id: vacuum.roborock_s7
     - service: notify.family
       data:
-        message: "Vacuum has started the daily cleaning"
         title: "Cleaning started"
+        message: "Vacuum has started the daily cleaning"
         data:
           image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg'
 
@@ -41,8 +41,8 @@
       data:
         title: "Returning to Dock"
         message: >-
-          "The Vacuum is in trouble:
+          The Vacuum is in trouble:
           {{ states('sensor.roborock_s7_current_error') }}
-          Returning home."
+          Returning home.
         data:
           image: "https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-161.jpg"

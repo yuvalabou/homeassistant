@@ -39,6 +39,10 @@
       entity_id: group.person
       to: 'home'
       id: 'quiet'
+    - platform: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      to: 'on'
+      id: 'quiet'
   action:
     choose:
       - conditions:

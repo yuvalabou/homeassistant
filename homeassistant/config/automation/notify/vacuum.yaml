@@ -1,0 +1,32 @@
+---
+
+- alias: "Notify - Appliance Complete"
+  id: f927b3f5-aaea-4d42-b724-ad3b08180512
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.roborock_s7_water_shortage
+      to: 'on'
+      id: 'water_shortage'
+    - platform: state
+      entity_id: sensor.roborock_s7_vacuum_error
+      id: 'error'
+  action:
+    - choose:
+        - conditions:
+            condition: trigger
+            id: 'water_shortage'
+          sequence:
+            service: notify.family
+            data:
+              message: "Vacuum water shortage"
+              data:
+                image: 'https://lh3.googleusercontent.com/proxy/eIIL7SITwruvRDHX953Ssw3z6eohVR60hT7jAfeFll4pEe8W_WhnTykAC5nRua1nTuVqqsEQuPkWL5AkjkmNvcG4okm75sA3GJ12uobTfgC35l6st-VVsX0U754mGNzYTaVL91jKpgjeQt2gilt6UBBdNR8qPIoiX-Y7kQ'
+        - conditions:
+            condition: trigger
+            id: 'error'
+          sequence:
+            service: notify.family
+            data:
+              title: "Vacuum Error"
+              data:
+                image: 'https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-4.jpg'
