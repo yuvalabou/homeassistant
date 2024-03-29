@@ -10,16 +10,6 @@
     zone: zone.home
     event: enter
   action:
-    - service: input_boolean.turn_off
-      data:
-        entity_id: input_boolean.guest_mode
-    - service: notify.nest_mini
-      data:
-        message: >
-          {{
-            [
-              "Guest Mode has been disabled and normal automations will continue.",
-              "I have disabled guest mode and have resumed normal operations!",
-              "Disabling guest mode!"
-            ] | random
-          }}
+    service: input_boolean.turn_off
+    data:
+      entity_id: input_boolean.guest_mode
