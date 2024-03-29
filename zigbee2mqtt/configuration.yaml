@@ -12,9 +12,6 @@ devices:
   '0x54ef4410002c18d8':
     friendly_name: Bathroom Door
     availability: true
-  '0x54ef441000293ac7':
-    friendly_name: Living room Window
-    availability: true
   '0x54ef4410002bc269':
     friendly_name: Ensuite Door
     availability: true
@@ -40,5 +37,5 @@ devices:
     friendly_name: Living Room Button
     availability: true
   '0x54ef4410002c05e4':
-    friendly_name: '0x54ef4410002c05e4'
+    friendly_name: Living room Window
     availability: true
