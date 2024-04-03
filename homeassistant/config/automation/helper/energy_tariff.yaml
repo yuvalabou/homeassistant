@@ -16,7 +16,7 @@
             target:
               entity_id: input_number.tariff
             data:
-              value: 0.5463
+              value: "{{ (states('sensor.iec_kwh_tariff') | float * 0.9) | round(4) }}"
       - conditions:
         - condition: time
           weekday:
@@ -26,4 +26,4 @@
             target:
               entity_id: input_number.tariff
             data:
-              value: 0.607
+              value: "{{ states('sensor.iec_kwh_tariff') }}"

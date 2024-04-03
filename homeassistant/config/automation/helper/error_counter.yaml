@@ -1,0 +1,32 @@
+---
+
+- alias: "System - Count Home Assistant errors"
+  id: e4653437-0a17-41d2-b14d-eaa1399cf890
+  trigger:
+    - platform: event
+      event_type: system_log_event
+      event_data:
+        level: ERROR
+      id: 'error'
+    - platform: event
+      event_type: system_log_event
+      event_data:
+        level: WARNING
+      id: 'warning'
+  action:
+    - choose:
+      - conditions:
+          condition: trigger
+          id: 'warning'
+        sequence:
+          service: counter.increment
+          entity_id: counter.home_assistant_warning
+      - conditions:
+          condition: trigger
+          id: 'error'
+        sequence:
+          service: counter.increment
+          entity_id: counter.home_assistant_errors
+  mode: queued
+  max: 20
+  max_exceeded: silent

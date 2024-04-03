@@ -1,0 +1,12 @@
+---
+
+- alias: "System - Set Logger Level"
+  id: c22df91c-cb12-4015-8de3-1d7a54b7b02b
+  trigger:
+    platform: state
+    entity_id:
+      - input_select.logger_level
+  action:
+    - service: logger.set_level
+      data:
+        homeassistant.components: "{{ states('input_select.logger_level') }}"

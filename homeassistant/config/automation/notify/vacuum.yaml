@@ -18,6 +18,7 @@
           sequence:
             service: notify.family
             data:
+              title: "Vacuum Error"
               message: "Vacuum water shortage"
               data:
                 image: 'https://lh3.googleusercontent.com/proxy/eIIL7SITwruvRDHX953Ssw3z6eohVR60hT7jAfeFll4pEe8W_WhnTykAC5nRua1nTuVqqsEQuPkWL5AkjkmNvcG4okm75sA3GJ12uobTfgC35l6st-VVsX0U754mGNzYTaVL91jKpgjeQt2gilt6UBBdNR8qPIoiX-Y7kQ'
@@ -28,5 +29,6 @@
             service: notify.family
             data:
               title: "Vacuum Error"
+              message: "General error"
               data:
                 image: 'https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-4.jpg'
