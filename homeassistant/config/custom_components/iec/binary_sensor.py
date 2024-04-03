@@ -8,11 +8,13 @@ from dataclasses import dataclass
 from homeassistant.components.binary_sensor import BinarySensorEntityDescription, BinarySensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
+from .commons import get_device_info
 from .const import DOMAIN, STATICS_DICT_NAME, INVOICE_DICT_NAME, \
-    EMPTY_INVOICE
+    EMPTY_INVOICE, ATTRIBUTES_DICT_NAME, METER_ID_ATTR_NAME
 from .coordinator import IecApiCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -32,8 +34,8 @@ class IecBinarySensorEntityDescription(BinarySensorEntityDescription, IecBinaryE
 
 BINARY_SENSORS: tuple[IecBinarySensorEntityDescription, ...] = (
     IecBinarySensorEntityDescription(
-        key="last_invoice_paid",
-        translation_key="last_invoice_paid",
+        key="last_iec_invoice_paid",
+        translation_key="last_iec_invoice_paid",
         value_fn=lambda data: (data[INVOICE_DICT_NAME].amount_to_pay == 0) if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
@@ -60,7 +62,8 @@ async def async_setup_entry(
                 IecBinarySensorEntity(coordinator=coordinator,
                                       entity_description=description,
                                       contract_id=contract_key,
-                                      is_multi_contract=is_multi_contract)
+                                      is_multi_contract=is_multi_contract,
+                                      attributes_to_add=coordinator.data[contract_key][ATTRIBUTES_DICT_NAME])
             )
 
     async_add_entities(entities)
@@ -79,20 +82,24 @@ class IecBinarySensorEntity(CoordinatorEntity[IecApiCoordinator], BinarySensorEn
             self,
             coordinator: IecApiCoordinator,
             entity_description: IecBinarySensorEntityDescription,
-
             contract_id: str,
-            is_multi_contract: bool
+            is_multi_contract: bool,
+            attributes_to_add: dict | None = None
     ):
         """Initialize the sensor."""
         super().__init__(coordinator)
         self.entity_description = entity_description
-        self.contract_id = contract_id
+        self.contract_id = str(int(contract_id))
+        self.meter_id = attributes_to_add.get(METER_ID_ATTR_NAME) if attributes_to_add else None
         self._attr_unique_id = f"{str(contract_id)}_{entity_description.key}"
 
 
         attributes = {
             "contract_id": contract_id
         }
+
+        if attributes_to_add:
+            attributes.update(attributes_to_add)
 
         if is_multi_contract:
             attributes["is_multi_contract"] = is_multi_contract
@@ -105,4 +112,10 @@ class IecBinarySensorEntity(CoordinatorEntity[IecApiCoordinator], BinarySensorEn
     @property
     def is_on(self) -> bool | None:
         """Return the state of the sensor."""
-        return self.coordinator.data.get(str(int(self.contract_id)))
+        return self.entity_description.value_fn(self.coordinator.data.get(self.contract_id))
+
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return the device info."""
+        return get_device_info(self.contract_id, self.meter_id)

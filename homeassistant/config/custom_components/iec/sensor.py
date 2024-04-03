@@ -15,15 +15,17 @@ from homeassistant.components.sensor import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfEnergy, UnitOfTime
 from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from iec_api.models.invoice import Invoice
 from iec_api.models.remote_reading import RemoteReading
 
-from .commons import find_reading_by_date
+from .commons import find_reading_by_date, get_device_info
 from .const import DOMAIN, ILS, STATICS_DICT_NAME, STATIC_KWH_TARIFF, FUTURE_CONSUMPTIONS_DICT_NAME, INVOICE_DICT_NAME, \
-    ILS_PER_KWH, DAILY_READINGS_DICT_NAME, EMPTY_REMOTE_READING, CONTRACT_DICT_NAME, EMPTY_INVOICE
+    ILS_PER_KWH, DAILY_READINGS_DICT_NAME, EMPTY_REMOTE_READING, CONTRACT_DICT_NAME, EMPTY_INVOICE, \
+    ATTRIBUTES_DICT_NAME, METER_ID_ATTR_NAME
 from .coordinator import IecApiCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -72,8 +74,10 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=3,
-        value_fn=lambda data: (data[FUTURE_CONSUMPTIONS_DICT_NAME].future_consumption or 0) if (
-            data[FUTURE_CONSUMPTIONS_DICT_NAME]) else None
+        value_fn=lambda data:
+        (data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]].future_consumption or 0)
+        if (data[FUTURE_CONSUMPTIONS_DICT_NAME]
+            and data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]) else None
     ),
     IecEntityDescription(
         key="elec_forecasted_cost",
@@ -82,8 +86,10 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=2,
         # The API doesn't provide future *cost* so we can try to estimate it by the previous consumption
-        value_fn=lambda data: ((data[FUTURE_CONSUMPTIONS_DICT_NAME].future_consumption or 0) * data[STATICS_DICT_NAME][
-            STATIC_KWH_TARIFF]) if (data[FUTURE_CONSUMPTIONS_DICT_NAME]) else None
+        value_fn=lambda data:
+        ((data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]].future_consumption or 0)
+         * data[STATICS_DICT_NAME][STATIC_KWH_TARIFF]) if (data[FUTURE_CONSUMPTIONS_DICT_NAME]
+                                                           and data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]) else None
     ),
     IecEntityDescription(
         key="elec_today_consumption",
@@ -91,8 +97,10 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=3,
-        value_fn=lambda data: _get_reading_by_date(data[DAILY_READINGS_DICT_NAME], datetime.now()).value if (
-            data[DAILY_READINGS_DICT_NAME]) else None
+        value_fn=lambda data:
+        _get_reading_by_date(data[DAILY_READINGS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]],
+                             datetime.now()).value if (data[DAILY_READINGS_DICT_NAME] and
+                                                       [data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]) else None
     ),
     IecEntityDescription(
         key="elec_yesterday_consumption",
@@ -100,8 +108,9 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=3,
-        value_fn=lambda data: (_get_reading_by_date(data[DAILY_READINGS_DICT_NAME],
-                                                    datetime.now() - timedelta(days=1)).value) if (
+        value_fn=lambda data: (
+            _get_reading_by_date(data[DAILY_READINGS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]],
+                                 datetime.now() - timedelta(days=1)).value) if (
             data[DAILY_READINGS_DICT_NAME]) else None,
     ),
     IecEntityDescription(
@@ -110,9 +119,10 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=3,
-        value_fn=lambda data: (sum([reading.value for reading in data[DAILY_READINGS_DICT_NAME]
-                                   if reading.date.month == datetime.now().month])) if (
-                data[DAILY_READINGS_DICT_NAME]) else None,
+        value_fn=lambda data: (sum([reading.value for reading in
+                                    data[DAILY_READINGS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]
+                                    if reading.date.month == datetime.now().month])) if (
+            data[DAILY_READINGS_DICT_NAME]) else None,
     ),
     IecEntityDescription(
         key="elec_latest_meter_reading",
@@ -120,8 +130,8 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         state_class=SensorStateClass.TOTAL_INCREASING,
         suggested_display_precision=3,
-        value_fn=lambda data: (data[FUTURE_CONSUMPTIONS_DICT_NAME].total_import or 0) if (
-                data[FUTURE_CONSUMPTIONS_DICT_NAME]) else None
+        value_fn=lambda data: (data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]
+                               .total_import or 0) if (data[FUTURE_CONSUMPTIONS_DICT_NAME]) else None
     ),
 )
 
@@ -230,7 +240,8 @@ async def async_setup_entry(
                         coordinator,
                         sensor_desc,
                         contract_id,
-                        is_multi_contract
+                        is_multi_contract,
+                        coordinator.data[contract_key][ATTRIBUTES_DICT_NAME]
                     )
                 )
 
@@ -248,12 +259,14 @@ class IecSensor(CoordinatorEntity[IecApiCoordinator], SensorEntity):
             coordinator: IecApiCoordinator,
             description: IecEntityDescription,
             contract_id: str,
-            is_multi_contract: bool
+            is_multi_contract: bool,
+            attributes_to_add: dict | None = None
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self.entity_description = description
         self.contract_id = contract_id
+        self.meter_id = attributes_to_add.get(METER_ID_ATTR_NAME) if attributes_to_add else None
         self._attr_unique_id = f"{str(contract_id)}_{description.key}"
         self._attr_translation_key = f"{description.key}"
         self._attr_translation_placeholders = {"multi_contract": f"of {contract_id}"}
@@ -261,6 +274,9 @@ class IecSensor(CoordinatorEntity[IecApiCoordinator], SensorEntity):
         attributes = {
             "contract_id": contract_id
         }
+
+        if attributes_to_add:
+            attributes.update(attributes_to_add)
 
         if is_multi_contract:
             attributes["is_multi_contract"] = is_multi_contract
@@ -276,7 +292,7 @@ class IecSensor(CoordinatorEntity[IecApiCoordinator], SensorEntity):
         if self.coordinator.data is not None:
             if self.contract_id == STATICS_DICT_NAME:
                 return self.entity_description.value_fn(
-                    self.coordinator.data.get(self.contract_id)
+                    self.coordinator.data.get(self.contract_id, self.meter_id)
                 )
 
             # Trim leading 0000 if needed and align with coordinator keys
@@ -284,3 +300,9 @@ class IecSensor(CoordinatorEntity[IecApiCoordinator], SensorEntity):
                 self.coordinator.data.get(str(int(self.contract_id)))
             )
         return None
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return the device info."""
+        return get_device_info(self.contract_id, self.meter_id)
+
