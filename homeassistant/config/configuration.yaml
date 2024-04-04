@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202403            #
+#            Yuval Aboulafia - 202404            #
 ##################################################
 #                      CORE                      #
 ##################################################
@@ -19,7 +19,6 @@ energy:
 frontend:
   themes: !include_dir_merge_named themes
 lovelace:
-map:
 system_health:
 homeassistant_alerts:
 
