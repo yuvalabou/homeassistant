@@ -5,8 +5,8 @@ notify_for_shabbat:
   description: "Give a Shabbat brief on a media device using tts"
   sequence:
     - service: media_player.volume_set
-      entity_id: media_player.living_room
       data:
+        entity_id: media_player.living_room
         volume_level: 0.9
     - delay: 3
     - service: notify.nest_mini
