@@ -1,6 +1,6 @@
 ---
 
-- alias: "Lights - Sukkah lights on"
+- alias: "Turn Sukkah lights on"
   id: 72cdbac3-f4ad-477a-acdf-21dd3e57e7e3
   trigger:
     - id: 'sunset'

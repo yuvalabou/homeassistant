@@ -1,6 +1,6 @@
 ---
 
-- alias: "Red Alert"
+- alias: "Red Alert notification"
   id: dd1aa657-f774-4826-9afb-9eaec8c889e1
   trigger:
     platform: state

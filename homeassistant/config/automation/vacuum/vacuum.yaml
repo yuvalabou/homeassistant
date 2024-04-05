@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - Start cleaning when away"
+- alias: "Start Vacuum when away"
   id: 0a5f46de-effa-4b82-a4f3-b0508dbd4095
   trigger:
     platform: state
@@ -24,7 +24,7 @@
         data:
           image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/636/536/df1.jpg'
 
-- alias: "Vacuum - Return to dock if got stuck"
+- alias: "Dock Vacuum if got stuck"
   id: c70477c9-66c0-43db-9036-570aa6bfcb09
   trigger:
     platform: state

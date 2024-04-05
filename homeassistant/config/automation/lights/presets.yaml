@@ -1,6 +1,6 @@
 ---
 
-- alias: "Light - Set scene"
+- alias: "Set Light scene"
   id: 8db9bb26-06a4-4315-a70b-72acfb0a5171
   trigger:
     platform: state

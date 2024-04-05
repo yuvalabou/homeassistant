@@ -1,6 +1,6 @@
 ---
 
-- alias: "Vacuum - Set to 'cleaned today'"
+- alias: "Set Vacuum as cleaned today"
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
     - platform: state
@@ -28,7 +28,7 @@
           data:
             entity_id: input_boolean.cleaned_today
 
-- alias: "Vacuum - Intelligent mode switch"
+- alias: "Vacuum mode switch"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
     - platform: state
@@ -65,7 +65,7 @@
           target:
             entity_id: vacuum.roborock_s7
 
-- alias: "Vacuum - Set Vacuum Fan Speed"
+- alias: "Set Vacuum Fan Speed"
   id: 6c1cb638-04fb-43c3-bf7a-a062c6289122
   trigger:
     - platform: state

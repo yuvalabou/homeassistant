@@ -1,6 +1,6 @@
 ---
 
-- alias: "Lights - Shabbat and Chag light notification"
+- alias: "Shabbat and Chag light notification"
   id: 66aff0fc-7022-4577-9d72-2f35104ca746
   trigger:
     - platform: state
@@ -28,7 +28,7 @@
         service: scene.turn_on
         entity_id: scene.shabbat_eve
 
-- alias: "Lights - Shabbat and Chag lighting schedule"
+- alias: "Shabbat and Chag lighting schedule"
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
     - id: 'off'

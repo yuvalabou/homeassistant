@@ -1,6 +1,6 @@
 ---
 
-- alias: "Notify - Vacuum Error"
+- alias: "Vacuum Error notification"
   id: f67ed229-d741-4469-9458-bbffc4561c29
   trigger:
     - platform: state

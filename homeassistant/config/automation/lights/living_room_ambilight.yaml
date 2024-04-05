@@ -1,6 +1,6 @@
 ---
 
-- alias: "Lights - Turn off ambilight"
+- alias: "Turn off ceiling ambilight"
   id: c008e73d-a014-4fa2-9097-4b14b65866d5
   trigger:
     platform: state

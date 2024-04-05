@@ -1,6 +1,6 @@
 ---
 
-- alias: "Notify - Arrived at zone"
+- alias: "Arrived at zone notification"
   id: 050ed8f0-0d39-46f9-9b9d-90a55820f5be
   trigger:
     - platform: zone

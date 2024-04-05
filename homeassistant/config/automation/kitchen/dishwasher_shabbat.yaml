@@ -1,6 +1,6 @@
 ---
 
-- alias: "Dishwasher - Start at shabbat afternoon"
+- alias: "Start Dishwasher at shabbat afternoon"
   id: 3dcfc7f1-ee04-403f-b6a2-0ed67af48336
   trigger:
     platform: time

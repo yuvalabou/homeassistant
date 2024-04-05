@@ -1,6 +1,6 @@
 ---
 
-- alias: "Notify - Home Assistant Startup"
+- alias: "Home Assistant Startup notification"
   id: c1dca5f3-6594-4c78-9681-8e50a1648c30
   trigger:
     platform: homeassistant
@@ -11,7 +11,7 @@
       title: "Home Assistant Startup"
       message: "Home Assistant has started at {{ now().strftime('%m/%d/%Y %H:%M:%S') }}."
 
-- alias: "Notify - Home Assistant update available"
+- alias: "Home Assistant update available notification"
   id: 52cbbc12-add7-4634-bd64-14888a23f357
   description: "Send a notification when there's an update availiable for Home Assistant"
   trigger:

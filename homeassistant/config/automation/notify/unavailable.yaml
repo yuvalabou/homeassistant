@@ -1,6 +1,6 @@
 ---
 
-- alias: 'Notify - Unavailable devices'
+- alias: 'Unavailable devices notification'
   id: 58a57846-29da-4bb1-b40e-4926049b6f1c
   mode: restart
   trigger:

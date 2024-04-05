@@ -1,6 +1,6 @@
 ---
 
-- alias: "Notify - Appliance Complete"
+- alias: "Appliance Complete notification"
   id: f927b3f5-aaea-4d42-b724-ad3b08180512
   trigger:
     - platform: state
