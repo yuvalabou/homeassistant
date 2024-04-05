@@ -84,3 +84,4 @@ logger:
     homeassistant.components.cast: error
     pychromecast.socket_client: error
 system_log:
+  fire_event: true

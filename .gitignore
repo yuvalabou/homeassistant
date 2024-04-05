@@ -21,7 +21,6 @@ zigbee2mqtt/*.json
 mosquitto/data
 mosquitto/log
 zigbee2mqtt/log
-mongo/
 unifi/
 frigate/storage
 frigate/config.yaml
