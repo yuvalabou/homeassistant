@@ -29,6 +29,6 @@
             service: notify.family
             data:
               title: "Vacuum Error"
-              message: "General error"
+              message: "{{ states('sensor.roborock_s7_vacuum_error') }}"
               data:
                 image: 'https://pleated-jeans.com/wp-content/uploads/2020/11/roomba-fails-4.jpg'

@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Toggle sheet heaters"
+- alias: "Toggle sheet heaters"
   description: >-
     "This automation turns on the sheet heaters at 6:30 PM if someone is home,
     and turns them off later that night."

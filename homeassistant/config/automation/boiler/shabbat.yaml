@@ -1,6 +1,6 @@
 ---
 
-- alias: "Boiler - Turn-on for Shabbat end"
+- alias: "Turn-on for Shabbat end"
   id: fb851b88-eac1-47a0-ade9-9aeab311a0b8
   trigger:
     platform: time

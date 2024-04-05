@@ -1,6 +1,6 @@
 ---
 
-- alias: "System - Set Logger Level"
+- alias: "Set Logger Level"
   id: c22df91c-cb12-4015-8de3-1d7a54b7b02b
   trigger:
     platform: state

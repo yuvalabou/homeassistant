@@ -1,6 +1,6 @@
 ---
 
-- alias: "Cover - Scheduled cover"
+- alias: "Scheduled cover"
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   trigger:
     - id: 'open'
@@ -31,7 +31,7 @@
           data:
             entity_id: cover.living_room_shutter
 
-- alias: "Cover - Shabbat scheduled cover"
+- alias: "Shabbat scheduled cover"
   id: 67d159ff-76fd-4ea6-9134-8e2237032966
   trigger:
     - id: 'close'

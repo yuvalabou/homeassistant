@@ -1,6 +1,6 @@
 ---
 
-- alias: "Energy - Change Tariff"
+- alias: "Change Energy Tariff"
   id: 4e8dff21-c8d7-4a9f-b0bb-804dc4e886fd
   trigger:
     platform: time

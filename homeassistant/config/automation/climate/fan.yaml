@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Shabbat fan"
+- alias: "Shabbat fan"
   id: 0ea02e72-2e51-46ed-8643-24ecf7eff2fe
   trigger:
     - platform: time
@@ -34,7 +34,7 @@
           data:
             entity_id: fan.ceiling_fans
 
-- alias: "Climate - Kids night fan"
+- alias: "Kids night fan"
   id: 15136e60-264f-43f2-974f-641b5ce2cf45
   trigger:
     - platform: time

@@ -1,6 +1,6 @@
 ---
 
-- alias: "Guest - Disable guest mode"
+- alias: "Disable guest mode"
   id: 9e82409c-df7b-43fd-ad61-aa993570d5c8
   trigger:
     platform: zone

@@ -1,6 +1,6 @@
 ---
 
-- alias: "Announce - Batteries full"
+- alias: "Batteries full"
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
   trigger:
     - platform: template

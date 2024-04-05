@@ -1,6 +1,6 @@
 ---
 
-- alias: "System - Count Home Assistant errors"
+- alias: "Count Home Assistant log entries"
   id: e4653437-0a17-41d2-b14d-eaa1399cf890
   trigger:
     - platform: event
