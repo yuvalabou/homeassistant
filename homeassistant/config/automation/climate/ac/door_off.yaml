@@ -1,6 +1,6 @@
 ---
 
-- alias: "Climate - Turn-off when door is open"
+- alias: "Turn-off AC when door is open"
   id: 3e15ca2c-43bc-469e-958a-ce74bfb07502
   trigger:
     platform: state

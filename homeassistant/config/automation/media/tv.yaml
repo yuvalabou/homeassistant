@@ -1,6 +1,6 @@
 ---
 
-- alias: "Shabbat - Turn off TV"
+- alias: "Turn off TV on Shabbat enter"
   id: f8de4acc-431b-4ee0-9c9f-35d1f01cd84c
   trigger:
     platform: state
