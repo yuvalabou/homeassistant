@@ -1,0 +1,14 @@
+---
+
+substitutions:
+  devicename: shed-multisensor
+  upper_devicename: "Shed"
+  template_id: shed
+
+<<: !include .base.yaml
+<<: !include .multisensor_base.yaml
+
+esphome:
+  name: $devicename
+  platform: ESP8266
+  board: nodemcuv2
