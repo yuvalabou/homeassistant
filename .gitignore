@@ -21,9 +21,7 @@ zigbee2mqtt/*.json
 mosquitto/data
 mosquitto/log
 zigbee2mqtt/log
-unifi/
-frigate/storage
-frigate/config.yaml
+unifi-controller/
 __pycache__
 
 # Ignore files

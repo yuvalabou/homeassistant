@@ -51,17 +51,59 @@ services:
     devices:
       - /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0:/dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 
-  unifi-controller:
-     image: lscr.io/linuxserver/unifi-controller:latest
-     container_name: "unifi-controller"
-     environment:
-       - PUID=1000
-       - PGID=1000
-     volumes:
-       - ./unifi/:/config
-     ports:
-       - 8443:8443
-       - 3478:3478/udp
-       - 10001:10001/udp
-       - 8080:8080
-     restart: unless-stopped
+  unifi-db:
+    image: docker.io/mongo:4.4
+    container_name: unifi-db
+    volumes:
+      - ./unifi-controller/mongodb/dbcfg:/data/configdb
+      - ./unifi-controller/mongodb/:/data/db
+      - ./unifi-controller/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    command:
+      mongod --port 27017
+    restart: unless-stopped
+
+  unifi-network-application:
+    image: lscr.io/linuxserver/unifi-network-application:latest
+    container_name: unifi-network-application
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MONGO_USER=unifi
+      - MONGO_PASS=unifipwd
+      - MONGO_HOST=unifi-db
+      - MONGO_PORT=27017
+      - MONGO_DBNAME=unifi
+      - MEM_LIMI=1024
+      - MEM_STARTUP=1024
+    volumes:
+      - ./unifi-controller/:/config
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+    restart: unless-stopped
+
+  # frigate:
+  #   container_name: frigate
+  #   privileged: true
+  #   restart: unless-stopped
+  #   image: ghcr.io/blakeblackshear/frigate:stable
+  #   shm_size: "64mb"
+  #   devices:
+  #     - /dev/dri/renderD128 # for intel hwaccel, needs to be updated for your hardware
+  #   volumes:
+  #     - /etc/localtime:/etc/localtime:ro
+  #     - ./frigate/config.yaml:/config/config.yaml:ro
+  #     - ./frigate/storage:/media/frigate
+  #     - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+  #       target: /tmp/cache
+  #       tmpfs:
+  #         size: 1000000000
+  #   ports:
+  #     - "5000:5000"
+  #     - "8554:8554" # RTSP feeds
+  #     - "8555:8555/tcp" # WebRTC over tcp
+  #     - "8555:8555/udp" # WebRTC over udp
+  #   environment:
+  #     FRIGATE_RTSP_PASSWORD: "password"
