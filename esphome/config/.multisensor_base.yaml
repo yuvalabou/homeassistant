@@ -44,7 +44,11 @@ sensor:
     unit_of_measurement: "%"
     state_class: measurement
     lambda: |-
-      return ((log10(id(${template_id}_illuminance).state) / 5) * 100);
+      if ((id(${template_id}_illuminance).state) > 0.1) {
+        return ((log10(id(${template_id}_illuminance).state) / 5) * 100);
+      } else {
+        return 0;
+      }
 
 button:
   - platform: restart
