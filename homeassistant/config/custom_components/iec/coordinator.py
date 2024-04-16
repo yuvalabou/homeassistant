@@ -97,7 +97,8 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
 
     async def _get_readings(self, contract_id: int, device_id: str | int, device_code: str | int, date: datetime,
                             resolution: ReadingResolution):
-        key = (contract_id, int(device_id), int(device_code), date, resolution)
+        date_key = date.date()
+        key = (contract_id, int(device_id), int(device_code), date_key, resolution)
         reading = self._readings.get(key)
         if not reading:
             try:
@@ -127,6 +128,9 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                 hourly_readings = await self._get_readings(contract_id, device.device_number, device.device_code,
                                                            desired_date,
                                                            ReadingResolution.DAILY)
+            else:
+                _LOGGER.debug(
+                    f'Daily reading for date: {desired_date.strftime("%Y-%m-%d")} - using existing prefetched readings')
 
             daily_sum = 0
             if hourly_readings is None or hourly_readings.data is None:
@@ -187,7 +191,7 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
         for contract_id in self._contract_ids:
             # Because IEC API provides historical usage/cost with a delay of a couple of days
             # we need to insert data into statistics.
-            await self._insert_statistics(contract_id, contracts.get(contract_id).smart_meter)
+            self.hass.async_create_task(self._insert_statistics(contract_id, contracts.get(contract_id).smart_meter))
 
             try:
                 billing_invoices = await self.api.get_billing_invoices(self._bp_number, contract_id)
@@ -231,7 +235,7 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                         daily_readings[device.device_number] = remote_reading.data
 
                     weekly_future_consumption = None
-                    if datetime.today().day == 1:
+                    if TIMEZONE.localize(datetime.today()).day == 1:
                         # if today's the 1st of the month, "yesterday" is on a different month
                         yesterday: datetime = monthly_report_req_date - timedelta(days=1)
                         remote_reading = await self._get_readings(contract_id, device.device_number, device.device_code,
@@ -249,19 +253,20 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                             daily_readings[device.device_number].sort(key=lambda x: x.date)
 
                     await self._verify_daily_readings_exist(daily_readings[device.device_number],
-                                                            datetime.today() - timedelta(days=1), device, contract_id)
+                                                            TIMEZONE.localize(datetime.today()) - timedelta(days=1),
+                                                            device, contract_id)
 
                     today_reading_key = str(contract_id) + "-" + device.device_number
                     today_reading = self._today_readings.get(today_reading_key)
 
                     if not today_reading:
                         today_reading = await self._get_readings(contract_id, device.device_number, device.device_code,
-                                                                 datetime.today(),
+                                                                 TIMEZONE.localize(datetime.today()),
                                                                  ReadingResolution.DAILY)
                         self._today_readings[today_reading_key] = today_reading
 
                     await self._verify_daily_readings_exist(daily_readings[device.device_number],
-                                                            datetime.today(), device, contract_id, today_reading)
+                                                            TIMEZONE.localize(datetime.today()), device, contract_id, today_reading)
 
                     # fallbacks for future consumption since IEC api is broken :/
                     if not future_consumption[device.device_number].future_consumption:
@@ -273,7 +278,7 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                             future_consumption[device.device_number] = (
                                 self._today_readings.get(today_reading_key).future_consumption_info)
                         else:
-                            req_date = datetime.today() - timedelta(days=2)
+                            req_date = TIMEZONE.localize(datetime.today()) - timedelta(days=2)
                             two_days_ago_reading = await self._get_readings(contract_id, device.device_number,
                                                                             device.device_code,
                                                                             req_date,
@@ -310,6 +315,10 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
         devices = await self._get_devices_by_contract_id(contract_id)
         kwh_price = await self._get_kwh_tariff()
 
+        if not devices:
+            _LOGGER.error(f"Failed fetching devices for IEC Contract {contract_id}")
+            return
+
         for device in devices:
             id_prefix = f"iec_meter_{device.device_number}"
             consumption_statistic_id = f"{DOMAIN}:{id_prefix}_energy_consumption"
@@ -338,7 +347,7 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                 if from_date.hour == 23:
                     from_date = from_date + timedelta(hours=2)
 
-                today = datetime.today()
+                today = TIMEZONE.localize(datetime.today())
                 if today.date() == from_date.date():
                     _LOGGER.debug("The date to fetch is today or later, replacing it with Today at 01:00:00")
                     from_date = TIMEZONE.localize(today.replace(hour=1, minute=0, second=0, microsecond=0))
@@ -354,10 +363,14 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                 _LOGGER.debug("No recent usage data. Skipping update")
                 continue
 
+            last_stat_hour = datetime.fromtimestamp(last_stat_time) if last_stat_time else readings.data[0].date
+            last_stat_req_hour = last_stat_hour if last_stat_hour.hour > 0 else (last_stat_hour - timedelta(hours=1))
+
+            _LOGGER.debug(f"Fetching LongTerm Statistics since {last_stat_req_hour}")
             stats = await get_instance(self.hass).async_add_executor_job(
                 statistics_during_period,
                 self.hass,
-                readings.data[0].date - timedelta(hours=1),
+                last_stat_req_hour,
                 None,
                 {cost_statistic_id, consumption_statistic_id},
                 "hour",
@@ -380,8 +393,8 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
             else:
                 cost_sum = cast(float, stats[cost_statistic_id][0]["sum"])
 
-            _LOGGER.debug(f"Last Consumption Sum for {contract_id}: {consumption_sum}")
-            _LOGGER.debug(f"Last Estimated Cost Sum for {contract_id}: {cost_sum}")
+            _LOGGER.debug(f"Last Consumption Sum for C[{contract_id}] D[{device.device_number}]: {consumption_sum}")
+            _LOGGER.debug(f"Last Estimated Cost Sum for C[{contract_id}] D[{device.device_number}]: {cost_sum}")
 
             new_readings: list[RemoteReading] = filter(lambda reading:
                                                        reading.date >= TIMEZONE.localize(
@@ -391,8 +404,16 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
             grouped_new_readings_by_hour = itertools.groupby(new_readings,
                                                              key=lambda reading: reading.date
                                                              .replace(minute=0, second=0, microsecond=0))
-            readings_by_hour: dict[datetime, float] = {key: sum(reading.value for reading in list(group))
-                                                       for key, group in grouped_new_readings_by_hour}
+            readings_by_hour: dict[datetime, float] = {}
+            for key, group in grouped_new_readings_by_hour:
+                group_list = list(group)
+                if len(group_list) < 4:
+                    _LOGGER.debug(f"LongTerm Statistics - Skipping {key} since it's partial for the hour")
+                    continue
+                if key <= TIMEZONE.localize(last_stat_req_hour):
+                    _LOGGER.debug(f"LongTerm Statistics -Skipping {key} data since it's already reported")
+                    continue
+                readings_by_hour[key] = sum(reading.value for reading in group_list)
 
             consumption_metadata = StatisticMetaData(
                 has_mean=False,
@@ -435,9 +456,10 @@ class IecApiCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
                 )
 
             if readings_by_hour:
-                _LOGGER.debug(f"Last hour fetched for {contract_id}: {max(readings_by_hour, key=lambda k: k)}")
-                _LOGGER.debug(f"New Consumption Sum for {contract_id}: {consumption_sum}")
-                _LOGGER.debug(f"New Estimated Cost Sum for {contract_id}: {cost_sum}")
+                _LOGGER.debug(f"Last hour fetched for C[{contract_id}] D[{device.device_number}]: "
+                              f"{max(readings_by_hour, key=lambda k: k)}")
+                _LOGGER.debug(f"New Consumption Sum for C[{contract_id}] D[{device.device_number}]: {consumption_sum}")
+                _LOGGER.debug(f"New Estimated Cost Sum for C[{contract_id}] D[{device.device_number}]: {cost_sum}")
 
             async_add_external_statistics(
                 self.hass, consumption_metadata, consumption_statistics
