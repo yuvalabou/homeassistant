@@ -12,5 +12,5 @@
     "haversine==2.8.0",
     "shapely==2.0.2"
   ],
-  "version": "v2.10.0"
+  "version": "v2.11.0"
 }
