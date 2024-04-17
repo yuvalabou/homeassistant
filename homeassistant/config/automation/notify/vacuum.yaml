@@ -10,6 +10,7 @@
     - platform: state
       entity_id: sensor.roborock_s7_vacuum_error
       id: 'error'
+  condition: "{{ not is_state('sensor.roborock_s7_vacuum_error', 'none') }}"
   action:
     - choose:
         - conditions:
