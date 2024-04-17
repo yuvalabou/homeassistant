@@ -7,7 +7,7 @@
       {{
         'Colder outside'
         if
-        states('sensor.outdoor_h_t_temperature') < states('sensor.living_room_h_t_temperature')
+        states('sensor.openweathermap_feels_like_temperature') < states('sensor.living_room_h_t_temperature')
         else
         'Warmer outside'
       }}
@@ -15,7 +15,7 @@
       {{
         'mdi:thermometer-chevron-up'
         if
-        states('sensor.outdoor_h_t_temperature') < states('sensor.living_room_h_t_temperature')
+        states('sensor.openweathermap_feels_like_temperature') < states('sensor.living_room_h_t_temperature')
         else
         'mdi:thermometer-chevron-down'
       }}
@@ -23,7 +23,7 @@
       temperature_difference: >-
         {{
           (
-            states('sensor.outdoor_h_t_temperature') | float(default=0.0)
+            states('sensor.openweathermap_feels_like_temperature') | float(default=0.0)
             -
             states('sensor.living_room_h_t_temperature') | float(default=0.0)
           ) | round(2)
