@@ -15,3 +15,14 @@
     data:
       entity_id: scene.morning
       transition: 300
+
+- alias: "Turn off ceiling ambilight"
+  id: c008e73d-a014-4fa2-9097-4b14b65866d5
+  trigger:
+    platform: state
+    entity_id: light.yeelight_ceilb_0x179e0932
+    to: 'on'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: light.yeelight_ceilb_0x179e0932_ambilight
