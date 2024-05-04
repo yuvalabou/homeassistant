@@ -10,6 +10,11 @@
       id: "yuval"
     - platform: zone
       entity_id: person.yuval
+      zone: zone.front
+      event: enter
+      id: "yuval"
+    - platform: zone
+      entity_id: person.yuval
       zone: zone.home
       event: enter
       id: "yuval_home"
@@ -37,6 +42,14 @@
           service: notify.mobile_app_tohar
           data:
             title: "יובל הגיע בשלום לעבודה"
+            message: "Arrived at {{ states('person.yuval') }}"
+      - conditions:
+          condition: trigger
+          id: 'yuval'
+        sequence:
+          service: notify.mobile_app_tohar
+          data:
+            title: "יובל הגיע בשלום לבסיס"
             message: "Arrived at {{ states('person.yuval') }}"
       - conditions:
         - condition: trigger

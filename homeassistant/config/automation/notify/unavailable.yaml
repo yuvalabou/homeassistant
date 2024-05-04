@@ -11,6 +11,7 @@
         - switch.boiler
         - switch.shabbat_plate
         - switch.washing_machine
+        - switch.athom_smart_plug_v2_9cd951_smart_plug_v2
         - fan.kids_bedroom_fan
         - fan.master_bedroom_fan
         - media_player.tv

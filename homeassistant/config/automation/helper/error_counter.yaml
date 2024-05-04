@@ -30,3 +30,14 @@
   mode: queued
   max: 20
   max_exceeded: silent
+
+- alias: "Reset Home Assistant log entries"
+  id: e5cb265d-697d-4a35-8415-5f6aa1253558
+  trigger:
+    platform: homeassistant
+    event: start
+  action:
+    service: counter.reset
+    entity_id:
+      - counter.home_assistant_errors
+      - counter.home_assistant_warning
