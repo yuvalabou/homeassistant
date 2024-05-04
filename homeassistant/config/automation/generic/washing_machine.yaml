@@ -4,17 +4,17 @@
   id: 860cd025-6d01-4ade-b19f-6e65b0cef62e
   trigger:
     - platform: numeric_state
-      entity_id: sensor.washing_machine_energy_current
+      entity_id: sensor.washing_machine_dd774f_current
       below: 1
       for:
         minutes: 20
       id: 'off'
     - platform: numeric_state
-      entity_id: sensor.washing_machine_energy_current
+      entity_id: sensor.washing_machine_dd774f_current
       above: 3
       id: 'running'
     - platform: numeric_state
-      entity_id: sensor.washing_machine_energy_current
+      entity_id: sensor.washing_machine_dd774f_current
       below: 1
       for:
         minutes: 10
