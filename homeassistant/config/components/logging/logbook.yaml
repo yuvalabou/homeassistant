@@ -6,6 +6,7 @@ exclude:
     - binary_sensor.night
     - sensor.watchman_last_updated
     - remote.tv
+    - automation.count_home_assistant_log_entries
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*
