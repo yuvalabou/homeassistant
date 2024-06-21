@@ -5,7 +5,7 @@
   trigger:
     - platform: time
       at:
-        - input_datetime.shabbat_lights_off_time
+        - '21:00:00'
         - '12:30:00'
       id: 'on'
     - platform: time
