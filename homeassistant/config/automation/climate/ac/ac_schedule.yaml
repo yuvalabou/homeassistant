@@ -59,11 +59,45 @@
           data:
             entity_id: climate.living_room
 
+- alias: "Shabbat Night climate automation toggle"
+  id: 6fc9b9d3-7069-4a0f-90ae-b2bc9b1ee805
+  trigger:
+    - id: 'on'
+      platform: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      to: 'on'
+    - id: 'off'
+      platform: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      to: 'off'
+  action:
+    service: automation.turn_on
+    data:
+      entity_id: automation.climate_shabbat_night_climate
+  action:
+    choose:
+      - conditions:
+          - condition: trigger
+            id: 'on'
+          - "{{ is_state('group.person', 'home') }}"
+          - "{{ is_state('input_boolean.night_ac_is_needed', 'on') }}"
+        sequence:
+          service: automation.turn_on
+          data:
+            entity_id: automation.climate_shabbat_night_climate
+      - conditions:
+          - condition: trigger
+            id: 'off'
+        sequence:
+          service: automation.turn_off
+          data:
+            entity_id: automation.climate_shabbat_night_climate
+
 - alias: "Shabbat Night climate alteration"
   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2
   trigger:
     platform: time_pattern
-    minutes: 30
+    minutes: 45
   condition:
     - condition: time
       after: '01:00:00'
