@@ -12,4 +12,17 @@
   action:
     service: notify.nest_mini
     data:
-      message: "יובל יצא מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות"
+      message: >-
+        {{
+          [
+            "יובל בדרכו הביתה מהעבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל סיים את יום העבודה, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל יוצא מהמשרד, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל יצא מהמשרד, הוא צפוי להגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל עזב את העבודה והוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל בדרך הביתה, זמן ההגעה המשוער הוא כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל סיים לעבוד ויגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל בדרכו הביתה מהמשרד, הוא יגיע בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות",
+            "יובל עזב את מקום העבודה, והוא יגיע הביתה בעוד כ {{ states('sensor.yuval_work_to_home') }} דקות"
+          ] | random
+        }}
