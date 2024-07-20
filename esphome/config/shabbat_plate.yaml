@@ -37,6 +37,7 @@ preferences:
 
 api:
 ota:
+  platform: esphome
 
 logger:
   baud_rate: 0
@@ -163,15 +164,6 @@ sensor:
     lambda: |-
       return id(total_energy);
     update_interval: never
-
-  # - platform: total_daily_energy
-  #   name: "Total Daily Energy"
-  #   restore: true
-  #   power_id: power_sensor
-  #   unit_of_measurement: kWh
-  #   accuracy_decimals: 3
-  #   filters:
-  #     - multiply: 0.001
 
 button:
   - platform: restart
