@@ -71,11 +71,10 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   action:
-    service: automation.turn_on
-    data:
-      entity_id: automation.climate_shabbat_night_climate
-  action:
-    choose:
+    - service: automation.turn_on
+      data:
+        entity_id: automation.climate_shabbat_night_climate
+    - choose:
       - conditions:
           - condition: trigger
             id: 'on'
