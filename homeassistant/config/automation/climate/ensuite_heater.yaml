@@ -11,7 +11,7 @@
       entity_id: sensor.ensuite_temperature
       above: 28
   action:
-    service: switch.turn_off
+    action: switch.turn_off
     data:
       entity_id: switch.ensuite_heater
 
@@ -27,6 +27,6 @@
       entity_id: sensor.ensuite_temperature
       below: 18
   action:
-    service: switch.turn_on
+    action: switch.turn_on
     data:
       entity_id: switch.ensuite_heater

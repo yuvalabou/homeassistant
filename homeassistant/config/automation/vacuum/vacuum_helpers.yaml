@@ -17,14 +17,14 @@
           condition: trigger
           id: 'set'
         sequence:
-          service: input_boolean.turn_on
+          action: input_boolean.turn_on
           data:
             entity_id: input_boolean.cleaned_today
       - conditions:
           condition: trigger
           id: 'reset'
         sequence:
-          service: input_boolean.turn_off
+          action: input_boolean.turn_off
           data:
             entity_id: input_boolean.cleaned_today
 
@@ -50,7 +50,7 @@
             id: 'turbo'
           - "{{ is_state('input_boolean.guest_mode', 'off') }}"
         sequence:
-          service: vacuum.set_fan_speed
+          action: vacuum.set_fan_speed
           data:
             fan_speed: "turbo"
           target:
@@ -59,7 +59,7 @@
         - condition: trigger
           id: 'quiet'
         sequence:
-          service: vacuum.set_fan_speed
+          action: vacuum.set_fan_speed
           data:
             fan_speed: "quiet"
           target:
@@ -71,7 +71,7 @@
     - platform: state
       entity_id: input_select.vacuum_fan_speed_list
   action:
-    service: >
+    action: >
       {% if is_state("input_select.vacuum_fan_speed_list", "off") %}
         vacuum.set_fan_speed
       {% elif is_state("input_select.vacuum_fan_speed_list", "quiet") %}

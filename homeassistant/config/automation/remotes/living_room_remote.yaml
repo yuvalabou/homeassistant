@@ -14,12 +14,12 @@
       - conditions:
         - "{{ is_state('light.yeelight_ceilb_0x179e0932', 'off') }}"
         sequence:
-          service: light.turn_on
+          action: light.turn_on
           data:
             entity_id: light.yeelight_ceilb_0x179e0932
       - conditions:
         - "{{ is_state('light.kitchen_ceiling_light', 'off') }}"
         sequence:
-          service: light.turn_on
+          action: light.turn_on
           data:
             entity_id: light.kitchen_ceiling_light

@@ -19,14 +19,14 @@
         - condition: trigger
           id: 'on_battery'
         sequence:
-          - service: notify.family
+          - action: notify.family
             data:
               message: "EMERGENCY POWER ONLY"
       - conditions:
         - condition: trigger
           id: 'online'
         sequence:
-          - service: notify.family
+          - action: notify.family
             data:
               message: "POWER RESTORED, ALL SYSTEMS ONLINE"
 
@@ -37,6 +37,6 @@
       entity_id: sensor.ups_battery_charge
       below: 20
   action:
-    service: notify.nest_mini
+    action: notify.nest_mini
     data:
       message: "סוללה נמוכה, כבה צרכנים מיותרים"

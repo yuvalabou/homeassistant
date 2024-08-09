@@ -10,8 +10,8 @@
     - "{{ is_state('group.person', 'home') }}"
     - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', 'yom_kippur') }}"
   action:
-    - service: switch.turn_on
+    - action: switch.turn_on
       entity_id: switch.400090386855001425_bsh_common_setting_powerstate
     - delay: 2
-    - service: button.press
+    - action: button.press
       entity_id: button.400090386855001425_start_pause

@@ -10,7 +10,7 @@
     event: leave
   condition: "{{ is_state('person.tohar', 'home') }}"
   action:
-    service: notify.nest_mini
+    action: notify.nest_mini
     data:
       message: >-
         {{

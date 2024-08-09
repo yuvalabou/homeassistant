@@ -9,6 +9,6 @@
     - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
   action:
-    service: light.turn_on
+    action: light.turn_on
     data:
       entity_id: light.master_bedroom_light

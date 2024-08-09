@@ -12,12 +12,12 @@
       to: 'off'
   condition: "{{ is_state('group.person', 'home') }}"
   action:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: light.wall_lights
         effect: Random Loop
     - delay: '00:00:03'
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: light.wall_lights
         effect: Stop
@@ -25,7 +25,7 @@
         condition: trigger
         id: 'shabbat_enter'
       then:
-        service: scene.turn_on
+        action: scene.turn_on
         entity_id: scene.shabbat_eve
 
 - alias: "Shabbat and Chag lighting schedule"
@@ -44,7 +44,7 @@
           - condition: trigger
             id: 'off'
         sequence:
-          service: light.turn_off
+          action: light.turn_off
           data:
             entity_id: light.public_lights
       - conditions:
@@ -52,5 +52,5 @@
             id: 'morning'
           - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: scene.turn_on
+          action: scene.turn_on
           entity_id: scene.shabbat_day

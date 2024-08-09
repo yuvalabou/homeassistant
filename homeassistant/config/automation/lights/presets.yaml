@@ -6,7 +6,7 @@
     platform: state
     entity_id: input_select.light_presets
   action:
-    service: scene.turn_on
+    action: scene.turn_on
     data:
       entity_id: >-
         {% if trigger.to_state.state == 'Romance' %}

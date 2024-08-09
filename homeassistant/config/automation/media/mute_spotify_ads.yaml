@@ -8,7 +8,7 @@
     attribute: media_title
     to: 'Advertisement'
   action:
-    - service: media_player.volume_mute
+    - action: media_player.volume_mute
       entity_id: media_player.living_room
       data:
         is_volume_muted: 'true'
@@ -17,7 +17,7 @@
         entity_id: media_player.living_room
         attribute: media_title
         from: 'Advertisement'
-    - service: media_player.volume_mute
+    - action: media_player.volume_mute
       entity_id: media_player.living_room
       data:
         is_volume_muted: 'false'

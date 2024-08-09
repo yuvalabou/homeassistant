@@ -11,7 +11,7 @@
     - "{{ is_state('group.person', 'home') }}"
     - "{{ not is_state('light.wall_lights', 'on') }}"
   action:
-    service: scene.turn_on
+    action: scene.turn_on
     data:
       entity_id: scene.morning
       transition: 300
@@ -23,6 +23,6 @@
     entity_id: light.yeelight_ceilb_0x179e0932
     to: 'on'
   action:
-    service: light.turn_off
+    action: light.turn_off
     data:
       entity_id: light.yeelight_ceilb_0x179e0932_ambilight

@@ -17,10 +17,10 @@
         - condition: trigger
           id: 'overheating'
         sequence:
-          - service: input_boolean.turn_on
+          - action: input_boolean.turn_on
             data:
               entity_id: input_boolean.boiler_overheated
-          - service: notify.mobile_app_yuval
+          - action: notify.mobile_app_yuval
             data:
               title: "Boiler Overheated"
               message: >-
@@ -30,6 +30,6 @@
         - condition: trigger
           id: 'state_changed'
         sequence:
-          service: input_boolean.turn_off
+          action: input_boolean.turn_off
           data:
             entity_id: input_boolean.boiler_overheated

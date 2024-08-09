@@ -7,7 +7,7 @@
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'on'
   action:
-    service: remote.turn_off
+    action: remote.turn_off
     data:
       entity_id: remote.tv
 
@@ -21,6 +21,6 @@
       seconds: 20
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: remote.turn_off
+    action: remote.turn_off
     data:
       entity_id: remote.tv

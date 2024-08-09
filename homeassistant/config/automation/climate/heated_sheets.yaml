@@ -19,13 +19,13 @@
           id: 'on'
         - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: switch.turn_on
+          action: switch.turn_on
           data:
             entity_id: switch.kids_socket
       - conditions:
         - condition: trigger
           id: 'off'
         sequence:
-          service: switch.turn_off
+          action: switch.turn_off
           data:
             entity_id: switch.kids_socket

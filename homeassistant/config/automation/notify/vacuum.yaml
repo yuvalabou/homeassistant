@@ -17,7 +17,7 @@
             condition: trigger
             id: 'water_shortage'
           sequence:
-            service: notify.family
+            action: notify.family
             data:
               title: "Vacuum Error"
               message: "Vacuum water shortage"
@@ -27,7 +27,7 @@
             condition: trigger
             id: 'error'
           sequence:
-            service: notify.family
+            action: notify.family
             data:
               title: "Vacuum Error"
               message: "{{ states('sensor.roborock_s7_vacuum_error') }}"

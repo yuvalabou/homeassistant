@@ -10,7 +10,7 @@
     zone: zone.home
     event: enter
   action:
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id: light.yeelight_ceilb_0x179e0932_ambilight
         effect: Stop
@@ -19,14 +19,14 @@
         condition: template
         value_template: "{{ is_state('cover.living_room_shutter', 'closed') }}"
       then:
-        service: cover.open_cover
+        action: cover.open_cover
         data:
           entity_id: cover.living_room_shutter
     - if:
         condition: template
         value_template: "{{ is_state('binary_sensor.day', 'on') }}"
       then:
-        service: light.turn_on
+        action: light.turn_on
         data:
           entity_id:
             - light.yeelight_ceilb_0x179e0932
@@ -36,6 +36,6 @@
         condition: template
         value_template: "{{ is_state('switch.vent', 'on') }}"
       then:
-        service: switch.turn_off
+        action: switch.turn_off
         data:
           entity_id: switch.vent

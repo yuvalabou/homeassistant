@@ -24,7 +24,7 @@
           id: 'yuval'
         - "{{ is_state('person.yuval', 'home') }}"
         sequence:
-          service: notify.nest_mini
+          action: notify.nest_mini
           data:
             message: "הסוללה של יובל טעונה במלואה"
       - conditions:
@@ -32,7 +32,7 @@
           id: 'tohar'
         - "{{ is_state('person.tohar', 'home') }}"
         sequence:
-          service: notify.nest_mini
+          action: notify.nest_mini
           data:
             message: "הסוללה של טוהר טעונה במלואה"
       - conditions:
@@ -40,6 +40,6 @@
           id: 'tablet'
         - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: notify.nest_mini
+          action: notify.nest_mini
           data:
             message: "הסוללה בטאבלט טעונה במלואה"

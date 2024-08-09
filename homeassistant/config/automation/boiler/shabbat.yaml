@@ -9,6 +9,6 @@
     - "{{ is_state('group.person', 'home')}}"
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
-    service: switch.turn_on
+    action: switch.turn_on
     data:
       entity_id: switch.boiler

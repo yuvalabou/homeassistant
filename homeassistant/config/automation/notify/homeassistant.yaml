@@ -6,7 +6,7 @@
     platform: homeassistant
     event: start
   action:
-    service: persistent_notification.create
+    action: persistent_notification.create
     data_template:
       title: "Home Assistant Startup"
       message: "Home Assistant has started at {{ now().strftime('%m/%d/%Y %H:%M:%S') }}."
@@ -19,7 +19,7 @@
     entity_id: binary_sensor.docker_hub_update_available
     to: 'on'
   action:
-    service: notify.mobile_app_yuval
+    action: notify.mobile_app_yuval
     data:
       title: "Update available"
       message: "Home Assistant {{ states('sensor.docker_hub_version') }} is available"

@@ -39,7 +39,7 @@
         - condition: trigger
           id: 'yuval'
         sequence:
-          service: notify.mobile_app_tohar
+          action: notify.mobile_app_tohar
           data:
             title: "יובל הגיע בשלום לעבודה"
             message: "Arrived at {{ states('person.yuval') }}"
@@ -47,7 +47,7 @@
           condition: trigger
           id: 'yuval'
         sequence:
-          service: notify.mobile_app_tohar
+          action: notify.mobile_app_tohar
           data:
             title: "יובל הגיע בשלום לבסיס"
             message: "Arrived at {{ states('person.yuval') }}"
@@ -55,7 +55,7 @@
         - condition: trigger
           id: 'tohar'
         sequence:
-          service: notify.mobile_app_yuval
+          action: notify.mobile_app_yuval
           data:
             title: "טוהר הגיעה בשלום לעבודה"
             message: "Arrived at {{ states('person.tohar') }}"
@@ -66,7 +66,7 @@
           entity_id: person.tohar
           state: 'not_home'
         sequence:
-          service: notify.mobile_app_tohar
+          action: notify.mobile_app_tohar
           data:
             title: "יובל הגיע הביתה בשלום"
             message: "Arrived at {{ states('person.yuval') }}"
@@ -77,7 +77,7 @@
           entity_id: person.yuval
           state: 'not_home'
         sequence:
-          service: notify.mobile_app_yuval
+          action: notify.mobile_app_yuval
           data:
             title: "טוהר הגיעה הביתה בשלום"
             message: "Arrived at {{ states('person.tohar') }}"

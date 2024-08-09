@@ -12,7 +12,7 @@
           weekday:
             - fri
         sequence:
-          - service: input_number.set_value
+          - action: input_number.set_value
             target:
               entity_id: input_number.tariff
             data:
@@ -22,7 +22,7 @@
           weekday:
             - sun
         sequence:
-          - service: input_number.set_value
+          - action: input_number.set_value
             target:
               entity_id: input_number.tariff
             data:

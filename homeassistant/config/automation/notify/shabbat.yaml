@@ -29,16 +29,16 @@
         - condition: trigger
           id: '30_min'
         sequence:
-          - service: notify.mobile_app_yuval
+          - action: notify.mobile_app_yuval
             data:
               title: "שבת שלום!"
               message:  "מיחם, נרות ומקרר"
-          - service: script.notify_for_shabbat
+          - action: script.notify_for_shabbat
       - conditions:
         - condition: trigger
           id: '10_min'
         sequence:
-          - service: notify.family
+          - action: notify.family
             data:
               title: "שבת שלום!"
               message: "שבת נכנסת בעוד 10 דקות."

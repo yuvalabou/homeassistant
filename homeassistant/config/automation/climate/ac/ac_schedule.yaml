@@ -31,7 +31,7 @@
             entity_id: sensor.living_room_h_t_temperature
             above: input_number.threshold_climate_temperature
         sequence:
-          service: script.turn_on
+          action: script.turn_on
           data:
             entity_id: script.ac_cool
       - conditions:
@@ -39,7 +39,7 @@
             id: 'off'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
         sequence:
-          service: climate.turn_off
+          action: climate.turn_off
           data:
             entity_id: climate.living_room
       - conditions:
@@ -47,7 +47,7 @@
             id: 'shabbat_morning'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
         sequence:
-          service: script.turn_on
+          action: script.turn_on
           data:
             entity_id: script.ac_cool
       - conditions:
@@ -55,7 +55,7 @@
             id: 'shabbat_night'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
         sequence:
-          service: climate.turn_off
+          action: climate.turn_off
           data:
             entity_id: climate.living_room
 
@@ -71,9 +71,6 @@
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   action:
-    - service: automation.turn_on
-      data:
-        entity_id: automation.climate_shabbat_night_climate
     - choose:
       - conditions:
           - condition: trigger
@@ -81,18 +78,18 @@
           - "{{ is_state('group.person', 'home') }}"
           - "{{ is_state('input_boolean.night_ac_is_needed', 'on') }}"
         sequence:
-          service: automation.turn_on
+          action: automation.turn_on
           data:
             entity_id: automation.climate_shabbat_night_climate
       - conditions:
           - condition: trigger
             id: 'off'
         sequence:
-          service: automation.turn_off
+          action: automation.turn_off
           data:
             entity_id: automation.climate_shabbat_night_climate
 
-- alias: "Shabbat Night climate alteration"
+- alias: "Shabbat Night Climate Alteration"
   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2
   trigger:
     platform: time_pattern
@@ -102,6 +99,7 @@
       after: '01:00:00'
       before: '07:00:00'
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    - "{{ is_state('input_boolean.night_ac_is_needed', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
   action:
     - if:
@@ -109,10 +107,10 @@
         entity_id: climate.living_room
         state: 'off'
       then:
-        service: script.turn_on
+        action: script.turn_on
         data:
           entity_id: script.ac_cool
       else:
-        service: climate.turn_off
+        action: climate.turn_off
         data:
           entity_id: climate.living_room

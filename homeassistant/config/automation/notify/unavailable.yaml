@@ -40,7 +40,7 @@
           condition: trigger
           id: 'devices'
         sequence:
-          service: persistent_notification.create
+          action: persistent_notification.create
           data_template:
             title: "Device Offline"
             message: >-
@@ -49,7 +49,7 @@
           condition: trigger
           id: 'devices'
         sequence:
-          service: persistent_notification.create
+          action: persistent_notification.create
           data_template:
             title: "Light Offline"
             message: >-

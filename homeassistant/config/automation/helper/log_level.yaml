@@ -7,6 +7,6 @@
     entity_id:
       - input_select.logger_level
   action:
-    - service: logger.set_level
-      data:
-        homeassistant.components: "{{ states('input_select.logger_level') }}"
+    action: logger.set_level
+    data:
+      homeassistant.components: "{{ states('input_select.logger_level') }}"

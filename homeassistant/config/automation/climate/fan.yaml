@@ -1,6 +1,6 @@
 ---
 
-- alias: "Shabbat fan"
+- alias: "Scheduled Shabbat Kids Fan"
   id: 0ea02e72-2e51-46ed-8643-24ecf7eff2fe
   trigger:
     - platform: time
@@ -9,9 +9,7 @@
         - '12:30:00'
       id: 'on'
     - platform: time
-      at:
-        - '09:00:00'
-        - '18:00:00'
+      at: '16:00:00'
       id: 'off'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
@@ -22,19 +20,19 @@
           id: 'on'
         - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: fan.turn_on
+          action: fan.turn_on
           data:
-            entity_id: fan.master_bedroom_fan
+            entity_id: fan.kids_bedroom_fan
             percentage: 66
       - conditions:
         - condition: trigger
           id: 'off'
         sequence:
-          service: fan.turn_off
+          action: fan.turn_off
           data:
-            entity_id: fan.ceiling_fans
+            entity_id: fan.kids_bedroom_fan
 
-- alias: "Kids night fan"
+- alias: "Kids Night Fan"
   id: 15136e60-264f-43f2-974f-641b5ce2cf45
   trigger:
     - platform: time
@@ -50,7 +48,7 @@
           id: 'on'
         - "{{ is_state('group.person', 'home') }}"
         sequence:
-          service: fan.turn_on
+          action: fan.turn_on
           data:
             entity_id: fan.kids_bedroom_fan
             percentage: 66
@@ -58,6 +56,6 @@
         - condition: trigger
           id: 'off'
         sequence:
-          service: fan.turn_off
+          action: fan.turn_off
           data:
             entity_id: fan.kids_bedroom_fan

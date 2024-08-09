@@ -1,0 +1,44 @@
+---
+
+- alias: "Scheduled Shabbat Master Bedroom Climate"
+  id: 80687afd-c9ef-47b1-80ff-4de14b38ba4d
+  trigger:
+    - id: 'on'
+      platform: time
+      at:
+        - '12:30:00'
+        - '19:30:00'
+    - id: 'off'
+      platform: time
+      at:
+        - '9:00:00'
+        - '16:30:00'
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    choose:
+      - conditions:
+          - condition: trigger
+            id: 'on'
+          - "{{ is_state('group.person', 'home') }}"
+        sequence:
+          - action: fan.turn_on
+            data:
+              entity_id: fan.master_bedroom_fan
+              percentage: 66
+          - action: climate.turn_on
+            data:
+              entity_id: climate.master_bedroom_ac
+          - delay: 2
+          - action: switch.turn_on
+            data:
+              entity_id: switch.master_bedroom_ac_quiet
+      - conditions:
+          condition: trigger
+          id: 'off'
+        sequence:
+          action: homeassistant.turn_off
+          data:
+            entity_id:
+              - climate.master_bedroom_ac
+              - fan.master_bedroom_fan

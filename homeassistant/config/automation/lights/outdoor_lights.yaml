@@ -9,7 +9,7 @@
     for:
       minutes: 5
   action:
-    service: light.turn_off
+    action: light.turn_off
     data:
       entity_id:
         - light.pergola_light

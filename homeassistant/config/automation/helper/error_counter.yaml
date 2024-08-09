@@ -19,13 +19,13 @@
           condition: trigger
           id: 'warning'
         sequence:
-          service: counter.increment
+          action: counter.increment
           entity_id: counter.home_assistant_warning
       - conditions:
           condition: trigger
           id: 'error'
         sequence:
-          service: counter.increment
+          action: counter.increment
           entity_id: counter.home_assistant_errors
   mode: queued
   max: 20
@@ -37,7 +37,7 @@
     platform: homeassistant
     event: start
   action:
-    service: counter.reset
+    action: counter.reset
     entity_id:
       - counter.home_assistant_errors
       - counter.home_assistant_warning

@@ -14,10 +14,10 @@
     - "{{ is_state('input_boolean.disable_auto_clean', 'off') }}"
     - "{{ is_state('input_boolean.guest_mode', 'off') }}"
   action:
-    - service: vacuum.start
+    - action: vacuum.start
       data:
         entity_id: vacuum.roborock_s7
-    - service: notify.family
+    - action: notify.family
       data:
         title: "Cleaning started"
         message: "Vacuum has started the daily cleaning"
@@ -34,10 +34,10 @@
     for:
       minutes: 8
   action:
-    - service: vacuum.return_to_base
+    - action: vacuum.return_to_base
       data:
         entity_id: vacuum.roborock_s7
-    - service: notify.family
+    - action: notify.family
       data:
         title: "Returning to Dock"
         message: >-

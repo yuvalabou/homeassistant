@@ -25,19 +25,19 @@
           condition: trigger
           id: 'off'
         sequence:
-          - service: input_select.select_option
+          - action: input_select.select_option
             target:
               entity_id: input_select.washing_machine_state
             data:
               option: 'Off'
-          - service: input_boolean.turn_off
+          - action: input_boolean.turn_off
             entity_id: input_boolean.washing_machine_started
       - conditions:
           - condition: trigger
             id: 'finished'
           - "{{ is_state('input_select.washing_machine_state', 'Running') }}"
         sequence:
-          service: input_select.select_option
+          action: input_select.select_option
           target:
             entity_id: input_select.washing_machine_state
           data:
@@ -51,12 +51,12 @@
               entity_id: input_boolean.washing_machine_started
               state: 'off'
             then:
-              - service: input_boolean.turn_on
+              - action: input_boolean.turn_on
                 entity_id: input_boolean.washing_machine_started
-              - service: timer.start
+              - action: timer.start
                 target:
                   entity_id: timer.washing_machine_working
-          - service: input_select.select_option
+          - action: input_select.select_option
             target:
               entity_id: input_select.washing_machine_state
             data:

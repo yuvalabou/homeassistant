@@ -18,7 +18,7 @@
         - condition: trigger
           id: 'open'
         sequence:
-          service: cover.open_cover
+          action: cover.open_cover
           data:
             entity_id: cover.living_room_shutter
       - conditions:
@@ -27,7 +27,7 @@
         - "{{ is_state('input_boolean.guest_mode', 'off')}}"
         - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
         sequence:
-          service: cover.close_cover
+          action: cover.close_cover
           data:
             entity_id: cover.living_room_shutter
 
@@ -53,7 +53,7 @@
         - condition: trigger
           id: 'open'
         sequence:
-          service: cover.open_cover
+          action: cover.open_cover
           data:
             entity_id: cover.living_room_shutter
       - conditions:
@@ -61,6 +61,6 @@
           id: 'close'
         - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
         sequence:
-          service: cover.close_cover
+          action: cover.close_cover
           data:
             entity_id: cover.living_room_shutter

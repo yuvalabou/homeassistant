@@ -17,7 +17,7 @@
             condition: trigger
             id: 'on'
           sequence:
-            service: notify.nest_mini
+            action: notify.nest_mini
             data:
               message: >-
                 {{
@@ -38,7 +38,7 @@
             condition: trigger
             id: 'off'
           sequence:
-            service: notify.nest_mini
+            action: notify.nest_mini
             data:
               message: >
                 {{

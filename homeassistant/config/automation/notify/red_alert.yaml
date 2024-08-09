@@ -8,15 +8,15 @@
     to: 'on'
   condition: "{{ is_state('group.person', 'home') }}"
   action:
-    - service: light.turn_on
+    - action: light.turn_on
       entity_id: light.yeelight_ceilb_0x179e0932
-    - service: light.turn_on
+    - action: light.turn_on
       data:
         entity_id:
           - light.yeelight_ceilb_0x179e0932_ambilight
           - light.wall_lights
         color: red
-    - service: notify.family
+    - action: notify.family
       data:
         title: "צבע אדום"
         message: "טלמון"
@@ -32,13 +32,13 @@
         before: '07:00:00'
         after: '21:00:00'
       then:
-        service: light.turn_off
+        action: light.turn_off
         data:
           entity_id:
             - light.yeelight_ceilb_0x179e0932_ambilight
             - light.wall_lights
       else:
-        service: scene.turn_on
+        action: scene.turn_on
         data:
           entity_id: scene.morning
           transition: 300

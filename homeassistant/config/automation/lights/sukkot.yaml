@@ -17,13 +17,13 @@
         - condition: trigger
           id: 'sunset'
         sequence:
-          service: light.turn_on
+          action: light.turn_on
           data:
             entity_id: light.pergola_light
       - conditions:
         - condition: trigger
           id: 'off'
         sequence:
-          service: light.turn_off
+          action: light.turn_off
           data:
             entity_id: light.pergola_light
