@@ -1,6 +1,6 @@
 ##################################################
 #     Home Assistant Main Configuration File     #
-#            Yuval Aboulafia - 202405            #
+#            Yuval Aboulafia - 202408            #
 ##################################################
 #                      CORE                      #
 ##################################################
@@ -36,6 +36,7 @@ ssdp:
 ##################################################
 #                  INTEGRATIONS                  #
 ##################################################
+assist_pipeline:
 automation: !include_dir_merge_list automation
 backup:
 binary_sensor: !include_dir_merge_list components/binary_sensor
@@ -49,8 +50,6 @@ input_button:
 input_datetime:
 input_number:
 input_select:
-jewish_calendar:
-  language: hebrew
 light: !include_dir_merge_list components/light
 media_source:
 mobile_app:
