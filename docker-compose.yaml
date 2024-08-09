@@ -37,6 +37,28 @@ services:
       - 1883:1883
       - 9001:9001
 
+  whisper:
+    container_name: whisper
+    image: rhasspy/wyoming-whisper
+    command: --model tiny-int8 --language he
+    volumes:
+      - ./assist/whisper/whisper-data:/data
+    environment:
+      - TZ=Asia/Jerusalem
+    restart: unless-stopped
+    ports:
+      - 10300:10300
+  oww:
+    container_name: openWakeWord
+    image: rhasspy/wyoming-openwakeword
+    volumes:
+      - ./assist/openWakeWord/data:/data
+    environment:
+      - TZ=Asia/Jerusalem
+    restart: unless-stopped
+    ports:
+      - 10400:10400
+
   zigbee2mqtt:
     container_name: "z2m"
     restart: unless-stopped

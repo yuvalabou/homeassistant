@@ -22,6 +22,7 @@ mosquitto/data
 mosquitto/log
 zigbee2mqtt/log
 unifi-controller/
+assist/
 __pycache__
 
 # Ignore files
