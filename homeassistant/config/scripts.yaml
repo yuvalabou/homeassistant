@@ -1,0 +1,96 @@
+set_turbo:
+  alias: Set Turbo
+  sequence:
+  - data:
+      entity_id: vacuum.roborock_s7
+      fan_speed: Turbo
+    action: vacuum.set_fan_speed
+  icon: mdi:fan
+  description: ''
+set_quiet:
+  alias: Set Quiet
+  sequence:
+  - data:
+      entity_id: vacuum.roborock_s7
+      fan_speed: Quiet
+    action: vacuum.set_fan_speed
+  icon: mdi:fan
+  description: ''
+set_max:
+  alias: Set Max
+  sequence:
+  - data:
+      entity_id: vacuum.roborock_s7
+      fan_speed: Max
+    action: vacuum.set_fan_speed
+  icon: mdi:fan
+  description: ''
+set_balanced:
+  alias: Set Balanced
+  sequence:
+  - data:
+      entity_id: vacuum.roborock_s7
+      fan_speed: Balanced
+    action: vacuum.set_fan_speed
+  icon: mdi:fan
+  description: ''
+notify_for_shabbat_2:
+  alias: Notify for Shabbat
+  sequence:
+  - data:
+      volume_level: 1
+    action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room
+  - delay: 3
+  - data:
+      message: '"השבת פרשת {{ states(''sensor.jewish_calendar_parshat_hashavua'')
+        }}, כניסת שבת בשעה {{ as_timestamp(states(''sensor.jewish_calendar_upcoming_shabbat_candle_lighting''))
+        | timestamp_custom(''%I:%M'') }}, צאת השבת בשעה {{ as_timestamp(states(''sensor.jewish_calendar_upcoming_havdalah''))
+        | timestamp_custom(''%I:%M'') }}."'
+    action: notify.nest_mini
+  - entity_id: media_player.living_room
+    data:
+      volume_level: 0.5
+    action: media_player.volume_set
+  description: Give a Shabbat brief on a media device using tts
+heat:
+  alias: Heat
+  sequence:
+  - data:
+      entity_id: climate.living_room
+    action: climate.turn_on
+  - delay: 2
+  - data:
+      hvac_mode: heat
+    target:
+      entity_id: climate.living_room
+    action: climate.set_hvac_mode
+  - delay: 2
+  - data:
+      temperature: input_number.climate_set_temp
+    target:
+      entity_id: climate.living_room
+    action: climate.set_temperature
+  icon: mdi:fire
+  description: ''
+cool:
+  alias: Cool
+  sequence:
+  - data:
+      entity_id: climate.living_room
+    action: climate.turn_on
+  - delay: 2
+  - data:
+      hvac_mode: cool
+    target:
+      entity_id: climate.living_room
+    action: climate.set_hvac_mode
+  - delay: 2
+  - data:
+      temperature: input_number.climate_set_temp
+    target:
+      entity_id: climate.living_room
+    action: climate.set_temperature
+  icon: mdi:snowflake
+  description: ''

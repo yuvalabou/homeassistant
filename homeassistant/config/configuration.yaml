@@ -57,7 +57,7 @@ mqtt: !include_dir_merge_named components/mqtt
 notify: !include_dir_merge_list components/notify
 schedule:
 scene: !include_dir_merge_list scene
-script: !include_dir_merge_named scripts
+script: !include ./scripts.yaml
 sensor: !include_dir_merge_list components/sensor
 switch: !include_dir_merge_list components/switch
 template: !include_dir_merge_list components/template
