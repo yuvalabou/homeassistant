@@ -20,10 +20,12 @@ from homeassistant.helpers.typing import StateType
 from iec_api.models.invoice import Invoice
 from iec_api.models.remote_reading import RemoteReading
 
-from .commons import find_reading_by_date
+from .commons import find_reading_by_date, IecEntityType
 from .const import DOMAIN, ILS, STATICS_DICT_NAME, STATIC_KWH_TARIFF, FUTURE_CONSUMPTIONS_DICT_NAME, INVOICE_DICT_NAME, \
     ILS_PER_KWH, DAILY_READINGS_DICT_NAME, EMPTY_REMOTE_READING, CONTRACT_DICT_NAME, EMPTY_INVOICE, \
-    ATTRIBUTES_DICT_NAME, METER_ID_ATTR_NAME
+    ATTRIBUTES_DICT_NAME, METER_ID_ATTR_NAME, ESTIMATED_BILL_DICT_NAME, TOTAL_EST_BILL_ATTR_NAME, EST_BILL_DAYS_ATTR_NAME, \
+    EST_BILL_CONSUMPTION_PRICE_ATTR_NAME, EST_BILL_DELIVERY_PRICE_ATTR_NAME, EST_BILL_DISTRIBUTION_PRICE_ATTR_NAME, \
+    EST_BILL_TOTAL_KVA_PRICE_ATTR_NAME, EST_BILL_KWH_CONSUMPTION_ATTR_NAME
 from .coordinator import IecApiCoordinator
 from .iec_entity import IecEntity
 
@@ -35,11 +37,22 @@ class IecEntityDescriptionMixin:
     """Mixin values for required keys."""
 
     value_fn: Callable[[dict | tuple], str | float | date] | None = None
+    custom_attrs_fn: Callable[[dict | tuple], dict[str, str | int | float | date]] | None = None
 
 
 @dataclass(frozen=True, kw_only=True)
 class IecEntityDescription(SensorEntityDescription, IecEntityDescriptionMixin):
     """Class describing IEC sensors entities."""
+
+
+@dataclass(frozen=True, kw_only=True)
+class IecMeterEntityDescription(IecEntityDescription):
+    """Class describing IEC sensors entities related to specific meter."""
+
+
+@dataclass(frozen=True, kw_only=True)
+class IecContractEntityDescription(IecEntityDescription):
+    """Class describing IEC sensors entities related to specific contract."""
 
 
 def get_previous_bill_kwh_price(invoice: Invoice) -> float:
@@ -52,6 +65,16 @@ def get_previous_bill_kwh_price(invoice: Invoice) -> float:
     if not invoice.consumption or not invoice.amount_origin:
         return 0
     return invoice.consumption / invoice.amount_origin
+
+
+def _get_iec_type_by_class(description: IecEntityDescription) -> IecEntityType:
+    """Get IEC type by class."""
+
+    if isinstance(description, IecContractEntityDescription):
+        return IecEntityType.CONTRACT
+    if isinstance(description, IecMeterEntityDescription):
+        return IecEntityType.METER
+    return IecEntityType.GENERIC
 
 
 def _get_reading_by_date(readings: list[RemoteReading] | None, desired_date: datetime) -> RemoteReading:
@@ -67,30 +90,33 @@ def _get_reading_by_date(readings: list[RemoteReading] | None, desired_date: dat
 
 
 SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_forecasted_usage",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=3,
-        value_fn=lambda data:
-        (data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]].future_consumption or 0)
-        if (data[FUTURE_CONSUMPTIONS_DICT_NAME]
-            and data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]) else None
+        value_fn=lambda data: (data[ESTIMATED_BILL_DICT_NAME][EST_BILL_KWH_CONSUMPTION_ATTR_NAME] if data[ESTIMATED_BILL_DICT_NAME] else 0)
+        if (data[ESTIMATED_BILL_DICT_NAME]
+            and data[ESTIMATED_BILL_DICT_NAME][EST_BILL_KWH_CONSUMPTION_ATTR_NAME]) else None
     ),
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_forecasted_cost",
         device_class=SensorDeviceClass.MONETARY,
         native_unit_of_measurement=ILS,
         # state_class=SensorStateClass.TOTAL,
         suggested_display_precision=2,
         # The API doesn't provide future *cost* so we can try to estimate it by the previous consumption
-        value_fn=lambda data:
-        ((data[FUTURE_CONSUMPTIONS_DICT_NAME][data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]].future_consumption or 0)
-         * data[STATICS_DICT_NAME][STATIC_KWH_TARIFF]) if (data[FUTURE_CONSUMPTIONS_DICT_NAME]
-                                                           and data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]) else None
+        value_fn=lambda data: (data[ESTIMATED_BILL_DICT_NAME][TOTAL_EST_BILL_ATTR_NAME]) if data[ESTIMATED_BILL_DICT_NAME] else 0,
+        custom_attrs_fn=lambda data: {
+            EST_BILL_DAYS_ATTR_NAME: data[ESTIMATED_BILL_DICT_NAME][EST_BILL_DAYS_ATTR_NAME],
+            EST_BILL_CONSUMPTION_PRICE_ATTR_NAME: data[ESTIMATED_BILL_DICT_NAME][EST_BILL_CONSUMPTION_PRICE_ATTR_NAME],
+            EST_BILL_DELIVERY_PRICE_ATTR_NAME: data[ESTIMATED_BILL_DICT_NAME][EST_BILL_DELIVERY_PRICE_ATTR_NAME],
+            EST_BILL_DISTRIBUTION_PRICE_ATTR_NAME: data[ESTIMATED_BILL_DICT_NAME][EST_BILL_DISTRIBUTION_PRICE_ATTR_NAME],
+            EST_BILL_TOTAL_KVA_PRICE_ATTR_NAME: data[ESTIMATED_BILL_DICT_NAME][EST_BILL_TOTAL_KVA_PRICE_ATTR_NAME],
+        } if data[ESTIMATED_BILL_DICT_NAME] else None
     ),
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_today_consumption",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -101,7 +127,7 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
                              datetime.now()).value if (data[DAILY_READINGS_DICT_NAME] and
                                                        [data[ATTRIBUTES_DICT_NAME][METER_ID_ATTR_NAME]]) else None
     ),
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_yesterday_consumption",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -112,7 +138,7 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
                                  datetime.now() - timedelta(days=1)).value) if (
             data[DAILY_READINGS_DICT_NAME]) else None,
     ),
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_this_month_consumption",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -123,7 +149,7 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
                                     if reading.date.month == datetime.now().month])) if (
             data[DAILY_READINGS_DICT_NAME]) else None,
     ),
-    IecEntityDescription(
+    IecMeterEntityDescription(
         key="elec_latest_meter_reading",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -135,7 +161,7 @@ SMART_ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
 )
 
 ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_last_elec_usage",
         device_class=SensorDeviceClass.ENERGY,
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
@@ -144,7 +170,7 @@ ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         value_fn=lambda data: data[INVOICE_DICT_NAME].consumption if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_last_cost",
         device_class=SensorDeviceClass.MONETARY,
         native_unit_of_measurement=ILS,
@@ -153,7 +179,7 @@ ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         value_fn=lambda data: data[INVOICE_DICT_NAME].amount_origin if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_last_bill_remain_to_pay",
         device_class=SensorDeviceClass.MONETARY,
         native_unit_of_measurement=ILS,
@@ -161,7 +187,7 @@ ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         value_fn=lambda data: data[INVOICE_DICT_NAME].amount_to_pay if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_last_number_of_days",
         device_class=SensorDeviceClass.DURATION,
         native_unit_of_measurement=UnitOfTime.DAYS,
@@ -170,26 +196,26 @@ ELEC_SENSORS: tuple[IecEntityDescription, ...] = (
         value_fn=lambda data: data[INVOICE_DICT_NAME].days_period if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_bill_date",
         device_class=SensorDeviceClass.DATE,
         value_fn=lambda data: data[INVOICE_DICT_NAME].to_date.date() if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_bill_last_payment_date",
         device_class=SensorDeviceClass.DATE,
         value_fn=lambda data: data[INVOICE_DICT_NAME].last_date if (
                 data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
     ),
-    IecEntityDescription(
+    IecContractEntityDescription(
         key="iec_last_meter_reading",
         native_unit_of_measurement=UnitOfEnergy.KILO_WATT_HOUR,
         device_class=SensorDeviceClass.ENERGY,
         state_class=SensorStateClass.TOTAL_INCREASING,
         suggested_display_precision=0,
         value_fn=lambda data: data[INVOICE_DICT_NAME].meter_readings[0].reading if (
-                data[INVOICE_DICT_NAME] != EMPTY_INVOICE) else None,
+                data[INVOICE_DICT_NAME] != EMPTY_INVOICE and data[INVOICE_DICT_NAME].meter_readings) else None,
     )
 )
 
@@ -262,7 +288,8 @@ class IecSensor(IecEntity, SensorEntity):
     ) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator, contract_id,
-                         attributes_to_add.get(METER_ID_ATTR_NAME) if attributes_to_add else None)
+                         attributes_to_add.get(METER_ID_ATTR_NAME) if attributes_to_add else None,
+                         _get_iec_type_by_class(description))
         self.entity_description = description
         self._attr_unique_id = f"{str(contract_id)}_{description.key}"
         self._attr_translation_key = f"{description.key}"
@@ -274,6 +301,13 @@ class IecSensor(IecEntity, SensorEntity):
 
         if attributes_to_add:
             attributes.update(attributes_to_add)
+
+        if self.entity_description.custom_attrs_fn:
+            custom_attr = self.entity_description.custom_attrs_fn(
+                self.coordinator.data.get(str(int(self.contract_id)))
+            )
+            if custom_attr:
+                attributes.update(custom_attr)
 
         if is_multi_contract:
             attributes["is_multi_contract"] = is_multi_contract
