@@ -33,7 +33,9 @@
             data:
               title: "שבת שלום!"
               message:  "מיחם, נרות ומקרר"
-          - action: script.notify_for_shabbat
+          - action: script.turn_on
+            data:
+              entity_id: script.notify_for_shabbat
       - conditions:
         - condition: trigger
           id: '10_min'
