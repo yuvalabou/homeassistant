@@ -46,6 +46,7 @@ from .const import (
     CONF_IGNORE_UNAVAILABLE_STATE,
     CONF_INCLUDE,
     CONF_INCLUDE_NON_POWERCALC_SENSORS,
+    CONF_PLAYBOOK,
     CONF_POWER,
     CONF_POWER_SENSOR_CATEGORY,
     CONF_POWER_SENSOR_FRIENDLY_NAMING,
@@ -54,6 +55,8 @@ from .const import (
     CONF_POWER_TEMPLATE,
     CONF_SENSOR_TYPE,
     CONF_SENSORS,
+    CONF_STATE_TRIGGER,
+    CONF_STATES_TRIGGER,
     CONF_UNAVAILABLE_POWER,
     CONF_UTILITY_METER_OFFSET,
     CONF_UTILITY_METER_TARIFFS,
@@ -412,17 +415,22 @@ async def async_remove_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> 
 async def async_migrate_entry(hass: HomeAssistant, config_entry: ConfigEntry) -> bool:
     """Migrate old entry."""
     version = config_entry.version
-    if version == 1:
-        data = {**config_entry.data}
-        if CONF_FIXED in data and CONF_POWER in data[CONF_FIXED] and CONF_POWER_TEMPLATE in data[CONF_FIXED]:
-            data[CONF_FIXED].pop(CONF_POWER, None)
-        hass.config_entries.async_update_entry(config_entry, data=data, version=2)
+    data = {**config_entry.data}
 
-    if version == 2:
-        data = {**config_entry.data}
-        if data.get(CONF_SENSOR_TYPE) and CONF_CREATE_ENERGY_SENSOR not in data:
-            data[CONF_CREATE_ENERGY_SENSOR] = True
-        hass.config_entries.async_update_entry(config_entry, data=data, version=3)
+    if version <= 1:
+        conf_fixed = data.get(CONF_FIXED, {})
+        if CONF_POWER in conf_fixed and CONF_POWER_TEMPLATE in conf_fixed:
+            conf_fixed.pop(CONF_POWER, None)
+
+    if version <= 2 and data.get(CONF_SENSOR_TYPE) and CONF_CREATE_ENERGY_SENSOR not in data:
+        data[CONF_CREATE_ENERGY_SENSOR] = True
+
+    if version <= 3:
+        conf_playbook = data.get(CONF_PLAYBOOK, {})
+        if CONF_STATES_TRIGGER in conf_playbook:
+            data[CONF_PLAYBOOK][CONF_STATE_TRIGGER] = conf_playbook.pop(CONF_STATES_TRIGGER)
+
+    hass.config_entries.async_update_entry(config_entry, data=data, version=4)
 
     return True
 
@@ -437,7 +445,7 @@ async def repair_none_config_entries_issue(hass: HomeAssistant) -> None:
         for entity in entities:
             entity_registry.async_remove(entity.entity_id)
         try:
-            unique_id = f"{int(time.time() * 1000)}_{random.randint(1000, 9999)}"
+            unique_id = f"{int(time.time() * 1000)}_{random.randint(1000, 9999)}"  # noqa: S311
             object.__setattr__(entry, "unique_id", unique_id)
             hass.config_entries._entries._index_entry(entry)  # noqa
             await hass.config_entries.async_remove(entry.entry_id)
