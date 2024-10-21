@@ -3,7 +3,7 @@
 - alias: "Red Alert notification"
   id: dd1aa657-f774-4826-9afb-9eaec8c889e1
   trigger:
-    platform: state
+    trigger: state
     entity_id: binary_sensor.oref_alert
     to: 'on'
   condition: "{{ is_state('group.person', 'home') }}"
@@ -24,7 +24,7 @@
           timeout: 300
           priority: high
     - wait_for_trigger:
-        platform: state
+        trigger: state
         entity_id: binary_sensor.oref_alert
         to: 'off'
     - if:

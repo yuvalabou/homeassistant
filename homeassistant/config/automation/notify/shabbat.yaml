@@ -4,12 +4,12 @@
   id: c5553611-fb7b-42d7-80af-2608a31c2c25
   description: "Notify 30 minutes and 10 minutes before Shabbat"
   trigger:
-    - platform: template
+    - trigger: template
       id: '30_min'
       value_template: >-
         {% set lighting = today_at((states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime | as_local).time()) %}
         {{ now() + timedelta(minutes = 30) >= lighting }}
-    - platform: template
+    - trigger: template
       id: '10_min'
       value_template: >-
         {% set lighting = today_at((states('sensor.jewish_calendar_upcoming_candle_lighting') | as_datetime | as_local).time()) %}

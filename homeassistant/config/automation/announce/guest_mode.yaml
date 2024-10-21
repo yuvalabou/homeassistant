@@ -3,11 +3,11 @@
 - alias: 'Guest Mode'
   id: db433658-1fd1-45a9-9165-8e05f912920e
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.guest_mode
       to: 'on'
       id: 'on'
-    - platform: state
+    - trigger: state
       entity_id: input_boolean.guest_mode
       to: 'off'
       id: 'off'

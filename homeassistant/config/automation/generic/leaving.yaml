@@ -3,7 +3,7 @@
 - alias: "Leaving Home"
   id: b53f7fa0-502e-42dc-ba0a-0599f2de3c16
   trigger:
-    platform: state
+    trigger: state
     entity_id: group.person
     to: 'not_home'
   condition:

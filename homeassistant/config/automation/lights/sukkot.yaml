@@ -4,11 +4,11 @@
   id: 72cdbac3-f4ad-477a-acdf-21dd3e57e7e3
   trigger:
     - id: 'sunset'
-      platform: sun
+      trigger: sun
       event: sunset
       offset: '-02:00:00'
     - id: 'off'
-      platform: time
+      trigger: time
       at: input_datetime.shabbat_lights_off_time
   condition: "{{ is_state_attr('sensor.jewish_calendar_holiday', 'id', ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}"
   action:

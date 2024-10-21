@@ -3,7 +3,7 @@
 - alias: "Arriving Home"
   id: c5c5bc9b-4297-4ddd-b789-fb2211d11fab
   trigger:
-    platform: zone
+    trigger: zone
     entity_id:
       - person.yuval
       - person.tohar

@@ -6,10 +6,10 @@
     and turns them off later that night."
   id: bbd85c59-0fd0-441c-8404-7ca7b6e3fc85
   trigger:
-    - platform: time
+    - trigger: time
       at: '18:30:00'
       id: 'on'
-    - platform: time
+    - trigger: time
       at: '23:00:00'
       id: 'off'
   action:

@@ -4,19 +4,19 @@
   id: eb10652e-6276-4c18-b063-d14fc7c2d2cb
   trigger:
     - id: 'on'
-      platform: state
+      trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
     - id: 'shabbat_morning'
-      platform: time
+      trigger: time
       at: '10:00:00'
     - id: 'off'
-      platform: time
+      trigger: time
       at:
         - '21:00:00'
         - '18:00:00'
     - id: 'shabbat_night'
-      platform: time
+      trigger: time
       at:
         - input_datetime.shabbat_lights_off_time
         - '18:00:00'
@@ -63,11 +63,11 @@
   id: 6fc9b9d3-7069-4a0f-90ae-b2bc9b1ee805
   trigger:
     - id: 'on'
-      platform: state
+      trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
     - id: 'off'
-      platform: state
+      trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   action:
@@ -92,7 +92,7 @@
 - alias: "Shabbat Night Climate Alteration"
   id: 8f583c89-8cfa-4aba-be92-cc98d727dcf2
   trigger:
-    platform: time_pattern
+    trigger: time_pattern
     minutes: 45
   condition:
     - condition: time

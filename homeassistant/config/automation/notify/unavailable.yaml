@@ -4,7 +4,7 @@
   id: 58a57846-29da-4bb1-b40e-4926049b6f1c
   mode: restart
   trigger:
-    - platform: state
+    - trigger: state
       entity_id:
         - switch.vent
         - switch.ensuite_heater
@@ -20,7 +20,7 @@
       to: 'unavailable'
       for: '00:05:00'
       id: 'devices'
-    - platform: state
+    - trigger: state
       entity_id:
         - light.master_bedroom_light
         - light.kids_bedroom_light

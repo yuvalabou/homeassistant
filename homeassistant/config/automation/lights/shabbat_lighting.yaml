@@ -3,11 +3,11 @@
 - alias: "Shabbat and Chag light notification"
   id: 66aff0fc-7022-4577-9d72-2f35104ca746
   trigger:
-    - platform: state
+    - trigger: state
       id: 'shabbat_enter'
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
   condition: "{{ is_state('group.person', 'home') }}"
@@ -32,10 +32,10 @@
   id: 84dba792-958c-432e-bfb4-db8266bb3f0a
   trigger:
     - id: 'off'
-      platform: time
+      trigger: time
       at: input_datetime.shabbat_lights_off_time
     - id: 'morning'
-      platform: time
+      trigger: time
       at: '07:55:00'
   condition: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:

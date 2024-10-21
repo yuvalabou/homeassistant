@@ -3,32 +3,32 @@
 - alias: "Arrived at zone notification"
   id: 050ed8f0-0d39-46f9-9b9d-90a55820f5be
   trigger:
-    - platform: zone
+    - trigger: zone
       entity_id: person.yuval
       zone: zone.hirsh
       event: enter
       id: "yuval"
-    - platform: zone
+    - trigger: zone
       entity_id: person.yuval
       zone: zone.front
       event: enter
       id: "yuval"
-    - platform: zone
+    - trigger: zone
       entity_id: person.yuval
       zone: zone.home
       event: enter
       id: "yuval_home"
-    - platform: zone
+    - trigger: zone
       entity_id: person.tohar
       zone: zone.melody
       event: enter
       id: "tohar"
-    - platform: zone
+    - trigger: zone
       entity_id: person.tohar
       zone: zone.gelato
       event: enter
       id: "tohar"
-    - platform: zone
+    - trigger: zone
       entity_id: person.tohar
       zone: zone.home
       event: enter

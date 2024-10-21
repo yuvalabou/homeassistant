@@ -3,10 +3,10 @@
 - alias: "Adjust volume based on time"
   id: 601a5853-78e9-4d45-b9c8-e7fe41895166
   trigger:
-    - platform: time
+    - trigger: time
       at: '19:00:00'
       id: 'quiet'
-    - platform: time
+    - trigger: time
       at: '07:00:00'
       id: 'loud'
   action:

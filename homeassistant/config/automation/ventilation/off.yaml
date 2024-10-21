@@ -3,7 +3,7 @@
 - alias: "Turn-off Vent when humidity is OK"
   id: 7d57c758-0175-46ff-a266-a8dd5670f71e
   trigger:
-    platform: time_pattern
+    trigger: time_pattern
     minutes: 5
   condition:
     - "{{ is_state('light.bathroom_light', 'off') }}"
@@ -18,7 +18,7 @@
 - alias: "Turn-off Vent after time has passed"
   id: ac975e09-9643-495c-8ab0-3364d8e67ab8
   trigger:
-    platform: state
+    trigger: state
     entity_id: switch.vent
     to: 'on'
     for: '00:30:00'

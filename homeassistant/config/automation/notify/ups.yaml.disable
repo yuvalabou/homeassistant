@@ -3,12 +3,12 @@
 - alias: "Power outage and restore notification"
   id: 151f5012-4ee2-4372-926c-81746b3e7f76
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: sensor.ups_status
       id: 'on_battery'
       from: 'Online'
       to: 'On Battery'
-    - platform: state
+    - trigger: state
       entity_id: sensor.ups_status
       id: 'online'
       from: 'On Battery'
@@ -33,7 +33,7 @@
 - alias: "low UPS battery notification"
   id: 564c9fc6-a645-4614-9d86-3d3936b32910
   trigger:
-    - platform: numeric_state
+    - trigger: numeric_state
       entity_id: sensor.ups_battery_charge
       below: 20
   action:

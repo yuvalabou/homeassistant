@@ -3,7 +3,7 @@
 - alias: "Turn-on boiler for Shabbat end"
   id: fb851b88-eac1-47a0-ade9-9aeab311a0b8
   trigger:
-    platform: time
+    trigger: time
     at: '17:00:00'
   condition:
     - "{{ is_state('group.person', 'home')}}"

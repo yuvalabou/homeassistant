@@ -3,11 +3,11 @@
 - alias: "Turn-off Ensuite heater when reaching time or temp"
   id: bb829a6e-f2ce-4d09-b7e4-312f8ddd7a89
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: switch.ensuite_heater
       to: 'on'
       for: '00:25:00'
-    - platform: numeric_state
+    - trigger: numeric_state
       entity_id: sensor.ensuite_temperature
       above: 28
   action:
@@ -18,7 +18,7 @@
 - alias: "Turn-on Ensuite heater in the morning"
   id: 0341d100-4828-43bc-9839-fdca34f0e121
   trigger:
-    platform: time
+    trigger: time
     at: '06:00:00'
   condition:
     - "{{ is_state('group.person', 'home') }}"

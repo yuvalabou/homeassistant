@@ -4,7 +4,7 @@
   description: "Notify at home that Yuval has left work, and arrive in x minutes"
   id: 6e439b47-a790-4b1b-aef3-176b030bb7a5
   trigger:
-    platform: zone
+    trigger: zone
     entity_id: person.yuval
     zone: zone.hirsh
     event: leave

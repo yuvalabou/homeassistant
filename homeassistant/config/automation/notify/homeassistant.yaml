@@ -3,7 +3,7 @@
 - alias: "Home Assistant Startup notification"
   id: c1dca5f3-6594-4c78-9681-8e50a1648c30
   trigger:
-    platform: homeassistant
+    trigger: homeassistant
     event: start
   action:
     action: persistent_notification.create
@@ -15,7 +15,7 @@
   id: 52cbbc12-add7-4634-bd64-14888a23f357
   description: "Send a notification when there's an update availiable for Home Assistant"
   trigger:
-    platform: state
+    trigger: state
     entity_id: binary_sensor.docker_hub_update_available
     to: 'on'
   action:

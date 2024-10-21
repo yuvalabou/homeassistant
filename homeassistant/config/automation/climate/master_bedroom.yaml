@@ -4,14 +4,14 @@
   id: 80687afd-c9ef-47b1-80ff-4de14b38ba4d
   trigger:
     - id: 'on'
-      platform: time
+      trigger: time
       at:
         - '12:30:00'
         - '19:30:00'
     - id: 'off'
-      platform: time
+      trigger: time
       at:
-        - '9:00:00'
+        - '09:00:00'
         - '16:30:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"

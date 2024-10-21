@@ -7,7 +7,7 @@
      If its on it dosn't matter"
   id: 175ea9fb-d7b6-419f-992d-a7cea43a7420
   trigger:
-    platform: sun
+    trigger: sun
     event: sunset
   condition:
     - condition: time
@@ -22,7 +22,7 @@
 - alias: "Plate - Turn-off plate at Shabbat noon"
   id: 48acb771-25fe-4629-9ce7-77dfc35adeab
   trigger:
-    platform: time
+    trigger: time
     at: '13:30:00'
   condition:
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
@@ -35,7 +35,7 @@
 - alias: "Plate - Seuda-Shlishit"
   id: eec856fd-3958-4296-984a-c62458c75c97
   trigger:
-    platform: sun
+    trigger: sun
     event: sunset
     offset: '-02:00:00'
   condition:
@@ -48,7 +48,7 @@
 - alias: "Plate - Shabbat/Chag ends"
   id: 0cb6679a-5286-419e-95be-fe5c2850a247
   trigger:
-    platform: state
+    trigger: state
     entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
     to: 'off'
   action:
@@ -59,7 +59,7 @@
 - alias: "Plate - Out for Shabbat morning"
   id: affe0510-ec83-4794-b7e7-69f7be51ce63
   trigger:
-    platform: time
+    trigger: time
     at: input_datetime.shabbat_lights_off_time
   condition:
     - "{{ is_state('input_boolean.out_for_shabbat_morning', 'on') }}"
@@ -73,7 +73,7 @@
 - alias: "Plate - Out for Shabbat eve"
   id: 2e260c86-7c46-4bbb-8190-557c9d66cc8c
   trigger:
-    platform: time
+    trigger: time
     at: '07:00:00'
   condition:
     - "{{ is_state('input_boolean.out_for_shabbat_eve', 'on') }}"
@@ -93,7 +93,7 @@
   # Will get turned off later by "Shabbat noon" automation
   id: 6a09b0cc-64f7-4cae-8d02-14ae61fe37fc
   trigger:
-    platform: time
+    trigger: time
     at: '07:00:00'
   condition:
     - condition: time
@@ -113,7 +113,7 @@
 - alias: "Plate - Turn-off plate at chag night"
   id: 2195b710-0c3a-4c4f-8a6a-961495f470a6
   trigger:
-    platform: time
+    trigger: time
     at: input_datetime.shabbat_lights_off_time
   condition:
     - condition: time

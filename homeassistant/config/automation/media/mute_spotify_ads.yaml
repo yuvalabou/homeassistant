@@ -3,7 +3,7 @@
 - alias: "Mute Spotify ads"
   id: e8e1bf28-e10e-4a2f-a09f-f58847aa8031
   trigger:
-    platform: state
+    trigger: state
     entity_id: media_player.living_room
     attribute: media_title
     to: 'Advertisement'
@@ -13,7 +13,7 @@
       data:
         is_volume_muted: 'true'
     - wait_for_trigger:
-        platform: state
+        trigger: state
         entity_id: media_player.living_room
         attribute: media_title
         from: 'Advertisement'

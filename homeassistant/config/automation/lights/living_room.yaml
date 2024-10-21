@@ -3,10 +3,10 @@
 - alias: "Turn-on Wall lights in workday morning"
   id: ab50f735-f05f-454e-813c-0ed8cdd4a51e
   trigger:
-    - platform: time
-      at: sensor.yuval_next_alarm
-    - platform: time
-      at: sensor.tohar_next_alarm
+    trigger: time
+    at:
+      - sensor.yuval_next_alarm
+      - sensor.tohar_next_alarm
   condition:
     - "{{ is_state('group.person', 'home') }}"
     - "{{ not is_state('light.wall_lights', 'on') }}"
@@ -19,7 +19,7 @@
 - alias: "Turn off ceiling ambilight"
   id: c008e73d-a014-4fa2-9097-4b14b65866d5
   trigger:
-    platform: state
+    trigger: state
     entity_id: light.yeelight_ceilb_0x179e0932
     to: 'on'
   action:

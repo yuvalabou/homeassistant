@@ -3,11 +3,11 @@
 - alias: "Vacuum Error notification"
   id: f67ed229-d741-4469-9458-bbffc4561c29
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.roborock_s7_water_shortage
       to: 'on'
       id: 'water_shortage'
-    - platform: state
+    - trigger: state
       entity_id: sensor.roborock_s7_vacuum_error
       id: 'error'
   condition: "{{ not is_state('sensor.roborock_s7_vacuum_error', ['none', 'unavailable']) }}"

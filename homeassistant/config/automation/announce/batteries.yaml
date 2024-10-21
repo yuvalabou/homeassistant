@@ -3,13 +3,13 @@
 - alias: "Batteries full"
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
   trigger:
-    - platform: template
+    - trigger: template
       id: 'yuval'
       value_template: "{{ is_state('sensor.yuval_battery_level', '100') }}"
-    - platform: template
+    - trigger: template
       id: 'tohar'
       value_template: "{{ is_state('sensor.tohar_battery_level', '100') }}"
-    - platform: template
+    - trigger: template
       id: 'tablet'
       value_template: "{{ is_state('sensor.tablet_battery_level', '100') }}"
   condition:

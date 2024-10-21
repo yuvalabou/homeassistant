@@ -3,12 +3,12 @@
 - alias: "Count Home Assistant log entries"
   id: e4653437-0a17-41d2-b14d-eaa1399cf890
   trigger:
-    - platform: event
+    - trigger: event
       event_type: system_log_event
       event_data:
         level: ERROR
       id: 'error'
-    - platform: event
+    - trigger: event
       event_type: system_log_event
       event_data:
         level: WARNING
@@ -34,7 +34,7 @@
 - alias: "Reset Home Assistant log entries"
   id: e5cb265d-697d-4a35-8415-5f6aa1253558
   trigger:
-    platform: homeassistant
+    trigger: homeassistant
     event: start
   action:
     action: counter.reset

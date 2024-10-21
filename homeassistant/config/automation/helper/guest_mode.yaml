@@ -3,7 +3,7 @@
 - alias: "Disable guest mode"
   id: 9e82409c-df7b-43fd-ad61-aa993570d5c8
   trigger:
-    platform: zone
+    trigger: zone
     entity_id:
       - person.yuval
       - person.tohar

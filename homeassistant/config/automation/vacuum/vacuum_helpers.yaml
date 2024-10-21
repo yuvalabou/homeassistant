@@ -3,12 +3,12 @@
 - alias: "Set Vacuum as cleaned today"
   id: 8d53ce02-066c-4a51-a369-3e13d1220cee
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: vacuum.roborock_s7
       to: 'cleaning'
       for: '00:10:00'
       id: 'set'
-    - platform: time
+    - trigger: time
       at: '00:00:00'
       id: 'reset'
   action:
@@ -31,15 +31,15 @@
 - alias: "Vacuum mode switch"
   id: c8258c50-16dd-4b3d-b743-7a806bdb1018
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: group.person
       to: 'not_home'
       id: 'turbo'
-    - platform: state
+    - trigger: state
       entity_id: group.person
       to: 'home'
       id: 'quiet'
-    - platform: state
+    - trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'on'
       id: 'quiet'
@@ -68,7 +68,7 @@
 - alias: "Set Vacuum Fan Speed"
   id: 6c1cb638-04fb-43c3-bf7a-a062c6289122
   trigger:
-    - platform: state
+    - trigger: state
       entity_id: input_select.vacuum_fan_speed_list
   action:
     action: >
