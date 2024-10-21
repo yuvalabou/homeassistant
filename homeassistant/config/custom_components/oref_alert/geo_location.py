@@ -11,12 +11,15 @@ from homeassistant.const import (
     ATTR_DATE,
     ATTR_LATITUDE,
     ATTR_LONGITUDE,
+    CONF_FRIENDLY_NAME,
+    CONF_UNIT_OF_MEASUREMENT,
     UnitOfLength,
 )
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util.location import vincenty
 
 from .const import (
+    ATTR_HOME_DISTANCE,
     DATA_COORDINATOR,
     DOMAIN,
     IST,
@@ -47,12 +50,17 @@ class OrefAlertLocationEvent(GeolocationEvent):
     _attr_should_poll = False
     _attr_source = DOMAIN
     _attr_has_entity_name = True
-    _entity_component_unrecorded_attributes = frozenset(
+    _unrecorded_attributes = frozenset(
         {
             ATTR_SOURCE,
             ATTR_LATITUDE,
             ATTR_LONGITUDE,
             ATTR_DATE,
+            ATTR_HOME_DISTANCE,
+            CONF_FRIENDLY_NAME,
+            CONF_UNIT_OF_MEASUREMENT,
+            "category",
+            "title",
         }
     )
 
@@ -68,9 +76,13 @@ class OrefAlertLocationEvent(GeolocationEvent):
         self._attr_latitude: float = AREA_INFO[area]["lat"]
         self._attr_longitude: float = AREA_INFO[area]["long"]
         self._attr_unit_of_measurement = UnitOfLength.KILOMETERS
-        self._attr_distance = vincenty(
-            (hass.config.latitude, hass.config.longitude),
-            (self._attr_latitude, self._attr_longitude),
+        self._attr_distance = round(
+            vincenty(
+                (hass.config.latitude, hass.config.longitude),
+                (self._attr_latitude, self._attr_longitude),
+            )
+            or 0,
+            1,
         )
         self._alert_attributes = attributes
 
@@ -82,7 +94,7 @@ class OrefAlertLocationEvent(GeolocationEvent):
     @property
     def extra_state_attributes(self) -> dict[str, Any]:
         """Return extra state attributes."""
-        return self._alert_attributes
+        return {**self._alert_attributes, ATTR_HOME_DISTANCE: self._attr_distance}
 
     @callback
     def async_remove_self(self) -> None:
