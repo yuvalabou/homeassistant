@@ -17,6 +17,11 @@
     - action: vacuum.start
       data:
         entity_id: vacuum.roborock_s7
+    - wait_for_trigger:
+      - platform: state
+        entity_id: vacuum.roborock_s7
+        to: 'cleaning'
+      timeout: '00:01:00'
     - action: notify.family
       data:
         title: "Cleaning started"
