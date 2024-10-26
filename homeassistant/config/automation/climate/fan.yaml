@@ -23,7 +23,7 @@
           action: fan.turn_on
           data:
             entity_id: fan.kids_bedroom_fan
-            percentage: 66
+            percentage: 33
       - conditions:
         - condition: trigger
           id: 'off'
@@ -51,7 +51,7 @@
           action: fan.turn_on
           data:
             entity_id: fan.kids_bedroom_fan
-            percentage: 66
+            percentage: 33
       - conditions:
         - condition: trigger
           id: 'off'
