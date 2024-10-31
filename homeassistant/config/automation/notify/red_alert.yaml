@@ -29,8 +29,8 @@
         to: 'off'
     - if:
         condition: time
-        before: '07:00:00'
         after: '21:00:00'
+        before: '07:00:00'
       then:
         action: light.turn_off
         data:
