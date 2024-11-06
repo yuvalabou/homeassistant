@@ -51,11 +51,12 @@ web_server:
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_passwd
-  ap: {} # This spawns an AP with the device name and mac address with no password.
+  # ap: {} # This spawns an AP with the device name and mac address with no password.
   fast_connect: "${wifi_fast_connect}"
   domain: "${dns_domain}"
+  reboot_timeout: 1h
 
-captive_portal:
+# captive_portal:
 
 dashboard_import:
   package_import_url: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
@@ -63,6 +64,7 @@ dashboard_import:
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
 
 globals:
   - id: total_energy
