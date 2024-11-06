@@ -13,7 +13,7 @@ from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import selector
 
 if TYPE_CHECKING:
-    from homeassistant.data_entry_flow import FlowResult
+    from homeassistant.config_entries import ConfigFlowResult
 
 from .const import (
     CONF_ALERT_ACTIVE_DURATION,
@@ -51,7 +51,7 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         """Handle a flow initialized by the user."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
@@ -74,7 +74,7 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
 
     async def async_step_confirm(
         self, user_input: dict[str, Any] | None = None
-    ) -> FlowResult:
+    ) -> ConfigFlowResult:
         """Confirm the setup."""
         if user_input is not None:
             return self.async_create_entry(
@@ -107,7 +107,7 @@ class OptionsFlowHandler(OptionsFlow):
         """Initialize options flow."""
         self._config_entry = config_entry
 
-    async def async_step_init(self, user_input: dict[str, Any]) -> FlowResult:
+    async def async_step_init(self, user_input: dict[str, Any]) -> ConfigFlowResult:
         """Handle an options flow."""
         if user_input is not None:
             return self.async_create_entry(

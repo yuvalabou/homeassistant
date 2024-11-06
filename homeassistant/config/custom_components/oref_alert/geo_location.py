@@ -9,6 +9,7 @@ import homeassistant.util.dt as dt_util
 from homeassistant.components.geo_location import ATTR_SOURCE, GeolocationEvent
 from homeassistant.const import (
     ATTR_DATE,
+    ATTR_ICON,
     ATTR_LATITUDE,
     ATTR_LONGITUDE,
     CONF_FRIENDLY_NAME,
@@ -18,8 +19,17 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util.location import vincenty
 
+from custom_components.oref_alert.category_symbol import (
+    category_to_emoji,
+    category_to_icon,
+)
+
 from .const import (
+    ATTR_AREA,
+    ATTR_CATEGORY,
+    ATTR_EMOJI,
     ATTR_HOME_DISTANCE,
+    ATTR_TITLE,
     DATA_COORDINATOR,
     DOMAIN,
     IST,
@@ -59,8 +69,8 @@ class OrefAlertLocationEvent(GeolocationEvent):
             ATTR_HOME_DISTANCE,
             CONF_FRIENDLY_NAME,
             CONF_UNIT_OF_MEASUREMENT,
-            "category",
-            "title",
+            ATTR_CATEGORY,
+            ATTR_TITLE,
         }
     )
 
@@ -142,6 +152,8 @@ class OrefAlertLocationEventManager:
                     alert_date := dt_util.parse_datetime(alert["alertDate"])
                 ) is not None:
                     attributes[ATTR_DATE] = alert_date.replace(tzinfo=IST)
+                attributes[ATTR_ICON] = category_to_icon(attributes[ATTR_CATEGORY])
+                attributes[ATTR_EMOJI] = category_to_emoji(attributes[ATTR_CATEGORY])
                 return attributes
         return {}
 
@@ -154,6 +166,24 @@ class OrefAlertLocationEventManager:
         for area in areas_to_delete:
             if (entity := self._location_events.pop(area, None)) is not None:
                 entity.async_remove_self()
+
+    def fire_events(self, events: dict[str, OrefAlertLocationEvent]) -> None:
+        """Fire events for new locations."""
+        for area, event in events.items():
+            attributes = event.extra_state_attributes
+            self._hass.bus.async_fire(
+                f"{DOMAIN}_event",
+                {
+                    ATTR_AREA: area,
+                    ATTR_HOME_DISTANCE: event.distance,
+                    ATTR_LATITUDE: event.latitude,
+                    ATTR_LONGITUDE: event.longitude,
+                    ATTR_CATEGORY: attributes.get(ATTR_CATEGORY),
+                    ATTR_TITLE: attributes.get(ATTR_TITLE),
+                    ATTR_ICON: attributes.get(ATTR_ICON),
+                    ATTR_EMOJI: attributes.get(ATTR_EMOJI),
+                },
+            )
 
     @callback
     def _async_update(self) -> None:
@@ -169,6 +199,7 @@ class OrefAlertLocationEventManager:
             for area in active - exists
             if area in AREA_INFO
         }
+        self.fire_events(to_add)
         self._location_events.update(to_add)
         self._async_add_entities(to_add.values())
 

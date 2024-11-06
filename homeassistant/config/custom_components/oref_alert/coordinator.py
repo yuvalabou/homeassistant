@@ -16,8 +16,11 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
+    ATTR_CATEGORY,
+    ATTR_TITLE,
     CONF_ALERT_ACTIVE_DURATION,
     CONF_POLL_INTERVAL,
+    DEFAULT_ALERT_ACTIVE_DURATION,
     DEFAULT_POLL_INTERVAL,
     DOMAIN,
     IST,
@@ -75,7 +78,9 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                 )
             ),
         )
-        self._config_entry: ConfigEntry = config_entry
+        self._active_duration = config_entry.options.get(
+            CONF_ALERT_ACTIVE_DURATION, DEFAULT_ALERT_ACTIVE_DURATION
+        )
         self._http_client = async_get_clientsession(hass)
         self._http_cache = {}
         self._synthetic_alerts: dict[int, dict[str, Any]] = {}
@@ -164,18 +169,16 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                     alerts.append(
                         {
                             "alertDate": now,
-                            "title": current["title"],
+                            ATTR_TITLE: current[ATTR_TITLE],
                             "data": area,
-                            "category": int(current["cat"]),
+                            ATTR_CATEGORY: int(current["cat"]),
                         }
                     )
         return alerts
 
     def _active_alerts(self, alerts: list[Any]) -> list[Any]:
         """Return the list of active alerts."""
-        return self._recent_alerts(
-            alerts, self._config_entry.options[CONF_ALERT_ACTIVE_DURATION]
-        )
+        return self._recent_alerts(alerts, self._active_duration)
 
     def _recent_alerts(self, alerts: list[Any], active_duration: int) -> list[Any]:
         """Return the list of recent alerts, assuming the input is sorted."""
@@ -196,9 +199,9 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
         now = dt_util.now(IST)
         self._synthetic_alerts[int(now.timestamp()) + duration] = {
             "alertDate": now.strftime("%Y-%m-%d %H:%M:%S"),
-            "title": "התרעה סינטטית לצורכי בדיקות",
+            ATTR_TITLE: "התרעה סינטטית לצורכי בדיקות",
             "data": area,
-            "category": 1,
+            ATTR_CATEGORY: 1,
         }
 
     def _get_synthetic_alerts(self) -> list[dict[str, Any]]:
