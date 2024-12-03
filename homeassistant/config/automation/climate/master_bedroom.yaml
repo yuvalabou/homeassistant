@@ -22,10 +22,6 @@
             id: 'on'
           - "{{ is_state('group.person', 'home') }}"
         sequence:
-          - action: fan.turn_on
-            data:
-              entity_id: fan.master_bedroom_fan
-              percentage: 66
           - action: climate.turn_on
             data:
               entity_id: climate.master_bedroom_ac
@@ -39,6 +35,38 @@
         sequence:
           action: homeassistant.turn_off
           data:
-            entity_id:
-              - climate.master_bedroom_ac
-              - fan.master_bedroom_fan
+            entity_id: climate.master_bedroom_ac
+
+- alias: "Scheduled Shabbat Master Bedroom fan"
+  id: 06924c07-7343-4a8d-a1e5-9d321beaf7e7
+  trigger:
+    - id: 'on'
+      trigger: time
+      at:
+        - '12:30:00'
+        - '19:30:00'
+    - id: 'off'
+      trigger: time
+      at:
+        - '09:00:00'
+        - '16:30:00'
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+  action:
+    choose:
+      - conditions:
+          - condition: trigger
+            id: 'on'
+          - "{{ is_state('group.person', 'home') }}"
+        sequence:
+          - action: fan.turn_on
+            data:
+              entity_id: fan.master_bedroom_fan
+              percentage: 66
+      - conditions:
+          condition: trigger
+          id: 'off'
+        sequence:
+          action: homeassistant.turn_off
+          data:
+            entity_id: fan.master_bedroom_fan
