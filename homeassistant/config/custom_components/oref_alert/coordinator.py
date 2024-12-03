@@ -19,6 +19,8 @@ from .const import (
     ATTR_CATEGORY,
     ATTR_TITLE,
     CONF_ALERT_ACTIVE_DURATION,
+    CONF_AREA,
+    CONF_DURATION,
     CONF_POLL_INTERVAL,
     DEFAULT_ALERT_ACTIVE_DURATION,
     DEFAULT_POLL_INTERVAL,
@@ -52,15 +54,16 @@ class OrefAlertCoordinatorData:
 
 def _sort_alerts(item1: dict[str, Any], item2: dict[str, Any]) -> int:
     """Sort by descending-order "date" and then ascending-order "name"."""
+    result = 0
     if item1["alertDate"] < item2["alertDate"]:
-        return 1
-    if item1["alertDate"] > item2["alertDate"]:
-        return -1
-    if item1["data"] > item2["data"]:
-        return 1
-    if item1["data"] < item2["data"]:
-        return -1
-    return 0
+        result = 1
+    elif item1["alertDate"] > item2["alertDate"]:
+        result = -1
+    elif item1["data"] > item2["data"]:
+        result = 1
+    elif item1["data"] < item2["data"]:
+        result = -1
+    return result
 
 
 class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorData]):
@@ -194,14 +197,14 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             recent_alerts.append(alert)
         return recent_alerts
 
-    def add_synthetic_alert(self, area: str, duration: int) -> None:
+    def add_synthetic_alert(self, details: dict) -> None:
         """Add a synthetic alert for testing purposes."""
         now = dt_util.now(IST)
-        self._synthetic_alerts[int(now.timestamp()) + duration] = {
+        self._synthetic_alerts[int(now.timestamp()) + details[CONF_DURATION]] = {
             "alertDate": now.strftime("%Y-%m-%d %H:%M:%S"),
-            ATTR_TITLE: "התרעה סינטטית לצורכי בדיקות",
-            "data": area,
-            ATTR_CATEGORY: 1,
+            ATTR_TITLE: details.get(ATTR_TITLE, "התרעה סינטטית לצורכי בדיקות"),
+            "data": details[CONF_AREA],
+            ATTR_CATEGORY: details[ATTR_CATEGORY],
         }
 
     def _get_synthetic_alerts(self) -> list[dict[str, Any]]:

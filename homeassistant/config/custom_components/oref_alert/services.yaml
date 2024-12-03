@@ -6,6 +6,7 @@ remove_sensor:
         entity:
           exclude_entities:
           - binary_sensor.oref_alert
+          - binary_sensor.oref_alert_all_areas
           filter:
           - integration: oref_alert
             domain: binary_sensor
@@ -94,7 +95,6 @@ add_sensor:
           - אזור תעשייה כרמיאל
           - אזור תעשייה מבוא כרמל
           - אזור תעשייה מבואות הגלבוע
-          - אזור תעשייה מילואות צפון
           - אזור תעשייה מישור אדומים
           - אזור תעשייה מיתרים
           - אזור תעשייה נ.ע.מ
@@ -131,6 +131,7 @@ add_sensor:
           - אחיסמך
           - אחיעזר
           - איבטין
+          - איזור תעשייה מילואות צפון
           - אייל
           - איילת השחר
           - איירפורט סיטי
@@ -1572,7 +1573,6 @@ synthetic_alert:
           - אזור תעשייה כרמיאל
           - אזור תעשייה מבוא כרמל
           - אזור תעשייה מבואות הגלבוע
-          - אזור תעשייה מילואות צפון
           - אזור תעשייה מישור אדומים
           - אזור תעשייה מיתרים
           - אזור תעשייה נ.ע.מ
@@ -1609,6 +1609,7 @@ synthetic_alert:
           - אחיסמך
           - אחיעזר
           - איבטין
+          - איזור תעשייה מילואות צפון
           - אייל
           - איילת השחר
           - איירפורט סיטי
@@ -2937,3 +2938,16 @@ synthetic_alert:
           min: 1
           max: 100
           unit_of_measurement: seconds
+    category:
+      required: true
+      default: 1
+      selector:
+        number:
+          min: 1
+          max: 30
+          mode: box
+    title:
+      required: true
+      default: התרעה סינטטית לצורכי בדיקות
+      selector:
+        text: null
