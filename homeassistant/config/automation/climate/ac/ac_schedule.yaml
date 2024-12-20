@@ -33,7 +33,7 @@
         sequence:
           action: script.turn_on
           data:
-            entity_id: script.cool
+            entity_id: script.heat
       - conditions:
           - condition: trigger
             id: 'off'
@@ -49,7 +49,7 @@
         sequence:
           action: script.turn_on
           data:
-            entity_id: script.cool
+            entity_id: script.heat
       - conditions:
           - condition: trigger
             id: 'shabbat_night'
