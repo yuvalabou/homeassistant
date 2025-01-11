@@ -47,7 +47,7 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
 
     def __init__(self) -> None:
         """Initialize object with defaults."""
-        self._auto_detected_area: str | None = None
+        self._auto_detected_area: str = ""
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -63,8 +63,8 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
         with contextlib.suppress(HomeAssistantError):
             hass = async_get_hass()
         if hass:
-            self._auto_detected_area = find_area(
-                hass.config.latitude, hass.config.longitude
+            self._auto_detected_area = (
+                find_area(hass.config.latitude, hass.config.longitude) or ""
             )
 
         if not self._auto_detected_area:
