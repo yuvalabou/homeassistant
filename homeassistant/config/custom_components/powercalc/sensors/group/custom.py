@@ -65,6 +65,8 @@ from custom_components.powercalc.const import (
     CONF_EXCLUDE_ENTITIES,
     CONF_FORCE_CALCULATE_GROUP_ENERGY,
     CONF_GROUP_ENERGY_ENTITIES,
+    CONF_GROUP_ENERGY_START_AT_ZERO,
+    CONF_GROUP_MEMBER_DEVICES,
     CONF_GROUP_MEMBER_SENSORS,
     CONF_GROUP_POWER_ENTITIES,
     CONF_GROUP_TYPE,
@@ -87,7 +89,7 @@ from custom_components.powercalc.const import (
     UnitPrefix,
 )
 from custom_components.powercalc.device_binding import get_device_info
-from custom_components.powercalc.group_include.filter import AreaFilter
+from custom_components.powercalc.group_include.filter import AreaFilter, CompositeFilter, DeviceFilter, EntityFilter, FilterOperator
 from custom_components.powercalc.group_include.include import find_entities
 from custom_components.powercalc.sensors.abstract import (
     BaseEntity,
@@ -230,7 +232,7 @@ def filter_entity_list_by_class(
     ]
 
 
-async def resolve_entity_ids_recursively(
+async def resolve_entity_ids_recursively(  # noqa: C901
     hass: HomeAssistant,
     entry: ConfigEntry,
     device_class: SensorDeviceClass,
@@ -263,12 +265,18 @@ async def resolve_entity_ids_recursively(
         conf_key = CONF_GROUP_POWER_ENTITIES if device_class == SensorDeviceClass.POWER else CONF_GROUP_ENERGY_ENTITIES
         resolved_ids.update(entry.data.get(conf_key) or [])
 
-    async def add_area_entities() -> None:
+    async def add_device_and_area_entities() -> None:
         """Add entities from the defined areas."""
-        if CONF_AREA not in entry.data:
+        if CONF_AREA not in entry.data and CONF_GROUP_MEMBER_DEVICES not in entry.data:
             return
 
-        entity_filter = AreaFilter(hass, entry.data[CONF_AREA])
+        filters: list[EntityFilter] = []
+        if CONF_AREA in entry.data:
+            filters.append(AreaFilter(hass, entry.data[CONF_AREA]))
+        if CONF_GROUP_MEMBER_DEVICES in entry.data:
+            filters.append(DeviceFilter(set(entry.data[CONF_GROUP_MEMBER_DEVICES])))
+        entity_filter = CompositeFilter(filters, FilterOperator.OR)
+
         resolved_area_entities, _ = await find_entities(
             hass,
             entity_filter,
@@ -298,7 +306,7 @@ async def resolve_entity_ids_recursively(
     # Process the main logic
     add_member_entry_ids()
     add_specified_sensors()
-    await add_area_entities()
+    await add_device_and_area_entities()
     await add_subgroup_entities()
 
     return resolved_ids
@@ -733,7 +741,9 @@ class GroupedEnergySensor(GroupedSensor, EnergySensor):
             state,
         )
 
-        delta = cur_state_value - prev_state_value
+        start_at_zero = bool(self._sensor_config.get(CONF_GROUP_ENERGY_START_AT_ZERO, True))
+        delta = Decimal(0) if not prev_state and start_at_zero else cur_state_value - prev_state_value
+
         if _LOGGER.isEnabledFor(logging.DEBUG):  # pragma: no cover
             rounded_delta = round(delta, self._rounding_digits)
             rounded_prev = round(prev_state_value, self._rounding_digits)

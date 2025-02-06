@@ -1,7 +1,9 @@
 {
   "common": {
+    "source_entity": "Source entity",
+    "source_device": "Source device",
     "remarks_smart_switch": "Denna profil visar endast effekt i standby-läge. \n Har du apparater som förbrukar ett fast effekt-värde när de är påslagna, kan du ange detta värde i nästa steg",
-    "remarks_smart_dimmer": "This profile only provides standby power values. \n In the next step you can optionally provide the values of the connected light"
+    "remarks_smart_dimmer": "Den här profilen ger endast standby-effektvärden. \n I nästa steg kan du ange värden för det anslutna ljuset som tillval"
   },
   "config": {
     "abort": {
@@ -23,10 +25,29 @@
     },
     "flow_title": "{name} ({manufacturer} {model})",
     "step": {
+      "assign_groups": {
+        "data": {
+          "group": "Välj grupp(er)",
+          "new_group": "Ny grupp"
+        },
+        "data_description": {
+          "new_group": "Fyll i ett anpassat gruppnamn för att skapa en ny grupp"
+        },
+        "title": "Tilldela till grupp"
+      },
+      "availability_entity": {
+        "data": {
+          "availability_entity": "Tillgänglighet entitet"
+        },
+        "data_description": {
+          "availability_entity": "When this entity is unavailable, the powercalc sensor will be unavailable as well"
+        },
+        "title": "Availability entity",
+        "description": "This profile is per device. Please select the entity which will be used to determine the availability of the powercalc sensor"
+      },
       "daily_energy": {
         "data": {
           "create_utility_meters": "Skapa bruksmätare",
-          "group": "Lägg till i grupp",
           "name": "Namn",
           "on_time": "Igång tid",
           "start_time": "Starttid",
@@ -36,7 +57,6 @@
           "value_template": "Värdesmall"
         },
         "data_description": {
-          "group": "Fyll i ett eget gruppnamn för att skapa en ny grupp",
           "on_time": "Om lämnas tomt är standard 1 dag. Alltid på",
           "update_frequency": "Tid i sekunder mellan uppdatering av sensor"
         },
@@ -67,13 +87,14 @@
         "title": "Fast konfig"
       },
       "global_configuration": {
-        "title": "Global configuration",
+        "title": "Global konfiguration",
         "description": "Setup global configuration for Powercalc. For more information see the [documentation](https://docs.powercalc.nl/configuration/global-configuration/). Additional options for energy sensors and utility meters can be provided in the next steps.",
         "data": {
           "create_energy_sensors": "Create energy sensors",
           "create_utility_meters": "Skapa bruksmätare",
           "disable_extended_attributes": "Inaktivera utökade attribut",
           "disable_library_download": "Disable remote library download",
+          "discovery_exclude_device_types": "Discovery exclude device types",
           "force_update_frequency": "Force update frequency",
           "ignore_unavailable_state": "Ignorera ej tillgängligt tillstånd",
           "include_non_powercalc_sensors": "Inkludera icke-powercalc sensorer",
@@ -86,6 +107,7 @@
           "create_utility_meters": "Låt powercalc skapa bruksmätare, vilken cykler dag, timme etc.",
           "disable_extended_attributes": "Inaktivera alla extra attribut powercalc bidrar till effekt, energi och grupp enhet stater. Detta kommer att bidra till att hålla databasen storlek liten",
           "disable_library_download": "Inaktivera nedladdningsfunktionen för Powercalc-biblioteket",
+          "discovery_exclude_device_types": "Exclude device types from the discovery process",
           "force_update_frequency": "Interval at which the sensor state is updated, even when the power value stays the same. In seconds",
           "ignore_unavailable_state": "Håll Powercalc-sensorer tillgängliga, även när källenheten inte är tillgänglig",
           "include_non_powercalc_sensors": "Control whether you want to include non powercalc sensors in groups"
@@ -118,6 +140,8 @@
           "device": "Enhet",
           "force_calculate_group_energy": "Force calculate energy",
           "group_energy_entities": "Medlem energi entiteter",
+          "group_energy_start_at_zero": "Start at zero",
+          "group_member_devices": "Member devices",
           "group_member_sensors": "Medlem powercalc sensorer",
           "group_power_entities": "Medlem effekt entiteter",
           "hide_members": "Dölj medlemmar",
@@ -131,6 +155,8 @@
           "device": "Lägg till de grupperade entiteterna Powercalc skapar till en existerande enhet.",
           "force_calculate_group_energy": "By default powercalc sums the energy sensors from the member sensors. Toggle this option to force creating a Riemann Sum sensor",
           "group_energy_entities": "Ytterligare energisensorer (kWh) från din HA installation som ska inkluderas",
+          "group_energy_start_at_zero": "When enabled, the energy sensor will start at zero when the sensor is created. Otherwise it will sum all the current member energy sensor states",
+          "group_member_devices": "Add power and energy entities from the selected devices to the group",
           "group_member_sensors": "Powercalc sensorer som ska inkluderas i gruppen",
           "group_power_entities": "Ytterligare effektsensorer (W) från din HA installation som ska inkluderas",
           "include_non_powercalc_sensors": "Ange huruvida icke-powercalc-sensorer ska inkluderas när områdesalternativet används",
@@ -182,7 +208,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Om du väljer att inte bekräfta kan du ange tillverkare och modell själv"
         },
-        "description": "Tillverkare \"{manufacturer}\" och modell \"{model}\" var automatiskt detekterade för din lampa.{remarks}",
+        "description": "{source}\n\nTillverkare \"{manufacturer}\" och modell \"{model}\" var automatiskt detekterade för din lampa.{remarks}",
         "title": "Bibliotek"
       },
       "library_multi_profile": {
@@ -190,7 +216,7 @@
           "model": "Select model"
         },
         "description": "Manufacturer \"{manufacturer}\" and model \"{model}\" were automatically detected for your device. There are multiple profiles found for the entity which can potentially be used. Please look up the exact model of your device in [Powercalc library]({library_link}) and select the correct one",
-        "title": "Library"
+        "title": "Bibliotek"
       },
       "linear": {
         "data": {
@@ -299,7 +325,7 @@
         "data": {
           "sub_profile": "Underprofil"
         },
-        "description": "Denna modellen har flera underprofiler. Välj en som passar din enhet",
+        "description": "Denna modellen har flera underprofiler. Välj en som passar din enhet\n\n\"{entity_id}\"",
         "title": "Underprofil konfiguration"
       },
       "smart_switch": {
@@ -348,7 +374,6 @@
           "create_energy_sensor": "Skapa energisensor",
           "create_utility_meters": "Skapa bruksmätare",
           "entity_id": "Källentitet",
-          "group": "Lägg till i grupp",
           "mode": "Beräkningsstrategi",
           "name": "Namn",
           "standby_power": "Standby effekt"
@@ -357,7 +382,6 @@
           "create_energy_sensor": "Ska powercalc skapa en kWh sensor",
           "create_utility_meters": "Låt powercalc skapa bruksmätare, vilken cykel dag, timme etc.",
           "entity_id": "Entitet den virtuella effekten är baserad på, effektsensorn kommer lyssna på förändringar på denna entitet",
-          "group": "Fill in a custom group name to create a new group",
           "name": "Lämnas tom kommer namn tas från källentiteten",
           "standby_power": "Ange effekten som enheten förbrukar i avstängt läge"
         },
@@ -467,6 +491,7 @@
           "create_utility_meters": "Create utility meters",
           "disable_extended_attributes": "Inaktivera utökade attribut",
           "disable_library_download": "Disable remote library download",
+          "discovery_exclude_device_types": "Discovery exclude device types",
           "force_update_frequency": "Force update frequency",
           "ignore_unavailable_state": "Ignore unavailable state",
           "include_non_powercalc_sensors": "Include non powercalc sensors",
@@ -479,6 +504,7 @@
           "create_utility_meters": "Let powercalc create utility meters, which cycle daily, hourly etc.",
           "disable_extended_attributes": "Disable all extra attributes powercalc adds to the power, energy and group entity states. This will help keep the database size small",
           "disable_library_download": "Disable the Powercalc library download feature",
+          "discovery_exclude_device_types": "Exclude device types from the discovery process",
           "force_update_frequency": "Interval at which the sensor state is updated, even when the power value stays the same. In seconds",
           "ignore_unavailable_state": "Keep Powercalc sensors available, even when the source entity is unavailable",
           "include_non_powercalc_sensors": "Control whether you want to include non powercalc sensors in groups"
@@ -512,6 +538,7 @@
           "device": "Enhet",
           "force_calculate_group_energy": "Force calculate energy",
           "group_energy_entities": "Medlem energi entiteter",
+          "group_member_devices": "Member devices",
           "group_member_sensors": "Medlem powercalc sensorer",
           "group_power_entities": "Medlem effekt entiteter",
           "hide_members": "Dölj medlemmar",
@@ -523,6 +550,7 @@
           "device": "Lägg till de grupperade entiteterna Powercalc skapar till en existerande enhet.",
           "force_calculate_group_energy": "By default powercalc sums the energy sensors from the member sensors. Toggle this option to force creating a Riemann Sum sensor",
           "group_energy_entities": "Ytterligare energisensorer (kWh) från din HA installation som ska inkluderas",
+          "group_member_devices": "Add power and energy entities from the selected devices to the group",
           "group_member_sensors": "Powercalc sensorer som ska inkluderas i gruppen",
           "group_power_entities": "Ytterligare effektsensorer (W) från din HA installation som ska inkluderas",
           "include_non_powercalc_sensors": "Control whether to include non powercalc sensors when using the area option",

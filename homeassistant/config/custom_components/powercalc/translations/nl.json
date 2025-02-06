@@ -1,7 +1,9 @@
 {
   "common": {
+    "source_entity": "Bron entiteit",
+    "source_device": "Bron apparaat",
     "remarks_smart_switch": "Dit profiel biedt alleen stand-by stroomwaarden. \n Wanneer je een apparaat hebt dat een vaste hoeveelheid stroom verbruikt wanneer het is ingeschakeld, kunt u die waarde opgeven in de volgende stap van de configuratie flow",
-    "remarks_smart_dimmer": "This profile only provides standby power values. \n In the next step you can optionally provide the values of the connected light"
+    "remarks_smart_dimmer": "Dit profiel biedt alleen stand-by-stroomwaarden. \n In de volgende stap kunt u optioneel de waarden van het aangesloten licht opgeven."
   },
   "config": {
     "abort": {
@@ -23,10 +25,29 @@
     },
     "flow_title": "{name} ({manufacturer} {model})",
     "step": {
+      "assign_groups": {
+        "data": {
+          "group": "Selecteer de groep(en)",
+          "new_group": "Nieuwe groep"
+        },
+        "data_description": {
+          "new_group": "Vul een eigen groepsnaam in om een nieuwe groep aan te maken"
+        },
+        "title": "Toewijzen aan groep"
+      },
+      "availability_entity": {
+        "data": {
+          "availability_entity": "Beschikbaarheid entiteit"
+        },
+        "data_description": {
+          "availability_entity": "Wanneer deze entiteit niet beschikbaar is, zal de stroomsensor ook niet beschikbaar zijn"
+        },
+        "title": "Beschikbaarheid entiteit",
+        "description": "Dit profiel is per apparaat. Selecteer de entiteit die zal worden gebruikt om de beschikbaarheid van de powercalc sensor te bepalen"
+      },
       "daily_energy": {
         "data": {
           "create_utility_meters": "Creëer utiliteit meters",
-          "group": "Aan groep toevoegen",
           "name": "Naam",
           "on_time": "Tijd aan per dag",
           "start_time": "Begintijd",
@@ -36,7 +57,6 @@
           "value_template": "Waarde template"
         },
         "data_description": {
-          "group": "Vul een eigen groepsnaam in om een nieuwe groep aan te maken",
           "on_time": "Standaard 1 dag indien niet gedefinieerd. altijd aan",
           "update_frequency": "tijd in seconden tussen status updates van de sensor"
         },
@@ -74,6 +94,7 @@
           "create_utility_meters": "Creëer utiliteit meters",
           "disable_extended_attributes": "Extra attributen uitschakelen",
           "disable_library_download": "Uitschakelen van externe bibliotheek download",
+          "discovery_exclude_device_types": "Discovery sluit apparaat types uit",
           "force_update_frequency": "Geforceerde update frequentie",
           "ignore_unavailable_state": "Negeer onbeschikbaar status",
           "include_non_powercalc_sensors": "Niet-powercalc sensoren meenemen",
@@ -86,6 +107,7 @@
           "create_utility_meters": "Laat powercalc utiliteit meters maken. Deze resetten dagelijks, uurlijks etc.",
           "disable_extended_attributes": "Schakel alle extra attributen uit die Powercalc aan de energie, energie en groepsentiteit states toevoegt. Dit helpt de grootte van de database klein te houden",
           "disable_library_download": "Uitschakelen van de Powercalc bibliotheek download functie",
+          "discovery_exclude_device_types": "Apparaattypes uitsluiten van het ontdekkingsproces",
           "force_update_frequency": "Interval waarop de sensorstatus wordt bijgewerkt, zelfs wanneer de stroomwaarde hetzelfde blijft. In seconden",
           "ignore_unavailable_state": "Houd Powercalc sensoren beschikbaar, zelfs als de bron entiteit niet beschikbaar is",
           "include_non_powercalc_sensors": "Bepaal of je niet-powercalc sensoren wilt opnemen in groepen"
@@ -118,6 +140,8 @@
           "device": "Apparaat",
           "force_calculate_group_energy": "Forceer berekenen energie",
           "group_energy_entities": "Additionele energie entiteiten",
+          "group_energy_start_at_zero": "Start op nul",
+          "group_member_devices": "Apparaten",
           "group_member_sensors": "Individuele Powercalc sensoren",
           "group_power_entities": "Additionele vermogen entiteiten",
           "hide_members": "Verberg onderliggende sensoren",
@@ -131,6 +155,8 @@
           "device": "Voeg de entiteiten toe aan een bestaand HA apparaat",
           "force_calculate_group_energy": "Standaard worden de energiesensoren van de individuele sensoren opgeteld. Schakel deze optie in om een Riemann Sum sensor te forceren",
           "group_energy_entities": "Additionele energie entiteiten (kWh)",
+          "group_energy_start_at_zero": "Wanneer ingeschakeld, start de energiesensor bij nul wanneer de sensor is aangemaakt. Anders worden alle huidige onderliggende energiesensor waarden opgeteld.",
+          "group_member_devices": "Energie- en stroomentiteiten van de geselecteerde apparaten toevoegen aan de groep",
           "group_member_sensors": "Powercalc sensoren die je wil toevoegen aan de groep",
           "group_power_entities": "Additionele vermogen entiteiten (W)",
           "include_non_powercalc_sensors": "Bepaal of je niet-powercalc sensoren wilt opnemen bij gebruik van de ruimte optie",
@@ -154,26 +180,26 @@
       },
       "group_tracked_untracked": {
         "data": {
-          "main_power_sensor": "Mains power sensor",
-          "group_tracked_auto": "Entities auto added",
-          "create_energy_sensor": "Create energy sensor",
-          "create_utility_meters": "Create utility meters"
+          "main_power_sensor": "Hoofd vermogen sensor (P1)",
+          "group_tracked_auto": "Entiteiten automatisch toegevoegd",
+          "create_energy_sensor": "Creëer energie sensor",
+          "create_utility_meters": "Creëer utiliteit meters"
         },
         "data_description": {
-          "main_power_sensor": "Select the power sensor containing your total power usage. When left empty, only an tracked power sensor will be created",
-          "group_tracked_auto": "Powercalc will automatically add all power sensors to the tracked group, skipping powercalc groups. Disable this when you'd like to manually define the tracked entities",
-          "create_energy_sensor": "Whether powercalc needs to create a kWh sensor",
-          "create_utility_meters": "Let powercalc create utility meters, which cycle daily, hourly etc."
+          "main_power_sensor": "Selecteer de vermogenssensor die uw totale energieverbruik bevat. Indien leeg wordt alleen een tracked groep gemaakt",
+          "group_tracked_auto": "Powercalc voegt automatisch alle vermogen sensoren toe aan de tracked groep, uitgezonderd powercalc groepen. Schakel deze uit als u handmatig de bijgehouden entiteiten wilt definiëren.",
+          "create_energy_sensor": "Laat Powercalc een kWh meter maken",
+          "create_utility_meters": "Laat powercalc utiliteit meters maken. Deze resetten dagelijks, uurlijks etc."
         },
-        "description": "Create a group sensor for all tracked and untracked power",
-        "title": "Create a tracked power sensor"
+        "description": "Maak een groepssensor aan voor alle bijgehouden en niet bijgehouden energie",
+        "title": "Maak een bijgehouden vermogensensor"
       },
       "group_tracked_untracked_manual": {
         "data": {
-          "group_tracked_entities": "Tracked entities"
+          "group_tracked_entities": "Bijgehouden entiteiten"
         },
-        "description": "Select all the power sensors which are part of the tracked consumption. It is already automatically populated, but you can manually adjust it",
-        "title": "Select power entities"
+        "description": "Selecteer alle stroomsensoren die onderdeel zijn van het bijgehouden verbruik. Het is al automatisch gevuld, maar je kunt het handmatig aanpassen",
+        "title": "Selecteer vermogensentiteiten"
       },
       "library": {
         "data": {
@@ -182,7 +208,7 @@
         "data_description": {
           "confirm_autodisovered_model": "Wanneer je niet bevestigd kan je in het volgende scherm zelf de fabrikant en het model kiezen."
         },
-        "description": "Fabrikant \"{manufacturer}\" en model \"{model}\" zijn automatisch gedecteerd voor het apparaat.{remarks}",
+        "description": "{source}\n\nFabrikant \"{manufacturer}\" en model \"{model}\" zijn automatisch gedecteerd voor het apparaat.{remarks}",
         "title": "Bibliotheek"
       },
       "library_multi_profile": {
@@ -225,7 +251,7 @@
           "group_custom": "Standaard groep",
           "group_domain": "Domein gebaseerde groep",
           "group_subtract": "Aftrekken",
-          "group_tracked_untracked": "Tracked/untracked power"
+          "group_tracked_untracked": "Bijgehouden/niet bijgehouden vermogen"
         },
         "title": "Kies het type groep",
         "description": "Selecteer het type groepssensor dat je wilt aanmaken. Kies een domein gebaseerde groep als u alle entiteiten van een specifiek domein wilt groeperen of een sensor opsomming wilt maken van al uw energie sensoren."
@@ -299,7 +325,7 @@
         "data": {
           "sub_profile": "Sub profiel"
         },
-        "description": "Dit model heeft meerdere profielen. Selecteer de juiste voor je apparaat",
+        "description": "Dit model heeft meerdere profielen. Selecteer de juiste voor je apparaat\n\n\"{entity_id}\"",
         "title": "Sub profiel configuratie"
       },
       "smart_switch": {
@@ -348,7 +374,6 @@
           "create_energy_sensor": "Creëer energie sensoren",
           "create_utility_meters": "Creëer utiliteit meters",
           "entity_id": "Bron entiteit",
-          "group": "Aan groep toevoegen",
           "mode": "Calculatie strategie",
           "name": "Naam",
           "standby_power": "Stand-by vermogen"
@@ -357,7 +382,6 @@
           "create_energy_sensor": "Laat Powercalc een kWh meter maken",
           "create_utility_meters": "Laat powercalc utiliteit meters maken. Deze resetten dagelijks, uurlijks etc.",
           "entity_id": "entiteit waarop de virtuele energie sensor is gebaseerd, de energiesensor update zichzelf wanneer deze entiteit van status wijzigt",
-          "group": "Vul een eigen groepsnaam in om een nieuwe groep aan te maken",
           "name": "Indien dit leeg gelaten wordt dan wordt de naam van de bron entiteit overgenomen",
           "standby_power": "Definieer het vermogen wanneer het apparaat uit staat (OFF status in Home Assistant)"
         },
@@ -467,6 +491,7 @@
           "create_utility_meters": "Creëer utiliteit meters",
           "disable_extended_attributes": "Extra attributen uitschakelen",
           "disable_library_download": "Uitschakelen van externe bibliotheek download",
+          "discovery_exclude_device_types": "Discovery sluit apparaat types uit",
           "force_update_frequency": "Geforceerde update frequentie",
           "ignore_unavailable_state": "Negeer onbeschikbaar status",
           "include_non_powercalc_sensors": "Niet-powercalc sensoren meenemen",
@@ -479,6 +504,7 @@
           "create_utility_meters": "Laat powercalc utiliteit meters maken. Deze resetten dagelijks, uurlijks etc.",
           "disable_extended_attributes": "Schakel alle extra attributen uit die Powercalc aan de energie, energie en groepsentiteit states toevoegt. Dit helpt de grootte van de database klein te houden",
           "disable_library_download": "Uitschakelen van de Powercalc bibliotheek download functie",
+          "discovery_exclude_device_types": "Apparaattypes uitsluiten van het ontdekkingsproces",
           "force_update_frequency": "Interval waarop de sensorstatus wordt bijgewerkt, zelfs wanneer de stroomwaarde hetzelfde blijft. In seconden",
           "ignore_unavailable_state": "Houd Powercalc sensoren beschikbaar, zelfs als de bron entiteit niet beschikbaar is",
           "include_non_powercalc_sensors": "Bepaal of je niet-powercalc sensoren wilt opnemen in groepen"
@@ -512,6 +538,7 @@
           "device": "Apparaat",
           "force_calculate_group_energy": "Forceer berekenen energie",
           "group_energy_entities": "Additionele energie entiteiten",
+          "group_member_devices": "Apparaten",
           "group_member_sensors": "Individuele Powercalc sensoren",
           "group_power_entities": "Additionele vermogen entiteiten",
           "hide_members": "Verberg onderliggende sensoren",
@@ -523,6 +550,7 @@
           "device": "Voeg de entiteiten toe aan een bestaand HA apparaat",
           "force_calculate_group_energy": "Standaard worden de energiesensoren van de individuele sensoren opgeteld. Schakel deze optie in om een Riemann Sum sensor te forceren",
           "group_energy_entities": "Additionele energie entiteiten (kWh)",
+          "group_member_devices": "Energie- en stroomentiteiten van de geselecteerde apparaten toevoegen aan de groep",
           "group_member_sensors": "Powercalc sensoren die je wil toevoegen aan de groep",
           "group_power_entities": "Additionele vermogen entiteiten (W)",
           "include_non_powercalc_sensors": "Bepaal of je niet-powercalc sensoren wilt opnemen bij gebruik van de ruimte optie",
@@ -542,9 +570,9 @@
       },
       "group_tracked_untracked": {
         "data": {
-          "main_power_sensor": "Mains power sensor",
-          "group_tracked_auto": "Entities auto added",
-          "create_energy_sensor": "Create energy sensor",
+          "main_power_sensor": "Hoofd vermogen sensor (P1)",
+          "group_tracked_auto": "Entiteiten automatisch toegevoegd",
+          "create_energy_sensor": "Creëer energie sensor",
           "create_utility_meters": "Creëer utiliteit meters"
         },
         "data_description": {
