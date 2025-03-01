@@ -1,6 +1,6 @@
 substitutions:
-  name: "laptop"
-  friendly_name: "Laptop"
+  name: "pc"
+  friendly_name: "PC"
   # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
   room: ""
   device_description: "athom smart plug v2"
@@ -63,6 +63,7 @@ dashboard_import:
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
 
 globals:
   - id: total_energy
