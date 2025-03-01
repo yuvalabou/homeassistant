@@ -17,7 +17,7 @@ services:
 
   esphome:
     container_name: "esphome"
-    image: esphome/esphome
+    image: ghcr.io/esphome/esphome
     network_mode: host
     environment:
       - TZ=Asia/Jerusalem
