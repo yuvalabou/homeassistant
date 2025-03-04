@@ -1,0 +1,26 @@
+---
+
+- alias: 'Reolink Push'
+  id: 98d1c7bd-5abf-4f4c-ab0a-c72cce8456fe
+  trigger:
+    trigger: state
+    entity_id: binary_sensor.rlc_510wa_aboulafia_motion
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'not_home'
+    - condition: template
+      value_template: >-
+        {{as_timestamp(now()) - as_timestamp(state_attr('automation.reolink_push', 'last_triggered'), 0) > 30}}
+  action:
+    - action: camera.snapshot
+      target:
+        entity_id: camera.rlc_510wa_aboulafia_fluent
+      data:
+        filename: '/config/www/garden.jpg'
+    - action: notify.mobile_app_yuval
+      data:
+        message: "Motion detected! Here's a snapshot."
+        data:
+          image: 'https://mqj9ef93edeicloi3qu2vac7bndfcycx.ui.nabu.casa/local/garden.jpg'
