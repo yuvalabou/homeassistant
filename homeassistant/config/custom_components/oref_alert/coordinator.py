@@ -1,7 +1,6 @@
 """DataUpdateCoordinator for oref_alert integration."""
 
 import asyncio
-from dataclasses import dataclass
 from datetime import timedelta
 from functools import cmp_to_key
 from http import HTTPStatus
@@ -14,6 +13,12 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+
+from custom_components.oref_alert.categories import (
+    category_is_alert,
+    category_is_update,
+    real_time_to_history_category,
+)
 
 from .const import (
     ATTR_CATEGORY,
@@ -44,12 +49,37 @@ REQUEST_RETRIES = 3
 REAL_TIME_ALERT_LOGIC_WINDOW = 2
 
 
-@dataclass
+def _is_update(alert: dict[str, Any]) -> bool:
+    """Check if the alert is an update."""
+    return category_is_update(alert["category"])
+
+
+def _is_alert(alert: dict[str, Any]) -> bool:
+    """Check if the alert is an alert."""
+    return category_is_alert(alert["category"]) and not _is_update(alert)
+
+
 class OrefAlertCoordinatorData:
     """Class for holding coordinator data."""
 
-    alerts: list[Any]
-    active_alerts: list[Any]
+    def __init__(self, data: list[Any], active_duration: int) -> None:
+        """Initialize the data."""
+        self.data = data
+        self.alerts = list(filter(lambda alert: _is_alert(alert), data))
+        active_alerts = OrefAlertDataUpdateCoordinator.recent_alerts(
+            data, active_duration
+        )
+        preemptive_updates = list(
+            filter(lambda alert: _is_update(alert), active_alerts)
+        )
+        self.active_alerts = list(filter(lambda alert: _is_alert(alert), active_alerts))
+        active_alerts_areas = {alert["data"] for alert in self.active_alerts}
+        self.preemptive_updates = list(
+            filter(
+                lambda alert: alert["data"] not in active_alerts_areas,
+                preemptive_updates,
+            )
+        )
 
 
 def _sort_alerts(item1: dict[str, Any], item2: dict[str, Any]) -> int:
@@ -107,12 +137,12 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             alerts.extend(self._get_synthetic_alerts())
             alerts.sort(key=cmp_to_key(_sort_alerts))
             for unrecognized_area in {alert["data"] for alert in alerts}.difference(
-                {alert["data"] for alert in getattr(self.data, "alerts", [])}
+                {alert["data"] for alert in getattr(self.data, "data", [])}
             ).difference(AREAS):
                 LOGGER.error("Alert has an unrecognized area: %s", unrecognized_area)
         else:
-            alerts = self.data.alerts
-        return OrefAlertCoordinatorData(alerts, self._active_alerts(alerts))
+            alerts = self.data.data
+        return OrefAlertCoordinatorData(alerts, self._active_duration)
 
     async def _async_fetch_url(self, url: str) -> tuple[Any, bool]:
         """Fetch data from Oref servers."""
@@ -144,14 +174,17 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
 
     def _current_to_history_format(
         self, current: dict[str, Any], history: list[dict[str, Any]]
-    ) -> list[dict[str, str]]:
+    ) -> list[dict[str, Any]]:
         """Convert current alerts payload to history format."""
+        if (category := real_time_to_history_category(int(current["cat"]))) is None:
+            # Unknown category. Wait for the history to include it.
+            return []
         now = dt_util.now(IST).strftime("%Y-%m-%d %H:%M:%S")
-        history_last_minute_alerts = self._recent_alerts(
+        history_last_minute_alerts = self.recent_alerts(
             history, REAL_TIME_ALERT_LOGIC_WINDOW
         )
         previous_last_minute_alerts = (
-            self._recent_alerts(self.data.active_alerts, REAL_TIME_ALERT_LOGIC_WINDOW)
+            self.recent_alerts(self.data.data, REAL_TIME_ALERT_LOGIC_WINDOW)
             if self.data
             else []
         )
@@ -174,16 +207,13 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                             "alertDate": now,
                             ATTR_TITLE: current[ATTR_TITLE],
                             "data": area,
-                            ATTR_CATEGORY: int(current["cat"]),
+                            ATTR_CATEGORY: category,
                         }
                     )
         return alerts
 
-    def _active_alerts(self, alerts: list[Any]) -> list[Any]:
-        """Return the list of active alerts."""
-        return self._recent_alerts(alerts, self._active_duration)
-
-    def _recent_alerts(self, alerts: list[Any], active_duration: int) -> list[Any]:
+    @staticmethod
+    def recent_alerts(alerts: list[Any], active_duration: int) -> list[Any]:
         """Return the list of recent alerts, assuming the input is sorted."""
         earliest_alert = dt_util.now().timestamp() - active_duration * 60
         recent_alerts = []
