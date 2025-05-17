@@ -6,7 +6,7 @@ substitutions:
   device_description: "athom smart plug v2"
   project_name: "Athom Technology.Smart Plug V2"
   project_version: "2.0.2"
-  relay_restore_mode: RESTORE_DEFAULT_OFF
+  relay_restore_mode: RESTORE_DEFAULT_ON
   sensor_update_interval: 10s
   # Current Limit in Amps. AU Plug = 10. IL, BR, EU, UK, US Plug = 16.
   current_limit : "16"
@@ -15,7 +15,7 @@ substitutions:
   # Set timezone of the smart plug. Useful if the plug is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney")
   timezone: "Asia/Jerusalem"
   # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
-  wifi_fast_connect: "false"
+  wifi_fast_connect: "true"
 
 
 esphome:
@@ -30,7 +30,7 @@ esphome:
 
 esp8266:
   board: esp8285
-  restore_from_flash: true
+  restore_from_flash: false
 
 preferences:
   flash_write_interval: 5min
@@ -49,9 +49,15 @@ web_server:
   port: 80
 
 wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_passwd
   ap: {} # This spawns an AP with the device name and mac address with no password.
   fast_connect: "${wifi_fast_connect}"
   domain: "${dns_domain}"
+  manual_ip: 
+    static_ip: 10.0.0.40
+    gateway: 10.0.0.1
+    subnet: 255.255.0.0
 
 captive_portal:
 
@@ -208,55 +214,3 @@ text_sensor:
     mac_address:
       name: "Mac Address"
       entity_category: diagnostic
-
-#   #  Creates a sensor showing when the device was last restarted
-#   - platform: template
-#     name: 'Last Restart'
-#     id: device_last_restart
-#     icon: mdi:clock
-#     entity_category: diagnostic
-# #    device_class: timestamp
-
-  # #  Creates a sensor of the uptime of the device, in formatted days, hours, minutes and seconds
-  # - platform: template
-  #   name: "Uptime"
-  #   entity_category: diagnostic
-  #   lambda: |-
-  #     int seconds = (id(uptime_sensor).state);
-  #     int days = seconds / (24 * 3600);
-  #     seconds = seconds % (24 * 3600);
-  #     int hours = seconds / 3600;
-  #     seconds = seconds % 3600;
-  #     int minutes = seconds /  60;
-  #     seconds = seconds % 60;
-  #     if ( days > 3650 ) {
-  #       return { "Starting up" };
-  #     } else if ( days ) {
-  #       return { (String(days) +"d " + String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-  #     } else if ( hours ) {
-  #       return { (String(hours) +"h " + String(minutes) +"m "+ String(seconds) +"s").c_str() };
-  #     } else if ( minutes ) {
-  #       return { (String(minutes) +"m "+ String(seconds) +"s").c_str() };
-  #     } else {
-  #       return { (String(seconds) +"s").c_str() };
-  #     }
-  #   icon: mdi:clock-start
-
-# time:
-#   - platform: sntp
-#     id: sntp_time
-#   # Define the timezone of the device
-#     timezone: "${timezone}"
-#   # Change sync interval from default 5min to 6 hours
-#     update_interval: 360min
-#   # Publish the time the device was last restarted
-#     on_time_sync:
-#       then:
-#         # Update last restart time, but only once.
-#         - if:
-#             condition:
-#               lambda: 'return id(device_last_restart).state == "";'
-#             then:
-#               - text_sensor.template.publish:
-#                   id: device_last_restart
-#                   state: !lambda 'return id(sntp_time).now().strftime("%a %d %b %Y - %I:%M:%S %p");'

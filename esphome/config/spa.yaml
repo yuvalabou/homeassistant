@@ -1,12 +1,12 @@
 substitutions:
-  name: "spa"
-  friendly_name: "Spa"
+  name: spa-9cd951
+  friendly_name: Spa 9cd951
   # Allows ESP device to be automatically lined to an 'Area' in Home Assistant. Typically used for areas such as 'Lounge Room', 'Kitchen' etc
-  room: ""
+  room: "Shed"
   device_description: "athom smart plug v2"
   project_name: "Athom Technology.Smart Plug V2"
   project_version: "2.0.2"
-  relay_restore_mode: RESTORE_DEFAULT_OFF
+  relay_restore_mode: RESTORE_DEFAULT_ON
   sensor_update_interval: 10s
   # Current Limit in Amps. AU Plug = 10. IL, BR, EU, UK, US Plug = 16.
   current_limit : "16"
@@ -15,7 +15,7 @@ substitutions:
   # Set timezone of the smart plug. Useful if the plug is in a location different to the HA server. Can be entered in unix Country/Area format (i.e. "Australia/Sydney")
   timezone: "Asia/Jerusalem"
   # Enables faster network connections, with last connected SSID being connected to and no full scan for SSID being undertaken
-  wifi_fast_connect: "false"
+  wifi_fast_connect: "true"
 
 
 esphome:
@@ -54,7 +54,7 @@ wifi:
   # ap: {} # This spawns an AP with the device name and mac address with no password.
   fast_connect: "${wifi_fast_connect}"
   domain: "${dns_domain}"
-  reboot_timeout: 1h
+  reboot_timeout: 0s
 
 # captive_portal:
 
