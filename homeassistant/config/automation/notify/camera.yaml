@@ -4,7 +4,7 @@
   id: 98d1c7bd-5abf-4f4c-ab0a-c72cce8456fe
   trigger:
     trigger: state
-    entity_id: binary_sensor.rlc_510wa_aboulafia_motion
+    entity_id: binary_sensor.rlc_510wa_aboulafia_person
     to: 'on'
   condition:
     - condition: state
