@@ -7,7 +7,7 @@
       trigger: time
       at:
         - '12:30:00'
-        - '19:30:00'
+        - '21:00:00'
     - id: 'off'
       trigger: time
       at:
@@ -70,3 +70,16 @@
           action: homeassistant.turn_off
           data:
             entity_id: fan.master_bedroom_fan
+
+- alias: "Morning heating of Master Bedroom"
+  id: 89335e47-9267-4eae-8f2c-726686658b62
+  trigger:
+    trigger: time
+    at: '06:30:00'
+  conditions:
+    - "{{ is_state('group.person', 'home') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+  action:
+    action: climate.turn_on
+    data:
+      entity_id: climate.master_bedroom_ac

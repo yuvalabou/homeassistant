@@ -1,0 +1,14 @@
+---
+
+- alias: "Turn-on boiler in 6 AM"
+  id: f0dc7b76-4819-42cf-9c4f-11e9c0fc5b2d
+  trigger:
+    trigger: time
+    at: '06:00:00'
+  condition:
+    - "{{ is_state('group.person', 'home')}}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+  action:
+    action: switch.turn_on
+    data:
+      entity_id: switch.boiler

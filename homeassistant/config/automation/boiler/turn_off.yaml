@@ -1,12 +1,23 @@
 ---
 
-- alias: "Turn-off Boiler when reaching time"
+- alias: "Start Boiler timer"
   id: 4fc58857-73d2-4938-acf8-5952bf3de671
   trigger:
     trigger: state
     entity_id: switch.boiler
     to: 'on'
-    for: '01:00:00'
+  action:
+    action: timer.start
+    data:
+      entity_id: timer.boiler_running
+
+- alias: "Turn off Boiler when timer ends"
+  id: fe6372cd-446f-47ae-b88b-2a44134a54f0
+  trigger:
+    trigger: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.boiler_running
   action:
     action: switch.turn_off
     data:
