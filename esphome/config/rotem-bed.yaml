@@ -1,9 +1,9 @@
 ---
 
 substitutions:
-  devicename: harel-bed
-  upper_devicename: "Harel Bed"
-  template_id: harel_bed
+  devicename: rotem-bed
+  upper_devicename: "Rotem Bed"
+  template_id: rotem_bed
 
 esphome:
   name: $devicename
@@ -15,7 +15,7 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_passwd
   manual_ip:
-    static_ip: 10.0.0.71
+    static_ip: 10.0.0.72
     gateway: 10.0.0.1
     subnet: 255.255.0.0
   ap:

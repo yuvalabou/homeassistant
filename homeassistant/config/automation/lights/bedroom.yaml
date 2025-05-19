@@ -1,6 +1,6 @@
 ---
 
-- alias: "Turn on Harel light"
+- alias: "Turn on Kids light"
   id: 3a9d0a6d-5e1a-4db8-b27f-39439539b18a
   trigger:
     trigger: time
@@ -10,7 +10,9 @@
   action:
     action: light.turn_on
     data:
-      entity_id: light.harel_bed_harel_light
+      entity_id:
+        - light.harel_bed_harel_bed_light
+        - light.rotem_bed_rotem_bed_light
       color_temp_kelvin: 3600
 
 - alias: "Turn off Harel light"
@@ -21,9 +23,11 @@
   action:
     action: light.turn_off
     data:
-      entity_id: light.harel_bed_harel_light
+      entity_id:
+        - light.harel_bed_harel_bed_light
+        - light.rotem_bed_rotem_bed_light
 
-- alias: "Harel light alarm mode"
+- alias: "Kids light alarm mode"
   id: 773491ad-c84f-486a-a55d-dc167ab494ea
   trigger:
     - trigger: state
@@ -48,7 +52,9 @@
         sequence:
           action: light.turn_on
           data:
-            entity_id: light.harel_bed_harel_light
+            entity_id:
+              - light.harel_bed_harel_bed_light
+              - light.rotem_bed_rotem_bed_light
             brightness_pct: 100
             color_name: yellow
             transition: 0
@@ -58,7 +64,9 @@
         sequence:
           action: light.turn_on
           data:
-            entity_id: light.harel_bed_harel_light
+            entity_id:
+              - light.harel_bed_harel_bed_light
+              - light.rotem_bed_rotem_bed_light
             brightness_pct: 100
             color_name: red
             transition: 0
@@ -68,5 +76,7 @@
         sequence:
           action: light.turn_off
           data:
-            entity_id: light.harel_bed_harel_light
+            entity_id:
+              - light.harel_bed_harel_bed_light
+              - light.rotem_bed_rotem_bed_light
             transition: 10
