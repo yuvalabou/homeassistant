@@ -1,0 +1,159 @@
+esphome:
+  name: ifan03_living_room # Change this to your desired device name
+  friendly_name: iFan03 Living Room # Change this to your desired friendly name
+
+esp8266:
+  board: esp8285 # iFan03 typically uses ESP8285, which is compatible with esp01_1m settings
+  restore_from_flash: True
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_passwd
+  manual_ip:
+    static_ip: 10.0.0.7
+    gateway: 10.0.0.1
+    subnet: 255.255.0.0
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  # password: "YOUR_API_PASSWORD" # Uncomment and set if you want an API password
+
+ota:
+  platform: esphome
+  # password: "YOUR_OTA_PASSWORD" # Uncomment and set if you want an OTA password
+
+web_server:
+  port: 80
+
+# ------------------------------------------------------------------------------------
+# GPIO DEFINITIONS for iFan03
+# ------------------------------------------------------------------------------------
+# Relay 1 (Fan Speed Low):    GPIO12
+# Relay 2 (Fan Speed Medium): GPIO5
+# Relay 3 (Fan Speed High):   GPIO4
+# Relay 4 (Light):            GPIO15
+# Button:                     GPIO0 (Pulled HIGH, active LOW)
+# RF Receiver Data:           GPIO14
+# Status LED (Blue):          GPIO13 (Active LOW)
+# ------------------------------------------------------------------------------------
+
+# Define the outputs (relays)
+output:
+  - platform: gpio
+    pin: GPIO12
+    id: fan_speed_low_relay
+  - platform: gpio
+    pin: GPIO5
+    id: fan_speed_medium_relay
+  - platform: gpio
+    pin: GPIO4
+    id: fan_speed_high_relay
+  - platform: gpio
+    pin: GPIO15
+    id: light_relay
+
+# Fan Component
+fan:
+  - platform: speed
+    name: "Ceiling Fan" # This will be the entity name in Home Assistant
+    id: ceiling_fan
+    low_speed_output: fan_speed_low_relay
+    medium_speed_output: fan_speed_medium_relay
+    high_speed_output: fan_speed_high_relay
+    # This ensures the fan remembers its last state after a reboot/power cycle
+    # Options: RESTORE_DEFAULT_OFF, RESTORE_DEFAULT_ON, RESTORE_INVERTED_DEFAULT_OFF,
+    #          RESTORE_INVERTED_DEFAULT_ON, ALWAYS_OFF, ALWAYS_ON
+    restore_mode: RESTORE_DEFAULT_OFF
+
+# Light Component
+light:
+  - platform: binary
+    name: "Ceiling Light" # This will be the entity name in Home Assistant
+    id: ceiling_light
+    output: light_relay
+    restore_mode: RESTORE_DEFAULT_OFF # Or your preferred restore mode
+
+# Physical Button
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP # Button is pulled high, goes low when pressed
+      inverted: true      # So a "press" is seen as ON
+    name: "iFan03 Button"
+    id: physical_button
+    filters:
+      - debounce: 50ms # Prevents multiple triggers from one press
+    on_click: # Short press
+      - min_length: 50ms   # Minimum time the button must be pressed
+        max_length: 350ms  # Maximum time for a short press
+        then:
+          - fan.cycle_speed: ceiling_fan
+      # Long press
+      - min_length: 500ms  # Minimum time for a long press
+      # max_length: 2s   # Optional: max_length for long press if needed
+        then:
+          - light.toggle: ceiling_light
+
+# RF Receiver - for the remote control
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: false # Usually false for RF receivers
+  dump: rc_switch   # This will print received RF codes to the ESPHome logs.
+                    # Use this to find the codes for your remote.
+  # dump: all        # For more verbose debugging if rc_switch doesn't show anything
+  #                   # but can be very noisy.
+  tolerance: 50%    # Adjust if codes are not reliably detected
+  filter: 50us      # Debounce filter for RF signals
+  idle: 2ms         # How long of an idle signal to wait for before considering a new packet
+
+# Example of how to use captured RF codes (uncomment and modify after capturing)
+# binary_sensor:
+#   - platform: remote_receiver
+#     name: "RF Remote Light Toggle"
+#     rc_switch_raw:
+#       code: '010101010101010101010101' # Replace with your captured code
+#       protocol: 1                     # Replace with your captured protocol (often 1 or 2)
+#     on_press:
+#       - light.toggle: ceiling_light
+#
+#   - platform: remote_receiver
+#     name: "RF Remote Fan Low"
+#     rc_switch_raw:
+#       code: '101010101010101010101010' # Replace with your captured code
+#       protocol: 1
+#     on_press:
+#       - fan.turn_on:
+#           id: ceiling_fan
+#           speed: low
+#
+#   - platform: remote_receiver
+#     name: "RF Remote Fan Off"
+#     rc_switch_raw:
+#       code: '110011001100110011001100' # Replace with your captured code
+#       protocol: 1
+#     on_press:
+#       - fan.turn_off: ceiling_fan
+#
+# You can also use on_rc_switch_received for more complex logic:
+# on_rc_switch_received:
+#   - lambda: |-
+#       ESP_LOGD("main", "Received RC Switch: Code='%s', Protocol=%d, Length=%d, Value=%lu",
+#                x.code.c_str(), x.protocol, x.length, x.value);
+#       if (x.code == "010101010101010101010101" && x.protocol == 1) { // Example Light Toggle
+#         id(ceiling_light).toggle();
+#       } else if (x.code == "101010101010101010101010" && x.protocol == 1) { // Example Fan Low
+#         auto call = id(ceiling_fan).turn_on();
+#         call.set_speed(1); // Speed level 1 (low)
+#         call.perform();
+#       } // Add more else if for other buttons
+
+# Status LED (Blue LED on iFan03)
+status_led:
+  pin:
+    number: GPIO13
+    inverted: true # The LED is on when the GPIO is LOW

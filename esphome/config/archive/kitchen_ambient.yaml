@@ -15,7 +15,7 @@ wifi:
   password: !secret wifi_passwd
   manual_ip:
     static_ip: !secret static_kitchen
-    gateway: !secret gateway
+    gateway: !secret gatewayesphome
     subnet: 255.255.255.0
   ap:
     ssid: "${upper_devicename}_fallback_hotspot"

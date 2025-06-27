@@ -1,0 +1,17 @@
+substitutions:
+  name: spa-9cd951
+  friendly_name: Spa 9cd951
+packages:
+  Athom Technology.Smart Plug V2: github://athom-tech/athom-configs/athom-smart-plug-v2.yaml
+esphome:
+  name: ${name}
+  name_add_mac_suffix: false
+  friendly_name: ${friendly_name}
+api:
+  encryption:
+    key: X4NXLv1kpR990WXsReeO0wjJ1tt/yofjsXM3EGtrNAg=
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
