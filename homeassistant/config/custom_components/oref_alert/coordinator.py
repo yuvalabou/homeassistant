@@ -1,14 +1,13 @@
 """DataUpdateCoordinator for oref_alert integration."""
 
 import asyncio
+import json
 from datetime import timedelta
 from functools import cmp_to_key
 from http import HTTPStatus
-from json import JSONDecodeError
 from typing import Any
 
 import homeassistant.util.dt as dt_util
-from aiohttp.client_exceptions import ContentTypeError
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
@@ -24,6 +23,7 @@ from .const import (
     ATTR_CATEGORY,
     ATTR_TITLE,
     CONF_ALERT_ACTIVE_DURATION,
+    CONF_ALL_ALERTS_ATTRIBUTES,
     CONF_AREA,
     CONF_DURATION,
     CONF_POLL_INTERVAL,
@@ -62,24 +62,15 @@ def _is_alert(alert: dict[str, Any]) -> bool:
 class OrefAlertCoordinatorData:
     """Class for holding coordinator data."""
 
-    def __init__(self, data: list[Any], active_duration: int) -> None:
+    def __init__(self, items: list[Any], active_duration: int) -> None:
         """Initialize the data."""
-        self.data = data
-        self.alerts = list(filter(lambda alert: _is_alert(alert), data))
+        self.items = items
+        self.alerts = list(filter(lambda alert: _is_alert(alert), items))
         active_alerts = OrefAlertDataUpdateCoordinator.recent_alerts(
-            data, active_duration
-        )
-        preemptive_updates = list(
-            filter(lambda alert: _is_update(alert), active_alerts)
+            items, active_duration
         )
         self.active_alerts = list(filter(lambda alert: _is_alert(alert), active_alerts))
-        active_alerts_areas = {alert["data"] for alert in self.active_alerts}
-        self.preemptive_updates = list(
-            filter(
-                lambda alert: alert["data"] not in active_alerts_areas,
-                preemptive_updates,
-            )
-        )
+        self.updates = list(filter(lambda alert: _is_update(alert), active_alerts))
 
 
 def _sort_alerts(item1: dict[str, Any], item2: dict[str, Any]) -> int:
@@ -114,14 +105,20 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
         self._active_duration = config_entry.options.get(
             CONF_ALERT_ACTIVE_DURATION, DEFAULT_ALERT_ACTIVE_DURATION
         )
+        self._all_alerts: bool = config_entry.options.get(
+            CONF_ALL_ALERTS_ATTRIBUTES, False
+        )
         self._http_client = async_get_clientsession(hass)
         self._http_cache = {}
-        self._synthetic_alerts: dict[int, dict[str, Any]] = {}
+        self._synthetic_alerts: list[tuple[float, dict[str, Any]]] = []
 
     async def _async_update_data(self) -> OrefAlertCoordinatorData:
         """Request the data from Oref servers.."""
         (current, current_modified), (history, history_modified) = await asyncio.gather(
-            *[self._async_fetch_url(url) for url in (OREF_ALERTS_URL, OREF_HISTORY_URL)]
+            *[
+                self._async_fetch_url(url)
+                for url in ((OREF_ALERTS_URL), (OREF_HISTORY_URL))
+            ]
         )
         if (
             current_modified
@@ -129,7 +126,12 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             or not self.data
             or self._synthetic_alerts
         ):
-            history = self._fix_areas_spelling(history) if history else []
+            history = history or []
+            if not self._all_alerts:
+                history = OrefAlertDataUpdateCoordinator.recent_alerts(
+                    history, self._active_duration
+                )
+            history = self._fix_areas_spelling(history)
             alerts = (
                 self._current_to_history_format(current, history) if current else []
             )
@@ -137,11 +139,11 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             alerts.extend(self._get_synthetic_alerts())
             alerts.sort(key=cmp_to_key(_sort_alerts))
             for unrecognized_area in {alert["data"] for alert in alerts}.difference(
-                {alert["data"] for alert in getattr(self.data, "data", [])}
+                {alert["data"] for alert in getattr(self.data, "items", [])}
             ).difference(AREAS):
                 LOGGER.error("Alert has an unrecognized area: %s", unrecognized_area)
         else:
-            alerts = self.data.data
+            alerts = self.data.items
         return OrefAlertCoordinatorData(alerts, self._active_duration)
 
     async def _async_fetch_url(self, url: str) -> tuple[Any, bool]:
@@ -158,11 +160,9 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                 async with self._http_client.get(url, headers=headers) as response:
                     if response.status == HTTPStatus.NOT_MODIFIED:
                         return cached_content, False
-                    try:
-                        content = await response.json(encoding="utf-8-sig")
-                    except (JSONDecodeError, ContentTypeError):
-                        # Empty file is a valid return but not a valid JSON file
-                        content = None
+                    raw = await response.read()
+                    text = raw.decode("utf-8-sig").strip()
+                    content = None if not text else json.loads(text)
                     self._http_cache[url] = (
                         content,
                         response.headers.get("Last-Modified"),
@@ -170,6 +170,15 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                     return content, not (content is None and cached_content is None)
             except Exception as ex:  # noqa: BLE001
                 exc_info = ex
+        if url in self._http_cache:
+            # Return the cached content if available to prevent entities unavailability.
+            LOGGER.info(
+                "Failed to fetch '%s'. Using the cached content.",
+                url,
+                exc_info=exc_info,
+            )
+            return cached_content, False
+        LOGGER.error("Failed to fetch '%s'", url)
         raise exc_info
 
     def _current_to_history_format(
@@ -180,23 +189,23 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             # Unknown category. Wait for the history to include it.
             return []
         now = dt_util.now(IST).strftime("%Y-%m-%d %H:%M:%S")
-        history_last_minute_alerts = self.recent_alerts(
+        history_recent_alerts = self.recent_alerts(
             history, REAL_TIME_ALERT_LOGIC_WINDOW
         )
-        previous_last_minute_alerts = (
-            self.recent_alerts(self.data.data, REAL_TIME_ALERT_LOGIC_WINDOW)
+        previous_recent_alerts = (
+            self.recent_alerts(self.data.items, REAL_TIME_ALERT_LOGIC_WINDOW)
             if self.data
             else []
         )
         alerts = []
         for alert_area in current["data"]:
             area = self._fix_area_spelling(alert_area)
-            for history_recent_alert in history_last_minute_alerts:
+            for history_recent_alert in history_recent_alerts:
                 if history_recent_alert["data"] == area:
                     # The alert is already in the history list. No need to add it twice.
                     break
             else:
-                for previous_recent_alert in previous_last_minute_alerts:
+                for previous_recent_alert in previous_recent_alerts:
                     if previous_recent_alert["data"] == area:
                         # The alert was already added, so take the original timestamp.
                         alerts.append(previous_recent_alert)
@@ -230,21 +239,34 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
     def add_synthetic_alert(self, details: dict) -> None:
         """Add a synthetic alert for testing purposes."""
         now = dt_util.now(IST)
-        self._synthetic_alerts[int(now.timestamp()) + details[CONF_DURATION]] = {
-            "alertDate": now.strftime("%Y-%m-%d %H:%M:%S"),
-            ATTR_TITLE: details.get(ATTR_TITLE, "התרעה סינטטית לצורכי בדיקות"),
-            "data": details[CONF_AREA],
-            ATTR_CATEGORY: details[ATTR_CATEGORY],
-        }
+        for area in details[CONF_AREA]:
+            self._synthetic_alerts.append(
+                (
+                    now.timestamp() + details[CONF_DURATION],
+                    {
+                        "alertDate": now.strftime("%Y-%m-%d %H:%M:%S"),
+                        ATTR_TITLE: details.get(
+                            ATTR_TITLE, "התרעה סינטטית לצורכי בדיקות"
+                        ),
+                        "data": area,
+                        ATTR_CATEGORY: details[ATTR_CATEGORY],
+                    },
+                )
+            )
 
     def _get_synthetic_alerts(self) -> list[dict[str, Any]]:
         """Return the list of synthetic alerts."""
         now = dt_util.now().timestamp()
-        for expired in [
-            timestamp for timestamp in self._synthetic_alerts if timestamp < now
-        ]:
-            del self._synthetic_alerts[expired]
-        return list(self._synthetic_alerts.values())
+        self._synthetic_alerts = [
+            (expired, alert)
+            for expired, alert in self._synthetic_alerts
+            if expired >= now
+        ]
+        return [alert for _, alert in self._synthetic_alerts]
+
+    def is_synthetic_alert(self, alert: dict[str, Any]) -> bool:
+        """Check if the alert is a synthetic alert."""
+        return any(alert == entry[1] for entry in self._synthetic_alerts)
 
     def _fix_areas_spelling(self, alerts: list[Any]) -> list[Any]:
         """Fix spelling errors in area names."""

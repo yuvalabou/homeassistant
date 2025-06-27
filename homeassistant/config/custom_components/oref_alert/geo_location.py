@@ -84,7 +84,7 @@ class OrefAlertLocationEvent(GeolocationEvent):
         self._hass = hass
         self._attr_name = area
         self._attr_latitude: float = AREA_INFO[area]["lat"]
-        self._attr_longitude: float = AREA_INFO[area]["long"]
+        self._attr_longitude: float = AREA_INFO[area]["lon"]
         self._attr_unit_of_measurement = UnitOfLength.KILOMETERS
         self._attr_distance = round(
             vincenty(
@@ -138,9 +138,9 @@ class OrefAlertLocationEventManager:
         self._hass = hass
         self._config_entry = config_entry
         self._async_add_entities = async_add_entities
-        self._coordinator: OrefAlertDataUpdateCoordinator = hass.data[DOMAIN][
-            config_entry.entry_id
-        ][DATA_COORDINATOR]
+        self._coordinator: OrefAlertDataUpdateCoordinator = config_entry.runtime_data[
+            DATA_COORDINATOR
+        ]
         self._coordinator.async_add_listener(self._async_update)
         self._async_update()
 
@@ -154,10 +154,9 @@ class OrefAlertLocationEventManager:
                     for key, value in alert.items()
                     if key not in {"data", "alertDate"}
                 }
-                if (
-                    alert_date := dt_util.parse_datetime(alert["alertDate"])
-                ) is not None:
-                    attributes[ATTR_DATE] = alert_date.replace(tzinfo=IST)
+                attributes[ATTR_DATE] = dt_util.parse_datetime(
+                    alert["alertDate"], raise_on_error=True
+                ).replace(tzinfo=IST)
                 attributes[ATTR_ICON] = category_to_icon(attributes[ATTR_CATEGORY])
                 attributes[ATTR_EMOJI] = category_to_emoji(attributes[ATTR_CATEGORY])
                 break

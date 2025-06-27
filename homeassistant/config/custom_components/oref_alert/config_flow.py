@@ -12,11 +12,14 @@ from homeassistant.core import async_get_hass, callback
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import selector
 
+from custom_components.oref_alert.metadata import ALL_AREAS_ALIASES
+
 if TYPE_CHECKING:
     from homeassistant.config_entries import ConfigFlowResult
 
 from .const import (
     CONF_ALERT_ACTIVE_DURATION,
+    CONF_ALL_ALERTS_ATTRIBUTES,
     CONF_AREAS,
     CONF_OFF_ICON,
     CONF_ON_ICON,
@@ -28,17 +31,17 @@ from .const import (
     DOMAIN,
     TITLE,
 )
-from .metadata.area_to_polygon import find_area
+from .metadata.area_to_polygon import async_find_area
 from .metadata.areas_and_groups import AREAS_AND_GROUPS
 
 AREAS_CONFIG = selector.SelectSelectorConfig(
-    options=AREAS_AND_GROUPS,
+    options=[area for area in AREAS_AND_GROUPS if area not in ALL_AREAS_ALIASES],
     mode=selector.SelectSelectorMode.DROPDOWN,
     multiple=True,
     custom_value=False,
 )
 CONFIG_SCHEMA = vol.Schema(
-    {vol.Required(CONF_AREAS, default=[]): selector.SelectSelector(AREAS_CONFIG)}  # type: ignore[reportArgumentType]
+    {vol.Required(CONF_AREAS, default=[]): selector.SelectSelector(AREAS_CONFIG)}
 )
 
 
@@ -64,7 +67,7 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
             hass = async_get_hass()
         if hass:
             self._auto_detected_area = (
-                find_area(hass.config.latitude, hass.config.longitude) or ""
+                await async_find_area(hass.config.latitude, hass.config.longitude) or ""
             )
 
         if not self._auto_detected_area:
@@ -86,6 +89,7 @@ class OrefAlertConfigFlow(ConfigFlow, domain=DOMAIN):
                     CONF_POLL_INTERVAL: DEFAULT_POLL_INTERVAL,
                     CONF_ON_ICON: DEFAULT_ON_ICON,
                     CONF_OFF_ICON: DEFAULT_OFF_ICON,
+                    CONF_ALL_ALERTS_ATTRIBUTES: False,
                 },
             )
         return self.async_show_form(
@@ -144,6 +148,12 @@ class OptionsFlowHandler(OptionsFlow):
                             CONF_OFF_ICON, DEFAULT_OFF_ICON
                         ),
                     ): selector.IconSelector(),
+                    vol.Required(
+                        CONF_ALL_ALERTS_ATTRIBUTES,
+                        default=self._config_entry.options.get(
+                            CONF_ALL_ALERTS_ATTRIBUTES, False
+                        ),
+                    ): selector.BooleanSelector(),
                 }
             ),
         )
