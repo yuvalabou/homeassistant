@@ -2,7 +2,6 @@
 
 from typing import TYPE_CHECKING, Any
 
-import homeassistant.util.dt as dt_util
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import (
     ATTR_ICON,
@@ -18,22 +17,20 @@ from custom_components.oref_alert.categories import (
 )
 from custom_components.oref_alert.metadata.area_info import AREA_INFO
 from custom_components.oref_alert.metadata.areas import AREAS
+from custom_components.oref_alert.ttl_deque import TTLDeque
 
 from .const import (
     ATTR_AREA,
-    ATTR_CATEGORY,
     ATTR_EMOJI,
     ATTR_HOME_DISTANCE,
-    ATTR_TITLE,
     CONF_ALERT_ACTIVE_DURATION,
     DATA_COORDINATOR,
     DOMAIN,
+    AlertField,
 )
 
 if TYPE_CHECKING:
     from custom_components.oref_alert.coordinator import OrefAlertDataUpdateCoordinator
-
-SECONDS_IN_A_MINUTE = 60
 
 
 class OrefAlertUpdateEventManager:
@@ -46,9 +43,8 @@ class OrefAlertUpdateEventManager:
     ) -> None:
         """Initialize object with defaults."""
         self._hass = hass
-        self._previous_updates: list[tuple[float, dict[str, Any]]] = []
-        self._expiration = (
-            config_entry.options[CONF_ALERT_ACTIVE_DURATION] * SECONDS_IN_A_MINUTE
+        self._previous_updates: TTLDeque = TTLDeque(
+            config_entry.options[CONF_ALERT_ACTIVE_DURATION]
         )
         self._coordinator: OrefAlertDataUpdateCoordinator = config_entry.runtime_data[
             DATA_COORDINATOR
@@ -59,12 +55,10 @@ class OrefAlertUpdateEventManager:
     @callback
     def _async_update(self) -> None:
         """Fire event for new updates."""
-        self._remove_expired()
-        expiration = dt_util.now().timestamp() + self._expiration
         for update in self._coordinator.data.updates:
             if self._is_previous_update(update):
                 continue
-            if (area := update["data"]) not in AREAS:
+            if (area := update[AlertField.AREA]) not in AREAS:
                 continue
             area_info = AREA_INFO[area]
             self._hass.bus.async_fire(
@@ -81,23 +75,21 @@ class OrefAlertUpdateEventManager:
                     ),
                     ATTR_LATITUDE: area_info["lat"],
                     ATTR_LONGITUDE: area_info["lon"],
-                    ATTR_CATEGORY: update.get("category"),
-                    ATTR_TITLE: update.get("title"),
+                    AlertField.CATEGORY: update.get(AlertField.CATEGORY),
+                    AlertField.TITLE: update.get(AlertField.TITLE),
                     ATTR_ICON: category_to_icon(update.get("category", 0)),
                     ATTR_EMOJI: category_to_emoji(update.get("category", 0)),
+                    AlertField.CHANNEL: update.get(AlertField.CHANNEL),
                 },
             )
-            self._previous_updates.append((expiration, update))
-
-    def _remove_expired(self) -> None:
-        """Remove expired updates."""
-        now = dt_util.now().timestamp()
-        self._previous_updates = [
-            (expired, update)
-            for expired, update in self._previous_updates
-            if expired >= now
-        ]
+            self._previous_updates.add(update)
 
     def _is_previous_update(self, update: dict[str, Any]) -> bool:
         """Check if the update is in the previous list."""
-        return any(update == entry[1] for entry in self._previous_updates)
+        for previous in self._previous_updates.items():
+            for field in (AlertField.AREA, AlertField.CATEGORY, AlertField.TITLE):
+                if update.get(field) != previous.get(field):
+                    break
+            else:
+                return True
+        return False
