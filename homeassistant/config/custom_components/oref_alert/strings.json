@@ -24,12 +24,46 @@
                 "data": {
                     "areas": "Select areas to monitor (Hebrew only)",
                     "alert_active_duration": "Alert's active duration (minutes)",
-                    "poll_interval": "Update frequency (seconds)",
-                    "on_icon": "Active alerts in selected areas icon",
-                    "off_icon": "Normal time icon",
                     "all_alerts_attributes": "Add 'all alerts' attributes"
                 }
             }
+        }
+    },
+    "device": {
+        "default": {
+            "name": "Oref Alert"
+        }
+    },
+    "entity": {
+        "binary_sensor": {
+            "all_areas": {
+                "name": "All Areas"
+            }
+        },
+        "sensor": {
+            "default_time_to_shelter": {
+                "name": "Time To Shelter"
+            },
+            "named_time_to_shelter": {
+                "name": "{name} Time To Shelter"
+            },
+            "default_end_time": {
+                "name": "End Time"
+            },
+            "named_end_time": {
+                "name": "{name} End Time"
+            }
+        }
+    },
+    "exceptions": {
+        "no_config_entry": {
+            "message": "Config entry not found"
+        },
+        "config_entry_not_loaded": {
+            "message": "Config entry not loaded"
+        },
+        "pushy_invalid_response": {
+            "message": "{url} reply payload is invalid: {content}"
         }
     },
     "services": {

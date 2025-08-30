@@ -1,33 +1,31 @@
 """DataUpdateCoordinator for oref_alert integration."""
 
+from __future__ import annotations
+
 import asyncio
 import json
 from datetime import datetime, timedelta
 from functools import cmp_to_key
 from http import HTTPStatus
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 import homeassistant.util.dt as dt_util
-from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
+from homeassistant.core import callback
+from homeassistant.helpers import event as event_helper
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from custom_components.oref_alert.categories import (
+from .categories import (
     category_is_alert,
     category_is_update,
     real_time_to_history_category,
 )
-from custom_components.oref_alert.ttl_deque import TTLDeque
-
 from .const import (
     CONF_ALERT_ACTIVE_DURATION,
     CONF_ALL_ALERTS_ATTRIBUTES,
     CONF_AREA,
     CONF_DURATION,
-    CONF_POLL_INTERVAL,
     DEFAULT_ALERT_ACTIVE_DURATION,
-    DEFAULT_POLL_INTERVAL,
     DOMAIN,
     IST,
     LOGGER,
@@ -36,17 +34,25 @@ from .const import (
 )
 from .metadata.areas import AREAS
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from homeassistant.core import HomeAssistant
+
+    from . import OrefAlertConfigEntry
+    from .ttl_deque import TTLDeque
+
 OREF_ALERTS_URL = "https://www.oref.org.il/warningMessages/alert/Alerts.json"
 OREF_HISTORY_URL = (
     "https://www.oref.org.il/warningMessages/alert/History/AlertsHistory.json"
 )
-
 OREF_HEADERS = {
     "Referer": "https://www.oref.org.il/",
     "X-Requested-With": "XMLHttpRequest",
     "Content-Type": "application/json",
 }
 REQUEST_RETRIES = 3
+REQUEST_THROTTLING = 0.8
 REAL_TIME_ALERT_LOGIC_WINDOW = 2
 
 
@@ -92,18 +98,16 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
     """Class to manage fetching Oref Alert data."""
 
     def __init__(
-        self, hass: HomeAssistant, config_entry: ConfigEntry, channels: list[TTLDeque]
+        self,
+        hass: HomeAssistant,
+        config_entry: OrefAlertConfigEntry,
+        channels: list[TTLDeque],
     ) -> None:
         """Initialize global data updater."""
         super().__init__(
             hass,
             LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(
-                seconds=config_entry.options.get(
-                    CONF_POLL_INTERVAL, DEFAULT_POLL_INTERVAL
-                )
-            ),
         )
         self._active_duration = config_entry.options.get(
             CONF_ALERT_ACTIVE_DURATION, DEFAULT_ALERT_ACTIVE_DURATION
@@ -112,7 +116,7 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             CONF_ALL_ALERTS_ATTRIBUTES, False
         )
         self._http_client = async_get_clientsession(hass)
-        self._http_cache = {}
+        self._http_cache: dict[str, tuple[Any, str, float]] = {}
         self._channels: list[TTLDeque] = channels
         self._channels_change: list[datetime | None] = []
         self._synthetic_alerts: list[tuple[float, dict[str, Any]]] = []
@@ -161,7 +165,12 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
     async def _async_fetch_url(self, url: str) -> tuple[Any, bool]:
         """Fetch data from Oref servers."""
         exc_info = Exception()
-        cached_content, last_modified = self._http_cache.get(url, (None, None))
+        now = dt_util.now().timestamp()
+        cached_content, last_modified, last_request = self._http_cache.get(
+            url, (None, "", 0)
+        )
+        if (now - last_request) < REQUEST_THROTTLING:
+            return cached_content, False
         headers = (
             OREF_HEADERS
             if not last_modified
@@ -171,6 +180,7 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
             try:
                 async with self._http_client.get(url, headers=headers) as response:
                     if response.status == HTTPStatus.NOT_MODIFIED:
+                        self._http_cache[url] = (cached_content, last_modified, now)
                         return cached_content, False
                     raw = await response.read()
                     text = raw.decode("utf-8-sig").replace("\x00", "").strip()
@@ -186,7 +196,8 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                         raise
                     self._http_cache[url] = (
                         content,
-                        response.headers.get("Last-Modified"),
+                        response.headers.get("Last-Modified", ""),
+                        now,
                     )
                     return content, not (content is None and cached_content is None)
             except Exception as ex:  # noqa: BLE001
@@ -198,6 +209,7 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
                 url,
                 exc_info=exc_info,
             )
+            self._http_cache[url] = (cached_content, last_modified, now)
             return cached_content, False
         LOGGER.error("Failed to fetch '%s'", url)
         raise exc_info
@@ -246,7 +258,7 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
     def _add_channels(self, alerts: list[dict[str, Any]]) -> None:
         """Add alerts from the different channels after de-dup."""
         dedup_window = REAL_TIME_ALERT_LOGIC_WINDOW * 60
-        new_alerts = []
+        new_alerts: list[dict] = []
         for channel in self._channels:
             if channel.changed() is None:
                 continue
@@ -350,3 +362,56 @@ class OrefAlertDataUpdateCoordinator(DataUpdateCoordinator[OrefAlertCoordinatorD
         if area[0] == "'":
             area = f"{area[1:]}'"
         return area
+
+
+class OrefAlertCoordinatorUpdater:
+    """Refresh coordinator if there are active alerts / updates."""
+
+    def __init__(
+        self, hass: HomeAssistant, coordinator: OrefAlertDataUpdateCoordinator
+    ) -> None:
+        """Initialize the updater."""
+        self._hass: HomeAssistant = hass
+        self._coordinator: OrefAlertDataUpdateCoordinator = coordinator
+        self._active: datetime = dt_util.now() - timedelta(days=1)
+        self._update: datetime = dt_util.now()
+        self._stop: bool = False
+        self._unsub_update: Callable[[], None] | None = None
+
+    def _sub(self) -> None:
+        """Subscribe an update."""
+        if not self._stop:
+            self._unsub_update = event_helper.async_track_point_in_time(
+                self._hass,
+                self._async_update,
+                dt_util.now() + timedelta(seconds=2),
+            )
+
+    @callback
+    async def _async_update(self, *_: Any) -> None:
+        """Refresh coordinator if needed."""
+        self._unsub_update = None
+        now = dt_util.now()
+        update = False
+        if self._coordinator.data.active_alerts or self._coordinator.data.updates:
+            self._active = now
+            update = True
+        elif now - self._active < timedelta(
+            minutes=20
+        ) or now - self._update > timedelta(hours=1):
+            update = True
+        if update:
+            self._update = now
+            await self._coordinator.async_refresh()
+        self._sub()
+
+    def start(self) -> None:
+        """Start the updater."""
+        self._sub()
+
+    def stop(self) -> None:
+        """Stop the updater."""
+        self._stop = True
+        if self._unsub_update is not None:
+            self._unsub_update()
+            self._unsub_update = None

@@ -16,8 +16,7 @@ add_sensor:
       example: Petah Tikva
       required: true
       selector:
-        text:
-          prefix: Oref Alert
+        text: null
     areas:
       example:
       - פתח תקווה

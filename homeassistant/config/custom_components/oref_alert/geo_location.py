@@ -19,46 +19,45 @@ from homeassistant.const import (
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.util.location import vincenty
 
-from custom_components.oref_alert.categories import (
+from .categories import (
     category_to_emoji,
     category_to_icon,
 )
-
 from .const import (
     ATTR_AREA,
     ATTR_EMOJI,
     ATTR_HOME_DISTANCE,
-    DATA_COORDINATOR,
     DOMAIN,
     IST,
     LOCATION_ID_SUFFIX,
     OREF_ALERT_UNIQUE_ID,
     AlertField,
 )
+from .entity import OrefAlertEntity
 from .metadata.area_info import AREA_INFO
 
 if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigEntry
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
+    from . import OrefAlertConfigEntry
     from .coordinator import OrefAlertDataUpdateCoordinator
+
+PARALLEL_UPDATES = 0
 
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
+    config_entry: OrefAlertConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Initialize config entry."""
     OrefAlertLocationEventManager(hass, config_entry, async_add_entities)
 
 
-class OrefAlertLocationEvent(GeolocationEvent):
+class OrefAlertLocationEvent(OrefAlertEntity, GeolocationEvent):
     """Represents an oref alert."""
 
-    _attr_should_poll = False
     _attr_source = DOMAIN
-    _attr_has_entity_name = True
     _unrecorded_attributes = frozenset(
         {
             ATTR_SOURCE,
@@ -76,11 +75,12 @@ class OrefAlertLocationEvent(GeolocationEvent):
     def __init__(
         self,
         hass: HomeAssistant,
+        config_entry: OrefAlertConfigEntry,
         area: str,
         attributes: dict,
     ) -> None:
         """Initialize entity."""
-        self._hass = hass
+        super().__init__(config_entry)
         self._attr_name = area
         self._attr_latitude: float = AREA_INFO[area]["lat"]
         self._attr_longitude: float = AREA_INFO[area]["lon"]
@@ -108,7 +108,7 @@ class OrefAlertLocationEvent(GeolocationEvent):
     @callback
     def async_remove_self(self) -> None:
         """Remove this entity."""
-        self._hass.async_create_task(self.async_remove(force_remove=True))
+        self.hass.async_create_task(self.async_remove(force_remove=True))
 
     def async_update(self, attributes: dict) -> bool:
         """Update the extra attributes when needed."""
@@ -129,7 +129,7 @@ class OrefAlertLocationEventManager:
     def __init__(
         self,
         hass: HomeAssistant,
-        config_entry: ConfigEntry,
+        config_entry: OrefAlertConfigEntry,
         async_add_entities: AddEntitiesCallback,
     ) -> None:
         """Initialize object with defaults."""
@@ -137,9 +137,9 @@ class OrefAlertLocationEventManager:
         self._hass = hass
         self._config_entry = config_entry
         self._async_add_entities = async_add_entities
-        self._coordinator: OrefAlertDataUpdateCoordinator = config_entry.runtime_data[
-            DATA_COORDINATOR
-        ]
+        self._coordinator: OrefAlertDataUpdateCoordinator = (
+            config_entry.runtime_data.coordinator
+        )
         self._coordinator.async_add_listener(self._async_update)
         self._async_update()
 
@@ -211,7 +211,9 @@ class OrefAlertLocationEventManager:
         }
 
         to_add = {
-            area: OrefAlertLocationEvent(self._hass, area, self._alert_attributes(area))
+            area: OrefAlertLocationEvent(
+                self._hass, self._config_entry, area, self._alert_attributes(area)
+            )
             for area in active - exists
             if area in AREA_INFO
         }

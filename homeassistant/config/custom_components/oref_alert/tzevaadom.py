@@ -6,7 +6,6 @@ import asyncio
 import contextlib
 import enum
 import secrets
-import sys
 from datetime import datetime
 from typing import TYPE_CHECKING, Final
 
@@ -14,27 +13,26 @@ import aiohttp
 from aiohttp import ClientWebSocketResponse, ClientWSTimeout, WSMsgType
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
-from custom_components.oref_alert.categories import (
+from .categories import (
     tzevaadom_threat_id_to_history_category,
 )
-from custom_components.oref_alert.metadata.areas import AREAS
-from custom_components.oref_alert.metadata.tzevaadom_id_to_area import (
-    TZEVAADOM_ID_TO_AREA,
-)
-from custom_components.oref_alert.ttl_deque import TTLDeque
-
 from .const import (
     CONF_ALERT_ACTIVE_DURATION,
-    DATA_COORDINATOR,
     IST,
     LOGGER,
     AlertField,
     AlertSource,
 )
+from .metadata.areas import AREAS
+from .metadata.tzevaadom_id_to_area import (
+    TZEVAADOM_ID_TO_AREA,
+)
+from .ttl_deque import TTLDeque
 
 if TYPE_CHECKING:
-    from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import HomeAssistant
+
+    from . import OrefAlertConfigEntry
 
 WS_URL: Final = "wss://ws.tzevaadom.co.il/socket?platform=WEB"
 ORIGIN_HEADER: Final = "https://www.tzevaadom.co.il"
@@ -58,6 +56,12 @@ THREAT_TITLES = {
     8: "התרעות פיקוד העורף",
 }
 
+PRE_ALERT_TITLE = "בדקות הקרובות צפויות להתקבל התרעות באזורך"
+
+TZEVAADOM_SPELLING_FIX = {
+    "אשדוד -יא,יב,טו,יז,מרינה,סיט": "אשדוד -יא,יב,טו,יז,מרינה,סיטי"  # noqa: RUF001
+}
+
 
 class MessageType(str, enum.Enum):
     """Message types for Tzeva Adom WebSocket messages."""
@@ -69,7 +73,7 @@ class MessageType(str, enum.Enum):
 class TzevaAdomNotifications:
     """Register for notifications coming from Tzeva Adom."""
 
-    def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
+    def __init__(self, hass: HomeAssistant, config_entry: OrefAlertConfigEntry) -> None:
         """Initialize TzevaAdomNotifications."""
         self._hass = hass
         self._config_entry = config_entry
@@ -166,16 +170,21 @@ class TzevaAdomNotifications:
             }
 
         elif message["type"] == MessageType.SYSTEM_MESSAGE:
-            if (
-                cities_ids := message["data"].get("citiesIds")
-                # SYSTEM_MESSAGE is working for now only for testing purposes.
-            ) is None or "pytest" not in sys.modules:
+            areas = [
+                TZEVAADOM_ID_TO_AREA[city_id]
+                for city_id in message["data"].get("citiesIds") or []
+            ]
+            # Filter out empty areas and ensure the message is a pre-alert.
+            if not areas or message["data"].get("instructionType") != 0:
                 return None
             fields = {
-                AlertField.TITLE: message["data"]["titleHe"],
+                # We use the official title for pre-alerts.
+                AlertField.TITLE: PRE_ALERT_TITLE,
                 AlertField.CATEGORY: 14,  # 14 is pre-alert and 13 is post-alert.
-                "areas": [TZEVAADOM_ID_TO_AREA[city_id] for city_id in cities_ids],
-                "id": f"{MessageType.SYSTEM_MESSAGE}_{message['data']['id']}",
+                "areas": areas,
+                "id": (
+                    f"{MessageType.SYSTEM_MESSAGE}_{message['data']['notificationId']}"
+                ),
             }
 
         else:
@@ -202,26 +211,25 @@ class TzevaAdomNotifications:
 
             new_alert = False
             for area in fields["areas"]:
-                if area not in AREAS:
+                name = TZEVAADOM_SPELLING_FIX.get(area, area)
+                if name not in AREAS:
                     LOGGER.warning(
-                        "Unknown area '%s' in Tzeva Adom alert, skipping.", area
+                        "Unknown area '%s' in Tzeva Adom alert, skipping.", name
                     )
                     continue
                 self.alerts.add(
                     {
                         AlertField.DATE: fields[AlertField.DATE],
                         AlertField.TITLE: fields[AlertField.TITLE],
-                        AlertField.AREA: area,
+                        AlertField.AREA: name,
                         AlertField.CATEGORY: fields[AlertField.CATEGORY],
                         AlertField.CHANNEL: AlertSource.TZEVAADOM,
                     }
                 )
                 new_alert = True
 
-            if new_alert and (
-                coordinator := self._config_entry.runtime_data.get(DATA_COORDINATOR)
-            ):
-                await coordinator.async_refresh()
+            if new_alert:
+                await self._config_entry.runtime_data.coordinator.async_refresh()
 
         except:  # noqa: E722
             LOGGER.exception("Error processing WS message")
