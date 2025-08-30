@@ -1,0 +1,81 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure AliExpress Tracker",
+        "description": "⚠️ 'Auto-delete days' is ignored if auto-delete is disabled.",
+        "data": {
+          "language": "Preferred Language",
+          "AUTO_DELETE": "Automatically delete after X days when status is 'Delivered'",
+          "AUTO_DELETE_DAYS": "Number of days before deletion"
+        }
+      }
+    },
+    "error": {
+      "already_configured": "This integration is already configured."
+    },
+    "abort": {
+      "already_configured": "The AliExpress Tracker integration is already configured."
+    },
+    "create_entry": {
+      "default": "AliExpress Tracker has been successfully configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure AliExpress Tracker",
+        "description": "⚠️ 'Auto-delete days' is ignored if auto-delete is disabled.",
+        "data": {
+          "language": "Preferred Language",
+          "AUTO_DELETE": "Automatically delete after X days when status is 'Delivered'",
+          "AUTO_DELETE_DAYS": "Number of days before deletion"
+        }
+      }
+    }
+  },
+  "services": {
+    "add_tracking": {
+      "name": "Add Tracking",
+      "description": "Add a new tracking number to AliExpress Package Tracker.",
+      "fields": {
+        "tracking_number": {
+          "name": "Tracking Number",
+          "description": "Tracking number for the new package.",
+          "example": "123456789"
+        },
+        "title": {
+          "name": "Title",
+          "description": "Custom title for the new tracking.",
+          "example": "Laptop"
+        }
+      }
+    },
+    "remove_tracking": {
+      "name": "Remove Tracking",
+      "description": "Remove a tracking number from AliExpress Package Tracker.",
+      "fields": {
+        "tracking_number": {
+          "name": "Tracking Number",
+          "description": "Tracking number to remove.",
+          "example": "123456789"
+        }
+      }
+    },
+    "edit_title": {
+      "name": "Edit Title",
+      "description": "Change the title attribute of a specific AliExpress tracking entity.",
+      "fields": {
+        "entity_id": {
+          "name": "Entity ID",
+          "description": "The entity ID of the AliExpress tracking sensor to update."
+        },
+        "new_title": {
+          "name": "New Title",
+          "description": "The new title to set for the entity."
+        }
+      }
+    }
+  },
+  "title": "AliExpress Package Tracker"
+}
