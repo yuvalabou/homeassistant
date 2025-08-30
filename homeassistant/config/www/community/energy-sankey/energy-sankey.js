@@ -1,4 +1,4 @@
-var version = "0.0.21";
+var version = "0.0.27";
 var repository = {
 	type: "git",
 	url: "https://github.com/davet2001/homeassistant-energy-sankey-card"
@@ -2478,6 +2478,24 @@ const getEnergyDataCollection = (hass, options = {}) => {
 // export const energyStatisticHelpUrl =
 //   "/docs/energy/faq/#troubleshooting-missing-entities";
 
+function registerCustomCard(params) {
+    const windowWithCards = window;
+    windowWithCards.customCards = windowWithCards.customCards || [];
+    windowWithCards.customCards.push(Object.assign(Object.assign({}, params), { preview: true, documentationURL: `${repository.url}/blob/main/README.md` }));
+}
+
+const PREFIX_NAME = "energy-sankey";
+const GENERIC_LABELS = [
+    "appearance",
+    "advanced_options",
+    "title",
+    "max_consumer_branches",
+];
+
+const ENERGY_CARD_NAME = `${PREFIX_NAME}-energy-elec-flow-card`;
+const ENERGY_CARD_EDITOR_NAME = `${ENERGY_CARD_NAME}-editor`;
+const HIDE_CONSUMERS_BELOW_THRESHOLD_KWH = 0.1;
+
 const SubscribeMixin = (superClass) => {
     class SubscribeClass extends superClass {
         connectedCallback() {
@@ -2535,32 +2553,280 @@ const SubscribeMixin = (superClass) => {
     return SubscribeClass;
 };
 
-function registerCustomCard(params) {
-    const windowWithCards = window;
-    windowWithCards.customCards = windowWithCards.customCards || [];
-    windowWithCards.customCards.push(Object.assign(Object.assign({}, params), { preview: true, documentationURL: `${repository.url}/blob/main/README.md` }));
+var card$2 = {
+	generic: {
+		other: "Ostatní",
+		untracked: "Nerozlišeno"
+	},
+	power_sankey: {
+		live_power_flow: "Aktuální tok energie"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Dnešní distribuce"
+	}
+};
+var editor$2 = {
+	card: {
+		generic: {
+			title: "Nadpis",
+			max_consumer_branches: "Maximální počet zařízení (0 pro neomezeno)",
+			appearance: "Zobrazení",
+			advanced_options: "Další nastavení"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Import ze sítě (nepovinné)",
+			power_to_grid_entity: "Export do sítě (nepovinné)",
+			generation_entity: "Výroba (nepovinné)",
+			hide_small_consumers: "Nerozlišovat spotřebu pod 20W",
+			invert_battery_flows: "Nabíjení baterie je kladné číslo",
+			battery_charge_only_from_generation: "Baterie se nabíjejí pouze z vyrobené energie",
+			battery_hint_std: "Energie z baterií (kombinované nabíjení/vybíjení, kladná hodnota = vybíjení)",
+			battery_hint_inverted: "Energie do baterií (kombinované nabíjení/vybíjení, kladná hodnota = nabíjení)",
+			independent_grid_in_out: "Samostatné senzory pro import/export do sítě"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Nerozlišovat spotřebu pod 0.1kWh",
+			battery_charge_only_from_generation: "Baterie se nabíjejí pouze z vyrobené energie"
+		}
+	}
+};
+var cs = {
+	card: card$2,
+	editor: editor$2
+};
+
+var cs$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$2,
+  default: cs,
+  editor: editor$2
+});
+
+var card$1 = {
+	generic: {
+		other: "Other",
+		untracked: "Untracked"
+	},
+	power_sankey: {
+		live_power_flow: "Live power flow"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Energy distribution today"
+	}
+};
+var editor$1 = {
+	card: {
+		generic: {
+			title: "Title",
+			max_consumer_branches: "Limit quantity of consumer branches (0 for unlimited)",
+			appearance: "Appearance",
+			advanced_options: "Advanced Options"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Power from grid (optional)",
+			power_to_grid_entity: "Power to grid (optional)",
+			generation_entity: "Power from generation (optional)",
+			hide_small_consumers: "Group consumers below 20W",
+			invert_battery_flows: "Battery flows are positive for charging",
+			battery_charge_only_from_generation: "Batteries can only charge from generated power",
+			battery_hint_std: "Power from battery (one combined in/out per battery, positive = discharging)",
+			battery_hint_inverted: "Power to battery (one combined in/out per battery, positive = charging)",
+			independent_grid_in_out: "Use separate sensors for grid in/out"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Group consumers below 0.1kWh",
+			battery_charge_only_from_generation: "Batteries can only charge from generated energy"
+		}
+	}
+};
+var en = {
+	card: card$1,
+	editor: editor$1
+};
+
+var en$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$1,
+  default: en,
+  editor: editor$1
+});
+
+var card = {
+	generic: {
+		other: "Autre",
+		untracked: "Non suivi"
+	},
+	power_sankey: {
+		live_power_flow: "Flux d'énergie en direct"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Répartition de l'énergie aujourd'hui"
+	}
+};
+var editor = {
+	card: {
+		generic: {
+			title: "Titre",
+			max_consumer_branches: "Limiter le nombre de consommateur (0 pour illimité)",
+			appearance: "Apparence",
+			advanced_options: "Options avancée"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Puissance depuis le réseaux (optionnel)",
+			power_to_grid_entity: "Puissance vers le réseaux (optionnel)",
+			generation_entity: "Puissance depuis les générateur/solaire (optionnel)",
+			hide_small_consumers: "Groupper les consommateurs de moins de 20W",
+			invert_battery_flows: "Le flux de batterie sont positifs pour la charge",
+			battery_charge_only_from_generation: "Les batteries ne peuvent se charger qu'à partir de l'énergie générée",
+			battery_hint_std: "Puissance depuis les batteries (une entrée/sortie combinée par batterie, positive = décharge)",
+			battery_hint_inverted: "Puissance vers les batteries (une entrée/sortie combinée par batterie, positif = charge)",
+			independent_grid_in_out: "Utiliser des capteurs séparés pour l'entrée/sortie du réseau"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Regrouper les consommateurs de moins de 0,1 kWh",
+			battery_charge_only_from_generation: "Les batteries ne peuvent se charger qu'à partir de l'énergie générée"
+		}
+	}
+};
+var fr = {
+	card: card,
+	editor: editor
+};
+
+var fr$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card,
+  default: fr,
+  editor: editor
+});
+
+// import * as ar from "./translations/ar.json";
+// import * as bg from "./translations/bg.json";
+// import * as ca from "./translations/ca.json";
+// import * as he from "./translations/he.json";
+// import * as hu from "./translations/hu.json";
+// import * as id from "./translations/id.json";
+// import * as it from "./translations/it.json";
+// import * as ko_KR from "./translations/ko-KR.json";
+// import * as nb from "./translations/nb.json";
+// import * as nl from "./translations/nl.json";
+// import * as pl from "./translations/pl.json";
+// import * as pt_BR from "./translations/pt-BR.json";
+// import * as pt_PT from "./translations/pt-PT.json";
+// import * as ro from "./translations/ro.json";
+// import * as ru from "./translations/ru.json";
+// import * as sl from "./translations/sl.json";
+// import * as sk from "./translations/sk.json";
+// import * as sv from "./translations/sv.json";
+// import * as tr from "./translations/tr.json";
+// import * as uk from "./translations/uk.json";
+// import * as vi from "./translations/vi.json";
+// import * as zh_Hans from "./translations/zh-Hans.json";
+// import * as zh_Hant from "./translations/zh-Hant.json";
+const languages = {
+    //   ar,
+    //   bg,
+    //   ca,
+    cs: cs$1,
+    //   da,
+    //   de,
+    //   el,
+    en: en$1,
+    //   es,
+    //   fi,
+    fr: fr$1,
+    //   he,
+    //   hu,
+    //   id,
+    //   it,
+    //   "ko-KR": ko_KR,
+    //   nb,
+    //   nl,
+    //   pl,
+    //   "pt-BR": pt_BR,
+    //   "pt-PT": pt_PT,
+    //   ro,
+    //   ru,
+    //   sl,
+    //   sk,
+    //   sv,
+    //   tr,
+    //   uk,
+    //   vi,
+    //   "zh-Hans": zh_Hans,
+    //   "zh-Hant": zh_Hant,
+};
+const DEFAULT_LANG = "en";
+function getTranslatedString(key, lang) {
+    try {
+        return key
+            .split(".")
+            .reduce((o, i) => o[i], languages[lang]);
+    }
+    catch (_) {
+        return undefined;
+    }
+}
+function setupCustomlocalize(hass) {
+    return function (key) {
+        var _a;
+        const lang = (_a = hass === null || hass === void 0 ? void 0 : hass.locale.language) !== null && _a !== void 0 ? _a : DEFAULT_LANG;
+        let translated = getTranslatedString(key, lang);
+        if (!translated)
+            translated = getTranslatedString(key, DEFAULT_LANG);
+        return translated !== null && translated !== void 0 ? translated : key;
+    };
 }
 
-const PREFIX_NAME = 'energy-sankey';
-const POWER_CARD_NAME = `${PREFIX_NAME}-power-flow-card`;
-const POWER_CARD_EDITOR_NAME = `${POWER_CARD_NAME}-editor`;
-const ENERGY_CARD_NAME = `${PREFIX_NAME}-energy-elec-flow-card`;
-const ENERGY_CARD_EDITOR_NAME = `${ENERGY_CARD_NAME}-editor`;
-const HIDE_CONSUMERS_BELOW_THRESHOLD_W = 20;
-const HIDE_CONSUMERS_BELOW_THRESHOLD_KWH = 0.1;
-const GENERIC_LABELS = [
-    "appearance",
-    "advanced_options",
-    "title",
-    "max_consumer_branches",
-];
+class ElecFlowCardBase extends SubscribeMixin(s$1) {
+    constructor() {
+        super(...arguments);
+        this._localizer = (key) => {
+            return key;
+        };
+        this._localizerIsSetup = false;
+        this._localize = (key) => {
+            if (!this._localizerIsSetup) {
+                this._localizer = setupCustomlocalize(this.hass);
+                this._localizerIsSetup = true;
+            }
+            console.info("[ElecFlowCardBase] Localizing key:", key);
+            return this._localizer(key);
+        };
+    }
+}
+__decorate([
+    n$1({ attribute: false })
+], ElecFlowCardBase.prototype, "hass", void 0);
 
+const DEFAULT_CONFIG$1 = {
+    type: `custom:${ENERGY_CARD_NAME}`,
+    title: "Energy distribution today",
+    config_version: 1,
+    hide_small_consumers: false,
+    max_consumer_branches: 0,
+    battery_charge_only_from_generation: false,
+};
+function verifyAndMigrateConfig$1(config) {
+    if (!config) {
+        throw new Error("Invalid configuration");
+    }
+    let newConfig = Object.assign({}, config);
+    let currentVersion = config.config_version || 0;
+    if (currentVersion === 0) {
+        console.log("Migrating config from ? to version 1");
+        currentVersion = 1;
+        newConfig.type = `custom:${ENERGY_CARD_NAME}`;
+    }
+    newConfig.config_version = currentVersion;
+    return newConfig;
+}
 registerCustomCard({
-    type: "hui-energy-elec-flow-card",
+    type: ENERGY_CARD_NAME,
     name: "Sankey Energy Flow Card",
     description: "Card for showing the flow of electrical energy over a time period on a sankey chart",
 });
-let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s$1) {
+let EnergyElecFlowCard = class EnergyElecFlowCard extends ElecFlowCardBase {
     constructor() {
         super(...arguments);
         this._generationInRoutes = {};
@@ -2580,17 +2846,18 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
         return 3;
     }
     static async getConfigElement() {
-        await Promise.resolve().then(function () { return energyFlowCardEditor; });
+        await Promise.resolve().then(function () { return energyElecFlowCardEditor; });
         return document.createElement(ENERGY_CARD_EDITOR_NAME);
     }
     setConfig(config) {
-        this._config = config;
+        this._config = verifyAndMigrateConfig$1(config);
     }
-    static getStubConfig() {
-        return {
-            type: "custom:hui-energy-elec-flow-card",
-            title: "Energy distribution today",
-        };
+    static getStubConfig(hass) {
+        // We don't have access to instance localizer yet, so set up a temp one.
+        const localize = setupCustomlocalize(hass);
+        let config = DEFAULT_CONFIG$1;
+        config.title = localize("card.energy_sankey.energy_distribution_today");
+        return config;
     }
     render() {
         if (!this.hass || !this._config) {
@@ -2598,7 +2865,8 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
         }
         const maxConsumerBranches = this._config.max_consumer_branches || 0;
         const hideConsumersBelow = this._config.hide_small_consumers
-            ? HIDE_CONSUMERS_BELOW_THRESHOLD_KWH : 0;
+            ? HIDE_CONSUMERS_BELOW_THRESHOLD_KWH
+            : 0;
         const batteryChargeOnlyFromGeneration = this._config.battery_charge_only_from_generation || false;
         return x `
       <ha-card>
@@ -2616,7 +2884,7 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
             .gridOutRoute=${this._gridOutRoute || undefined}
             .generationInRoutes=${this._generationInRoutes || {}}
             .consumerRoutes=${this._consumerRoutes || {}}
-            .batteryRoutes=${this._batteryRoutes || {}} 
+            .batteryRoutes=${this._batteryRoutes || {}}
             .maxConsumerBranches=${maxConsumerBranches}
             .hideConsumersBelow=${hideConsumersBelow}
             .batteryChargeOnlyFromGeneration=${batteryChargeOnlyFromGeneration}
@@ -2630,18 +2898,24 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
         const solarSources = energyData.prefs.energy_sources.filter((source) => source.type === "solar");
         const prefs = energyData.prefs;
         const types = energySourcesByType(prefs);
-        const totalFromGrid = (_a = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_from.map((flow) => flow.stat_energy_from))) !== null && _a !== void 0 ? _a : 0;
-        const gridInId = types.grid[0].flow_from[0].stat_energy_from;
-        this._gridInRoute = {
-            id: gridInId,
-            rate: totalFromGrid,
-        };
-        const totalToGrid = (_b = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_to.map((flow) => flow.stat_energy_to))) !== null && _b !== void 0 ? _b : 0;
-        const gridOutId = types.grid[0].flow_to[0].stat_energy_to;
-        this._gridOutRoute = {
-            id: gridOutId,
-            rate: totalToGrid,
-        };
+        if (types.grid && types.grid.length > 0) {
+            if (types.grid[0].flow_from.length > 0) {
+                const totalFromGrid = (_a = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_from.map((flow) => flow.stat_energy_from))) !== null && _a !== void 0 ? _a : 0;
+                const gridInId = types.grid[0].flow_from[0].stat_energy_from;
+                this._gridInRoute = {
+                    id: gridInId,
+                    rate: totalFromGrid,
+                };
+            }
+            if (types.grid[0].flow_to.length > 0) {
+                const totalToGrid = (_b = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_to.map((flow) => flow.stat_energy_to))) !== null && _b !== void 0 ? _b : 0;
+                const gridOutId = types.grid[0].flow_to[0].stat_energy_to;
+                this._gridOutRoute = {
+                    id: gridOutId,
+                    rate: totalToGrid,
+                };
+            }
+        }
         solarSources.forEach((source) => {
             const label = getStatisticLabel(this.hass, source.stat_energy_from);
             const value = calculateStatisticsSumGrowth(energyData.stats, [
@@ -2672,7 +2946,8 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
             if (consumerBlacklist.includes(consumer.stat_consumption)) {
                 return;
             }
-            const label = consumer.name || getStatisticLabel(this.hass, consumer.stat_consumption);
+            const label = consumer.name ||
+                getStatisticLabel(this.hass, consumer.stat_consumption);
             const value = calculateStatisticsSumGrowth(energyData.stats, [
                 consumer.stat_consumption,
             ]);
@@ -2688,8 +2963,7 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
                 this._consumerRoutes[consumer.stat_consumption].rate = value !== null && value !== void 0 ? value : 0;
             }
         });
-        const batteries = energyData.prefs
-            .energy_sources.filter((source) => source.type === "battery");
+        const batteries = energyData.prefs.energy_sources.filter((source) => source.type === "battery");
         batteries.forEach((battery) => {
             getStatisticLabel(this.hass, battery.stat_energy_from);
             const inToSystem = calculateStatisticsSumGrowth(energyData.stats, [
@@ -2711,7 +2985,7 @@ let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends SubscribeMixin(s
         });
     }
 };
-HuiEnergyElecFlowCard.styles = [
+EnergyElecFlowCard.styles = [
     i$3 `
       ha-card {
         height: 100%;
@@ -2729,42 +3003,33 @@ HuiEnergyElecFlowCard.styles = [
     `,
 ];
 __decorate([
-    n$1({ attribute: false })
-], HuiEnergyElecFlowCard.prototype, "hass", void 0);
+    t$1()
+], EnergyElecFlowCard.prototype, "_config", void 0);
 __decorate([
     t$1()
-], HuiEnergyElecFlowCard.prototype, "_config", void 0);
+], EnergyElecFlowCard.prototype, "_gridInRoute", void 0);
 __decorate([
     t$1()
-], HuiEnergyElecFlowCard.prototype, "_gridInRoute", void 0);
+], EnergyElecFlowCard.prototype, "_gridOutRoute", void 0);
 __decorate([
     t$1()
-], HuiEnergyElecFlowCard.prototype, "_gridOutRoute", void 0);
+], EnergyElecFlowCard.prototype, "_generationInRoutes", void 0);
 __decorate([
     t$1()
-], HuiEnergyElecFlowCard.prototype, "_generationInRoutes", void 0);
+], EnergyElecFlowCard.prototype, "_consumerRoutes", void 0);
 __decorate([
     t$1()
-], HuiEnergyElecFlowCard.prototype, "_consumerRoutes", void 0);
-__decorate([
-    t$1()
-], HuiEnergyElecFlowCard.prototype, "_batteryRoutes", void 0);
+], EnergyElecFlowCard.prototype, "_batteryRoutes", void 0);
+EnergyElecFlowCard = __decorate([
+    e$2(ENERGY_CARD_NAME)
+], EnergyElecFlowCard);
+// Legacy element name for backwards compatibility. Keep this until
+// we are sure that noone is using pre config version 1 any more.
+let HuiEnergyElecFlowCard = class HuiEnergyElecFlowCard extends EnergyElecFlowCard {
+};
 HuiEnergyElecFlowCard = __decorate([
     e$2("hui-energy-elec-flow-card")
 ], HuiEnergyElecFlowCard);
-
-/**
- * @license
- * Copyright 2020 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */const {I:l}=j,r=()=>document.createComment(""),c$1=(o,i,n)=>{var t;const v=o._$AA.parentNode,d=void 0===i?o._$AB:i._$AA;if(void 0===n){const i=v.insertBefore(r(),d),t=v.insertBefore(r(),d);n=new l(i,t,o,o.options);}else {const l=n._$AB.nextSibling,i=n._$AM,u=i!==o;if(u){let l;null===(t=n._$AQ)||void 0===t||t.call(n,o),n._$AM=o,void 0!==n._$AP&&(l=o._$AU)!==i._$AU&&n._$AP(l);}if(l!==d||u){let o=n._$AA;for(;o!==l;){const l=o.nextSibling;v.insertBefore(o,d),o=l;}}}return n},f=(o,l,i=o)=>(o._$AI(l,i),o),s={},a=(o,l=s)=>o._$AH=l,m=o=>o._$AH,p=o=>{var l;null===(l=o._$AP)||void 0===l||l.call(o,!1,!0);let i=o._$AA;const n=o._$AB.nextSibling;for(;i!==n;){const o=i.nextSibling;i.remove(),i=o;}};
-
-/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */
-const u=(e,s,t)=>{const r=new Map;for(let l=s;l<=t;l++)r.set(e[l],l);return r},c=e(class extends i{constructor(e){if(super(e),e.type!==t.CHILD)throw Error("repeat() can only be used in text expressions")}ct(e,s,t){let r;void 0===t?t=s:void 0!==s&&(r=s);const l=[],o=[];let i=0;for(const s of e)l[i]=r?r(s,i):i,o[i]=t(s,i),i++;return {values:o,keys:l}}render(e,s,t){return this.ct(e,s,t).values}update(s,[t,r,c]){var d;const a$1=m(s),{values:p$1,keys:v}=this.ct(t,r,c);if(!Array.isArray(a$1))return this.ut=v,p$1;const h=null!==(d=this.ut)&&void 0!==d?d:this.ut=[],m$1=[];let y,x,j=0,k=a$1.length-1,w=0,A=p$1.length-1;for(;j<=k&&w<=A;)if(null===a$1[j])j++;else if(null===a$1[k])k--;else if(h[j]===v[w])m$1[w]=f(a$1[j],p$1[w]),j++,w++;else if(h[k]===v[A])m$1[A]=f(a$1[k],p$1[A]),k--,A--;else if(h[j]===v[A])m$1[A]=f(a$1[j],p$1[A]),c$1(s,m$1[A+1],a$1[j]),j++,A--;else if(h[k]===v[w])m$1[w]=f(a$1[k],p$1[w]),c$1(s,a$1[j],a$1[k]),k--,w++;else if(void 0===y&&(y=u(v,w,A),x=u(h,j,k)),y.has(h[j]))if(y.has(h[k])){const e=x.get(v[w]),t=void 0!==e?a$1[e]:null;if(null===t){const e=c$1(s,a$1[j]);f(e,p$1[w]),m$1[w]=e;}else m$1[w]=f(t,p$1[w]),c$1(s,a$1[j],t),a$1[e]=null;w++;}else p(a$1[k]),k--;else p(a$1[j]),j++;for(;w<=A;){const e=c$1(s,m$1[A+1]);f(e,p$1[w]),m$1[w++]=e;}for(;j<=k;){const e=a$1[j++];null!==e&&p(e);}return this.ut=v,a(s,m$1),T}});
 
 // Polymer legacy event helpers used courtesy of the Polymer project.
 //
@@ -2824,329 +3089,6 @@ const fireEvent = (node, type, detail, options) => {
     return event;
 };
 
-let HuiEntitiesCardRowEditor = class HuiEntitiesCardRowEditor extends s$1 {
-    constructor() {
-        super(...arguments);
-        this._entityKeys = new WeakMap();
-    }
-    _getKey(action) {
-        if (!this._entityKeys.has(action)) {
-            this._entityKeys.set(action, Math.random().toString());
-        }
-        return this._entityKeys.get(action);
-    }
-    render() {
-        var _a;
-        if (!this.entities || !this.hass) {
-            return A;
-        }
-        const deviceClassesFilter = this.includeDeviceClasses
-            ? '["' + ((_a = this.includeDeviceClasses) === null || _a === void 0 ? void 0 : _a.join('","')) + '"]'
-            : "";
-        return x `
-      <h3>
-        ${this.label ||
-            `${this.hass.localize("ui.panel.lovelace.editor.card.generic.entities")} (${this.hass.localize("ui.panel.lovelace.editor.card.config.required")})`}
-      </h3>
-      <ha-sortable handle-selector=".handle" @item-moved=${this._rowMoved}>
-        <div class="entities">
-          ${c(this.entities, (entityConf) => this._getKey(entityConf), (entityConf, index) => x `
-              <div class="entity">
-                <div class="handle">
-                  <ha-svg-icon .path=${mdiDrag}></ha-svg-icon>
-                </div>
-                ${entityConf.type
-            ? x `
-                      <div class="special-row">
-                        <div>
-                          <span>
-                            ${this.hass.localize(`ui.panel.lovelace.editor.card.entities.entity_row.${entityConf.type}`)}
-                          </span>
-                          <span class="secondary"
-                            >${this.hass.localize("ui.panel.lovelace.editor.card.entities.edit_special_row")}</span
-                          >
-                        </div>
-                      </div>
-                    `
-            : x `
-                      <ha-entity-picker
-                        allow-custom-entity
-                        include-device-classes=${deviceClassesFilter}
-                        hideClearIcon
-                        label=${this.subLabel || A}
-                        .hass=${this.hass}
-                        .value=${entityConf.entity}
-                        .index=${index}
-                        @value-changed=${this._valueChanged}
-                      ></ha-entity-picker>
-                    `}
-                <ha-icon-button
-                  .label=${this.hass.localize("ui.components.entity.entity-picker.clear")}
-                  .path=${mdiClose}
-                  class="remove-icon"
-                  .index=${index}
-                  @click=${this._removeRow}
-                ></ha-icon-button>
-              </div>
-            `)}
-        </div>
-      </ha-sortable>
-      <ha-entity-picker
-        class="add-entity"
-        include-device-classes=${deviceClassesFilter}
-        label=${this.subLabel || A}
-        .hass=${this.hass}
-        @value-changed=${this._addEntity}
-      ></ha-entity-picker>
-    `;
-    }
-    async _addEntity(ev) {
-        const value = ev.detail.value;
-        if (value === "") {
-            return;
-        }
-        const newConfigEntities = this.entities.concat({
-            entity: value,
-        });
-        ev.target.value = "";
-        fireEvent(this, "entities-changed", { entities: newConfigEntities });
-    }
-    _rowMoved(ev) {
-        ev.stopPropagation();
-        const { oldIndex, newIndex } = ev.detail;
-        const newEntities = this.entities.concat();
-        newEntities.splice(newIndex, 0, newEntities.splice(oldIndex, 1)[0]);
-        fireEvent(this, "entities-changed", { entities: newEntities });
-    }
-    _removeRow(ev) {
-        const index = ev.currentTarget.index;
-        const newConfigEntities = this.entities.concat();
-        newConfigEntities.splice(index, 1);
-        fireEvent(this, "entities-changed", { entities: newConfigEntities });
-    }
-    _valueChanged(ev) {
-        const value = ev.detail.value;
-        const index = ev.target.index;
-        const newConfigEntities = this.entities.concat();
-        if (value === "" || value === undefined) {
-            newConfigEntities.splice(index, 1);
-        }
-        else {
-            newConfigEntities[index] = Object.assign(Object.assign({}, newConfigEntities[index]), { entity: value });
-        }
-        fireEvent(this, "entities-changed", { entities: newConfigEntities });
-    }
-    _editRow(ev) {
-        const index = ev.currentTarget.index;
-        fireEvent(this, "edit-detail-element", {
-            subElementConfig: {
-                index,
-                type: "row",
-                elementConfig: this.entities[index],
-            },
-        });
-    }
-    static get styles() {
-        return i$3 `
-      ha-entity-picker {
-        margin-top: 8px;
-      }
-      .add-entity {
-        display: block;
-        margin-left: 31px;
-        margin-right: 71px;
-        margin-inline-start: 31px;
-        margin-inline-end: 71px;
-        direction: var(--direction);
-      }
-      .entity {
-        display: flex;
-        align-items: center;
-      }
-
-      .entity .handle {
-        padding-right: 8px;
-        cursor: move; /* fallback if grab cursor is unsupported */
-        cursor: grab;
-        padding-inline-end: 8px;
-        padding-inline-start: initial;
-        direction: var(--direction);
-      }
-      .entity .handle > * {
-        pointer-events: none;
-      }
-
-      .entity ha-entity-picker {
-        flex-grow: 1;
-      }
-
-      .special-row {
-        height: 60px;
-        font-size: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        flex-grow: 1;
-      }
-
-      .special-row div {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .remove-icon,
-      .edit-icon {
-        --mdc-icon-button-size: 36px;
-        color: var(--secondary-text-color);
-      }
-
-      .secondary {
-        font-size: 12px;
-        color: var(--secondary-text-color);
-      }
-    `;
-    }
-};
-__decorate([
-    n$1({ attribute: false })
-], HuiEntitiesCardRowEditor.prototype, "hass", void 0);
-__decorate([
-    n$1({ attribute: false })
-], HuiEntitiesCardRowEditor.prototype, "entities", void 0);
-__decorate([
-    n$1()
-], HuiEntitiesCardRowEditor.prototype, "includeDeviceClasses", void 0);
-__decorate([
-    n$1()
-], HuiEntitiesCardRowEditor.prototype, "label", void 0);
-__decorate([
-    n$1()
-], HuiEntitiesCardRowEditor.prototype, "subLabel", void 0);
-HuiEntitiesCardRowEditor = __decorate([
-    e$2("elec-sankey-hui-entities-card-row-editor")
-], HuiEntitiesCardRowEditor);
-
-var editor = {
-	card: {
-		generic: {
-			title: "Title",
-			max_consumer_branches: "Limit quantity of consumer branches (0 for unlimited)",
-			appearance: "Appearance",
-			advanced_options: "Advanced Options"
-		},
-		power_sankey: {
-			power_from_grid_entity: "Power from grid (optional)",
-			power_to_grid_entity: "Power to grid (optional)",
-			group_small: "Group low values together",
-			generation_entity: "Power from generation (optional)",
-			hide_small_consumers: "Group consumers below 20W",
-			invert_battery_flows: "Battery flows are positive for charging",
-			battery_charge_only_from_generation: "Batteries can only charge from generated power",
-			battery_hint_std: "Power from battery (one combined in/out per battery, positive = discharging)",
-			battery_hint_inverted: "Power to battery (one combined in/out per battery, positive = charging)",
-			independent_grid_in_out: "Use separate sensors for grid in/out"
-		},
-		energy_sankey: {
-			hide_small_consumers: "Group consumers below 0.1kWh",
-			battery_charge_only_from_generation: "Batteries can only charge from generated energy"
-		}
-	}
-};
-var en = {
-	editor: editor
-};
-
-var en$1 = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  default: en,
-  editor: editor
-});
-
-// import * as ar from "./translations/ar.json";
-// import * as bg from "./translations/bg.json";
-// import * as ca from "./translations/ca.json";
-// import * as cs from "./translations/cs.json";
-// import * as da from "./translations/da.json";
-// import * as de from "./translations/de.json";
-// import * as el from "./translations/el.json";
-// import * as es from "./translations/es.json";
-// import * as fi from "./translations/fi.json";
-// import * as fr from "./translations/fr.json";
-// import * as he from "./translations/he.json";
-// import * as hu from "./translations/hu.json";
-// import * as id from "./translations/id.json";
-// import * as it from "./translations/it.json";
-// import * as ko_KR from "./translations/ko-KR.json";
-// import * as nb from "./translations/nb.json";
-// import * as nl from "./translations/nl.json";
-// import * as pl from "./translations/pl.json";
-// import * as pt_BR from "./translations/pt-BR.json";
-// import * as pt_PT from "./translations/pt-PT.json";
-// import * as ro from "./translations/ro.json";
-// import * as ru from "./translations/ru.json";
-// import * as sl from "./translations/sl.json";
-// import * as sk from "./translations/sk.json";
-// import * as sv from "./translations/sv.json";
-// import * as tr from "./translations/tr.json";
-// import * as uk from "./translations/uk.json";
-// import * as vi from "./translations/vi.json";
-// import * as zh_Hans from "./translations/zh-Hans.json";
-// import * as zh_Hant from "./translations/zh-Hant.json";
-const languages = {
-    //   ar,
-    //   bg,
-    //   ca,
-    //   cs,
-    //   da,
-    //   de,
-    //   el,
-    en: en$1,
-    //   es,
-    //   fi,
-    //   fr,
-    //   he,
-    //   hu,
-    //   id,
-    //   it,
-    //   "ko-KR": ko_KR,
-    //   nb,
-    //   nl,
-    //   pl,
-    //   "pt-BR": pt_BR,
-    //   "pt-PT": pt_PT,
-    //   ro,
-    //   ru,
-    //   sl,
-    //   sk,
-    //   sv,
-    //   tr,
-    //   uk,
-    //   vi,
-    //   "zh-Hans": zh_Hans,
-    //   "zh-Hant": zh_Hant,
-};
-const DEFAULT_LANG = "en";
-function getTranslatedString(key, lang) {
-    try {
-        return key
-            .split(".")
-            .reduce((o, i) => o[i], languages[lang]);
-    }
-    catch (_) {
-        return undefined;
-    }
-}
-function setupCustomlocalize(hass) {
-    return function (key) {
-        var _a;
-        const lang = (_a = hass === null || hass === void 0 ? void 0 : hass.locale.language) !== null && _a !== void 0 ? _a : DEFAULT_LANG;
-        let translated = getTranslatedString(key, lang);
-        if (!translated)
-            translated = getTranslatedString(key, DEFAULT_LANG);
-        return translated !== null && translated !== void 0 ? translated : key;
-    };
-}
-
 const ENERGY_LABELS = [
     "hide_small_consumers",
     "battery_charge_only_from_generation",
@@ -3166,19 +3108,19 @@ const schema = [
                         min: 0,
                         max: 10,
                         mode: "slider",
-                    }
-                }
+                    },
+                },
             },
             {
                 name: "hide_small_consumers",
-                selector: { boolean: {} }
+                selector: { boolean: {} },
             },
             {
                 name: "battery_charge_only_from_generation",
-                selector: { boolean: {} }
-            }
-        ]
-    }
+                selector: { boolean: {} },
+            },
+        ],
+    },
 ];
 let EnergyFlowCardEditor = class EnergyFlowCardEditor extends s$1 {
     constructor() {
@@ -3195,13 +3137,14 @@ let EnergyFlowCardEditor = class EnergyFlowCardEditor extends s$1 {
         };
     }
     setConfig(config) {
-        this._config = config;
+        this._config = verifyAndMigrateConfig$1(config);
     }
     render() {
         if (!this.hass || !this._config) {
             return A;
         }
         const data = Object.assign({}, this._config);
+        const language = this.hass.locale.language;
         return x `
       <ha-form
         .hass=${this.hass}
@@ -3210,27 +3153,35 @@ let EnergyFlowCardEditor = class EnergyFlowCardEditor extends s$1 {
         .computeLabel=${this._computeLabel}
         @value-changed=${this._valueChanged}
       ></ha-form>
-      <ha-alert
-        alert-type="info"
-        .title="Note"
-      >
+      <ha-alert alert-type="info" .title="Note">
         Energy flow entities are configured in the
-        <a href="/config/energy">Energy Dashboard Config</a>.
-        They cannot be modified via the card configuration.
+        <a href="/config/energy">Energy Dashboard Config</a>. They cannot be
+        modified via the card configuration.
       </ha-alert>
-      <ha-alert
-        alert-type="info"
-      >
-        Please note that this card is in development!
-        If you see a bug or a possible improvement, please use the
-        <a href="https://github.com/davet2001/energy-sankey/issues">issue tracker</a>
-        to help us improve it!
-      </ha-alert>
-      `;
+      ${!(language in languages)
+            ? x ` <ha-alert alert-type="info" .title="Translations Wanted!">
+            Do you want this card translated into ${language}? If you would like
+            to translate this card into additional languages, please see the
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/davet2001/energy-sankey#language-translations"
+              >project page</a
+            >
+            for instructions on how to contribute! Thanks!
+          </ha-alert>`
+            : x ` <ha-alert alert-type="info">
+            Please note that this card is in development! If you see a bug or a
+            possible improvement, please use the
+            <a href="https://github.com/davet2001/energy-sankey/issues"
+              >issue tracker</a
+            >
+            to help us improve it!
+          </ha-alert>`}
+    `;
     }
     _valueChanged(ev) {
-        const config = ev.detail.value;
-        fireEvent(this, "config-changed", { config });
+        fireEvent(this, "config-changed", { config: ev.detail.value });
     }
 };
 __decorate([
@@ -3243,7 +3194,7 @@ EnergyFlowCardEditor = __decorate([
     e$2(ENERGY_CARD_EDITOR_NAME)
 ], EnergyFlowCardEditor);
 
-var energyFlowCardEditor = /*#__PURE__*/Object.freeze({
+var energyElecFlowCardEditor = /*#__PURE__*/Object.freeze({
   __proto__: null,
   get EnergyFlowCardEditor () { return EnergyFlowCardEditor; }
 });
@@ -3781,7 +3732,24 @@ const getExtendedEntityRegistryEntry = (hass, entityId) => hass.callWS({
 //   return entityLookup;
 // };
 
-//import "./power-flow-card-editor"
+const POWER_CARD_NAME = `${PREFIX_NAME}-power-flow-card`;
+const POWER_CARD_EDITOR_NAME = `${POWER_CARD_NAME}-editor`;
+const HIDE_CONSUMERS_BELOW_THRESHOLD_W = 20;
+
+const DEFAULT_CONFIG = {
+    type: `custom:${POWER_CARD_NAME}`,
+    title: "Live power flow",
+    config_version: 3,
+    consumer_entities: [],
+    battery_entities: [],
+    generation_entity: undefined,
+    power_from_grid_entity: undefined,
+    power_to_grid_entity: undefined,
+    invert_battery_flows: false,
+    hide_small_consumers: false,
+    max_consumer_branches: 0,
+    independent_grid_in_out: false,
+};
 function verifyAndMigrateConfig(config) {
     if (!config) {
         throw new Error("Invalid configuration");
@@ -3801,6 +3769,12 @@ function verifyAndMigrateConfig(config) {
         currentVersion = 2;
         newConfig.invert_battery_flows = false;
     }
+    if (currentVersion === 2) {
+        // Migrate from version 2 to version 3
+        console.log("Migrating config from version 2 to version 3");
+        currentVersion = 3;
+        newConfig.type = `custom:${POWER_CARD_NAME}`;
+    }
     if (!config.power_from_grid_entity &&
         !config.power_to_grid_entity &&
         !config.generation_entity &&
@@ -3811,7 +3785,7 @@ function verifyAndMigrateConfig(config) {
     return newConfig;
 }
 registerCustomCard({
-    type: "hui-power-flow-card",
+    type: POWER_CARD_NAME,
     name: "Sankey Power Flow Card",
     description: "Card for showing the instantaneous flow of electrical power",
 });
@@ -3821,7 +3795,7 @@ function computePower(stateObj) {
      */
     let uom;
     let state = Number(stateObj.state);
-    if (uom = stateObj.attributes.unit_of_measurement) {
+    if ((uom = stateObj.attributes.unit_of_measurement)) {
         switch (uom) {
             case "kW": {
                 return 1000 * state;
@@ -3835,7 +3809,15 @@ function computePower(stateObj) {
         return state;
     }
 }
-let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
+function htmlHuiWarning(hass, entity) {
+    /**
+     * Returns a not found warning for the given entity name.
+     */
+    return x `<hui-warning
+    >${createEntityNotFoundWarning(hass, entity)}</hui-warning
+  >`;
+}
+let PowerFlowCard = class PowerFlowCard extends ElecFlowCardBase {
     static async getConfigElement() {
         await Promise.resolve().then(function () { return powerFlowCardEditor; });
         return document.createElement(POWER_CARD_EDITOR_NAME);
@@ -3881,7 +3863,8 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
         let powerEntityIds = [];
         for (let key in extEntities) {
             const extEntity = extEntities[key];
-            if (extEntity.device_id === deviceEntityId && extEntity.original_device_class === "power") {
+            if (extEntity.device_id === deviceEntityId &&
+                extEntity.original_device_class === "power") {
                 powerEntityIds.push(extEntity.entity_id);
             }
         }
@@ -3912,7 +3895,8 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
          */
         let powerEntityId = await this.getPowerEntityIdForEnergyEntityId(_hass, energyEntityId, extEntities);
         if (!powerEntityId) {
-            powerEntityId = "please_manually_enter_power_entity_id_for " + energyEntityId;
+            powerEntityId =
+                "please_manually_enter_power_entity_id_for " + energyEntityId;
         }
         return powerEntityId;
     }
@@ -3927,19 +3911,17 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
          */
         const energyPrefs = await getEnergyPreferences(_hass);
         const extEntities = await this.getExtendedEntityRegistryEntries(_hass);
-        let returnConfig = {
-            type: "custom:hui-power-flow-card",
-            title: "Live power flow",
-            consumer_entities: [],
-            battery_entities: [],
-            config_version: 1,
-        };
+        // We don't have access to instance localizer here, so set up a temp one.
+        const localize = setupCustomlocalize(_hass);
+        let returnConfig = DEFAULT_CONFIG;
+        returnConfig.title = localize("card.power_sankey.live_power_flow");
         // Parse energy sources from HA's energy prefs
         for (const source of energyPrefs.energy_sources) {
             switch (source.type) {
                 case "grid":
                     let power_from_grid_entity = "";
-                    power_from_grid_entity = await this.getPowerEntityIdForEnergyEntityIdWithFail(_hass, source.flow_from[0].stat_energy_from, extEntities);
+                    power_from_grid_entity =
+                        await this.getPowerEntityIdForEnergyEntityIdWithFail(_hass, source.flow_from[0].stat_energy_from, extEntities);
                     returnConfig.power_from_grid_entity = power_from_grid_entity;
                     break;
                 case "solar":
@@ -3982,21 +3964,12 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
         }
         return returnConfig;
     }
-    render() {
-        if (!this._config || !this.hass) {
-            return A;
-        }
-        let config = this._config;
+    _getValues(config) {
         // The editor only supports a single generation entity, so we need to
         // convert the single entity to an array.
-        if (config.generation_entity) {
-            config.generation_entities = [config.generation_entity];
-            delete (config.generation_entity);
-        }
-        const maxConsumerBranches = this._config.max_consumer_branches || 0;
-        const hideConsumersBelow = this._config.hide_small_consumers
-            ? HIDE_CONSUMERS_BELOW_THRESHOLD_W : 0;
-        const batteryChargeOnlyFromGeneration = this._config.battery_charge_only_from_generation || false;
+        config.generation_entities = config.generation_entity
+            ? [config.generation_entity]
+            : [];
         let gridInRoute = null;
         if (config.power_from_grid_entity) {
             const stateObj = this.hass.states[config.power_from_grid_entity];
@@ -4018,11 +3991,7 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
         if (config.independent_grid_in_out && config.power_to_grid_entity) {
             const stateObj = this.hass.states[config.power_to_grid_entity];
             if (!stateObj) {
-                return x `
-          <hui-warning>
-            ${createEntityNotFoundWarning(this.hass, config.power_to_grid_entity)}
-          </hui-warning>
-        `;
+                return htmlHuiWarning(this.hass, config.power_to_grid_entity);
             }
             gridOutRoute = {
                 id: config.power_to_grid_entity,
@@ -4031,37 +4000,30 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
             };
         }
         const generationInRoutes = {};
-        if (config.generation_entities) {
-            for (const entity of config.generation_entities) {
-                const stateObj = this.hass.states[entity];
-                if (!stateObj) {
-                    return x `
-            <hui-warning>
-              ${createEntityNotFoundWarning(this.hass, entity)}
-            </hui-warning>
-          `;
-                }
-                generationInRoutes[entity] = {
-                    id: entity,
-                    text: computeStateName(stateObj),
-                    rate: computePower(stateObj),
-                    icon: mdiSolarPower,
-                };
+        for (const entity of config.generation_entities) {
+            if (!entity) {
+                continue;
             }
+            const stateObj = this.hass.states[entity];
+            if (!stateObj) {
+                return htmlHuiWarning(this.hass, entity);
+            }
+            generationInRoutes[entity] = {
+                id: entity,
+                text: computeStateName(stateObj),
+                rate: computePower(stateObj),
+                icon: mdiSolarPower,
+            };
         }
         const consumerRoutes = {};
-        if (this._config.consumer_entities) {
-            for (const entity of this._config.consumer_entities) {
+        if (config.consumer_entities) {
+            for (const entity of config.consumer_entities) {
                 let stateObj;
                 stateObj = this.hass.states[entity.entity];
-                let name = entity.name;
                 if (!stateObj) {
-                    return x `
-            <hui-warning>
-              ${createEntityNotFoundWarning(this.hass, entity.entity)}
-            </hui-warning>
-          `;
+                    return htmlHuiWarning(this.hass, entity.entity);
                 }
+                let name = entity.name;
                 if (!name) {
                     name = computeStateName(stateObj);
                 }
@@ -4073,25 +4035,20 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
             }
         }
         const batteryRoutes = {};
-        if (this._config.battery_entities) {
-            for (const entity of this._config.battery_entities) {
+        if (config.battery_entities) {
+            for (const entity of config.battery_entities) {
                 let stateObj;
                 stateObj = this.hass.states[entity.entity];
                 let name = entity.name;
                 if (!stateObj) {
-                    return x `
-            <hui-warning>
-              ${createEntityNotFoundWarning(this.hass, entity.entity)}
-            </hui-warning>
-          `;
+                    return htmlHuiWarning(this.hass, entity.entity);
                 }
                 if (!name) {
                     name = computeStateName(stateObj);
                 }
                 // power in refers to power into the energy distribution system
                 // (i.e. out of the battery)
-                let powerIn = (this._config.invert_battery_flows ? -1 : 1)
-                    * computePower(stateObj);
+                let powerIn = (config.invert_battery_flows ? -1 : 1) * computePower(stateObj);
                 batteryRoutes[entity.entity] = {
                     in: {
                         id: entity.entity,
@@ -4102,10 +4059,35 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
                         id: "null",
                         text: "null",
                         rate: powerIn < 0 ? -powerIn : 0,
-                    }
+                    },
                 };
             }
         }
+        return [
+            gridInRoute,
+            gridOutRoute,
+            generationInRoutes,
+            consumerRoutes,
+            batteryRoutes,
+        ];
+    }
+    render() {
+        if (!this._config || !this.hass) {
+            return A;
+        }
+        const config = this._config;
+        const res = this._getValues(config);
+        // If the result is an not an array, assume it is a error in the form of a
+        // TemplateResult. Show it and stop.
+        if (!Array.isArray(res)) {
+            return res;
+        }
+        const [gridInRoute, gridOutRoute, generationInRoutes, consumerRoutes, batteryRoutes,] = res;
+        const maxConsumerBranches = this._config.max_consumer_branches || 0;
+        const hideConsumersBelow = this._config.hide_small_consumers
+            ? HIDE_CONSUMERS_BELOW_THRESHOLD_W
+            : 0;
+        const batteryChargeOnlyFromGeneration = this._config.battery_charge_only_from_generation || false;
         return x `
       <ha-card>
         ${config.title
@@ -4146,8 +4128,8 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
                 this._config.power_from_grid_entity,
                 this._config.power_to_grid_entity,
                 ...(this._config.generation_entities || []),
-                ...(this._config.consumer_entities.map(a => a.entity) || []),
-                ...(this._config.battery_entities.map(a => a.entity) || []),
+                ...(this._config.consumer_entities.map((a) => a.entity) || []),
+                ...(this._config.battery_entities.map((a) => a.entity) || []),
             ]) {
                 if (id) {
                     const oldState = oldHass.states[id];
@@ -4175,7 +4157,7 @@ let HuiPowerFlowCard = class HuiPowerFlowCard extends s$1 {
         }
     }
 };
-HuiPowerFlowCard.styles = [
+PowerFlowCard.styles = [
     i$3 `
       ha-card {
         height: 100%;
@@ -4190,15 +4172,18 @@ HuiPowerFlowCard.styles = [
         --grid-in-color: var(--energy-grid-consumption-color);
         --batt-in-color: var(--energy-battery-out-color);
       }
-
     `,
 ];
 __decorate([
-    n$1({ attribute: false })
-], HuiPowerFlowCard.prototype, "hass", void 0);
-__decorate([
     t$1()
-], HuiPowerFlowCard.prototype, "_config", void 0);
+], PowerFlowCard.prototype, "_config", void 0);
+PowerFlowCard = __decorate([
+    e$2(POWER_CARD_NAME)
+], PowerFlowCard);
+// Legacy element name for backwards compatibility
+// Can be dropped once we are sure noone is using config version 2 any more.
+let HuiPowerFlowCard = class HuiPowerFlowCard extends PowerFlowCard {
+};
 HuiPowerFlowCard = __decorate([
     e$2("hui-power-flow-card")
 ], HuiPowerFlowCard);
@@ -4211,6 +4196,221 @@ function processEditorEntities(entities) {
         return entityConf;
     });
 }
+
+/**
+ * @license
+ * Copyright 2020 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */const {I:l}=j,r=()=>document.createComment(""),c$1=(o,i,n)=>{var t;const v=o._$AA.parentNode,d=void 0===i?o._$AB:i._$AA;if(void 0===n){const i=v.insertBefore(r(),d),t=v.insertBefore(r(),d);n=new l(i,t,o,o.options);}else {const l=n._$AB.nextSibling,i=n._$AM,u=i!==o;if(u){let l;null===(t=n._$AQ)||void 0===t||t.call(n,o),n._$AM=o,void 0!==n._$AP&&(l=o._$AU)!==i._$AU&&n._$AP(l);}if(l!==d||u){let o=n._$AA;for(;o!==l;){const l=o.nextSibling;v.insertBefore(o,d),o=l;}}}return n},f=(o,l,i=o)=>(o._$AI(l,i),o),s={},a=(o,l=s)=>o._$AH=l,m=o=>o._$AH,p=o=>{var l;null===(l=o._$AP)||void 0===l||l.call(o,!1,!0);let i=o._$AA;const n=o._$AB.nextSibling;for(;i!==n;){const o=i.nextSibling;i.remove(),i=o;}};
+
+/**
+ * @license
+ * Copyright 2017 Google LLC
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+const u=(e,s,t)=>{const r=new Map;for(let l=s;l<=t;l++)r.set(e[l],l);return r},c=e(class extends i{constructor(e){if(super(e),e.type!==t.CHILD)throw Error("repeat() can only be used in text expressions")}ct(e,s,t){let r;void 0===t?t=s:void 0!==s&&(r=s);const l=[],o=[];let i=0;for(const s of e)l[i]=r?r(s,i):i,o[i]=t(s,i),i++;return {values:o,keys:l}}render(e,s,t){return this.ct(e,s,t).values}update(s,[t,r,c]){var d;const a$1=m(s),{values:p$1,keys:v}=this.ct(t,r,c);if(!Array.isArray(a$1))return this.ut=v,p$1;const h=null!==(d=this.ut)&&void 0!==d?d:this.ut=[],m$1=[];let y,x,j=0,k=a$1.length-1,w=0,A=p$1.length-1;for(;j<=k&&w<=A;)if(null===a$1[j])j++;else if(null===a$1[k])k--;else if(h[j]===v[w])m$1[w]=f(a$1[j],p$1[w]),j++,w++;else if(h[k]===v[A])m$1[A]=f(a$1[k],p$1[A]),k--,A--;else if(h[j]===v[A])m$1[A]=f(a$1[j],p$1[A]),c$1(s,m$1[A+1],a$1[j]),j++,A--;else if(h[k]===v[w])m$1[w]=f(a$1[k],p$1[w]),c$1(s,a$1[j],a$1[k]),k--,w++;else if(void 0===y&&(y=u(v,w,A),x=u(h,j,k)),y.has(h[j]))if(y.has(h[k])){const e=x.get(v[w]),t=void 0!==e?a$1[e]:null;if(null===t){const e=c$1(s,a$1[j]);f(e,p$1[w]),m$1[w]=e;}else m$1[w]=f(t,p$1[w]),c$1(s,a$1[j],t),a$1[e]=null;w++;}else p(a$1[k]),k--;else p(a$1[j]),j++;for(;w<=A;){const e=c$1(s,m$1[A+1]);f(e,p$1[w]),m$1[w++]=e;}for(;j<=k;){const e=a$1[j++];null!==e&&p(e);}return this.ut=v,a(s,m$1),T}});
+
+let HuiEntitiesCardRowEditor = class HuiEntitiesCardRowEditor extends s$1 {
+    constructor() {
+        super(...arguments);
+        this._entityKeys = new WeakMap();
+    }
+    _getKey(action) {
+        if (!this._entityKeys.has(action)) {
+            this._entityKeys.set(action, Math.random().toString());
+        }
+        return this._entityKeys.get(action);
+    }
+    render() {
+        var _a;
+        if (!this.entities || !this.hass) {
+            return A;
+        }
+        const deviceClassesFilter = this.includeDeviceClasses
+            ? '["' + ((_a = this.includeDeviceClasses) === null || _a === void 0 ? void 0 : _a.join('","')) + '"]'
+            : "";
+        return x `
+      <h3>
+        ${this.label ||
+            `${this.hass.localize("ui.panel.lovelace.editor.card.generic.entities")} (${this.hass.localize("ui.panel.lovelace.editor.card.config.required")})`}
+      </h3>
+      <ha-sortable handle-selector=".handle" @item-moved=${this._rowMoved}>
+        <div class="entities">
+          ${c(this.entities, (entityConf) => this._getKey(entityConf), (entityConf, index) => x `
+              <div class="entity">
+                <div class="handle">
+                  <ha-svg-icon .path=${mdiDrag}></ha-svg-icon>
+                </div>
+                ${entityConf.type
+            ? x `
+                      <div class="special-row">
+                        <div>
+                          <span>
+                            ${this.hass.localize(`ui.panel.lovelace.editor.card.entities.entity_row.${entityConf.type}`)}
+                          </span>
+                          <span class="secondary"
+                            >${this.hass.localize("ui.panel.lovelace.editor.card.entities.edit_special_row")}</span
+                          >
+                        </div>
+                      </div>
+                    `
+            : x `
+                      <ha-entity-picker
+                        allow-custom-entity
+                        include-device-classes=${deviceClassesFilter}
+                        hideClearIcon
+                        label=${this.subLabel || A}
+                        .hass=${this.hass}
+                        .value=${entityConf.entity}
+                        .index=${index}
+                        @value-changed=${this._valueChanged}
+                      ></ha-entity-picker>
+                    `}
+                <ha-icon-button
+                  .label=${this.hass.localize("ui.components.entity.entity-picker.clear")}
+                  .path=${mdiClose}
+                  class="remove-icon"
+                  .index=${index}
+                  @click=${this._removeRow}
+                ></ha-icon-button>
+              </div>
+            `)}
+        </div>
+      </ha-sortable>
+      <ha-entity-picker
+        class="add-entity"
+        include-device-classes=${deviceClassesFilter}
+        label=${this.subLabel || A}
+        .hass=${this.hass}
+        @value-changed=${this._addEntity}
+      ></ha-entity-picker>
+    `;
+    }
+    async _addEntity(ev) {
+        const value = ev.detail.value;
+        if (value === "") {
+            return;
+        }
+        const newConfigEntities = this.entities.concat({
+            entity: value,
+        });
+        ev.target.value = "";
+        fireEvent(this, "entities-changed", { entities: newConfigEntities });
+    }
+    _rowMoved(ev) {
+        ev.stopPropagation();
+        const { oldIndex, newIndex } = ev.detail;
+        const newEntities = this.entities.concat();
+        newEntities.splice(newIndex, 0, newEntities.splice(oldIndex, 1)[0]);
+        fireEvent(this, "entities-changed", { entities: newEntities });
+    }
+    _removeRow(ev) {
+        const index = ev.currentTarget.index;
+        const newConfigEntities = this.entities.concat();
+        newConfigEntities.splice(index, 1);
+        fireEvent(this, "entities-changed", { entities: newConfigEntities });
+    }
+    _valueChanged(ev) {
+        const value = ev.detail.value;
+        const index = ev.target.index;
+        const newConfigEntities = this.entities.concat();
+        if (value === "" || value === undefined) {
+            newConfigEntities.splice(index, 1);
+        }
+        else {
+            newConfigEntities[index] = Object.assign(Object.assign({}, newConfigEntities[index]), { entity: value });
+        }
+        fireEvent(this, "entities-changed", { entities: newConfigEntities });
+    }
+    _editRow(ev) {
+        const index = ev.currentTarget.index;
+        fireEvent(this, "edit-detail-element", {
+            subElementConfig: {
+                index,
+                type: "row",
+                elementConfig: this.entities[index],
+            },
+        });
+    }
+    static get styles() {
+        return i$3 `
+      ha-entity-picker {
+        margin-top: 8px;
+      }
+      .add-entity {
+        display: block;
+        margin-left: 31px;
+        margin-right: 71px;
+        margin-inline-start: 31px;
+        margin-inline-end: 71px;
+        direction: var(--direction);
+      }
+      .entity {
+        display: flex;
+        align-items: center;
+      }
+
+      .entity .handle {
+        padding-right: 8px;
+        cursor: move; /* fallback if grab cursor is unsupported */
+        cursor: grab;
+        padding-inline-end: 8px;
+        padding-inline-start: initial;
+        direction: var(--direction);
+      }
+      .entity .handle > * {
+        pointer-events: none;
+      }
+
+      .entity ha-entity-picker {
+        flex-grow: 1;
+      }
+
+      .special-row {
+        height: 60px;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-grow: 1;
+      }
+
+      .special-row div {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .remove-icon,
+      .edit-icon {
+        --mdc-icon-button-size: 36px;
+        color: var(--secondary-text-color);
+      }
+
+      .secondary {
+        font-size: 12px;
+        color: var(--secondary-text-color);
+      }
+    `;
+    }
+};
+__decorate([
+    n$1({ attribute: false })
+], HuiEntitiesCardRowEditor.prototype, "hass", void 0);
+__decorate([
+    n$1({ attribute: false })
+], HuiEntitiesCardRowEditor.prototype, "entities", void 0);
+__decorate([
+    n$1()
+], HuiEntitiesCardRowEditor.prototype, "includeDeviceClasses", void 0);
+__decorate([
+    n$1()
+], HuiEntitiesCardRowEditor.prototype, "label", void 0);
+__decorate([
+    n$1()
+], HuiEntitiesCardRowEditor.prototype, "subLabel", void 0);
+HuiEntitiesCardRowEditor = __decorate([
+    e$2("elec-sankey-hui-entities-card-row-editor")
+], HuiEntitiesCardRowEditor);
 
 const POWER_LABELS = [
     "power_from_grid_entity",
@@ -4243,30 +4443,35 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
         return [
             { name: "title", selector: { text: {} } },
             {
-                name: "power_from_grid_entity", selector: {
+                name: "power_from_grid_entity",
+                selector: {
                     entity: {
                         domain: "sensor",
                         device_class: "power",
-                    }
-                }
+                    },
+                },
             },
-            ...showSeparateToGridOption ? [
-                {
-                    name: "power_to_grid_entity", selector: {
-                        entity: {
-                            domain: "sensor",
-                            device_class: "power",
-                        }
-                    }
-                }
-            ] : [],
+            ...(showSeparateToGridOption
+                ? [
+                    {
+                        name: "power_to_grid_entity",
+                        selector: {
+                            entity: {
+                                domain: "sensor",
+                                device_class: "power",
+                            },
+                        },
+                    },
+                ]
+                : []),
             {
-                name: "generation_entity", selector: {
+                name: "generation_entity",
+                selector: {
                     entity: {
                         domain: "sensor",
                         device_class: "power",
-                    }
-                }
+                    },
+                },
             },
             {
                 name: "appearance",
@@ -4281,22 +4486,22 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
                                 min: 0,
                                 max: 10,
                                 mode: "slider",
-                            }
-                        }
+                            },
+                        },
                     },
                     {
                         name: "hide_small_consumers",
-                        selector: { boolean: {} }
+                        selector: { boolean: {} },
                     },
                     {
                         name: "invert_battery_flows",
-                        selector: { boolean: {} }
+                        selector: { boolean: {} },
                     },
                     {
                         name: "battery_charge_only_from_generation",
-                        selector: { boolean: {} }
+                        selector: { boolean: {} },
                     },
-                ]
+                ],
             },
             {
                 name: "advanced_options",
@@ -4306,18 +4511,16 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
                 schema: [
                     {
                         name: "independent_grid_in_out",
-                        selector: { boolean: {} }
-                    }
-                ]
+                        selector: { boolean: {} },
+                    },
+                ],
             },
         ];
     }
     setConfig(config) {
         this._config = verifyAndMigrateConfig(config);
-        this._configBatteryEntities =
-            processEditorEntities(this._config.battery_entities);
-        this._configConsumerEntities =
-            processEditorEntities(this._config.consumer_entities);
+        this._configBatteryEntities = processEditorEntities(this._config.battery_entities);
+        this._configConsumerEntities = processEditorEntities(this._config.consumer_entities);
     }
     render() {
         if (!this.hass || !this._config) {
@@ -4366,12 +4569,12 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
         @entities-changed=${this._valueChanged}
         @edit-detail-element=${this._editDetailElement}
       ></elec-sankey-hui-entities-card-row-editor>
-      <ha-alert
-        alert-type="info"
-      >
-        Please note that this card is in development!
-        If you see a bug or a possible improvement, please use the
-        <a href="https://github.com/davet2001/energy-sankey/issues">issue tracker</a>
+      <ha-alert alert-type="info">
+        Please note that this card is in development! If you see a bug or a
+        possible improvement, please use the
+        <a href="https://github.com/davet2001/energy-sankey/issues"
+          >issue tracker</a
+        >
         to help us improve it!
       </ha-alert>
     `;
@@ -4398,43 +4601,37 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
             //   configValue = "theme";
             //   value = value.theme;
             // }
-            else if (value.power_from_grid_entity
-                !== this._config.power_from_grid_entity) {
+            else if (value.power_from_grid_entity !== this._config.power_from_grid_entity) {
                 configValue = "power_from_grid_entity";
                 value = value.power_from_grid_entity;
             }
-            else if (value.power_to_grid_entity
-                !== this._config.power_to_grid_entity) {
+            else if (value.power_to_grid_entity !== this._config.power_to_grid_entity) {
                 configValue = "power_to_grid_entity";
                 value = value.power_to_grid_entity;
             }
-            else if (value.generation_entity
-                !== this._config.generation_entity) {
+            else if (value.generation_entity !== this._config.generation_entity) {
                 configValue = "generation_entity";
                 value = value.generation_entity;
             }
-            else if (value.max_consumer_branches
-                != this._config.max_consumer_branches || 0) {
+            else if (value.max_consumer_branches != this._config.max_consumer_branches ||
+                0) {
                 configValue = "max_consumer_branches";
                 value = value.max_consumer_branches;
             }
-            else if (value.hide_small_consumers
-                != this._config.hide_small_consumers) {
+            else if (value.hide_small_consumers != this._config.hide_small_consumers) {
                 configValue = "hide_small_consumers";
                 value = value.hide_small_consumers;
             }
-            else if (value.invert_battery_flows
-                != this._config.invert_battery_flows) {
+            else if (value.invert_battery_flows != this._config.invert_battery_flows) {
                 configValue = "invert_battery_flows";
                 value = value.invert_battery_flows;
             }
-            else if (value.battery_charge_only_from_generation
-                != this._config.battery_charge_only_from_generation) {
+            else if (value.battery_charge_only_from_generation !=
+                this._config.battery_charge_only_from_generation) {
                 configValue = "battery_charge_only_from_generation";
                 value = value.battery_charge_only_from_generation;
             }
-            else if (value.independent_grid_in_out
-                != this._config.independent_grid_in_out) {
+            else if (value.independent_grid_in_out != this._config.independent_grid_in_out) {
                 configValue = "independent_grid_in_out";
                 value = value.independent_grid_in_out;
             }
@@ -4454,11 +4651,13 @@ let PowerFlowCardEditor = class PowerFlowCardEditor extends s$1 {
                 }
                 this._subElementEditorConfig.elementConfig = value;
             }
-            if (ev.currentTarget && ev.currentTarget.id === "consumer-entities") {
+            if (ev.currentTarget &&
+                ev.currentTarget.id === "consumer-entities") {
                 this._config = Object.assign(Object.assign({}, this._config), { consumer_entities: newConfigEntities });
                 this._configConsumerEntities = processEditorEntities(this._config.consumer_entities);
             }
-            else if (ev.currentTarget && ev.currentTarget.id === "battery-entities") {
+            else if (ev.currentTarget &&
+                ev.currentTarget.id === "battery-entities") {
                 this._config = Object.assign(Object.assign({}, this._config), { battery_entities: newConfigEntities });
                 this._configBatteryEntities = processEditorEntities(this._config.battery_entities);
             }
@@ -4704,6 +4903,7 @@ function renderFlowByCorners(startLX, startLY, startRX, startRY, endLX, endLY, e
     return svg_ret;
 }
 function renderRect(x, y, width, height, classname, color = null) {
+    const styleString = color ? `fill:${color};fill-opacity:1` : "";
     return b `
   <rect
   class=${classname}
@@ -4711,7 +4911,7 @@ function renderRect(x, y, width, height, classname, color = null) {
   y="${y}"
   height="${height}"
   width="${width}"
-  {color ? style="fill:${color};fill-opacity:1" : ""}
+  style=${styleString}
   />`;
 }
 /**
@@ -4762,6 +4962,31 @@ function renderBlendRect(startLX, startLY, startRX, startRY, endLX, endLY, endRX
     />
   `;
     return svgRet;
+}
+/**
+ * Sorts ElecRoute objects by their rate in ascending or descending order.
+ */
+function sortRoutesByRate(routes, ascending) {
+    const routesSorted = Object.values(routes).sort((a, b) => {
+        return ascending
+            ? (a.rate || 0) - (b.rate || 0)
+            : (b.rate || 0) - (a.rate || 0);
+    });
+    let ret = {};
+    for (const val of routesSorted) {
+        if (!val.id) {
+            console.warn("Skipping route without id:", val);
+            continue;
+        }
+        ret[val.id] = val;
+    }
+    return ret;
+}
+function sortRoutesByRateDescending(routes) {
+    return sortRoutesByRate(routes, false);
+}
+function sortRoutesByRateAscending(routes) {
+    return sortRoutesByRate(routes, true);
 }
 /**
  * Creates a flow map graphic showing the flow of electricity.
@@ -4835,6 +5060,10 @@ let ElecSankey = class ElecSankey extends s$1 {
         this._generationToBatteriesRate = 0;
         this._generationToGridRate = 0;
         this._generationToConsumersRate = 0;
+        this._localize = (key, fallBack) => {
+            // This is a simple localizer that can be overridden by the parent class.
+            return fallBack || key;
+        };
     }
     _generationTrackedTotal() {
         let totalGen = 0;
@@ -4859,6 +5088,9 @@ let ElecSankey = class ElecSankey extends s$1 {
         }
         else if (this.gridOutRoute) {
             return this.gridOutRoute.rate < 0 ? -this.gridOutRoute.rate : 0;
+        }
+        else if (this._phantomGridInRoute) {
+            return this._phantomGridInRoute.rate;
         }
         return 0;
     }
@@ -5112,7 +5344,7 @@ let ElecSankey = class ElecSankey extends s$1 {
                 : undefined;
         this._untrackedConsumerRoute = {
             id: UNTRACKED_ID,
-            text: "Untracked",
+            text: this._localize("untracked", "Untracked"),
             rate: untrackedConsumer > 0 ? untrackedConsumer : 0,
         };
         /**
@@ -5219,7 +5451,7 @@ let ElecSankey = class ElecSankey extends s$1 {
     _generationToConsumersRadius() {
         return 50 + this._generationToConsumersFlowWidth();
     }
-    renderGenerationToConsumersFlow(x0, y0, x15, x16, x1, y1, y2, svgScaleX = 1) {
+    renderGenerationToConsumersFlow(x0, y0, x15, x16, x1, y1, y2, svgScaleX) {
         const totalGenWidth = this._generationInFlowWidth();
         const genToConsWidth = this._generationToConsumersFlowWidth();
         const genFanOutGap = GENERATION_FAN_OUT_HORIZONTAL_GAP / svgScaleX;
@@ -5329,8 +5561,11 @@ let ElecSankey = class ElecSankey extends s$1 {
     />
     `;
     }
-    renderGridInFlow(y2, y13, y10, svgScaleX = 1) {
-        const gridRoute = this.gridInRoute ? this.gridInRoute : this.gridOutRoute;
+    renderGridInFlow(y2, y13, y10, svgScaleX) {
+        const gridRoute = this.gridInRoute ||
+            this.gridOutRoute ||
+            this._phantomGridInRoute ||
+            undefined;
         if (!gridRoute) {
             return [A, A];
         }
@@ -5346,7 +5581,7 @@ let ElecSankey = class ElecSankey extends s$1 {
       style="left: 0px; height:${divHeight}px;
       top: ${midY * svgScaleX}px; margin: ${-divHeight / 2}px 0 0 0px;"
     >
-      ${this._generateLabelDiv(gridRoute.id, mdiTransmissionTower, undefined, rateA, rateB, undefined, undefined, "grid")}
+      ${this._generateLabelDiv(gridRoute.id, gridRoute.icon || mdiTransmissionTower, undefined, rateA, rateB, undefined, undefined, "grid")}
     </div>`;
         const svgRet = b `
     <rect
@@ -5442,7 +5677,7 @@ let ElecSankey = class ElecSankey extends s$1 {
     _insertExtras(_topLeftX, _topLeftY, _width, _color, _route) {
         return b ``;
     }
-    _renderConsumerFlow(topLeftX, topLeftY, topRightX, topRightY, consumer, color, svgScaleX = 1, count = 1) {
+    _renderConsumerFlow(topLeftX, topLeftY, topRightX, topRightY, consumer, color, svgScaleX, count = 1) {
         var _a;
         const width = this._rateToWidth(consumer.rate);
         const yEnd = topRightY + width / 2;
@@ -5472,15 +5707,10 @@ let ElecSankey = class ElecSankey extends s$1 {
         return [divRet, svgFlow, svgExtras, svgArrow, bottomLeftY, bottomRightY];
     }
     _getGroupedConsumerRoutes() {
-        let consumerRoutes = {};
-        const entries = Object.entries(this.consumerRoutes);
-        entries.sort(([, routeA], [, routeB]) => routeB.rate - routeA.rate);
-        for (const [key, val] of Object.entries(entries)) {
-            consumerRoutes[key] = val[1];
-        }
+        let consumerRoutes = sortRoutesByRateDescending(this.consumerRoutes);
         let groupedConsumer = {
             id: OTHER_ID,
-            text: "Other",
+            text: this._localize("other", "Other"),
             rate: 0,
         };
         let groupedConsumerExists = false;
@@ -5498,9 +5728,8 @@ let ElecSankey = class ElecSankey extends s$1 {
             const numConsumerRoutes = Object.keys(consumerRoutes).length;
             if (numConsumerRoutes > this.maxConsumerBranches - 1) {
                 let otherCount = numConsumerRoutes + 2 - this.maxConsumerBranches;
-                consumerRoutes = this.consumerRoutes;
-                const sortedConsumerRoutes = Object.values(this.consumerRoutes).sort((a, b) => (a.rate || 0) - (b.rate || 0));
-                sortedConsumerRoutes.forEach((route) => {
+                const ascendingConsumerRoutes = sortRoutesByRateAscending(consumerRoutes);
+                for (const route of Object.values(ascendingConsumerRoutes)) {
                     if (otherCount > 0) {
                         groupedConsumer.rate += route.rate || 0;
                         groupedConsumerExists = true;
@@ -5509,9 +5738,11 @@ let ElecSankey = class ElecSankey extends s$1 {
                         }
                         otherCount--;
                     }
-                });
+                }
             }
         }
+        // Re-sort the consumer routes - deleting can break the order (issue #128).
+        consumerRoutes = sortRoutesByRateDescending(consumerRoutes);
         if (groupedConsumerExists) {
             consumerRoutes[groupedConsumer.id] = groupedConsumer;
         }
@@ -5665,6 +5896,9 @@ let ElecSankey = class ElecSankey extends s$1 {
     }
     _toConsumersBlendColor(genToConsFlow, gridToConsFlow, battToConsFlow) {
         const total = genToConsFlow + gridToConsFlow + battToConsFlow;
+        if (total === 0) {
+            return this._gridColor();
+        }
         return mix3Hexes(this._genColor(), this._gridColor(), this._battColor(), genToConsFlow / total, gridToConsFlow / total, battToConsFlow / total);
     }
     _gridOutBlendColor(genToGridFlow, battToGridFlow) {
@@ -6078,38 +6312,62 @@ const getDefaultFormatOptions = (num, options) => {
 
 // end of additional items from frontend src/dialogs/more-info/ha-more-info-dialog.ts
 let HaElecSankey = class HaElecSankey extends ElecSankey {
+    constructor() {
+        super(...arguments);
+        this._localizer = (key) => {
+            return key;
+        };
+        this._localizerIsSetup = false;
+        this._localize = (key) => {
+            if (!this._localizerIsSetup) {
+                this._localizer = setupCustomlocalize(this.hass);
+                this._localizerIsSetup = true;
+            }
+            // The low level card ElecSankey doesn't know anything about the card
+            // prefix, so we need to add it here.
+            if (!key.startsWith("card.")) {
+                key = "card.generic." + key;
+            }
+            return this._localizer(key);
+        };
+    }
     _generateLabelDiv(id, icon, _name, valueA, valueB, valueAColor = undefined, valueBColor = undefined, displayClass = undefined) {
         const _id = id || "";
         const numFractionDigits = this.unit === "kWh" ? 1 : 0;
-        return x `
-      <div
-        class="label ${id ? "label-action-clickable " : ""}${displayClass}"
-        id=${_id}
-        @click=${id ? this._handleMoreInfo : A}
-      >${_name || A} ${icon
+        // prettier-ignore
+        return x `<div
+      class="label ${id ? "label-action-clickable " : ""}${displayClass}"
+      id=${_id}
+      @click=${id ? this._handleMoreInfo : A}
+    >${_name || A}${icon
             ? x `<ha-svg-icon id=${_id} .path=${icon}> </ha-svg-icon>`
             : A}${valueB !== undefined
-            ? x `<br /><span class="directionleft ${displayClass}" style=${valueBColor
-                ? `color:${valueBColor}`
-                : A} id=${_id}>
-                <ha-svg-icon id=${_id} class="small" .path=${mdiArrowLeft}>
-                </ha-svg-icon
-                >${formatNumber(valueB, this.hass.locale, {
+            ? x `<br /><span
+              class="directionleft ${displayClass}"
+              style=${valueBColor ? `color:${valueBColor}` : A}
+              id=${_id}
+            >
+              <ha-svg-icon id=${_id} class="small" .path=${mdiArrowLeft}>
+              </ha-svg-icon
+              >${formatNumber(valueB, this.hass.locale, {
                 maximumFractionDigits: numFractionDigits,
             })}&nbsp;${this.unit}</span
-              ><br />
-              <span class="directionright ${displayClass}" style=${valueAColor
-                ? `color:${valueAColor}`
-                : A} id=${_id}>
-                <ha-svg-icon id=${_id} class="small" .path=${mdiArrowRight}>
-                </ha-svg-icon
-                >${formatNumber(valueA, this.hass.locale, {
+            ><br />
+            <span
+              class="directionright ${displayClass}"
+              style=${valueAColor ? `color:${valueAColor}` : A}
+              id=${_id}
+            >
+              <ha-svg-icon id=${_id} class="small" .path=${mdiArrowRight}>
+              </ha-svg-icon
+              >${formatNumber(valueA, this.hass.locale, {
                 maximumFractionDigits: numFractionDigits,
             })}&nbsp;${this.unit}
-              </span>`
+            </span>`
             : x `<br />${formatNumber(valueA, this.hass.locale, {
                 maximumFractionDigits: numFractionDigits,
-            })}&nbsp;${this.unit}`}</div>`;
+            })}&nbsp;${this.unit}`}
+    </div>`;
     }
     _handleMoreInfo(e) {
         const div = e.target;
