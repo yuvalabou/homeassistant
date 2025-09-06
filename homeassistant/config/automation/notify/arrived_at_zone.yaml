@@ -25,11 +25,6 @@
       id: "tohar"
     - trigger: zone
       entity_id: person.tohar
-      zone: zone.gelato
-      event: enter
-      id: "tohar"
-    - trigger: zone
-      entity_id: person.tohar
       zone: zone.home
       event: enter
       id: "tohar_home"

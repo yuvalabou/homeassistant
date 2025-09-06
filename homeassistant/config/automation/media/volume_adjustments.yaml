@@ -26,4 +26,4 @@
           action: media_player.volume_set
           entity_id: media_player.living_room
           data:
-            volume_level: 0.7
+            volume_level: 0.6

@@ -7,7 +7,6 @@ exclude:
     - sensor.watchman_last_updated
     - remote.tv
     - automation.count_home_assistant_log_entries
-    - binary_sensor.tohar_interactive
     - binary_sensor.yuval_interactive
   entity_globs:
     - sensor.openweathermap_*

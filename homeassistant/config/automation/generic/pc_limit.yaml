@@ -1,0 +1,29 @@
+---
+
+- alias: "PC limit hours"
+  id: 4ee9766d-32db-43ab-aee8-4c81094c2805
+  trigger:
+    - trigger: time
+      id: 'on'
+      at: '15:30:00'
+    - trigger: time
+      id: 'off'
+      at: '19:15:00'
+  condition:
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+  action:
+    choose:
+    - conditions:
+        condition: trigger
+        id: 'on'
+      sequence:
+        action: switch.turn_on
+        data:
+          entity_id: switch.pc_9cd97f_switch
+    - conditions:
+        condition: trigger
+        id: 'off'
+      sequence:
+        action: switch.turn_off
+        data:
+          entity_id: switch.pc_9cd97f_switch

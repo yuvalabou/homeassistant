@@ -1,26 +1,62 @@
 ---
 
-- alias: 'Reolink Push'
-  id: 98d1c7bd-5abf-4f4c-ab0a-c72cce8456fe
+- alias: 'Reolink Motion Push Notification'
+  id: '98d1c7bd-5abf-4f4c-ab0a-c72cce8456fe'
+  description: 'Sends a snapshot when a person or animal is detected in the garden while no one is home.'
+  # 'queued' mode handles rapid triggers gracefully. If another event fires
+  # while this is running, it waits its turn instead of being ignored.
+  mode: queued
+  max: 3 # Allow up to 3 runs to be queued.
   trigger:
-    trigger: state
-    entity_id: binary_sensor.rlc_510wa_aboulafia_person
-    to: 'on'
+    - trigger: state
+      entity_id: binary_sensor.rlc_510wa_aboulafia_person
+      to: 'on'
+      id: 'person'
+    - trigger: state
+      entity_id: binary_sensor.rlc_510wa_aboulafia_animal
+      to: 'on'
+      id: 'animal'
   condition:
     - condition: state
       entity_id: group.person
       state: 'not_home'
+    # Condition 2: Cooldown to prevent notification spam.
+    # 'this.entity_id' is a robust way to self-reference the automation,
+    # so you can change the alias without breaking this logic.
     - condition: template
       value_template: >-
-        {{as_timestamp(now()) - as_timestamp(state_attr('automation.reolink_push', 'last_triggered'), 0) > 30}}
+        {{ as_timestamp(now()) - as_timestamp(state_attr(this.entity_id, 'last_triggered'), 0) > 30 }}
   action:
+    # Step 1: Define all dynamic variables upfront based on the trigger.
+    # This keeps the logic clean and avoids repeating code (DRY principle).
+    - variables:
+        # 'trigger.id' comes from the trigger section ('person' or 'animal').
+        object_type: "{{ trigger.id | capitalize }}"
+        timestamp: "{{ now().strftime('%Y%m%d_%H%M%S') }}"
+
+        # Create a unique, descriptive filename for the snapshot.
+        snapshot_filename: "reolink/{{ trigger.id }}_{{ timestamp }}.jpg"
+    # Step 2: Take the camera snapshot.
     - action: camera.snapshot
       target:
         entity_id: camera.rlc_510wa_aboulafia_fluent
       data:
-        filename: '/config/www/garden.jpg'
+        # The full path where the file will be saved.
+        filename: "/config/www/{{ snapshot_filename }}"
+    # Step 3: Wait a moment to ensure the file is written to disk before sending.
+    # This prevents the notification from failing because the image isn't ready.
+    - delay:
+        seconds: 1
+    # Step 4: Send the notification with the dynamic data.
     - action: notify.mobile_app_yuval
       data:
-        message: "Motion detected! Here's a snapshot."
+        title: "{{ object_type }} Detected in Garden"
+        message: "A {{ trigger.id }} was detected by the garden camera at {{ now().strftime('%H:%M') }}."
         data:
-          image: 'https://mqj9ef93edeicloi3qu2vac7bndfcycx.ui.nabu.casa/local/garden.jpg'
+          # The public-facing URL path for the snapshot.
+          image: "/local/{{ snapshot_filename }}"
+          # Use a tag to group these notifications. A new one will replace the old one.
+          tag: "garden-camera-alert"
+          # On Android, channels can be used for custom sounds/vibrations.
+          channel: "alerts"
+          priority: "high" # Attempts to bypass Do Not Disturb.

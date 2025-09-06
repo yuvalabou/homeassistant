@@ -13,4 +13,4 @@
     data:
       entity_id:
         - light.pergola_light
-        - light.shed_light
+        # - light.shed_light

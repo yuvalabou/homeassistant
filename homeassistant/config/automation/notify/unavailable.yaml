@@ -12,7 +12,7 @@
         - switch.shabbat_plate
         - switch.washing_machine
         - switch.spa_9cd951_switch
-        - switch.laptop_9cd97f_switch
+        - switch.pc_9cd97f_switch
         - fan.kids_bedroom_fan
         - fan.master_bedroom_fan
         - media_player.tv
@@ -29,7 +29,7 @@
         - light.yeelight_ceilb_0x179e0932
         - light.yeelight_color_0x12ab4331
         - light.yeelight_color_0x12bfc0a1
-        - light.shed_light
+        # - light.shed_light
         - light.pergola_light
       to: 'unavailable'
       for: '00:05:00'
