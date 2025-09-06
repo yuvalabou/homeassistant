@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2025.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2025.1.0%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2025.9.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -31,20 +31,20 @@
 
 | Type | Count |
 |------|:-----:|
-| **Entities** | 600 |
-| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 278 |
-| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 63 |
-| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 29 |
-| **[Buttons](https://www.home-assistant.io/integrations/button)** | 30 |
-| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 15 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 64 |
+| **Entities** | 637 |
+| **[Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/sensor)** | 258 |
+| **[Binary Sensors](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/binary_sensor)** | 75 |
+| **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 46 |
+| **[Buttons](https://www.home-assistant.io/integrations/button)** | 32 |
+| **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 16 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 73 |
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 7 |
 
 ### Lines of code
 | Type | Lines |
 |:-:|:-:|
-| Python | 50818 |
-| Yaml | 8801 |
+| Python | 28613 |
+| Yaml | 12931 |
 
 -----
 
@@ -82,7 +82,9 @@ Firebat T8 pro
 - [ESPHome](https://esphome.io/index.html#)
 - Mosquitto broker
 - [zigbee2mqtt](https://github.com/Koenkk/zigbee2mqtt)
-- [Unifi-Controller](https://github.com/linuxserver/docker-unifi-controller)
+- [Unifi-Network-Application](https://github.com/linuxserver/docker-unifi-network-application)
+- Whisper
+- OWW
 
 -----
 
@@ -99,10 +101,10 @@ Firebat T8 pro
 
 ### Integrations
 
+- [AliExpress Package Tracker](https://github.com/yohaybn/HA_aliexpress_package_tracker_sensor)
+- [Anova Nano](https://github.com/mcolyer/home-assistant-anova-nano)
 - [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Oref Alerts](https://github.com/amitfin/oref_alert)
-- [Powercalc](https://github.com/bramstroker/homeassistant-powercalc)
-- [SmartThinQ](https://github.com/ollo69/ha-smartthinq-sensors)
 - [Watchman](https://github.com/dummylabs/thewatchman)
 
 ### Lovelace-UI Enhancements
