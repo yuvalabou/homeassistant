@@ -14,9 +14,8 @@
 deps
 tts
 assets
-floor_plan
 image
-cam_captures
+reolink
 zigbee2mqtt/*.json
 mosquitto/data
 mosquitto/log
