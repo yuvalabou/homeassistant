@@ -5,7 +5,9 @@
   trigger:
     - trigger: time
       id: 'on'
-      at: '15:30:00'
+      at:
+        - '15:30:00'
+        - '07:10:00'
     - trigger: time
       id: 'off'
       at: '19:15:00'

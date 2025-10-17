@@ -1,4 +1,4 @@
-var version = "0.0.27";
+var version = "1.0.1";
 var repository = {
 	type: "git",
 	url: "https://github.com/davet2001/homeassistant-energy-sankey-card"
@@ -2553,9 +2553,10 @@ const SubscribeMixin = (superClass) => {
     return SubscribeClass;
 };
 
-var card$2 = {
+var card$5 = {
 	generic: {
 		other: "Ostatní",
+		home: "Domov",
 		untracked: "Nerozlišeno"
 	},
 	power_sankey: {
@@ -2565,7 +2566,7 @@ var card$2 = {
 		energy_distribution_today: "Dnešní distribuce"
 	}
 };
-var editor$2 = {
+var editor$5 = {
 	card: {
 		generic: {
 			title: "Nadpis",
@@ -2591,20 +2592,71 @@ var editor$2 = {
 	}
 };
 var cs = {
-	card: card$2,
-	editor: editor$2
+	card: card$5,
+	editor: editor$5
 };
 
 var cs$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$2,
+  card: card$5,
   default: cs,
-  editor: editor$2
+  editor: editor$5
 });
 
-var card$1 = {
+var card$4 = {
+	generic: {
+		other: "Andere",
+		home: "Zuhause",
+		untracked: "nicht überwacht"
+	},
+	power_sankey: {
+		live_power_flow: "Aktueller Leistungsfluss"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Heutige Energieaufteilung"
+	}
+};
+var editor$4 = {
+	card: {
+		generic: {
+			title: "Titel",
+			max_consumer_branches: "Beschränkung der Anzahl an Verbrauchern (0 für kein Limit)",
+			appearance: "Erscheinungsbild",
+			advanced_options: "Erweiterte Optionen"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Netzbezug (optional)",
+			power_to_grid_entity: "Netzeinspeisung (optional)",
+			generation_entity: "Solarleistung (optional)",
+			hide_small_consumers: "Gruppiere Verbraucher unter 20W",
+			invert_battery_flows: "Batteriefluss für Laden ist positiv",
+			battery_charge_only_from_generation: "Batterien werden nur über Solar geladen",
+			battery_hint_std: "Entladeleistung der Batterie (Ein- und Ausgang kombiniert, positiver Wert = Entladen)",
+			battery_hint_inverted: "Ladeleistung der Batterie (Ein- und Ausgang kombiniert, positiver Wert = Laden)",
+			independent_grid_in_out: "Benutze separate Sensoren für Netzbezug/-einspeisung"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Gruppiere Verbraucher unter 0.1kWh",
+			battery_charge_only_from_generation: "Batterien werden nur über Solar geladen"
+		}
+	}
+};
+var de = {
+	card: card$4,
+	editor: editor$4
+};
+
+var de$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$4,
+  default: de,
+  editor: editor$4
+});
+
+var card$3 = {
 	generic: {
 		other: "Other",
+		home: "Home",
 		untracked: "Untracked"
 	},
 	power_sankey: {
@@ -2614,7 +2666,7 @@ var card$1 = {
 		energy_distribution_today: "Energy distribution today"
 	}
 };
-var editor$1 = {
+var editor$3 = {
 	card: {
 		generic: {
 			title: "Title",
@@ -2640,20 +2692,70 @@ var editor$1 = {
 	}
 };
 var en = {
-	card: card$1,
-	editor: editor$1
+	card: card$3,
+	editor: editor$3
 };
 
 var en$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$1,
+  card: card$3,
   default: en,
-  editor: editor$1
+  editor: editor$3
 });
 
-var card = {
+var card$2 = {
+	generic: {
+		other: "Otros",
+		untracked: "Sin seguimiento"
+	},
+	power_sankey: {
+		live_power_flow: "Flujo de energía en tiempo real"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Distribución de energía hoy"
+	}
+};
+var editor$2 = {
+	card: {
+		generic: {
+			title: "Título",
+			max_consumer_branches: "Limitar cantidad de ramas de consumidores (0 para ilimitado)",
+			appearance: "Apariencia",
+			advanced_options: "Opciones avanzadas"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Potencia de la red (opcional)",
+			power_to_grid_entity: "Potencia a la red (opcional)",
+			generation_entity: "Potencia de generación (opcional)",
+			hide_small_consumers: "Agrupar consumidores menores de 20W",
+			invert_battery_flows: "Los flujos de la batería son positivos al cargar",
+			battery_charge_only_from_generation: "Las baterías solo pueden cargarse con energía generada",
+			battery_hint_std: "Potencia desde la batería (una combinación de entrada/salida por batería, positivo = descarga)",
+			battery_hint_inverted: "Potencia hacia la batería (una combinación de entrada/salida por batería, positivo = carga)",
+			independent_grid_in_out: "Utilizar sensores separados para entrada/salida de la red"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Agrupar consumidores menores de 0.1 kWh",
+			battery_charge_only_from_generation: "Las baterías solo pueden cargarse con energía generada"
+		}
+	}
+};
+var es = {
+	card: card$2,
+	editor: editor$2
+};
+
+var es$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$2,
+  default: es,
+  editor: editor$2
+});
+
+var card$1 = {
 	generic: {
 		other: "Autre",
+		home: "Maison",
 		untracked: "Non suivi"
 	},
 	power_sankey: {
@@ -2663,7 +2765,7 @@ var card = {
 		energy_distribution_today: "Répartition de l'énergie aujourd'hui"
 	}
 };
-var editor = {
+var editor$1 = {
 	card: {
 		generic: {
 			title: "Titre",
@@ -2689,24 +2791,70 @@ var editor = {
 	}
 };
 var fr = {
-	card: card,
-	editor: editor
+	card: card$1,
+	editor: editor$1
 };
 
 var fr$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card,
+  card: card$1,
   default: fr,
+  editor: editor$1
+});
+
+var card = {
+	generic: {
+		other: "Altro",
+		home: "Casa",
+		untracked: "Non tracciati"
+	},
+	power_sankey: {
+		live_power_flow: "Flusso di potenza istantaneo"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Distribuzione di energia oggi"
+	}
+};
+var editor = {
+	card: {
+		generic: {
+			title: "Titolo",
+			max_consumer_branches: "Limita quantità di rami personalizzati (0 per illimitato)",
+			appearance: "Aspetto",
+			advanced_options: "Opzioni avanzate"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Potenza dalla rete (opzionale)",
+			power_to_grid_entity: "Potenza alla rete (opzionale)",
+			generation_entity: "Potenza da generazione (opzionale)",
+			hide_small_consumers: "Raggruppa personalizzati sotto i 20W",
+			invert_battery_flows: "Flussi batteria sono positivi quando in carica",
+			battery_charge_only_from_generation: "Batterie possono essere ricaricate solo da generazione",
+			battery_hint_std: "Potenza da batterie (combinato in/out per batteria, positivo = in scarica)",
+			battery_hint_inverted: "Potenza a batterie (combinato in/out per batteria, positivo = in scarica)",
+			independent_grid_in_out: "Usa sensori separati per rete (in/out)"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Raggruppa personalizzati sotto 0.1kWh",
+			battery_charge_only_from_generation: "Batterie possono essere ricaricate solo da generazione"
+		}
+	}
+};
+var it = {
+	card: card,
+	editor: editor
+};
+
+var it$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card,
+  default: it,
   editor: editor
 });
 
 // import * as ar from "./translations/ar.json";
 // import * as bg from "./translations/bg.json";
 // import * as ca from "./translations/ca.json";
-// import * as he from "./translations/he.json";
-// import * as hu from "./translations/hu.json";
-// import * as id from "./translations/id.json";
-// import * as it from "./translations/it.json";
 // import * as ko_KR from "./translations/ko-KR.json";
 // import * as nb from "./translations/nb.json";
 // import * as nl from "./translations/nl.json";
@@ -2729,16 +2877,16 @@ const languages = {
     //   ca,
     cs: cs$1,
     //   da,
-    //   de,
+    de: de$1,
     //   el,
     en: en$1,
-    //   es,
+    es: es$1,
     //   fi,
     fr: fr$1,
     //   he,
     //   hu,
     //   id,
-    //   it,
+    it: it$1,
     //   "ko-KR": ko_KR,
     //   nb,
     //   nl,
@@ -4783,6 +4931,7 @@ const FONT_SIZE_PX = 16;
 const ICON_SIZE_PX = 24;
 const SVG_LHS_VISIBLE_WIDTH = 110;
 const PAD_ANTIALIAS = 0.5;
+const ZERO_CHECK_TOLERANCE = 0.1;
 const UNTRACKED_ID = "untracked";
 const OTHER_ID = "other";
 // Color mixing from here: https://stackoverflow.com/a/76752232
@@ -5082,14 +5231,14 @@ let ElecSankey = class ElecSankey extends s$1 {
     _generationTotal() {
         return this._generationTrackedTotal() + this._generationPhantom();
     }
-    _gridImport() {
+    _gridImport(excludePhantom = false) {
         if (this.gridInRoute) {
             return this.gridInRoute.rate > 0 ? this.gridInRoute.rate : 0;
         }
         else if (this.gridOutRoute) {
             return this.gridOutRoute.rate < 0 ? -this.gridOutRoute.rate : 0;
         }
-        else if (this._phantomGridInRoute) {
+        else if (!excludePhantom && this._phantomGridInRoute) {
             return this._phantomGridInRoute.rate;
         }
         return 0;
@@ -5154,7 +5303,7 @@ let ElecSankey = class ElecSankey extends s$1 {
          * each flow only possible to be in or out (not both), but they are both
          * calculated using the same algorithm, documented inline below.
          */
-        const gridImport = this._gridImport();
+        const gridImport = this._gridImport(true);
         // Determine the grid import and export
         if (this.gridOutRoute) {
             this._gridExport =
@@ -5184,7 +5333,7 @@ let ElecSankey = class ElecSankey extends s$1 {
         let x = this._gridExport - generationTrackedTotal - batteryInTotal;
         if (x > 0) {
             // If this is the case, we create a phantom generation source
-            // of sufficient value to balance thie equation, and assume that all
+            // of sufficient value to balance the equation, and assume that all
             // battery power is going to the grid.
             phantomGeneration = x;
             batteriesToGridTemp = batteryInTotal;
@@ -5270,7 +5419,7 @@ let ElecSankey = class ElecSankey extends s$1 {
             batteriesToConsumersTemp;
         // Do we have an excess of consumption?
         x = consumerTrackedTotal - consumerTotalA;
-        if (x > 0) {
+        if (x > ZERO_CHECK_TOLERANCE) {
             // There is an unknown energy source.
             if (this.gridInRoute === undefined && this.gridOutRoute === undefined) {
                 // If we aren't tracking grid sources, create a phantom one.
@@ -5290,7 +5439,7 @@ let ElecSankey = class ElecSankey extends s$1 {
                 generationToBatteriesTemp +
                 generationToConsumersTemp -
                 generationTrackedTotal;
-        if (x > 0) {
+        if (x > ZERO_CHECK_TOLERANCE) {
             phantomGeneration = x;
             // generationToConsumersTemp =
             //   generationTrackedTotal +
@@ -5342,9 +5491,13 @@ let ElecSankey = class ElecSankey extends s$1 {
                     rate: phantomGeneration,
                 }
                 : undefined;
+        // if we aren't tracking any consumers, use the word 'Home'
+        const untrackedName = consumerTrackedTotal !== 0
+            ? this._localize("untracked", "Untracked")
+            : this._localize("home", "Home");
         this._untrackedConsumerRoute = {
             id: UNTRACKED_ID,
-            text: this._localize("untracked", "Untracked"),
+            text: untrackedName,
             rate: untrackedConsumer > 0 ? untrackedConsumer : 0,
         };
         /**

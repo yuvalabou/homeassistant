@@ -174,7 +174,7 @@ class PushyNotifications:
                 },
             )
             return False
-        LOGGER.debug("Pushy credentials are validate.")
+        LOGGER.debug("Pushy credentials are valid.")
         return True
 
     async def _subscribe(self) -> bool:
@@ -275,6 +275,8 @@ class PushyNotifications:
         try:
             content = json.loads(message.payload.decode("utf-8"))
             LOGGER.debug("MQTT message: %s", content)
+            if content.get("test"):
+                return
             new_alert = False
             alert_date = dt_util.parse_datetime(
                 content["time"], raise_on_error=True

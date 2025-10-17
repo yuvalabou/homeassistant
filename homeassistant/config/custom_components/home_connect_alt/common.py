@@ -1,11 +1,14 @@
 from __future__ import annotations
 import logging
+from math import log
 import re
 from abc import ABC, abstractmethod
 
 from home_connect_async import Appliance, Events
+from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers import entity_registry as er
 
 from .const import CONF_NAME_TEMPLATE, CONF_NAME_TEMPLATE_DEFAULT, DOMAIN, DEFAULT_SETTINGS, CONF_ENTITY_SETTINGS, CONF_APPLIANCE_SETTINGS
 
@@ -36,8 +39,10 @@ class EntityBase(ABC):
         self._homeconnect = appliance._homeconnect
         self._key = key
         self._conf = conf
+        self._haid = None
         self.entity_id = f'home_connect.{self.unique_id}'
         self._hc_obj = hc_obj
+
 
     def get_entity_setting(self, option, default=None):
         """ Gets the specified configuration option for the entity """
@@ -47,10 +52,33 @@ class EntityBase(ABC):
         """ Checks if the specified configuration option exists for the entity """
         return self._conf.has_entity_setting(self._key, option)
 
+    @staticmethod
+    def get_non_numeric_haID(hass: HomeAssistant, haid:str, brand:str) -> str:
+        """ Returns a haID that doesn't start with a digit by adding the brand as a prefix if needed """
+        if haid[0].isdigit():
+            # if the haID starts with a digit and there aren't entities that use that haid already then add the brand as a prefix to the haId
+            # This is to avoid issues with using such entities in templates
+            ent_reg = er.async_get(hass)
+            if ent_reg.entities.get(f"binary_sensor.{haid}_connected") is None:
+                # Use the "connected" entity as a representative of the IDs of all the other entities
+                # This is done to avoid breaking existing implementations that already use the haId without the brand prefix
+                haid = brand.lower() + "_" + haid
+            else:
+                _LOGGER.debug("Not adding brand prefix to haID %s because there are existing entities without it", haid)
+
+        return haid
+
     @property
     def haId(self) -> str:
         """ The haID of the appliance """
-        return self._appliance.haId.lower().replace('-','_')
+
+        if self._haid:
+            # If the haId is already set, we return it, so this is only calculated once
+            return self._haid
+
+        haid = EntityBase.get_non_numeric_haID(self._conf.hass, self._appliance.normalized_haId, self._appliance.brand)
+        self._haid = haid
+        return haid
 
 
     @property
@@ -72,7 +100,8 @@ class EntityBase(ABC):
 
     @property
     def unique_id(self) -> str:
-        """" The unique ID oif the entity """
+        """" The unique ID of the entity """
+
         return f"{self.haId}_{self._key.lower().replace('.','_')}"
 
     @property
@@ -199,6 +228,7 @@ class EntityManager():
 class Configuration(dict):
     """ A class to handle both global config coming from configuration.yaml and the local config of each entity """
     _global_config:dict = None
+    _hass:HomeAssistant = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -251,10 +281,16 @@ class Configuration(dict):
             c.update(extra_conf)
         return c
 
+    @property
+    def hass(self) -> HomeAssistant | None:
+        """Return the Home Assistant instance."""
+        return Configuration._hass
+
     @classmethod
-    def set_global_config(cls, global_config:dict):
+    def set_global_config(cls, hass:HomeAssistant, global_config:dict):
         """Set the global config once as a static member that will be appended automatically to each config object."""
         cls._global_config = global_config
+        cls._hass = hass
 
     @classmethod
     def get_global_config(cls):

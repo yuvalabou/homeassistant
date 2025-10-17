@@ -10,7 +10,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING, Any, Final
 
 import aiohttp
-from aiohttp import ClientWebSocketResponse, ClientWSTimeout, WSMsgType
+from aiohttp import ClientWebSocketResponse, WSMsgType
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .categories import (
@@ -40,13 +40,7 @@ if TYPE_CHECKING:
 
 WS_URL: Final = "wss://ws.tzevaadom.co.il/socket?platform=WEB"
 ORIGIN_HEADER: Final = "https://www.tzevaadom.co.il"
-WS_IDLE_TIMEOUT: Final = 10 * 60
-WS_CLOSE_TIMEOUT: Final = 3.0
-WS_SYSTEM_MESSAGES: Final = [
-    aiohttp.WSMsgType.BINARY,
-    aiohttp.WSMsgType.PING,
-    aiohttp.WSMsgType.PONG,
-]
+WS_HEARTBEAT: Final = 45
 
 THREAT_TITLES = {
     0: "ירי רקטות וטילים",
@@ -110,47 +104,47 @@ class TzevaAdomNotifications:
 
     async def _listen(self) -> None:
         """Listen for WebSocket messages."""
-        while not self._stop.is_set():
+        while True:
             try:
                 async with self._http_client.ws_connect(
                     WS_URL,
                     origin=ORIGIN_HEADER,
-                    timeout=ClientWSTimeout(
-                        ws_receive=WS_IDLE_TIMEOUT,  # pyright: ignore[reportCallIssue]
-                        ws_close=WS_CLOSE_TIMEOUT,  # pyright: ignore[reportCallIssue]
-                    ),
+                    heartbeat=WS_HEARTBEAT,
                 ) as self._ws:
                     while True:
                         message = await self._ws.receive()
-                        if message.type == aiohttp.WSMsgType.TEXT:
-                            await self._on_message(message.json())
-                        elif message.type in WS_SYSTEM_MESSAGES:
-                            LOGGER.debug(
-                                "WS system message (%s), ignoring.",
-                                WSMsgType(message.type).name,
-                            )
-                        else:
-                            if message.type != aiohttp.WSMsgType.CLOSING:
+                        match message.type:
+                            case aiohttp.WSMsgType.TEXT:
+                                await self._on_message(message.json())
+                            case (
+                                aiohttp.WSMsgType.CLOSING
+                                | aiohttp.WSMsgType.CLOSE
+                                | aiohttp.WSMsgType.CLOSED
+                                | aiohttp.WSMsgType.ERROR
+                            ):
                                 LOGGER.debug(
-                                    "Unexpected WS message (%s): %s",
-                                    WSMsgType(message.type).name
-                                    if isinstance(message.type, int)
-                                    else "None",
-                                    message.data,
+                                    "WS system message '%s' => closing",
+                                    WSMsgType(message.type).name,
                                 )
-                                await self._delay()
-                            break
+                                break
+                            case _:
+                                LOGGER.debug(
+                                    "WS system message '%s' => ignoring",
+                                    WSMsgType(message.type).name,
+                                )
 
             except:  # noqa: E722
                 LOGGER.exception("Error in WS listener")
-                await self._delay()
+            if self._stop.is_set():
+                break
             await self._close()
+            await self._delay()
 
     async def _delay(self) -> None:
         """Delay for a short period before reconnecting."""
         with contextlib.suppress(Exception):
             await asyncio.wait_for(
-                self._stop.wait(), timeout=secrets.SystemRandom().uniform(5, 15)
+                self._stop.wait(), timeout=secrets.SystemRandom().uniform(5, 8)
             )
 
     def _parse_message(self, message: dict[str, Any]) -> dict[str, str] | None:
@@ -178,13 +172,13 @@ class TzevaAdomNotifications:
                 TZEVAADOM_ID_TO_AREA[city_id]
                 for city_id in message["data"].get("citiesIds") or []
             ]
-            # Filter out empty areas and ensure the message is a pre-alert.
+            # Filter out empty areas and ensure the message is a pre_alert.
             if not areas or message["data"].get("instructionType") != 0:
                 return None
             fields = {
                 # We use the official title for pre-alerts.
                 TITLE_FIELD: PRE_ALERT_TITLE,
-                CATEGORY_FIELD: 14,  # 14 is pre-alert and 13 is post-alert.
+                CATEGORY_FIELD: 14,  # 14 is pre_alert and 13 is post-alert.
                 "areas": areas,
                 "id": (
                     f"{MessageType.SYSTEM_MESSAGE}_{message['data']['notificationId']}"
