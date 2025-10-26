@@ -9,6 +9,9 @@ services:
     image: ghcr.io/home-assistant/home-assistant:stable
     environment:
       - TZ=Asia/Jerusalem
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     volumes:
       - ./homeassistant/config:/config
       - /var/run/docker.sock:/var/run/docker.sock
