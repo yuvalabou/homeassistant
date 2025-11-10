@@ -9,4 +9,4 @@
   action:
     action: notify.nest_mini
     data:
-      message: "Guest Mode has been enabled.",
+      message: "Guest Mode has been enabled."
