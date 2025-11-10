@@ -3,48 +3,10 @@
 - alias: 'Guest Mode'
   id: db433658-1fd1-45a9-9165-8e05f912920e
   trigger:
-    - trigger: state
-      entity_id: input_boolean.guest_mode
-      to: 'on'
-      id: 'on'
-    - trigger: state
-      entity_id: input_boolean.guest_mode
-      to: 'off'
-      id: 'off'
+    trigger: state
+    entity_id: input_boolean.guest_mode
+    to: 'on'
   action:
-    - choose:
-        - conditions:
-            condition: trigger
-            id: 'on'
-          sequence:
-            action: notify.nest_mini
-            data:
-              message: >-
-                {{
-                  [
-                    "Guest Mode has been enabled.",
-                    "Switching to guest mode!",
-                    "I have enabled guest mode.",
-                    "System Guest Mode has been enabled. I will minimize the amount of automation for today.",
-                    "Look but do not touch mode enabled. Otherwise known as Guest Mode around here.",
-                    "Guest mode enabled or as I like to call it, Look but do not touch mode.",
-                    "Awesome! I will take the rest of the day off. Guest mode has been enabled.",
-                    "Guest Mode enabled. In other words, Manual Mode engaged.",
-                    "Guest mode enabled. Have Fun!",
-                    "Guest Mode enabled. I am still doing stuff behind the scenes but probably will not turn off the lights on you."
-                  ] | random
-                }}
-        - conditions:
-            condition: trigger
-            id: 'off'
-          sequence:
-            action: notify.nest_mini
-            data:
-              message: >
-                {{
-                  [
-                    "Guest Mode has been disabled and normal automations will continue.",
-                    "I have disabled guest mode and have resumed normal operations!",
-                    "Disabling guest mode!"
-                  ] | random
-                }}
+    action: notify.nest_mini
+    data:
+      message: "Guest Mode has been enabled.",

@@ -6,7 +6,7 @@
   trigger:
     - trigger: state
       entity_id:
-        - switch.vent
+        # - switch.vent
         - switch.ensuite_heater
         - switch.boiler
         - switch.shabbat_plate
