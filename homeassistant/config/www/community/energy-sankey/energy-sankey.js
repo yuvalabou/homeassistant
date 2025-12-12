@@ -1,4 +1,4 @@
-var version = "1.0.1";
+var version = "1.0.2";
 var repository = {
 	type: "git",
 	url: "https://github.com/davet2001/homeassistant-energy-sankey-card"
@@ -2553,7 +2553,7 @@ const SubscribeMixin = (superClass) => {
     return SubscribeClass;
 };
 
-var card$5 = {
+var card$8 = {
 	generic: {
 		other: "Ostatní",
 		home: "Domov",
@@ -2566,7 +2566,7 @@ var card$5 = {
 		energy_distribution_today: "Dnešní distribuce"
 	}
 };
-var editor$5 = {
+var editor$8 = {
 	card: {
 		generic: {
 			title: "Nadpis",
@@ -2592,18 +2592,68 @@ var editor$5 = {
 	}
 };
 var cs = {
-	card: card$5,
-	editor: editor$5
+	card: card$8,
+	editor: editor$8
 };
 
 var cs$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$5,
+  card: card$8,
   default: cs,
-  editor: editor$5
+  editor: editor$8
 });
 
-var card$4 = {
+var card$7 = {
+	generic: {
+		other: "Øvrige",
+		home: "Hjem",
+		untracked: "Usporede"
+	},
+	power_sankey: {
+		live_power_flow: "Aktiv energi"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Dagens energi distribution"
+	}
+};
+var editor$7 = {
+	card: {
+		generic: {
+			title: "Titel",
+			max_consumer_branches: "Begrænset antal af forbrugssteder (0 for uubegrænset)",
+			appearance: "Udseende",
+			advanced_options: "Avancerede Optioner"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Energi fra nettet (optional)",
+			power_to_grid_entity: "Energi til nettet (optional)",
+			generation_entity: "Energi fra produktion (optional)",
+			hide_small_consumers: "Gruppér under 20W",
+			invert_battery_flows: "Batteri flow er positiv ved opladning",
+			battery_charge_only_from_generation: "Batterier kan kun oplade fra produceret energi",
+			battery_hint_std: "Energi fra batteri (En samlet for ind/ud per batteri, positiv = afladning)",
+			battery_hint_inverted: "Energi til batteri (En samlet for ind/ud per batteri, positiv = opladning)",
+			independent_grid_in_out: "Brug seperate sensorer til ind/ud på nettet"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Saml forbrug under 0.1kWh",
+			battery_charge_only_from_generation: "Batterier kan kun oplades fra genereret energi"
+		}
+	}
+};
+var da = {
+	card: card$7,
+	editor: editor$7
+};
+
+var da$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$7,
+  default: da,
+  editor: editor$7
+});
+
+var card$6 = {
 	generic: {
 		other: "Andere",
 		home: "Zuhause",
@@ -2616,7 +2666,7 @@ var card$4 = {
 		energy_distribution_today: "Heutige Energieaufteilung"
 	}
 };
-var editor$4 = {
+var editor$6 = {
 	card: {
 		generic: {
 			title: "Titel",
@@ -2642,18 +2692,18 @@ var editor$4 = {
 	}
 };
 var de = {
-	card: card$4,
-	editor: editor$4
+	card: card$6,
+	editor: editor$6
 };
 
 var de$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$4,
+  card: card$6,
   default: de,
-  editor: editor$4
+  editor: editor$6
 });
 
-var card$3 = {
+var card$5 = {
 	generic: {
 		other: "Other",
 		home: "Home",
@@ -2666,7 +2716,7 @@ var card$3 = {
 		energy_distribution_today: "Energy distribution today"
 	}
 };
-var editor$3 = {
+var editor$5 = {
 	card: {
 		generic: {
 			title: "Title",
@@ -2692,18 +2742,18 @@ var editor$3 = {
 	}
 };
 var en = {
-	card: card$3,
-	editor: editor$3
+	card: card$5,
+	editor: editor$5
 };
 
 var en$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$3,
+  card: card$5,
   default: en,
-  editor: editor$3
+  editor: editor$5
 });
 
-var card$2 = {
+var card$4 = {
 	generic: {
 		other: "Otros",
 		untracked: "Sin seguimiento"
@@ -2715,7 +2765,7 @@ var card$2 = {
 		energy_distribution_today: "Distribución de energía hoy"
 	}
 };
-var editor$2 = {
+var editor$4 = {
 	card: {
 		generic: {
 			title: "Título",
@@ -2741,18 +2791,18 @@ var editor$2 = {
 	}
 };
 var es = {
-	card: card$2,
-	editor: editor$2
+	card: card$4,
+	editor: editor$4
 };
 
 var es$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$2,
+  card: card$4,
   default: es,
-  editor: editor$2
+  editor: editor$4
 });
 
-var card$1 = {
+var card$3 = {
 	generic: {
 		other: "Autre",
 		home: "Maison",
@@ -2765,7 +2815,7 @@ var card$1 = {
 		energy_distribution_today: "Répartition de l'énergie aujourd'hui"
 	}
 };
-var editor$1 = {
+var editor$3 = {
 	card: {
 		generic: {
 			title: "Titre",
@@ -2791,18 +2841,18 @@ var editor$1 = {
 	}
 };
 var fr = {
-	card: card$1,
-	editor: editor$1
+	card: card$3,
+	editor: editor$3
 };
 
 var fr$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$1,
+  card: card$3,
   default: fr,
-  editor: editor$1
+  editor: editor$3
 });
 
-var card = {
+var card$2 = {
 	generic: {
 		other: "Altro",
 		home: "Casa",
@@ -2815,7 +2865,7 @@ var card = {
 		energy_distribution_today: "Distribuzione di energia oggi"
 	}
 };
-var editor = {
+var editor$2 = {
 	card: {
 		generic: {
 			title: "Titolo",
@@ -2841,25 +2891,120 @@ var editor = {
 	}
 };
 var it = {
-	card: card,
-	editor: editor
+	card: card$2,
+	editor: editor$2
 };
 
 var it$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card,
+  card: card$2,
   default: it,
+  editor: editor$2
+});
+
+var card$1 = {
+	generic: {
+		other: "その他",
+		home: "ホーム",
+		untracked: "追跡外"
+	},
+	power_sankey: {
+		live_power_flow: "ライブ電力フロー"
+	},
+	energy_sankey: {
+		energy_distribution_today: "今日のエネルギー使用量"
+	}
+};
+var editor$1 = {
+	card: {
+		generic: {
+			title: "タイトル",
+			max_consumer_branches: "消費デバイスの最大表示数(0で無制限)",
+			appearance: "外観",
+			advanced_options: "詳細設定"
+		},
+		power_sankey: {
+			power_from_grid_entity: "系統からの電力 (任意)",
+			power_to_grid_entity: "系統への電力 (任意)",
+			generation_entity: "発電からの電力 (任意)",
+			hide_small_consumers: "20W以下の消費をグループ化する",
+			invert_battery_flows: "蓄電器の電力は＋で充電を示します",
+			battery_charge_only_from_generation: "蓄電器は発電からの電力でのみ充電する",
+			battery_hint_std: "蓄電器からの放電(入出力をまとめた値、＋は放電を示します)",
+			battery_hint_inverted: "蓄電器への充電 (入出力をまとめた値、＋は充電を示します)",
+			independent_grid_in_out: "充電と放電で異なるセンサーを割り当てる"
+		},
+		energy_sankey: {
+			hide_small_consumers: "0.1kWh以下の消費をグループ化する",
+			battery_charge_only_from_generation: "蓄電器は発電からの電力でのみ充電する"
+		}
+	}
+};
+var ja = {
+	card: card$1,
+	editor: editor$1
+};
+
+var ja$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$1,
+  default: ja,
+  editor: editor$1
+});
+
+var card = {
+	generic: {
+		other: "Outro",
+		home: "Início",
+		untracked: "Não rastreado"
+	},
+	power_sankey: {
+		live_power_flow: "Fluxo de energia em tempo real"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Distribuição de energia hoje"
+	}
+};
+var editor = {
+	card: {
+		generic: {
+			title: "Título",
+			max_consumer_branches: "Limite da quantidade de ramificações de consumidores (0 para ilimitado)",
+			appearance: "Aparência",
+			advanced_options: "Opções avançadas"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Potência da rede (opcional)",
+			power_to_grid_entity: "Potência para a rede (opcional)",
+			generation_entity: "Potência da geração (opcional)",
+			hide_small_consumers: "Grupo de consumidores abaixo de 20W",
+			invert_battery_flows: "Os fluxos da bateria são positivos ao carregar",
+			battery_charge_only_from_generation: "As baterias só podem ser carregadas com energia gerada",
+			battery_hint_std: "Potência da bateria (uma entrada/saída combinada por bateria, positivo = descarregando)",
+			battery_hint_inverted: "Potência para bateria (uma entrada/saída combinada por bateria, positivo = carregando)",
+			independent_grid_in_out: "Usar sensores separados para entrada/saída da rede"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Agrupar consumidores abaixo de 0.1kWh",
+			battery_charge_only_from_generation: "As baterias só podem ser carregadas com energia gerada"
+		}
+	}
+};
+var ptBR = {
+	card: card,
+	editor: editor
+};
+
+var pt_BR = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card,
+  default: ptBR,
   editor: editor
 });
 
 // import * as ar from "./translations/ar.json";
 // import * as bg from "./translations/bg.json";
 // import * as ca from "./translations/ca.json";
-// import * as ko_KR from "./translations/ko-KR.json";
-// import * as nb from "./translations/nb.json";
-// import * as nl from "./translations/nl.json";
-// import * as pl from "./translations/pl.json";
-// import * as pt_BR from "./translations/pt-BR.json";
 // import * as pt_PT from "./translations/pt-PT.json";
 // import * as ro from "./translations/ro.json";
 // import * as ru from "./translations/ru.json";
@@ -2876,7 +3021,7 @@ const languages = {
     //   bg,
     //   ca,
     cs: cs$1,
-    //   da,
+    da: da$1,
     de: de$1,
     //   el,
     en: en$1,
@@ -2887,11 +3032,12 @@ const languages = {
     //   hu,
     //   id,
     it: it$1,
+    ja: ja$1,
     //   "ko-KR": ko_KR,
     //   nb,
     //   nl,
     //   pl,
-    //   "pt-BR": pt_BR,
+    "pt-BR": pt_BR,
     //   "pt-PT": pt_PT,
     //   ro,
     //   ru,
@@ -4030,6 +4176,7 @@ let PowerFlowCard = class PowerFlowCard extends ElecFlowCardBase {
             for (let powerEntityId of powerEntityIds) {
                 const power = Math.abs(+_hass.states[powerEntityId].state);
                 if (power > maxPower) {
+                    maxPower = power;
                     mostLikelyPowerEntityId = powerEntityId;
                 }
             }
@@ -5584,7 +5731,7 @@ let ElecSankey = class ElecSankey extends s$1 {
         const ret = computedStyles.getPropertyValue("--batt-in-color").trim();
         return ret || BATT_IN_COLOR;
     }
-    _generateLabelDiv(_id, icon, _name, valueA, valueB = undefined, _valueAColor = undefined, _valueBColor = undefined, _displayClass = undefined) {
+    _generateLabelDiv(_id, icon, _name, valueA, valueB = undefined, _valueAColor = undefined, _valueBColor = undefined, _displayClass = undefined, _ = true) {
         const valueARounded = Math.round(valueA * 10) / 10;
         const valueBRounded = valueB ? Math.round(valueB * 10) / 10 : undefined;
         return x `<div class="label">
@@ -5728,13 +5875,15 @@ let ElecSankey = class ElecSankey extends s$1 {
         const rateB = this._gridExport;
         const midY = (y10 + y13) / 2;
         const divHeight = ICON_SIZE_PX + TEXT_PADDING + FONT_SIZE_PX * 2;
+        const hasGridExport = Object.keys(this.batteryRoutes).length > 0 ||
+            Object.keys(this.generationInRoutes).length > 0;
         const divRet = x `<div
       width=${ICON_SIZE_PX * 2}
       class="label elecroute-label-grid"
       style="left: 0px; height:${divHeight}px;
       top: ${midY * svgScaleX}px; margin: ${-divHeight / 2}px 0 0 0px;"
     >
-      ${this._generateLabelDiv(gridRoute.id, gridRoute.icon || mdiTransmissionTower, undefined, rateA, rateB, undefined, undefined, "grid")}
+      ${this._generateLabelDiv(gridRoute.id, gridRoute.icon || mdiTransmissionTower, undefined, rateA, rateB, undefined, undefined, "grid", hasGridExport)}
     </div>`;
         const svgRet = b `
     <rect
@@ -6484,7 +6633,7 @@ let HaElecSankey = class HaElecSankey extends ElecSankey {
             return this._localizer(key);
         };
     }
-    _generateLabelDiv(id, icon, _name, valueA, valueB, valueAColor = undefined, valueBColor = undefined, displayClass = undefined) {
+    _generateLabelDiv(id, icon, _name, valueA, valueB, valueAColor = undefined, valueBColor = undefined, displayClass = undefined, showLeftValue = true) {
         const _id = id || "";
         const numFractionDigits = this.unit === "kWh" ? 1 : 0;
         // prettier-ignore
@@ -6495,7 +6644,7 @@ let HaElecSankey = class HaElecSankey extends ElecSankey {
     >${_name || A}${icon
             ? x `<ha-svg-icon id=${_id} .path=${icon}> </ha-svg-icon>`
             : A}${valueB !== undefined
-            ? x `<br /><span
+            ? x `<br />${showLeftValue ? x `<span
               class="directionleft ${displayClass}"
               style=${valueBColor ? `color:${valueBColor}` : A}
               id=${_id}
@@ -6505,7 +6654,7 @@ let HaElecSankey = class HaElecSankey extends ElecSankey {
               >${formatNumber(valueB, this.hass.locale, {
                 maximumFractionDigits: numFractionDigits,
             })}&nbsp;${this.unit}</span
-            ><br />
+            >` : A}<br />
             <span
               class="directionright ${displayClass}"
               style=${valueAColor ? `color:${valueAColor}` : A}

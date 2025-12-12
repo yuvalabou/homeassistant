@@ -1,0 +1,10 @@
+---
+
+garmin:
+  name: "Garmin"
+  entities:
+    - switch.boiler
+    - light.all_lights
+    - cover.living_room_shutter
+    - fan.master_bedroom_fan
+  icon: mdi:devices
