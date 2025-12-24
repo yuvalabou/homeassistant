@@ -1,78 +1,62 @@
 ---
 
-- alias: "Arrived at zone notification"
+- alias: "Notifications: Arrived Safely"
   id: 050ed8f0-0d39-46f9-9b9d-90a55820f5be
+  mode: parallel
   trigger:
     - trigger: zone
       entity_id: person.yuval
       zone: zone.hirsh
       event: enter
-      id: "yuval"
+      id: "work_yuval"
     - trigger: zone
       entity_id: person.yuval
       zone: zone.front
       event: enter
-      id: "yuval"
+      id: "base_yuval"
     - trigger: zone
       entity_id: person.yuval
       zone: zone.home
       event: enter
-      id: "yuval_home"
+      id: "home_yuval"
     - trigger: zone
       entity_id: person.tohar
       zone: zone.melody
       event: enter
-      id: "tohar"
-    - trigger: zone
+      id: "work_tohar"
+    - platform: zone
       entity_id: person.tohar
       zone: zone.home
       event: enter
-      id: "tohar_home"
+      id: "home_tohar"
   action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'yuval'
-        sequence:
-          action: notify.mobile_app_tohar
-          data:
-            title: "יובל הגיע בשלום לעבודה"
-            message: "Arrived at {{ states('person.yuval') }}"
-      - conditions:
-          condition: trigger
-          id: 'yuval'
-        sequence:
-          action: notify.mobile_app_tohar
-          data:
-            title: "יובל הגיע בשלום לבסיס"
-            message: "Arrived at {{ states('person.yuval') }}"
-      - conditions:
-        - condition: trigger
-          id: 'tohar'
-        sequence:
-          action: notify.mobile_app_yuval
-          data:
-            title: "טוהר הגיעה בשלום לעבודה"
-            message: "Arrived at {{ states('person.tohar') }}"
-      - conditions:
-        - condition: trigger
-          id: 'yuval_home'
-        - condition: state
-          entity_id: person.tohar
-          state: 'not_home'
-        sequence:
-          action: notify.mobile_app_tohar
-          data:
-            title: "יובל הגיע הביתה בשלום"
-            message: "Arrived at {{ states('person.yuval') }}"
-      - conditions:
-        - condition: trigger
-          id: 'tohar_home'
-        - condition: state
-          entity_id: person.yuval
-          state: 'not_home'
-        sequence:
-          action: notify.mobile_app_yuval
-          data:
-            title: "טוהר הגיעה הביתה בשלום"
-            message: "Arrived at {{ states('person.tohar') }}"
+    - variables:
+        person_entity: "{{ trigger.entity_id }}"
+        person_name: "{{ state_attr(trigger.entity_id, 'friendly_name') }}"
+        notify_target: >
+          {{ 'mobile_app_tohar' if 'yuval' in trigger.entity_id else 'mobile_app_yuval' }}
+        partner_entity: >
+          {{ 'person.tohar' if 'yuval' in trigger.entity_id else 'person.yuval' }}
+        verb: >
+          {{ 'הגיע' if 'yuval' in trigger.entity_id else 'הגיעה' }}
+        place_map:
+          zone.hirsh: "לעבודה"
+          zone.melody: "לעבודה"
+          zone.front: "לבסיס"
+          zone.home: "הביתה"
+        current_zone: "{{ trigger.zone.entity_id }}"
+        hebrew_place: "{{ place_map.get(trigger.zone.entity_id, 'ליעד') }}"
+    - condition: template
+      value_template: >
+        {% if current_zone == 'zone.home' %}
+          {{ is_state(partner_entity, 'not_home') }}
+        {% else %}
+          true
+        {% endif %}
+    - action: notify.{{ notify_target }}
+      data:
+        title: "{{ person_name }} {{ verb }} בשלום {{ hebrew_place }}"
+        message: "Location: {{ trigger.to_state.state }}"
+        data:
+          group: "location-updates"
+          clickAction: "map"

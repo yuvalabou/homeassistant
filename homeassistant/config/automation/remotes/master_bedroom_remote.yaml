@@ -1,24 +1,84 @@
 ---
 
-- alias: "Button - Turn-off everything at night"
+- alias: "Bedroom: Master Button Manager (Device Ver.)"
   id: d188bbe8-773b-4319-b2b8-5f6896f98b0a
+  mode: restart
   trigger:
-    trigger: device
-    domain: mqtt
-    device_id: fa81c5b69bfa60ab1e06687bfcbee9d2
-    type: action
-    subtype: hold
-    discovery_id: 0x00158d0006d0a9eb action_hold
-  condition:
-    condition: time
-    after: '20:00:00'
-    before: '02:00:00'
+    - trigger: device
+      domain: mqtt
+      device_id: fa81c5b69bfa60ab1e06687bfcbee9d2
+      type: action
+      subtype: single
+      discovery_id: 0x00158d0006d0a9eb action_single
+      id: "single_click"
+    - trigger: device
+      domain: mqtt
+      device_id: fa81c5b69bfa60ab1e06687bfcbee9d2
+      type: action
+      subtype: double
+      discovery_id: 0x00158d0006d0a9eb action_double
+      id: "double_click"
+    - trigger: device
+      domain: mqtt
+      device_id: fa81c5b69bfa60ab1e06687bfcbee9d2
+      type: action
+      subtype: hold
+      discovery_id: 0x00158d0006d0a9eb action_hold
+      id: "hold_press"
   action:
-    - action: homeassistant.turn_off
-      data:
-        entity_id:
-          - light.all_lights
-          - climate.living_room
-    - action: cover.close_cover
-      data:
-        entity_id: cover.living_room_shutter
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: "single_click"
+          sequence:
+            action: light.toggle
+            target:
+              entity_id: light.master_bedroom_light
+        - conditions:
+            - condition: trigger
+              id: "double_click"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: state
+                      entity_id: climate.master_bedroom_ac
+                      state: ["cool", "heat", "fan_only"]
+                  sequence:
+                    - action: climate.turn_off
+                      target:
+                        entity_id: climate.master_bedroom_ac
+              default:
+                action: climate.turn_on
+                target:
+                  entity_id: climate.master_bedroom_ac
+                data:
+                  hvac_mode: cool
+                  temperature: 22
+        - conditions:
+            - condition: trigger
+              id: "hold_press"
+          sequence:
+            - choose:
+                - conditions:
+                    - condition: time
+                      after: "20:00:00"
+                      before: "06:00:00"
+                  sequence:
+                    - action: homeassistant.turn_off
+                      target:
+                        entity_id:
+                          - light.all_lights
+                          - climate.living_room
+                    - action: cover.close_cover
+                      target:
+                        entity_id: cover.living_room_shutter
+                    - action: notify.mobile_app_yuval
+                      data:
+                        message: "Goodnight. House Dark."
+              default:
+                - action: light.turn_off
+                  target:
+                    entity_id: light.master_bedroom_light
+                - action: fan.turn_on
+                  target:
+                    entity_id: fan.master_bedroom_fan

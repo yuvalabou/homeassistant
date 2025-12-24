@@ -30,7 +30,7 @@
         data:
           entity_id:
             - light.yeelight_ceilb_0x179e0932
-            - light.kitchen_ceiling_light
+            - light.yeelight_ceilb_0x3154de69
             - light.pergola_light
           brightness_pct: 100
     # - if:

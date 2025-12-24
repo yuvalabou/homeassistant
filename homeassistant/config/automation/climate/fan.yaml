@@ -1,61 +1,66 @@
 ---
 
-- alias: "Scheduled Shabbat Kids Fan"
-  id: 0ea02e72-2e51-46ed-8643-24ecf7eff2fe
-  trigger:
-    - trigger: time
-      at:
-        - '21:00:00'
-        - '12:30:00'
-      id: 'on'
-    - trigger: time
-      at: '16:00:00'
-      id: 'off'
-  condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-  action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'on'
-        - "{{ is_state('group.person', 'home') }}"
-        sequence:
-          action: fan.turn_on
-          data:
-            entity_id: fan.kids_bedroom_fan
-            percentage: 66
-      - conditions:
-        - condition: trigger
-          id: 'off'
-        sequence:
-          action: fan.turn_off
-          data:
-            entity_id: fan.kids_bedroom_fan
-
-- alias: "Kids Night Fan"
+- alias: "Kids Bedroom: Fan Manager"
   id: 15136e60-264f-43f2-974f-641b5ce2cf45
+  mode: restart
   trigger:
-    - trigger: time
+    - id: 'night_start'
+      trigger: time
       at: '19:00:00'
-      id: 'on'
-    - trigger: time
+    - id: 'night_end'
+      trigger: time
       at: '07:00:00'
-      id: 'off'
+    - id: 'nap_start'
+      trigger: time
+      at: '12:30:00'
+    - id: 'nap_end'
+      trigger: time
+      at: '16:00:00'
+  condition:
+    - condition: state
+      entity_id: group.person
+      state: 'home'
   action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'on'
-        - "{{ is_state('group.person', 'home') }}"
-        sequence:
-          action: fan.turn_on
-          data:
-            entity_id: fan.kids_bedroom_fan
-            percentage: 66
-      - conditions:
-        - condition: trigger
-          id: 'off'
-        sequence:
-          action: fan.turn_off
-          data:
-            entity_id: fan.kids_bedroom_fan
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: trigger
+                  id: 'night_start'
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: 'nap_start'
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'on'
+          sequence:
+            - action: fan.turn_on
+              target:
+                entity_id: fan.kids_bedroom_fan
+              data:
+                percentage: >
+                  {% set temp = states('sensor.kids_room_temperature') | float(22) %}
+                  {% if temp >= 26 %}
+                    100
+                  {% elif temp >= 24 %}
+                    66
+                  {% elif temp >= 22 %}
+                    33
+                  {% endif %}
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: trigger
+                  id: 'night_end'
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: 'nap_end'
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'on'
+          sequence:
+            - action: fan.turn_off
+              target:
+                entity_id: fan.kids_bedroom_fan

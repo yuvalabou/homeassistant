@@ -1,34 +1,50 @@
 ---
 
-- alias: "Batteries full"
+- alias: "Batteries Full"
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
   trigger:
-    - trigger: template
+    - trigger: numeric_state
+      entity_id: sensor.yuval_battery_level
+      above: 99
       id: 'yuval'
-      value_template: "{{ is_state('sensor.yuval_battery_level', '100') }}"
-    - trigger: template
+    - trigger: numeric_state
+      entity_id: sensor.tohar_battery_level
+      above: 99
       id: 'tohar'
-      value_template: "{{ is_state('sensor.tohar_battery_level', '100') }}"
   condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
+    - condition: state
+      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+      state: 'off'
     - condition: time
       after: '06:00:00'
       before: '22:00:00'
   action:
-    choose:
-      - conditions:
-        - condition: trigger
-          id: 'yuval'
-        - "{{ is_state('person.yuval', 'home') }}"
-        sequence:
-          action: notify.nest_mini
-          data:
-            message: "הסוללה של יובל טעונה במלואה"
-      - conditions:
-        - condition: trigger
-          id: 'tohar'
-        - "{{ is_state('person.tohar', 'home') }}"
-        sequence:
-          action: notify.nest_mini
-          data:
-            message: "הסוללה של טוהר טעונה במלואה"
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: 'yuval'
+            - condition: state
+              entity_id: person.yuval
+              state: 'home'
+            # ONLY announce if actually plugged in.
+            # Note: Adjust sensor name if your integration uses 'binary_sensor.yuval_is_charging'
+            - condition: state
+              entity_id: binary_sensor.yuval_is_charging
+              state: 'on'
+          sequence:
+            - action: notify.nest_mini
+              data:
+                message: "יובל, הסוללה מלאה. תנתק אותי."
+        - conditions:
+            - condition: trigger
+              id: 'tohar'
+            - condition: state
+              entity_id: person.tohar
+              state: 'home'
+            - condition: state
+              entity_id: binary_sensor.tohar_is_charging
+              state: 'on'
+          sequence:
+            - action: notify.nest_mini
+              data:
+                message: "טוהר, הסוללה מלאה."
