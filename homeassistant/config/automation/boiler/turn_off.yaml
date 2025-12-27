@@ -2,7 +2,7 @@
 
 - alias: "Boiler: Logic Controller"
   id: 4fc58857-73d2-4938-acf8-5952bf3de671
-  mode: restart # Important: If triggers happen rapidly, restart the logic flow
+  mode: restart
   trigger:
     - id: 'boiler_on'
       trigger: state
@@ -19,7 +19,6 @@
         entity_id: timer.boiler_running
   action:
     - choose:
-        # SCENARIO 1: Boiler turned ON -> Smart Duration
         - conditions:
             - condition: trigger
               id: 'boiler_on'
@@ -37,7 +36,6 @@
                   {% else %}
                     00:45:00  {# Shoulder Season = 45 Mins #}
                   {% endif %}
-        # SCENARIO 2: Boiler turned OFF -> Kill the Timer
         - conditions:
             - condition: trigger
               id: 'boiler_off'
@@ -45,7 +43,6 @@
             - action: timer.cancel
               target:
                 entity_id: timer.boiler_running
-        # SCENARIO 3: Timer finished -> Kill the Boiler
         - conditions:
             - condition: trigger
               id: 'timer_finished'

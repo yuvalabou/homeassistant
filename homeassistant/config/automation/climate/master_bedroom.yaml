@@ -7,6 +7,12 @@
     - id: 'morning_heat'
       trigger: time
       at: '06:30:00'
+    - id: 'shabbat_wake'
+      trigger: time
+      at: '08:00:00'
+    - id: 'night_sleep_prep'
+      trigger: time
+      at: '22:30:00'
     - id: 'shabbat_nap'
       trigger: time
       at: '12:30:00'
@@ -31,14 +37,50 @@
         - condition: and
           conditions:
             - condition: trigger
-              id: 'morning_heat'
-            - condition: state
-              entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-              state: 'off'
+              id: ['morning_heat', 'shabbat_wake']
+            - condition: or
+              conditions:
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: 'morning_heat'
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'off'
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: 'shabbat_wake'
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'on'
+            - condition: numeric_state
+              entity_id: sensor.master_bedroom_h_t_temperature
+              below: 23
         - condition: and
           conditions:
             - condition: trigger
-              id: ['shabbat_nap', 'shabbat_night_fan', 'shabbat_night_ac', 'stop_morning', 'stop_afternoon']
+              id: ['night_sleep_prep', 'shabbat_nap', 'shabbat_night_ac']
+            - condition: or
+              conditions:
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: 'night_sleep_prep'
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'off'
+                - condition: and
+                  conditions:
+                    - condition: trigger
+                      id: ['shabbat_nap', 'shabbat_night_ac']
+                    - condition: state
+                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+                      state: 'on'
+        - condition: and
+          conditions:
+            - condition: trigger
+              id: ['shabbat_night_fan', 'stop_morning', 'stop_afternoon']
             - condition: state
               entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
               state: 'on'
@@ -46,8 +88,48 @@
     - choose:
         - conditions:
             - condition: trigger
-              id: ['morning_heat', 'shabbat_nap', 'shabbat_night_ac']
+              id: ['night_sleep_prep', 'shabbat_nap', 'shabbat_night_ac']
           sequence:
+            - action: fan.turn_on
+              target:
+                entity_id: fan.master_bedroom_fan
+              data:
+                percentage: 66
+            - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ now().month >= 11 or now().month <= 3 }}"
+                sequence:
+                  - action: climate.set_temperature
+                    target:
+                      entity_id: climate.master_bedroom_ac
+                    data:
+                      hvac_mode: cool
+                      temperature: 19
+              default:
+                - action: climate.set_temperature
+                  target:
+                    entity_id: climate.master_bedroom_ac
+                  data:
+                    hvac_mode: cool
+                    temperature: 21
+                - action: climate.set_fan_mode
+                  target:
+                    entity_id: climate.master_bedroom_ac
+                  data:
+                    fan_mode: 'low'
+                - action: switch.turn_on
+                  target:
+                    entity_id: switch.master_bedroom_ac_quiet
+        - conditions:
+            - condition: trigger
+              id: ['morning_heat', 'shabbat_wake']
+          sequence:
+            - action: fan.turn_on
+              target:
+                entity_id: fan.master_bedroom_fan
+              data:
+                percentage: 66
             - choose:
                 - conditions:
                     - condition: template
@@ -62,7 +144,7 @@
                       target:
                         entity_id: climate.master_bedroom_ac
                       data:
-                        temperature: 23
+                        temperature: 22
                         hvac_mode: heat
               default:
                 - action: climate.set_hvac_mode
@@ -74,7 +156,7 @@
                   target:
                     entity_id: climate.master_bedroom_ac
                   data:
-                    temperature: 24 # Standard sleeping temp
+                    temperature: 24
                     hvac_mode: cool
             - action: climate.set_fan_mode
               target:

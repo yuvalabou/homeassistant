@@ -27,56 +27,56 @@
         - light.harel_bed_harel_bed_light
         - light.rotem_bed_rotem_bed_light
 
-- alias: "Kids light alarm mode"
-  id: 773491ad-c84f-486a-a55d-dc167ab494ea
-  trigger:
-    - trigger: state
-      entity_id: binary_sensor.oref_alert_preemptive_update
-      to: 'on'
-      id: 'pre'
-    - trigger: state
-      entity_id: binary_sensor.oref_alert
-      to: 'on'
-      id: 'on'
-    - trigger: state
-      entity_id: binary_sensor.oref_alert
-      to: 'off'
-      id: 'off'
-  condition:
-    - "{{ is_state('group.person', 'home') }}"
-  action:
-    choose:
-      - conditions:
-          condition: trigger
-          id: 'pre'
-        sequence:
-          action: light.turn_on
-          data:
-            entity_id:
-              - light.harel_bed_harel_bed_light
-              - light.rotem_bed_rotem_bed_light
-            brightness_pct: 100
-            color_name: yellow
-            transition: 0
-      - conditions:
-          condition: trigger
-          id: 'on'
-        sequence:
-          action: light.turn_on
-          data:
-            entity_id:
-              - light.harel_bed_harel_bed_light
-              - light.rotem_bed_rotem_bed_light
-            brightness_pct: 100
-            color_name: red
-            transition: 0
-      - conditions:
-          condition: trigger
-          id: 'off'
-        sequence:
-          action: light.turn_off
-          data:
-            entity_id:
-              - light.harel_bed_harel_bed_light
-              - light.rotem_bed_rotem_bed_light
-            transition: 10
+# - alias: "Kids light alarm mode"
+#   id: 773491ad-c84f-486a-a55d-dc167ab494ea
+#   trigger:
+#     - trigger: state
+#       entity_id: binary_sensor.oref_alert_preemptive_update
+#       to: 'on'
+#       id: 'pre'
+#     - trigger: state
+#       entity_id: binary_sensor.oref_alert
+#       to: 'on'
+#       id: 'on'
+#     - trigger: state
+#       entity_id: binary_sensor.oref_alert
+#       to: 'off'
+#       id: 'off'
+#   condition:
+#     - "{{ is_state('group.person', 'home') }}"
+#   action:
+#     choose:
+#       - conditions:
+#           condition: trigger
+#           id: 'pre'
+#         sequence:
+#           action: light.turn_on
+#           data:
+#             entity_id:
+#               - light.harel_bed_harel_bed_light
+#               - light.rotem_bed_rotem_bed_light
+#             brightness_pct: 100
+#             color_name: yellow
+#             transition: 0
+#       - conditions:
+#           condition: trigger
+#           id: 'on'
+#         sequence:
+#           action: light.turn_on
+#           data:
+#             entity_id:
+#               - light.harel_bed_harel_bed_light
+#               - light.rotem_bed_rotem_bed_light
+#             brightness_pct: 100
+#             color_name: red
+#             transition: 0
+#       - conditions:
+#           condition: trigger
+#           id: 'off'
+#         sequence:
+#           action: light.turn_off
+#           data:
+#             entity_id:
+#               - light.harel_bed_harel_bed_light
+#               - light.rotem_bed_rotem_bed_light
+#             transition: 10

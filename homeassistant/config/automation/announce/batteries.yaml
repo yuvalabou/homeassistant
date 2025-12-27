@@ -26,15 +26,13 @@
             - condition: state
               entity_id: person.yuval
               state: 'home'
-            # ONLY announce if actually plugged in.
-            # Note: Adjust sensor name if your integration uses 'binary_sensor.yuval_is_charging'
             - condition: state
               entity_id: binary_sensor.yuval_is_charging
               state: 'on'
           sequence:
             - action: notify.nest_mini
               data:
-                message: "יובל, הסוללה מלאה. תנתק אותי."
+                message: "יובל, הסוללה מלאה."
         - conditions:
             - condition: trigger
               id: 'tohar'

@@ -57,10 +57,9 @@
 
 - alias: "Lighting: Shabbat Shutdown Warning"
   trigger:
-    - platform: template
-      value_template: >
-        {{ as_timestamp(now()) >= as_timestamp(today_at(states('input_datetime.shabbat_lights_off_time'))) - 300 }}
-      # Triggers 5 minutes (300 seconds) BEFORE the off time
+    trigger: template
+    value_template: >
+      {{ as_timestamp(now()) >= as_timestamp(today_at(states('input_datetime.shabbat_lights_off_time'))) - 300 }}
   condition:
     - condition: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
@@ -69,17 +68,16 @@
       entity_id: light.public_lights
       state: 'on'
   action:
-    # Visual Warning: Dim momentarily then return (or just flash)
     - action: light.turn_on
       target:
         entity_id: light.public_lights
       data:
-        brightness_pct: 30 # Dim low
+        brightness_pct: 30
         transition: 2
     - delay: 5
     - action: light.turn_on
       target:
         entity_id: light.public_lights
       data:
-        brightness_pct: 100 # Restore brightness (assuming scene was bright)
+        brightness_pct: 100
         transition: 2

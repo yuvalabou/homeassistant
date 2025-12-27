@@ -32,7 +32,6 @@
                     sound:
                       name: "critical_alert"
                       volume: 1.0
-
         - conditions:
             - condition: trigger
               id: 'manual_reset'
@@ -59,7 +58,7 @@
   trigger:
     - trigger: numeric_state
       entity_id: sensor.boiler_device_temperature
-      below: 50 # Safe re-start temperature
+      below: 50
   condition:
     - condition: state
       entity_id: input_boolean.boiler_overheated

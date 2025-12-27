@@ -1,6 +1,6 @@
 ---
 
-- alias: "Cover: Living Room & Shacharit Protocol"
+- alias: "Cover: Living Room Shutter Schedule"
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   mode: restart
   trigger:
@@ -71,8 +71,12 @@
               state: 'off'
             - condition: template
               value_template: >
-                {{ not is_state_attr('sensor.jewish_calendar_holiday', 'id',
-                ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']) }}
+                {{
+                    not is_state_attr(
+                      'sensor.jewish_calendar_holiday', 'id',
+                      ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']
+                  )
+                }}
           sequence:
             - action: cover.close_cover
               target:
