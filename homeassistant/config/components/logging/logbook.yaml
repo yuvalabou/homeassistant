@@ -8,6 +8,9 @@ exclude:
     - remote.tv
     - automation.count_home_assistant_log_entries
     - binary_sensor.yuval_interactive
+    - sensor.date
+    - sensor.time
+    - sensor.date_time
   entity_globs:
     - sensor.openweathermap_*
     - sensor.jewish_calendar_*

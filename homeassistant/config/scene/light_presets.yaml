@@ -7,9 +7,6 @@
       flowing: true
       effect: Date Night
       state: 'on'
-    light.kitchen_ceiling_light:
-      state: 'on'
-      brightness_pct: 50
 
 - name: "Morning"
   icon: mdi:weather-sunset-up
@@ -28,7 +25,7 @@
     light.living_room_lights:
       state: 'on'
       brightness_pct: 80
-    light.kitchen_ceiling_light:
+    light.yeelight_ceilb_0x3154de69:
       state: 'on'
       brightness_pct: 60
       color_temp_kelvin: 4000
@@ -40,8 +37,8 @@
       state: 'off'
     light.living_room_lights:
       state: 'on'
-      brightness_pct: 90
-    light.kitchen_ceiling_light:
+      brightness_pct: 100
+    light.yeelight_ceilb_0x3154de69:
       state: 'on'
       brightness_pct: 100
     light.bathroom_light:
@@ -59,7 +56,7 @@
     light.living_room_lights:
       state: 'on'
       brightness_pct: 100
-    light.kitchen_ceiling_light:
+    light.yeelight_ceilb_0x3154de69:
       state: 'on'
       brightness_pct: 100
     light.bathroom_light:

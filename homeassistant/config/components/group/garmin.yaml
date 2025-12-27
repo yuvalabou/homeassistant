@@ -7,4 +7,5 @@ garmin:
     - light.all_lights
     - cover.living_room_shutter
     - fan.master_bedroom_fan
+    - fan.kids_bedroom_fan
   icon: mdi:devices
