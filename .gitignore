@@ -38,6 +38,7 @@ __pycache__
 core
 *.1
 *.tar
+.ha_run.lock
 
 # Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
 ip_bans.yaml
