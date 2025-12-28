@@ -1,0 +1,9 @@
+---
+
+substitutions:
+  devicename: bathroom-multisensor
+  upper_devicename: "Bathroom"
+  template_id: bathroom
+
+packages:
+  device_base: !include templates/.multisensor.yaml

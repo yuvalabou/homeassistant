@@ -1,0 +1,9 @@
+---
+
+substitutions:
+  devicename: ensuite-multisensor
+  upper_devicename: "Ensuite"
+  template_id: ensuite
+
+packages:
+  device_base: !include templates/.multisensor.yaml

@@ -1,5 +1,29 @@
 ---
 
+substitutions:
+  devicename: "unknown-multisensor"
+  upper_devicename: "Unknown Room"
+  template_id: "unknown_id"
+
+esphome:
+  name: "${devicename}"
+
+esp8266:
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_passwd
+  ap:
+    ssid: "${upper_devicename}_fallback_hotspot"
+    password: !secret ap_passwd
+
+captive_portal:
+logger:
+api:
+ota:
+  platform: esphome
+
 i2c:
   sda: D2
   scl: D1
@@ -38,6 +62,7 @@ sensor:
     id: ${template_id}_illuminance
     address: 0x23
     update_interval: 60s
+
   - platform: template
     name: "${upper_devicename} Percieved Brightness"
     id: ${template_id}_percieved_brightness
