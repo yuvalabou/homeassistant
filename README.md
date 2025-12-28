@@ -1,6 +1,6 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2025.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2025.9.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2025.12.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -41,6 +41,7 @@
 | **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 7 |
 
 ### Lines of code
+
 | Type | Lines |
 |:-:|:-:|
 | Python | 28613 |
@@ -102,7 +103,7 @@ Firebat T8 pro
 ### Integrations
 
 - [AliExpress Package Tracker](https://github.com/yohaybn/HA_aliexpress_package_tracker_sensor)
-- [Anova Nano](https://github.com/mcolyer/home-assistant-anova-nano)
+- [Garmin connect](https://github.com/cyberjunky/home-assistant-garmin_connect)
 - [Home Connect Alternative](https://github.com/ekutner/home-connect-hass)
 - [Oref Alerts](https://github.com/amitfin/oref_alert)
 - [Watchman](https://github.com/dummylabs/thewatchman)
@@ -117,6 +118,7 @@ Firebat T8 pro
 - [Card Mod](https://github.com/thomasloven/lovelace-card-mod)
 - [Clock Weather Card](https://github.com/pkissling/clock-weather-card)
 - [Elapsed time Card](https://github.com/kirbo/ha-lovelace-elapsed-time-card)
+- [Energy Sankey](https://github.com/davet2001/energy-sankey)
 - [Fold Entity Row](https://github.com/thomasloven/lovelace-fold-entity-row)
 - [Hui-Element](https://github.com/thomasloven/lovelace-hui-element)
 - [Mini Graph Card](https://github.com/kalkih/mini-graph-card)
