@@ -1,0 +1,28 @@
+{
+  "config": {
+    "flow_title": "Home Maintenance",
+    "step": {
+      "user": {
+        "title": "Configure Home Maintenance",
+        "description": "Set up the Home Maintenance integration.",
+        "data": {
+          "admin_only": "Restrict panel to admins only",
+          "sidebar_title": "The name shown in the sidebar for this integration."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only a single instance of Home Maintenance is allowed."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "admin_only": "Restrict panel to admins only",
+          "sidebar_title": "The name shown in the sidebar for this integration."
+        }
+      }
+    }
+  }
+}

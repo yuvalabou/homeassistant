@@ -1,0 +1,28 @@
+{
+  "config": {
+    "flow_title": "Home Maintenance",
+    "step": {
+      "user": {
+        "title": "Home Maintenance konfigurieren",
+        "description": "Richten Sie die Home Maintenance-Integration ein.",
+        "data": {
+          "admin_only": "Panel nur für Administratoren anzeigen",
+          "sidebar_title": "Der Name, der in der Seitenleiste für diese Integration angezeigt wird."
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Es ist nur eine einzige Instanz von Home Maintenance erlaubt."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "admin_only": "Panel nur für Administratoren anzeigen",
+          "sidebar_title": "Der Name, der in der Seitenleiste für diese Integration angezeigt wird."
+        }
+      }
+    }
+  }
+}
