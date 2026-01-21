@@ -19,7 +19,7 @@
     entity_id: binary_sensor.docker_hub_update_available
     to: 'on'
   action:
-    action: notify.mobile_app_yuval
+    action: notify.mobile_app_yuval14
     data:
       title: "Update available"
       message: "Home Assistant {{ states('sensor.docker_hub_version') }} is available"

@@ -3,5 +3,5 @@
 - name: "Family"
   platform: group
   services:
-    - service: mobile_app_yuval
-    - service: mobile_app_tohar
+    - service: notify.mobile_app_yuval14
+    - service: notify.mobile_app_tohar15

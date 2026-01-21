@@ -35,7 +35,7 @@
         filename: "/config/www/{{ snapshot_filename }}"
     - delay:
         seconds: 1
-    - action: notify.mobile_app_yuval
+    - action: notify.mobile_app_yuval14
       data:
         title: "{{ object_type }} Detected in Garden"
         message: "A {{ trigger.id }} was detected by the garden camera at {{ now().strftime('%H:%M') }}."

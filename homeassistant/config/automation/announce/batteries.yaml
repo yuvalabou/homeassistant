@@ -4,11 +4,11 @@
   id: 7cbcf6ee-ceb0-4190-b1aa-127ec17979df
   trigger:
     - trigger: numeric_state
-      entity_id: sensor.yuval_battery_level
+      entity_id: sensor.yuval14_battery_level
       above: 99
       id: 'yuval'
     - trigger: numeric_state
-      entity_id: sensor.tohar_battery_level
+      entity_id: sensor.tohar15_battery_level
       above: 99
       id: 'tohar'
   condition:
@@ -27,7 +27,7 @@
               entity_id: person.yuval
               state: 'home'
             - condition: state
-              entity_id: binary_sensor.yuval_is_charging
+              entity_id: binary_sensor.yuval14_is_charging
               state: 'on'
           sequence:
             - action: notify.nest_mini
@@ -40,7 +40,7 @@
               entity_id: person.tohar
               state: 'home'
             - condition: state
-              entity_id: binary_sensor.tohar_is_charging
+              entity_id: binary_sensor.tohar15_is_charging
               state: 'on'
           sequence:
             - action: notify.nest_mini

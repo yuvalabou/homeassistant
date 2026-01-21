@@ -11,11 +11,6 @@
       id: "work_yuval"
     - trigger: zone
       entity_id: person.yuval
-      zone: zone.front
-      event: enter
-      id: "base_yuval"
-    - trigger: zone
-      entity_id: person.yuval
       zone: zone.home
       event: enter
       id: "home_yuval"
@@ -24,7 +19,7 @@
       zone: zone.melody
       event: enter
       id: "work_tohar"
-    - platform: zone
+    - trigger: zone
       entity_id: person.tohar
       zone: zone.home
       event: enter
@@ -34,7 +29,7 @@
         person_entity: "{{ trigger.entity_id }}"
         person_name: "{{ state_attr(trigger.entity_id, 'friendly_name') }}"
         notify_target: >
-          {{ 'mobile_app_tohar' if 'yuval' in trigger.entity_id else 'mobile_app_yuval' }}
+          {{ 'mobile_app_tohar15' if 'yuval' in trigger.entity_id else 'mobile_app_yuval14' }}
         partner_entity: >
           {{ 'person.tohar' if 'yuval' in trigger.entity_id else 'person.yuval' }}
         verb: >
@@ -42,7 +37,6 @@
         place_map:
           zone.hirsh: "לעבודה"
           zone.melody: "לעבודה"
-          zone.front: "לבסיס"
           zone.home: "הביתה"
         current_zone: "{{ trigger.zone.entity_id }}"
         hebrew_place: "{{ place_map.get(trigger.zone.entity_id, 'ליעד') }}"

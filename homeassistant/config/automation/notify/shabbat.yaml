@@ -29,7 +29,7 @@
         - condition: trigger
           id: '30_min'
         sequence:
-          - action: notify.mobile_app_yuval
+          - action: notify.mobile_app_yuval14
             data:
               title: "שבת שלום!"
               message:  "מיחם, נרות ומקרר"
