@@ -1,40 +1,41 @@
-homeassistant: true
+homeassistant:
+  enabled: true
 frontend:
+  enabled: true
   port: 8080
-permit_join: true
 mqtt:
   base_topic: zigbee2mqtt
   server: mqtt://10.0.0.20
 serial:
+  adapter: zstack
   port: >-
     /dev/serial/by-id/usb-Silicon_Labs_Sonoff_Zigbee_3.0_USB_Dongle_Plus_0001-if00-port0
 devices:
   '0x54ef4410002bc269':
-    friendly_name: 'Ensuite Door'
+    friendly_name: Ensuite Door
     availability: true
   '0x54ef4410002b73e4':
-    friendly_name: 'Master Bedroom Door'
+    friendly_name: Master Bedroom Door
     availability: true
   '0x00158d0006d0a9eb':
-    friendly_name: 'Master bedroom button'
+    friendly_name: Master bedroom button
     availability: true
   '0x00158d00092100d1':
-    friendly_name: 'Master Bedroom H&T'
+    friendly_name: Master Bedroom H&T
     availability: true
   '0x00158d00091de379':
-    friendly_name: 'Living room H&T'
-    availability: true
-  '0x00158d00091df38a':
-    friendly_name: 'Outdoor H&T'
-    availability: true
-  '0x00158d00091df412':
-    friendly_name: 'Kids Bedroom H&T'
+    friendly_name: Living room H&T
     availability: true
   '0x00158d0006d0a9bd':
-    friendly_name: 'Living Room Button'
+    friendly_name: Living Room Button
     availability: true
   '0x54ef4410002c05e4':
-    friendly_name: 'Living room Window'
+    friendly_name: Living room Window
     availability: true
+  '0x00158d00091df412':
+    friendly_name: Kids bedroom H&T
+  '0x00158d00091df38a':
+    friendly_name: Outdoor H&T
   '0x54ef441000293ac7':
-    friendly_name: 'Bathroom Door'
+    friendly_name: Bathroom Door
+version: 4
