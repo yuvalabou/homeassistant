@@ -12,15 +12,14 @@ from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN, LOGGER
+from .metadata import CITIES_MIX_URL, DEPRECATION_SUFFIX
 from .metadata.areas import AREAS
 
 if TYPE_CHECKING:
     from collections.abc import Callable
 
-CITIES_MIX_URL = "https://alerts-history.oref.org.il/Shared/Ajax/GetCitiesMix.aspx"
 FILTER_SUFFIX1 = " - כל האזורים"
 FILTER_SUFFIX2 = " כל - האזורים"
-DEPRECATION_SUFFIX = " (אזור התרעה ישן)"
 
 
 class AreasChecker:
@@ -49,11 +48,11 @@ class AreasChecker:
             async with self._http_client.get(CITIES_MIX_URL) as response:
                 data = await response.json()
             areas = {
-                area["label_he"]
+                area["label"]
                 for area in data
-                if not area["label_he"].endswith(FILTER_SUFFIX1)
-                and not area["label_he"].endswith(FILTER_SUFFIX2)
-                and not area["label_he"].endswith(DEPRECATION_SUFFIX)
+                if not area["label"].endswith(FILTER_SUFFIX1)
+                and not area["label"].endswith(FILTER_SUFFIX2)
+                and not area["label"].endswith(DEPRECATION_SUFFIX)
             }
             new = sorted(areas.difference(AREAS))
             old = sorted(AREAS.difference(areas))

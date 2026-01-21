@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import asyncio
-import inspect
 import itertools
 from typing import TYPE_CHECKING, cast
 
@@ -136,6 +135,20 @@ class OrefAlertRuntimeData:
     pushy: PushyNotifications
     tzevaadom: TzevaAdomNotifications
     records_schema: RecordsSchemaLoader
+    update_events: OrefAlertUpdateEventManager
+
+    async def stop(self) -> None:
+        """Stop background managers and release resources."""
+        self.areas_checker.stop()
+        self.updater.stop()
+        self.unload_template_extensions()
+        self.update_events.stop()
+        self.records_schema.stop()
+        await asyncio.gather(
+            self.pushy.stop(),
+            self.tzevaadom.stop(),
+            return_exceptions=True,
+        )
 
 
 type OrefAlertConfigEntry = ConfigEntry[OrefAlertRuntimeData]
@@ -242,12 +255,7 @@ async def async_setup(hass: HomeAssistant, _config: ConfigType) -> bool:
         EDIT_SENSOR_ACTION,
         edit_sensor,
         EDIT_SENSOR_SCHEMA,
-        **(
-            {"supports_response": SupportsResponse.OPTIONAL}
-            if "supports_response"
-            in inspect.signature(async_register_admin_service).parameters
-            else {}
-        ),
+        SupportsResponse.OPTIONAL,
     )
 
     async def synthetic_alert(service_call: ServiceCall) -> None:
@@ -326,9 +334,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: OrefAlertConfigEntry) ->
         pushy,
         tzevaadom,
         RecordsSchemaLoader(hass),
+        OrefAlertUpdateEventManager(hass, entry),
     )
 
-    OrefAlertUpdateEventManager(hass, entry)
+    entry.runtime_data.update_events.start()
 
     try:
         await entry.runtime_data.records_schema.load()
@@ -342,6 +351,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: OrefAlertConfigEntry) ->
         )
     except Exception as exc:
         LOGGER.exception(f"Error loading {DOMAIN} config entry. Will retry later.")
+        await entry.runtime_data.stop()
         raise ConfigEntryNotReady from exc
 
     entry.runtime_data.updater.start()
@@ -360,11 +370,5 @@ async def async_unload_entry(hass: HomeAssistant, entry: OrefAlertConfigEntry) -
     """Unload a config entry."""
     if not getattr(entry, "runtime_data", None):
         return True
-    entry.runtime_data.areas_checker.stop()
-    entry.runtime_data.updater.stop()
-    entry.runtime_data.records_schema.stop()
-    await asyncio.gather(
-        entry.runtime_data.pushy.stop(), entry.runtime_data.tzevaadom.stop()
-    )
-    entry.runtime_data.unload_template_extensions()
+    await entry.runtime_data.stop()
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
