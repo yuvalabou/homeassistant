@@ -55,7 +55,7 @@
                     - action: light.turn_on
                       target:
                         entity_id: light.pergola_light
-                    - delay: "00:15:00"
+                    - delay: "00:20:00"
                     - action: light.turn_off
                       target:
                         entity_id: light.pergola_light
@@ -64,11 +64,32 @@
               conditions:
                 - condition: trigger
                   id: 'weekday_close'
-                - condition: trigger
-                  id: 'shabbat_close'
             - condition: state
               entity_id: input_boolean.guest_mode
               state: 'off'
+            - condition: state
+              entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+              state: 'off'
+            - condition: template
+              value_template: >
+                {{
+                    not is_state_attr(
+                      'sensor.jewish_calendar_holiday', 'id',
+                      ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']
+                  )
+                }}
+          sequence:
+            - action: cover.close_cover
+              target:
+                entity_id: cover.living_room_shutter
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: trigger
+                  id: 'shabbat_close'
+            - condition: state
+              entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
+              state: 'on'
             - condition: template
               value_template: >
                 {{
