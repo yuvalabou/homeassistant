@@ -1,7 +1,0 @@
----
-
-- name: "Family"
-  platform: group
-  services:
-    - service: notify.mobile_app_yuval14
-    - service: notify.mobile_app_tohar15

@@ -24,8 +24,11 @@
       data:
         entity_id: cover.living_room_shutter
     - delay: 30
-    - action: notify.family
+    - action: notify.send_message
       data:
+        target:
+          - mobile_app_yuval14
+          - mobile_app_tohar15
         title: "I'll be missing you."
         message: >-
           Lights are {{ states('light.all_lights') }}.

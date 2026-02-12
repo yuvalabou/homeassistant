@@ -40,8 +40,11 @@
         - condition: trigger
           id: '10_min'
         sequence:
-          - action: notify.family
+          - action: notify.send_message
             data:
+              target:
+                - mobile_app_yuval14
+                - mobile_app_tohar15
               title: "שבת שלום!"
               message: "שבת נכנסת בעוד 10 דקות."
               data:
