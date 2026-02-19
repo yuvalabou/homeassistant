@@ -33,6 +33,11 @@
         entity_id: camera.rlc_510wa_aboulafia_fluent
       data:
         filename: "/config/www/{{ snapshot_filename }}"
+    - action: camera.snapshot
+      target:
+        entity_id: camera.rlc_510wa_aboulafia_fluent
+      data:
+        filename: "/config/www/reolink/latest.jpg"
     - delay:
         seconds: 1
     - action: notify.mobile_app_yuval14

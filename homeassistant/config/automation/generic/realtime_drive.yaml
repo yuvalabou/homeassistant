@@ -1,0 +1,21 @@
+---
+
+- alias: "Yuval - Departure Times"
+  id: 5e1e9305-b2ef-413d-ae37-1d2db425a233
+  trigger:
+    - trigger: zone
+      zone: zone.hirsh
+      event: leave
+      entity_id: person.yuval
+      id: "work"
+    - trigger: zone
+      zone: zone.home
+      event: leave
+      entity_id: person.yuval
+      id: "home"
+  action:
+    - action: input_datetime.set_datetime
+      target:
+        entity_id: "input_datetime.{{ trigger.id }}_departure_time"
+      data:
+        datetime: "{{ now() }}"
