@@ -22,7 +22,7 @@
         entity_id: vacuum.roborock_s7
         to: 'cleaning'
       timeout: '00:01:00'
-    - action: notify.family
+    - action: notify.mobile_app_yuval14
       data:
         title: "Cleaning started"
         message: "Vacuum has started the daily cleaning"
@@ -42,7 +42,7 @@
     - action: vacuum.return_to_base
       data:
         entity_id: vacuum.roborock_s7
-    - action: notify.family
+    - action: notify.mobile_app_yuval14
       data:
         title: "Returning to Dock"
         message: >-

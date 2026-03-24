@@ -1,17 +1,38 @@
 ---
 
-- alias: "Start Dishwasher at shabbat afternoon"
+- alias: "Start Dishwasher on Shabbat"
   id: 3dcfc7f1-ee04-403f-b6a2-0ed67af48336
   trigger:
-    trigger: time
-    at: '15:00:00'
+    - trigger: time
+      at: '15:00:00'
+      id: 'afternoon'
+    - trigger: time
+      at: '23:30:00'
+      id: 'night'
   condition:
-    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-    - "{{ is_state('group.person', 'home') }}"
-    - "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', 'yom_kippur') }}"
+    - condition: template
+      value_template: "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
+    - condition: template
+      value_template: "{{ is_state('group.person', 'home') }}"
+    - condition: template
+      value_template: "{{ not is_state_attr('sensor.jewish_calendar_holiday', 'id', 'yom_kippur') }}"
   action:
-    - action: switch.turn_on
-      entity_id: switch.400090386855001425_bsh_common_setting_powerstate
-    - delay: 2
-    - action: button.press
-      entity_id: button.400090386855001425_start_pause
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: 'night'
+            - condition: state
+              entity_id: input_boolean.guests_for_shabbat
+              state: 'on'
+          sequence: &start_dishwasher
+            - action: switch.turn_on
+              target:
+                entity_id: switch.400090386855001425_bsh_common_setting_powerstate
+            - delay: 2
+            - action: button.press
+              target:
+                entity_id: button.400090386855001425_start_pause
+        - conditions:
+            - condition: trigger
+              id: 'afternoon'
+          sequence: *start_dishwasher

@@ -16,7 +16,7 @@
           - light.yeelight_ceilb_0x179e0932_ambilight
           - light.wall_lights
         color: red
-    - action: notify.family
+    - action: notify.mobile_app_yuval14
       data:
         title: "צבע אדום"
         message: "טלמון"

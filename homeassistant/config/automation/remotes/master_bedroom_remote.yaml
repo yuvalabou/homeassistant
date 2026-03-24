@@ -1,6 +1,6 @@
 ---
 
-- alias: "Bedroom: Master Button Manager (Device Ver.)"
+- alias: "Master Bedroom - Button Manager"
   id: d188bbe8-773b-4319-b2b8-5f6896f98b0a
   mode: restart
   trigger:

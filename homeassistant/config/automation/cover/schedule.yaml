@@ -4,53 +4,29 @@
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   mode: restart
   trigger:
-    - id: 'weekday_open'
-      trigger: time
-      at: '06:15:00'
-    - id: 'weekday_close'
-      trigger: time
-      at: '23:00:00'
-    - id: 'shabbat_open'
-      trigger: time
-      at: '08:00:00'
-    - id: 'shabbat_close'
-      trigger: time
-      at: input_datetime.shabbat_lights_off_time
+    - { id: 'weekday_open', trigger: time, at: '06:15:00' }
+    - { id: 'weekday_close', trigger: time, at: '23:00:00' }
+    - { id: 'shabbat_open', trigger: time, at: '08:00:00' }
+    - { id: 'shabbat_close', trigger: time, at: input_datetime.shabbat_lights_off_time }
   condition:
     - condition: state
       entity_id: group.person
       state: 'home'
+    - condition: template
+      value_template: >
+        {% set shabbat = is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') %}
+        {% set tid = trigger.id if trigger is defined else 'manual' %}
+        {{ (tid in ['weekday_open', 'weekday_close'] and not shabbat) or
+           (tid in ['shabbat_open', 'shabbat_close'] and shabbat) }}
   action:
     - choose:
-        - conditions:
-            - condition: or
-              conditions:
-                - condition: and
-                  conditions:
-                    - condition: trigger
-                      id: 'weekday_open'
-                    - condition: state
-                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-                      state: 'off'
-                - condition: and
-                  conditions:
-                    - condition: trigger
-                      id: 'shabbat_open'
-                    - condition: state
-                      entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-                      state: 'on'
+        - conditions: "{{ trigger.id in ['weekday_open', 'shabbat_open'] }}"
           sequence:
             - action: cover.open_cover
               target:
                 entity_id: cover.living_room_shutter
             - choose:
-                - conditions:
-                    - condition: trigger
-                      id: 'weekday_open'
-                    - condition: numeric_state
-                      entity_id: sun.sun
-                      attribute: elevation
-                      below: 5
+                - conditions: "{{ trigger.id == 'weekday_open' and state_attr('sun.sun', 'elevation') | float(10) < 5 }}"
                   sequence:
                     - action: light.turn_on
                       target:
@@ -59,45 +35,10 @@
                     - action: light.turn_off
                       target:
                         entity_id: light.pergola_light
-        - conditions:
-            - condition: or
-              conditions:
-                - condition: trigger
-                  id: 'weekday_close'
-            - condition: state
-              entity_id: input_boolean.guest_mode
-              state: 'off'
-            - condition: state
-              entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-              state: 'off'
-            - condition: template
-              value_template: >
-                {{
-                    not is_state_attr(
-                      'sensor.jewish_calendar_holiday', 'id',
-                      ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']
-                  )
-                }}
-          sequence:
-            - action: cover.close_cover
-              target:
-                entity_id: cover.living_room_shutter
-        - conditions:
-            - condition: or
-              conditions:
-                - condition: trigger
-                  id: 'shabbat_close'
-            - condition: state
-              entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
-              state: 'on'
-            - condition: template
-              value_template: >
-                {{
-                    not is_state_attr(
-                      'sensor.jewish_calendar_holiday', 'id',
-                      ['sukkot', 'hol_hamoed_sukkot', 'hoshana_raba']
-                  )
-                }}
+        - conditions: "{% set tid = trigger.id %}
+            {% set not_sukkot = state_attr('sensor.jewish_calendar_holiday', 'id') not in ['sukkot', 'hol_hamoed_sukkot'] %}
+            {% set guest_ok = is_state('input_boolean.guest_mode', 'off') %}
+            {{ (tid == 'weekday_close' and guest_ok and not_sukkot) or (tid == 'shabbat_close' and not_sukkot) }}"
           sequence:
             - action: cover.close_cover
               target:
