@@ -250,7 +250,8 @@ class Configuration(dict):
             if isinstance(value, dict):
                 # get node or create one
                 node = destination.setdefault(key, {})
-                self.__merge(node, value, overwrite)
+                if node is not value:
+                    self.__merge(node, value, overwrite)
             else:
                 if key not in destination or overwrite:
                     destination[key] = value

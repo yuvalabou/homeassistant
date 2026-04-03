@@ -2,15 +2,13 @@
 
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final
 
-import homeassistant.util.dt as dt_util
 from homeassistant.components import binary_sensor
 from homeassistant.const import Platform
 from homeassistant.util import slugify
 
 from .entity import OrefAlertCoordinatorEntity
-from .metadata import ALL_AREAS_ALIASES
 
 if TYPE_CHECKING:
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
@@ -20,21 +18,14 @@ if TYPE_CHECKING:
 from .area_utils import expand_areas_and_groups
 from .const import (
     ALL_AREAS_ID_SUFFIX,
-    AREA_FIELD,
     ATTR_COUNTRY_ACTIVE_ALERTS,
-    ATTR_COUNTRY_ALERTS,
     ATTR_COUNTRY_UPDATES,
     ATTR_SELECTED_AREAS_ACTIVE_ALERTS,
-    ATTR_SELECTED_AREAS_ALERTS,
     ATTR_SELECTED_AREAS_UPDATES,
-    CONF_ALERT_ACTIVE_DURATION,
-    CONF_ALL_ALERTS_ATTRIBUTES,
     CONF_AREAS,
     CONF_SENSORS,
-    DATE_FIELD,
-    IST,
     OREF_ALERT_UNIQUE_ID,
-    AlertType,
+    RecordType,
 )
 
 if TYPE_CHECKING:
@@ -42,9 +33,8 @@ if TYPE_CHECKING:
 
     from homeassistant.core import HomeAssistant
 
-PARALLEL_UPDATES = 0
-
-SECONDS_IN_A_MINUTE = 60
+PARALLEL_UPDATES: Final = 0
+UPDATE_RECORDS_WINDOW_MINUTES = 5
 
 
 async def async_setup_entry(
@@ -65,16 +55,13 @@ class AlertSensorBase(OrefAlertCoordinatorEntity, binary_sensor.BinarySensorEnti
 
     _attr_device_class = binary_sensor.BinarySensorDeviceClass.SAFETY
     _attr_translation_key = "home_alert"
-    _entity_component_unrecorded_attributes = frozenset(
+    _unrecorded_attributes = frozenset(
         {
             ATTR_COUNTRY_ACTIVE_ALERTS,
-            ATTR_COUNTRY_ALERTS,
             ATTR_COUNTRY_UPDATES,
             ATTR_SELECTED_AREAS_ACTIVE_ALERTS,
-            ATTR_SELECTED_AREAS_ALERTS,
             ATTR_SELECTED_AREAS_UPDATES,
             CONF_AREAS,
-            CONF_ALERT_ACTIVE_DURATION,
         }
     )
 
@@ -84,40 +71,9 @@ class AlertSensorBase(OrefAlertCoordinatorEntity, binary_sensor.BinarySensorEnti
     ) -> None:
         """Initialize object with defaults."""
         super().__init__(config_entry)
-        self._common_attributes = {
-            CONF_ALERT_ACTIVE_DURATION: self._config_entry.options[
-                CONF_ALERT_ACTIVE_DURATION
-            ],
-        }
-        self._add_all_alerts_attributes: bool = config_entry.options.get(
-            CONF_ALL_ALERTS_ATTRIBUTES, False
-        )
 
 
-class AlertAreaSensorBase(AlertSensorBase):
-    """Representation of alert area sensor."""
-
-    def __init__(
-        self,
-        areas: list[str],
-        config_entry: OrefAlertConfigEntry,
-    ) -> None:
-        """Initialize object with defaults."""
-        super().__init__(config_entry)
-        self._areas = expand_areas_and_groups(areas)
-        self._common_area_sensor_attributes = {
-            CONF_AREAS: self._areas,
-            **self._common_attributes,
-        }
-
-    def is_selected_area(self, alert: AlertType) -> bool:
-        """Check is the alert is among the selected areas."""
-        return (
-            alert[AREA_FIELD] in self._areas or alert[AREA_FIELD] in ALL_AREAS_ALIASES
-        )
-
-
-class AlertSensor(AlertAreaSensorBase):
+class AlertSensor(AlertSensorBase):
     """Representation of the alert sensor."""
 
     def __init__(
@@ -126,16 +82,12 @@ class AlertSensor(AlertAreaSensorBase):
         config_entry: OrefAlertConfigEntry,
     ) -> None:
         """Initialize object with defaults."""
-        super().__init__(
+        super().__init__(config_entry)
+        self._areas = expand_areas_and_groups(
             config_entry.options[CONF_AREAS]
             if not name
-            else config_entry.options[CONF_SENSORS][name],
-            config_entry,
+            else config_entry.options[CONF_SENSORS][name]
         )
-        self._active_seconds: int = (
-            config_entry.options[CONF_ALERT_ACTIVE_DURATION] * SECONDS_IN_A_MINUTE
-        )
-        self._is_on_timestamp: float = 0
         self._sensor_key: str = name or ""
         if not name:
             self.use_device_name = True
@@ -153,57 +105,33 @@ class AlertSensor(AlertAreaSensorBase):
 
     @property
     def is_on(self) -> bool:
-        """Return True is sensor is on."""
-        if (dt_util.now().timestamp() - self._is_on_timestamp) < self._active_seconds:
-            # The state should stay "on" for the active duration.
-            return True
-
-        for alert in self.coordinator.data.active_alerts:
-            if self.is_selected_area(alert):
-                if not self.coordinator.is_synthetic_alert(alert):
-                    self._is_on_timestamp = (
-                        dt_util.parse_datetime(alert[DATE_FIELD], raise_on_error=True)
-                        .replace(tzinfo=IST)
-                        .timestamp()
-                    )
-                return True
-        return False
+        """Return True if sensor is on."""
+        return any(
+            True
+            for area in self._areas
+            if (record := self.coordinator.data.areas.get(area))
+            and record.record_type == RecordType.ALERT
+        )
 
     @property
     def extra_state_attributes(self) -> Mapping[str, Any] | None:
         """Return additional attributes."""
         return {
-            **self._common_area_sensor_attributes,
-            ATTR_SELECTED_AREAS_ACTIVE_ALERTS: [
-                alert
-                for alert in self.coordinator.data.active_alerts
-                if self.is_selected_area(alert)
-            ],
-            **(
-                {
-                    ATTR_SELECTED_AREAS_ALERTS: [
-                        alert
-                        for alert in self.coordinator.data.alerts
-                        if self.is_selected_area(alert)
-                    ],
-                }
-                if self._add_all_alerts_attributes
-                else {}
+            CONF_AREAS: self._areas,
+            ATTR_SELECTED_AREAS_ACTIVE_ALERTS: self.coordinator.get_records(
+                self._areas, {RecordType.ALERT}, None
             ),
-            ATTR_SELECTED_AREAS_UPDATES: [
-                alert
-                for alert in self.coordinator.data.updates
-                if self.is_selected_area(alert)
-            ],
-            ATTR_COUNTRY_ACTIVE_ALERTS: self.coordinator.data.active_alerts,
-            **(
-                {
-                    ATTR_COUNTRY_ALERTS: self.coordinator.data.alerts,
-                }
-                if self._add_all_alerts_attributes
-                else {}
+            ATTR_SELECTED_AREAS_UPDATES: self.coordinator.get_records(
+                self._areas, {RecordType.PRE_ALERT, RecordType.END}, None
             ),
-            ATTR_COUNTRY_UPDATES: self.coordinator.data.updates,
+            ATTR_COUNTRY_ACTIVE_ALERTS: self.coordinator.get_records(
+                None, {RecordType.ALERT}, None
+            ),
+            ATTR_COUNTRY_UPDATES: self.coordinator.get_records(
+                None,
+                {RecordType.PRE_ALERT, RecordType.END},
+                UPDATE_RECORDS_WINDOW_MINUTES,
+            ),
         }
 
     def get_sensor_key(self) -> str:
@@ -228,20 +156,22 @@ class AlertSensorAllAreas(AlertSensorBase):
     @property
     def is_on(self) -> bool:
         """Return True is sensor is on."""
-        return len(self.coordinator.data.active_alerts) > 0
+        return any(
+            True
+            for record in self.coordinator.data.areas.values()
+            if record.record_type == RecordType.ALERT
+        )
 
     @property
     def extra_state_attributes(self) -> Mapping[str, Any] | None:
         """Return additional attributes."""
         return {
-            **self._common_attributes,
-            ATTR_COUNTRY_ACTIVE_ALERTS: self.coordinator.data.active_alerts,
-            **(
-                {
-                    ATTR_COUNTRY_ALERTS: self.coordinator.data.alerts,
-                }
-                if self._add_all_alerts_attributes
-                else {}
+            ATTR_COUNTRY_ACTIVE_ALERTS: self.coordinator.get_records(
+                None, {RecordType.ALERT}, None
             ),
-            ATTR_COUNTRY_UPDATES: self.coordinator.data.updates,
+            ATTR_COUNTRY_UPDATES: self.coordinator.get_records(
+                None,
+                {RecordType.PRE_ALERT, RecordType.END},
+                UPDATE_RECORDS_WINDOW_MINUTES,
+            ),
         }

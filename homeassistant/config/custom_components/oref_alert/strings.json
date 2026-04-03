@@ -22,9 +22,7 @@
             "init": {
                 "title": "Configure Oref Alert",
                 "data": {
-                    "areas": "Select areas to monitor (Hebrew only)",
-                    "alert_active_duration": "Alert's active duration (minutes)",
-                    "all_alerts_attributes": "Add 'all alerts' attributes"
+                    "areas": "Select areas to monitor (Hebrew only)"
                 }
             }
         }
@@ -47,11 +45,12 @@
             "named_time_to_shelter": {
                 "name": "{name} Time To Shelter"
             },
-            "default_end_time": {
-                "name": "End Time"
-            },
-            "named_end_time": {
-                "name": "{name} End Time"
+            "status": {
+                "state": {
+                    "ok": "OK",
+                    "pre_alert": "Pre Alert",
+                    "alert": "Alert"
+                }
             }
         },
         "event": {
@@ -125,6 +124,14 @@
                 }
             }
         },
+        "areas_status": {
+            "name": "Areas Status",
+            "description": "Return areas that are currently pre-alert or alert"
+        },
+        "last_update": {
+            "name": "Last Update",
+            "description": "Return the last time any area's status was changed"
+        },
         "synthetic_alert": {
             "name": "Create Synthetic Alert",
             "description": "Create a synthetic alert for testing purposes",
@@ -144,6 +151,16 @@
                 "title": {
                     "name": "Title",
                     "description": "Alert's description"
+                }
+            }
+        },
+        "manual_event_end": {
+            "name": "Mark Manual Event End",
+            "description": "Create manual event-end records for active alerts",
+            "fields": {
+                "area": {
+                    "name": "Area",
+                    "description": "Optional list of areas; only active alerts in these areas are marked as ended"
                 }
             }
         }

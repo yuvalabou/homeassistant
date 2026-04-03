@@ -332,6 +332,7 @@ class DelayedOperationSelect(InteractiveEntityBase, SelectEntity):
         parts = option.split(':')
         delay = int(parts[0])*3600 + int(parts[1])*60
         self._appliance.set_startonly_option(self._key, delay)
+        self.async_write_ha_state()
 
     async def async_on_update(self, appliance:Appliance, key:str, value) -> None:
         if key == Events.PROGRAM_FINISHED:

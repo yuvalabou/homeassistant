@@ -6,6 +6,7 @@ import asyncio
 import contextlib
 import enum
 import secrets
+from collections import deque
 from datetime import datetime
 from typing import TYPE_CHECKING, Any, Final
 
@@ -14,18 +15,19 @@ from aiohttp import ClientWebSocketResponse, WSMsgType
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .categories import (
+    END_ALERT_CATEGORY,
+    PRE_ALERT_CATEGORY,
     tzevaadom_threat_id_to_history_category,
 )
 from .const import (
-    AREA_FIELD,
     CATEGORY_FIELD,
-    CHANNEL_FIELD,
-    CONF_ALERT_ACTIVE_DURATION,
     DATE_FIELD,
     IST,
     LOGGER,
     TITLE_FIELD,
-    AlertSource,
+    Record,
+    RecordAndMetadata,
+    RecordSource,
 )
 from .metadata import TZEVAADOM_SPELLING_FIX
 from .metadata.areas import AREAS
@@ -56,13 +58,21 @@ THREAT_TITLES = {
 }
 
 PRE_ALERT_TITLE = "בדקות הקרובות צפויות להתקבל התרעות באזורך"
+END_TITLE = "הארוע הסתיים"
 
 
-class MessageType(str, enum.Enum):
+class MessageType(enum.StrEnum):
     """Message types for Tzeva Adom WebSocket messages."""
 
     ALERT = "ALERT"
     SYSTEM_MESSAGE = "SYSTEM_MESSAGE"
+
+
+class SystemMessageType(enum.IntEnum):
+    """Message types for Tzeva Adom WebSocket messages."""
+
+    PRE_ALERT = 0
+    END = 1
 
 
 class TzevaAdomNotifications:
@@ -72,10 +82,8 @@ class TzevaAdomNotifications:
         """Initialize TzevaAdomNotifications."""
         self._hass = hass
         self._config_entry = config_entry
-        self.alerts: TTLDeque = TTLDeque(
-            config_entry.options[CONF_ALERT_ACTIVE_DURATION]
-        )
-        self._ids: TTLDeque = TTLDeque(config_entry.options[CONF_ALERT_ACTIVE_DURATION])
+        self.alerts: deque[RecordAndMetadata] = deque()
+        self._ids: TTLDeque[str] = TTLDeque()
         self._http_client = async_get_clientsession(hass)
         self._ws: ClientWebSocketResponse | None = None
         self._stop = asyncio.Event()
@@ -144,7 +152,7 @@ class TzevaAdomNotifications:
                 self._stop.wait(), timeout=secrets.SystemRandom().uniform(5, 8)
             )
 
-    def _parse_message(self, message: dict[str, Any]) -> dict[str, str] | None:
+    def _parse_message(self, message: dict[str, Any]) -> dict[str, Any] | None:
         """Parse the message and return parsed/converted fields."""
         if message["type"] == MessageType.ALERT:
             if (
@@ -170,13 +178,24 @@ class TzevaAdomNotifications:
                 for city_id in message["data"].get("citiesIds") or []
                 if city_id in TZEVAADOM_ID_TO_AREA
             ]
-            # Filter out empty areas and ensure the message is a pre_alert.
-            if not areas or message["data"].get("instructionType") != 0:
+
+            # Filter out empty areas and ensure the message is "pre_alert" or "end".
+            if (
+                not areas
+                or (instruction := message["data"].get("instructionType")) is None
+                or instruction
+                not in (SystemMessageType.PRE_ALERT, SystemMessageType.END)
+            ):
                 return None
+
             fields = {
                 # We use the official title for pre-alerts.
-                TITLE_FIELD: PRE_ALERT_TITLE,
-                CATEGORY_FIELD: 14,  # 14 is pre_alert and 13 is post-alert.
+                TITLE_FIELD: PRE_ALERT_TITLE
+                if instruction == SystemMessageType.PRE_ALERT
+                else END_TITLE,
+                CATEGORY_FIELD: PRE_ALERT_CATEGORY
+                if instruction == SystemMessageType.PRE_ALERT
+                else END_ALERT_CATEGORY,
                 "areas": areas,
                 "id": (
                     f"{MessageType.SYSTEM_MESSAGE}_{message['data']['notificationId']}"
@@ -213,14 +232,16 @@ class TzevaAdomNotifications:
                         "Unknown area '%s' in Tzeva Adom alert, skipping.", name
                     )
                     continue
-                self.alerts.add(
-                    {
-                        DATE_FIELD: fields[DATE_FIELD],
-                        TITLE_FIELD: fields[TITLE_FIELD],
-                        AREA_FIELD: name,
-                        CATEGORY_FIELD: fields[CATEGORY_FIELD],
-                        CHANNEL_FIELD: AlertSource.TZEVAADOM,
-                    }
+                self.alerts.append(
+                    self._config_entry.runtime_data.coordinator.add_metadata(
+                        Record(
+                            alertDate=fields[DATE_FIELD],
+                            title=fields[TITLE_FIELD],
+                            data=name,
+                            category=fields[CATEGORY_FIELD],
+                            channel=RecordSource.TZEVAADOM,
+                        )
+                    )
                 )
                 new_alert = True
 

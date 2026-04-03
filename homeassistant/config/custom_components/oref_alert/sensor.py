@@ -2,36 +2,31 @@
 
 from __future__ import annotations
 
-from abc import abstractmethod
 from datetime import timedelta
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Final
 
 import homeassistant.util.dt as dt_util
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.components.sensor.const import SensorDeviceClass
-from homeassistant.const import Platform, UnitOfTime
+from homeassistant.const import STATE_OK, Platform, UnitOfTime
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers import event as event_helper
 from homeassistant.util import slugify
 
 from .const import (
-    AREA_FIELD,
     ATTR_ALERT,
     ATTR_AREA,
     ATTR_DISPLAY,
+    ATTR_RECORD,
     ATTR_TIME_TO_SHELTER,
-    CONF_ALERT_ACTIVE_DURATION,
     CONF_AREAS,
     CONF_SENSORS,
-    DATE_FIELD,
-    END_TIME_ID_SUFFIX,
-    IST,
     OREF_ALERT_UNIQUE_ID,
     TIME_TO_SHELTER_ID_SUFFIX,
-    AlertType,
+    RecordAndMetadata,
+    RecordType,
 )
 from .entity import OrefAlertCoordinatorEntity
-from .metadata import ALL_AREAS_ALIASES
 from .metadata.area_to_migun_time import AREA_TO_MIGUN_TIME
 from .metadata.areas import AREAS
 
@@ -42,9 +37,8 @@ if TYPE_CHECKING:
 
     from . import OrefAlertConfigEntry
 
-PARALLEL_UPDATES = 0
-
-SECONDS_IN_A_MINUTE = 60
+PARALLEL_UPDATES: Final = 0
+SECONDS_IN_A_MINUTE: Final = 60
 
 
 async def async_setup_entry(
@@ -63,57 +57,50 @@ async def async_setup_entry(
     ]
     async_add_entities(
         [TimeToShelterSensor(name, area, config_entry) for name, area in entities]
-        + [AlertEndTimeSensor(name, area, config_entry) for name, area in entities]
+        + [OrefAlertStatusSensor(name, area, config_entry) for name, area in entities]
     )
 
 
-class OrefAlertTimerSensor(OrefAlertCoordinatorEntity, SensorEntity):
+class TimeToShelterSensor(OrefAlertCoordinatorEntity, SensorEntity):
     """Representation of a timer sensor."""
 
     _attr_device_class = SensorDeviceClass.DURATION
     _attr_native_unit_of_measurement = UnitOfTime.SECONDS
     _attr_translation_key = "timer"
 
+    _unrecorded_attributes = frozenset(
+        {
+            ATTR_AREA,
+            ATTR_TIME_TO_SHELTER,
+            ATTR_ALERT,
+            ATTR_DISPLAY,
+        }
+    )
+
     def __init__(
         self,
+        name: str,
         area: str,
         config_entry: OrefAlertConfigEntry,
     ) -> None:
         """Initialize object with defaults."""
         super().__init__(config_entry)
-        self._active_duration: int = config_entry.options[CONF_ALERT_ACTIVE_DURATION]
         self._area: str = area
-        self._alert: AlertType | None = None
-        self._alert_timestamp: float | None = None
+        self._alert: RecordAndMetadata | None = None
+        self._migun_time: int = AREA_TO_MIGUN_TIME[area]
+        if not name:
+            self._attr_translation_key = "default_time_to_shelter"
+            self._attr_unique_id = f"{OREF_ALERT_UNIQUE_ID}_{TIME_TO_SHELTER_ID_SUFFIX}"
+        else:
+            self._attr_translation_key = "named_time_to_shelter"
+            self._attr_translation_placeholders = {"name": name}
+            self._attr_unique_id = slugify(
+                OREF_ALERT_UNIQUE_ID
+                + f"_{name.lower().replace(' ', '_')}_"
+                + TIME_TO_SHELTER_ID_SUFFIX
+            )
+        self.entity_id = f"{Platform.SENSOR}.{self._attr_unique_id}"
         self._unsub_update: Callable[[], None] | None = None
-
-    def _get_alert(self) -> AlertType | None:
-        """Return the latest active alert in the area."""
-        if self._alert_timestamp is not None:
-            if (
-                dt_util.now().timestamp() - self._alert_timestamp
-            ) < self._active_duration * 60:
-                return self._alert
-            self._alert = None
-            self._alert_timestamp = None
-        for alert in self.coordinator.data.active_alerts:
-            if (
-                alert[AREA_FIELD] == self._area
-                or alert[AREA_FIELD] in ALL_AREAS_ALIASES
-            ):
-                if not self.coordinator.is_synthetic_alert(alert):
-                    self._alert = alert
-                    self._alert_timestamp = (
-                        dt_util.parse_datetime(alert[DATE_FIELD], raise_on_error=True)
-                        .replace(tzinfo=IST)
-                        .timestamp()
-                    )
-                return alert
-        return None
-
-    def _get_alert_timestamp(self) -> float | None:
-        """Return the timestamp of the latest active alert in the area."""
-        return self._alert_timestamp if self._get_alert() else None
 
     async def async_will_remove_from_hass(self) -> None:
         """Run when entity will be removed from hass."""
@@ -139,9 +126,20 @@ class OrefAlertTimerSensor(OrefAlertCoordinatorEntity, SensorEntity):
             dt_util.now() + timedelta(seconds=1),
         )
 
-    @abstractmethod
-    def oref_value_seconds(self) -> int | None:
-        """Abstract method for getting the state's value in seconds."""
+    def _get_alert(self) -> RecordAndMetadata | None:
+        """Get area's record."""
+        if self._alert and self.oref_value_seconds(self._alert) is not None:
+            return self._alert
+
+        if (
+            (record := self.coordinator.data.areas.get(self._area))
+            and record.record_type == RecordType.ALERT
+            and self.oref_value_seconds(record) is not None
+        ):
+            self._alert = record
+            return record
+
+        return None
 
     @property
     def native_value(self) -> int | None:
@@ -161,45 +159,10 @@ class OrefAlertTimerSensor(OrefAlertCoordinatorEntity, SensorEntity):
             f"{seconds % SECONDS_IN_A_MINUTE:02}"
         )
 
-
-class TimeToShelterSensor(OrefAlertTimerSensor):
-    """Representation of the time to shelter sensor."""
-
-    _entity_component_unrecorded_attributes = frozenset(
-        {
-            ATTR_AREA,
-            ATTR_TIME_TO_SHELTER,
-            ATTR_ALERT,
-            ATTR_DISPLAY,
-        }
-    )
-
-    def __init__(
-        self,
-        name: str,
-        area: str,
-        config_entry: OrefAlertConfigEntry,
-    ) -> None:
-        """Initialize object with defaults."""
-        super().__init__(area, config_entry)
-        self._migun_time: int = AREA_TO_MIGUN_TIME[area]
-        if not name:
-            self._attr_translation_key = "default_time_to_shelter"
-            self._attr_unique_id = f"{OREF_ALERT_UNIQUE_ID}_{TIME_TO_SHELTER_ID_SUFFIX}"
-        else:
-            self._attr_translation_key = "named_time_to_shelter"
-            self._attr_translation_placeholders = {"name": name}
-            self._attr_unique_id = slugify(
-                OREF_ALERT_UNIQUE_ID
-                + f"_{name.lower().replace(' ', '_')}_"
-                + TIME_TO_SHELTER_ID_SUFFIX
-            )
-        self.entity_id = f"{Platform.SENSOR}.{self._attr_unique_id}"
-
-    def oref_value_seconds(self) -> int | None:
+    def oref_value_seconds(self, alert: RecordAndMetadata | None = None) -> int | None:
         """Return the remaining seconds to shelter."""
-        if alert_timestamp := self._get_alert_timestamp():
-            alert_age = dt_util.now().timestamp() - alert_timestamp
+        if alert or (alert := self._get_alert()):
+            alert_age = (dt_util.now() - alert.time).total_seconds()
             time_to_shelter = int(self._migun_time - alert_age)
             # Count till "-60" (a minute past the time to shelter).
             if time_to_shelter > -1 * SECONDS_IN_A_MINUTE:
@@ -209,25 +172,21 @@ class TimeToShelterSensor(OrefAlertTimerSensor):
     @property
     def extra_state_attributes(self) -> Mapping[str, Any] | None:
         """Return additional attributes."""
+        alert = self._get_alert()
         return {
             ATTR_AREA: self._area,
             ATTR_TIME_TO_SHELTER: self._migun_time,
-            ATTR_ALERT: self._get_alert(),
+            ATTR_ALERT: alert.raw_dict if alert else None,
             ATTR_DISPLAY: self.oref_display_value(),
         }
 
 
-class AlertEndTimeSensor(OrefAlertTimerSensor):
-    """Representation of the alert end time sensor."""
+class OrefAlertStatusSensor(OrefAlertCoordinatorEntity, SensorEntity):
+    """Representation of a status sensor."""
 
-    _entity_component_unrecorded_attributes = frozenset(
-        {
-            ATTR_AREA,
-            CONF_ALERT_ACTIVE_DURATION,
-            ATTR_ALERT,
-            ATTR_DISPLAY,
-        }
-    )
+    _unrecorded_attributes = frozenset({ATTR_AREA, ATTR_RECORD})
+    _attr_device_class = SensorDeviceClass.ENUM
+    _attr_translation_key = "status"
 
     def __init__(
         self,
@@ -236,33 +195,36 @@ class AlertEndTimeSensor(OrefAlertTimerSensor):
         config_entry: OrefAlertConfigEntry,
     ) -> None:
         """Initialize object with defaults."""
-        super().__init__(area, config_entry)
+        super().__init__(config_entry)
+        self._area: str = area
+        self._attr_options = [STATE_OK, RecordType.PRE_ALERT, RecordType.ALERT]
         if not name:
-            self._attr_translation_key = "default_end_time"
-            self._attr_unique_id = f"{OREF_ALERT_UNIQUE_ID}_{END_TIME_ID_SUFFIX}"
+            self.use_device_name = True
+            self._attr_unique_id = OREF_ALERT_UNIQUE_ID
         else:
-            self._attr_translation_key = "named_end_time"
-            self._attr_translation_placeholders = {"name": name}
+            self._attr_name = name
             self._attr_unique_id = slugify(
-                OREF_ALERT_UNIQUE_ID
-                + f"_{name.lower().replace(' ', '_')}_"
-                + END_TIME_ID_SUFFIX
+                f"{OREF_ALERT_UNIQUE_ID}_{name.lower().replace(' ', '_')}"
             )
         self.entity_id = f"{Platform.SENSOR}.{self._attr_unique_id}"
 
-    def oref_value_seconds(self) -> int | None:
-        """Return the remaining seconds till the end of the alert."""
-        if alert_timestamp := self._get_alert_timestamp():
-            alert_age = dt_util.now().timestamp() - alert_timestamp
-            return int(self._active_duration * 60 - alert_age)
-        return None
+    @property
+    def native_value(self) -> str:
+        """Return the state value."""
+        if (
+            record := self.coordinator.data.areas.get(self._area)
+        ) is not None and record.record_type in (
+            RecordType.PRE_ALERT,
+            RecordType.ALERT,
+        ):
+            return str(record.record_type)
+
+        return STATE_OK
 
     @property
     def extra_state_attributes(self) -> Mapping[str, Any] | None:
         """Return additional attributes."""
         return {
             ATTR_AREA: self._area,
-            CONF_ALERT_ACTIVE_DURATION: self._active_duration,
-            ATTR_ALERT: self._get_alert(),
-            ATTR_DISPLAY: self.oref_display_value(),
+            ATTR_RECORD: self.coordinator.get_record(self._area, None),
         }

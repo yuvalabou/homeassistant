@@ -7,10 +7,13 @@ import hashlib
 import json
 import logging
 import ssl
+from collections import deque
+from datetime import timedelta
 from itertools import chain
 from typing import TYPE_CHECKING, Any, Final
 
 import homeassistant.util.dt as dt_util
+from homeassistant.const import ATTR_DATE
 from homeassistant.exceptions import IntegrationError
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.instance_id import async_get
@@ -20,22 +23,18 @@ from paho.mqtt.enums import CallbackAPIVersion
 
 from .categories import pushy_thread_id_to_history_category
 from .const import (
-    AREA_FIELD,
-    CATEGORY_FIELD,
-    CHANNEL_FIELD,
-    CONF_ALERT_ACTIVE_DURATION,
     CONF_AREAS,
     CONF_SENSORS,
-    DATE_FIELD,
     DOMAIN,
     LOGGER,
     TITLE_FIELD,
-    AlertSource,
+    Record,
+    RecordAndMetadata,
+    RecordSource,
 )
 from .metadata import PUSHY_TEST_SEGMENTS
 from .metadata.area_info import AREA_INFO
 from .metadata.segment_to_area import SEGMENT_TO_AREA
-from .ttl_deque import TTLDeque
 
 if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
@@ -87,9 +86,7 @@ class PushyNotifications:
         self._http_client = async_get_clientsession(hass)
         self._credentials: dict[str, str] = {}
         self._mqtt: MQTTClient | None = None
-        self.alerts: TTLDeque = TTLDeque(
-            config_entry.options[CONF_ALERT_ACTIVE_DURATION]
-        )
+        self.alerts: deque[RecordAndMetadata] = deque()
 
     async def _api_call(self, uri: str, content: Any, check: bool = True) -> Any:  # noqa: FBT001, FBT002
         """Make HTTP request to the API server."""
@@ -138,10 +135,30 @@ class PushyNotifications:
             self._config_entry,
             data={
                 **self._config_entry.data,
-                PUSHY_CREDENTIALS_KEY: credentials,
+                PUSHY_CREDENTIALS_KEY: {
+                    **credentials,
+                    ATTR_DATE: dt_util.now().isoformat(),
+                },
             },
         )
         return
+
+    def _cleanup_old(self, credentials: dict[str, str]) -> None:
+        """Cleanup current credentials (on failure), but only if it's 1 hour old."""
+        if (
+            create_date := dt_util.parse_datetime(credentials.get(ATTR_DATE, ""))
+        ) and dt_util.now() - create_date < timedelta(hours=1):
+            return
+
+        # This is causing a reload of the integration.
+        self._hass.config_entries.async_update_entry(
+            self._config_entry,
+            data={
+                key: value
+                for key, value in self._config_entry.data.items()
+                if key != PUSHY_CREDENTIALS_KEY
+            },
+        )
 
     async def _validate(self, credentials: dict[str, str]) -> bool:
         """Validate that the configuration is working properly."""
@@ -156,16 +173,7 @@ class PushyNotifications:
                 },
             )
         except:  # noqa: E722
-            # Delete the credentials data which causes the integration to reload.
-            # Note: there is no loop here. The registration might fail and that's it.
-            self._hass.config_entries.async_update_entry(
-                self._config_entry,
-                data={
-                    key: value
-                    for key, value in self._config_entry.data.items()
-                    if key != PUSHY_CREDENTIALS_KEY
-                },
-            )
+            self._cleanup_old(credentials)
             return False
         LOGGER.debug("Pushy credentials are valid.")
         return True
@@ -199,11 +207,21 @@ class PushyNotifications:
         if added := [topic for topic in topics if topic not in previous_topics]:
             try:
                 await self._api_call(
-                    "devices/subscribe", {**self._credentials, TOPICS_KEY: added}
+                    "devices/subscribe",
+                    {
+                        TOKEN_KEY: self._credentials[TOKEN_KEY],
+                        AUTH_KEY: self._credentials[AUTH_KEY],
+                        TOPICS_KEY: added,
+                    },
                 )
             except:  # noqa: E722
                 LOGGER.exception(f"'{API_ENDPOINT}/devices/subscribe' failed")
+                # We stop the initialization flow by returning True.
+                # _cleanup_old might cause the integration to reload and try again.
+                # Otherwise, we are ok with not using this channel until a restart.
+                self._cleanup_old(self._credentials)
                 return True
+
             LOGGER.debug("Pushy subscribe is done: %s", added)
 
         if added or removed:
@@ -222,7 +240,12 @@ class PushyNotifications:
         """Unsubscribe the relevant topics."""
         try:
             await self._api_call(
-                "devices/unsubscribe", {**self._credentials, TOPICS_KEY: topics}
+                "devices/unsubscribe",
+                {
+                    TOKEN_KEY: self._credentials[TOKEN_KEY],
+                    AUTH_KEY: self._credentials[AUTH_KEY],
+                    TOPICS_KEY: topics,
+                },
             )
         except:  # noqa: E722
             LOGGER.exception(f"'{API_ENDPOINT}/devices/unsubscribe' failed")
@@ -284,14 +307,16 @@ class PushyNotifications:
                     for segment in content["citiesIds"].split(",")
                     if int(segment) in SEGMENT_TO_AREA
                 ]:
-                    self.alerts.add(
-                        {
-                            DATE_FIELD: alert_date,
-                            TITLE_FIELD: content[TITLE_FIELD],
-                            AREA_FIELD: area,
-                            CATEGORY_FIELD: category,
-                            CHANNEL_FIELD: AlertSource.MOBILE,
-                        }
+                    self.alerts.append(
+                        self._config_entry.runtime_data.coordinator.add_metadata(
+                            Record(
+                                alertDate=alert_date,
+                                title=content[TITLE_FIELD],
+                                data=area,
+                                category=category,
+                                channel=RecordSource.MOBILE,
+                            )
+                        )
                     )
                     new_alert = True
             if new_alert:

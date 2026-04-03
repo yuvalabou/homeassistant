@@ -15,8 +15,18 @@
       }
     },
     "sensor": {
-      "timer": {
+      "default_time_to_shelter": {
         "default": "mdi:timer-sand"
+      },
+      "named_time_to_shelter": {
+        "default": "mdi:timer-sand"
+      },
+      "status": {
+        "default": "mdi:check-circle-outline",
+        "state": {
+          "pre_alert": "mdi:message-alert-outline",
+          "alert": "mdi:home-alert-outline"
+        }
       }
     },
     "event": {
@@ -29,6 +39,9 @@
     "add_sensor": "mdi:map-marker-plus-outline",
     "remove_sensor": "mdi:map-marker-remove-outline",
     "edit_sensor": "mdi:map-marker-star-outline",
-    "synthetic_alert": "mdi:rocket-launch"
+    "areas_status": "mdi:map-search-outline",
+    "last_update": "mdi:clock-sync-outline",
+    "synthetic_alert": "mdi:rocket-launch",
+    "manual_event_end": "mdi:check-circle-outline"
   }
 }
