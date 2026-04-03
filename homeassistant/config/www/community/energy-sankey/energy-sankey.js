@@ -1,6 +1,5 @@
-var version = "1.0.2";
+var version = "1.0.4";
 var repository = {
-	type: "git",
 	url: "https://github.com/davet2001/homeassistant-energy-sankey-card"
 };
 
@@ -63,26 +62,26 @@ var mdiWrench = "M22.7,19L13.6,9.9C14.5,7.6 14,4.9 12.1,3C10.1,1 7.1,0.6 4.7,1.7
  * Copyright 2019 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t$3=window,e$5=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$4=Symbol(),n$5=new WeakMap;let o$4 = class o{constructor(t,e,n){if(this._$cssResult$=!0,n!==s$4)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$5&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=n$5.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&n$5.set(s,t));}return t}toString(){return this.cssText}};const r$3=t=>new o$4("string"==typeof t?t:t+"",void 0,s$4),i$3=(t,...e)=>{const n=1===t.length?t[0]:e.reduce(((e,s,n)=>e+(t=>{if(!0===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[n+1]),t[0]);return new o$4(n,t,s$4)},S$1=(s,n)=>{e$5?s.adoptedStyleSheets=n.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):n.forEach((e=>{const n=document.createElement("style"),o=t$3.litNonce;void 0!==o&&n.setAttribute("nonce",o),n.textContent=e.cssText,s.appendChild(n);}));},c$3=e$5?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$3(e)})(t):t;
+const t$3=window,e$5=t$3.ShadowRoot&&(void 0===t$3.ShadyCSS||t$3.ShadyCSS.nativeShadow)&&"adoptedStyleSheets"in Document.prototype&&"replace"in CSSStyleSheet.prototype,s$4=Symbol(),n$5=new WeakMap;let o$4 = class o{constructor(t,e,n){if(this._$cssResult$=true,n!==s$4)throw Error("CSSResult is not constructable. Use `unsafeCSS` or `css` instead.");this.cssText=t,this.t=e;}get styleSheet(){let t=this.o;const s=this.t;if(e$5&&void 0===t){const e=void 0!==s&&1===s.length;e&&(t=n$5.get(s)),void 0===t&&((this.o=t=new CSSStyleSheet).replaceSync(this.cssText),e&&n$5.set(s,t));}return t}toString(){return this.cssText}};const r$3=t=>new o$4("string"==typeof t?t:t+"",void 0,s$4),i$3=(t,...e)=>{const n=1===t.length?t[0]:e.reduce(((e,s,n)=>e+(t=>{if(true===t._$cssResult$)return t.cssText;if("number"==typeof t)return t;throw Error("Value passed to 'css' function must be a 'css' function result: "+t+". Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.")})(s)+t[n+1]),t[0]);return new o$4(n,t,s$4)},S$1=(s,n)=>{e$5?s.adoptedStyleSheets=n.map((t=>t instanceof CSSStyleSheet?t:t.styleSheet)):n.forEach((e=>{const n=document.createElement("style"),o=t$3.litNonce;void 0!==o&&n.setAttribute("nonce",o),n.textContent=e.cssText,s.appendChild(n);}));},c$3=e$5?t=>t:t=>t instanceof CSSStyleSheet?(t=>{let e="";for(const s of t.cssRules)e+=s.cssText;return r$3(e)})(t):t;
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */var s$3;const e$4=window,r$2=e$4.trustedTypes,h$1=r$2?r$2.emptyScript:"",o$3=e$4.reactiveElementPolyfillSupport,n$4={toAttribute(t,i){switch(i){case Boolean:t=t?h$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,i){let s=t;switch(i){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t);}catch(t){s=null;}}return s}},a$2=(t,i)=>i!==t&&(i==i||t==t),l$3={attribute:!0,type:String,converter:n$4,reflect:!1,hasChanged:a$2},d$1="finalized";let u$2 = class u extends HTMLElement{constructor(){super(),this._$Ei=new Map,this.isUpdatePending=!1,this.hasUpdated=!1,this._$El=null,this._$Eu();}static addInitializer(t){var i;this.finalize(),(null!==(i=this.h)&&void 0!==i?i:this.h=[]).push(t);}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((i,s)=>{const e=this._$Ep(s,i);void 0!==e&&(this._$Ev.set(e,s),t.push(e));})),t}static createProperty(t,i=l$3){if(i.state&&(i.attribute=!1),this.finalize(),this.elementProperties.set(t,i),!i.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,e=this.getPropertyDescriptor(t,s,i);void 0!==e&&Object.defineProperty(this.prototype,t,e);}}static getPropertyDescriptor(t,i,s){return {get(){return this[i]},set(e){const r=this[t];this[i]=e,this.requestUpdate(t,r,s);},configurable:!0,enumerable:!0}}static getPropertyOptions(t){return this.elementProperties.get(t)||l$3}static finalize(){if(this.hasOwnProperty(d$1))return !1;this[d$1]=!0;const t=Object.getPrototypeOf(this);if(t.finalize(),void 0!==t.h&&(this.h=[...t.h]),this.elementProperties=new Map(t.elementProperties),this._$Ev=new Map,this.hasOwnProperty("properties")){const t=this.properties,i=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of i)this.createProperty(s,t[s]);}return this.elementStyles=this.finalizeStyles(this.styles),!0}static finalizeStyles(i){const s=[];if(Array.isArray(i)){const e=new Set(i.flat(1/0).reverse());for(const i of e)s.unshift(c$3(i));}else void 0!==i&&s.push(c$3(i));return s}static _$Ep(t,i){const s=i.attribute;return !1===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}_$Eu(){var t;this._$E_=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Eg(),this.requestUpdate(),null===(t=this.constructor.h)||void 0===t||t.forEach((t=>t(this)));}addController(t){var i,s;(null!==(i=this._$ES)&&void 0!==i?i:this._$ES=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t));}removeController(t){var i;null===(i=this._$ES)||void 0===i||i.splice(this._$ES.indexOf(t)>>>0,1);}_$Eg(){this.constructor.elementProperties.forEach(((t,i)=>{this.hasOwnProperty(i)&&(this._$Ei.set(i,this[i]),delete this[i]);}));}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return S$1(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(!0),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostConnected)||void 0===i?void 0:i.call(t)}));}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostDisconnected)||void 0===i?void 0:i.call(t)}));}attributeChangedCallback(t,i,s){this._$AK(t,s);}_$EO(t,i,s=l$3){var e;const r=this.constructor._$Ep(t,s);if(void 0!==r&&!0===s.reflect){const h=(void 0!==(null===(e=s.converter)||void 0===e?void 0:e.toAttribute)?s.converter:n$4).toAttribute(i,s.type);this._$El=t,null==h?this.removeAttribute(r):this.setAttribute(r,h),this._$El=null;}}_$AK(t,i){var s;const e=this.constructor,r=e._$Ev.get(t);if(void 0!==r&&this._$El!==r){const t=e.getPropertyOptions(r),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==(null===(s=t.converter)||void 0===s?void 0:s.fromAttribute)?t.converter:n$4;this._$El=r,this[r]=h.fromAttribute(i,t.type),this._$El=null;}}requestUpdate(t,i,s){let e=!0;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||a$2)(this[t],i)?(this._$AL.has(t)||this._$AL.set(t,i),!0===s.reflect&&this._$El!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,s))):e=!1),!this.isUpdatePending&&e&&(this._$E_=this._$Ej());}async _$Ej(){this.isUpdatePending=!0;try{await this._$E_;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Ei&&(this._$Ei.forEach(((t,i)=>this[i]=t)),this._$Ei=void 0);let i=!1;const s=this._$AL;try{i=this.shouldUpdate(s),i?(this.willUpdate(s),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostUpdate)||void 0===i?void 0:i.call(t)})),this.update(s)):this._$Ek();}catch(t){throw i=!1,this._$Ek(),t}i&&this._$AE(s);}willUpdate(t){}_$AE(t){var i;null===(i=this._$ES)||void 0===i||i.forEach((t=>{var i;return null===(i=t.hostUpdated)||void 0===i?void 0:i.call(t)})),this.hasUpdated||(this.hasUpdated=!0,this.firstUpdated(t)),this.updated(t);}_$Ek(){this._$AL=new Map,this.isUpdatePending=!1;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$E_}shouldUpdate(t){return !0}update(t){void 0!==this._$EC&&(this._$EC.forEach(((t,i)=>this._$EO(i,this[i],t))),this._$EC=void 0),this._$Ek();}updated(t){}firstUpdated(t){}};u$2[d$1]=!0,u$2.elementProperties=new Map,u$2.elementStyles=[],u$2.shadowRootOptions={mode:"open"},null==o$3||o$3({ReactiveElement:u$2}),(null!==(s$3=e$4.reactiveElementVersions)&&void 0!==s$3?s$3:e$4.reactiveElementVersions=[]).push("1.6.3");
+ */var s$3;const e$4=window,r$2=e$4.trustedTypes,h$1=r$2?r$2.emptyScript:"",o$3=e$4.reactiveElementPolyfillSupport,n$4={toAttribute(t,i){switch(i){case Boolean:t=t?h$1:null;break;case Object:case Array:t=null==t?t:JSON.stringify(t);}return t},fromAttribute(t,i){let s=t;switch(i){case Boolean:s=null!==t;break;case Number:s=null===t?null:Number(t);break;case Object:case Array:try{s=JSON.parse(t);}catch(t){s=null;}}return s}},a$2=(t,i)=>i!==t&&(i==i||t==t),l$3={attribute:true,type:String,converter:n$4,reflect:false,hasChanged:a$2},d$1="finalized";let u$2 = class u extends HTMLElement{constructor(){super(),this._$Ei=new Map,this.isUpdatePending=false,this.hasUpdated=false,this._$El=null,this._$Eu();}static addInitializer(t){var i;this.finalize(),(null!==(i=this.h)&&void 0!==i?i:this.h=[]).push(t);}static get observedAttributes(){this.finalize();const t=[];return this.elementProperties.forEach(((i,s)=>{const e=this._$Ep(s,i);void 0!==e&&(this._$Ev.set(e,s),t.push(e));})),t}static createProperty(t,i=l$3){if(i.state&&(i.attribute=false),this.finalize(),this.elementProperties.set(t,i),!i.noAccessor&&!this.prototype.hasOwnProperty(t)){const s="symbol"==typeof t?Symbol():"__"+t,e=this.getPropertyDescriptor(t,s,i);void 0!==e&&Object.defineProperty(this.prototype,t,e);}}static getPropertyDescriptor(t,i,s){return {get(){return this[i]},set(e){const r=this[t];this[i]=e,this.requestUpdate(t,r,s);},configurable:true,enumerable:true}}static getPropertyOptions(t){return this.elementProperties.get(t)||l$3}static finalize(){if(this.hasOwnProperty(d$1))return  false;this[d$1]=true;const t=Object.getPrototypeOf(this);if(t.finalize(),void 0!==t.h&&(this.h=[...t.h]),this.elementProperties=new Map(t.elementProperties),this._$Ev=new Map,this.hasOwnProperty("properties")){const t=this.properties,i=[...Object.getOwnPropertyNames(t),...Object.getOwnPropertySymbols(t)];for(const s of i)this.createProperty(s,t[s]);}return this.elementStyles=this.finalizeStyles(this.styles),true}static finalizeStyles(i){const s=[];if(Array.isArray(i)){const e=new Set(i.flat(1/0).reverse());for(const i of e)s.unshift(c$3(i));}else void 0!==i&&s.push(c$3(i));return s}static _$Ep(t,i){const s=i.attribute;return  false===s?void 0:"string"==typeof s?s:"string"==typeof t?t.toLowerCase():void 0}_$Eu(){var t;this._$E_=new Promise((t=>this.enableUpdating=t)),this._$AL=new Map,this._$Eg(),this.requestUpdate(),null===(t=this.constructor.h)||void 0===t||t.forEach((t=>t(this)));}addController(t){var i,s;(null!==(i=this._$ES)&&void 0!==i?i:this._$ES=[]).push(t),void 0!==this.renderRoot&&this.isConnected&&(null===(s=t.hostConnected)||void 0===s||s.call(t));}removeController(t){var i;null===(i=this._$ES)||void 0===i||i.splice(this._$ES.indexOf(t)>>>0,1);}_$Eg(){this.constructor.elementProperties.forEach(((t,i)=>{this.hasOwnProperty(i)&&(this._$Ei.set(i,this[i]),delete this[i]);}));}createRenderRoot(){var t;const s=null!==(t=this.shadowRoot)&&void 0!==t?t:this.attachShadow(this.constructor.shadowRootOptions);return S$1(s,this.constructor.elementStyles),s}connectedCallback(){var t;void 0===this.renderRoot&&(this.renderRoot=this.createRenderRoot()),this.enableUpdating(true),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostConnected)||void 0===i?void 0:i.call(t)}));}enableUpdating(t){}disconnectedCallback(){var t;null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostDisconnected)||void 0===i?void 0:i.call(t)}));}attributeChangedCallback(t,i,s){this._$AK(t,s);}_$EO(t,i,s=l$3){var e;const r=this.constructor._$Ep(t,s);if(void 0!==r&&true===s.reflect){const h=(void 0!==(null===(e=s.converter)||void 0===e?void 0:e.toAttribute)?s.converter:n$4).toAttribute(i,s.type);this._$El=t,null==h?this.removeAttribute(r):this.setAttribute(r,h),this._$El=null;}}_$AK(t,i){var s;const e=this.constructor,r=e._$Ev.get(t);if(void 0!==r&&this._$El!==r){const t=e.getPropertyOptions(r),h="function"==typeof t.converter?{fromAttribute:t.converter}:void 0!==(null===(s=t.converter)||void 0===s?void 0:s.fromAttribute)?t.converter:n$4;this._$El=r,this[r]=h.fromAttribute(i,t.type),this._$El=null;}}requestUpdate(t,i,s){let e=true;void 0!==t&&(((s=s||this.constructor.getPropertyOptions(t)).hasChanged||a$2)(this[t],i)?(this._$AL.has(t)||this._$AL.set(t,i),true===s.reflect&&this._$El!==t&&(void 0===this._$EC&&(this._$EC=new Map),this._$EC.set(t,s))):e=false),!this.isUpdatePending&&e&&(this._$E_=this._$Ej());}async _$Ej(){this.isUpdatePending=true;try{await this._$E_;}catch(t){Promise.reject(t);}const t=this.scheduleUpdate();return null!=t&&await t,!this.isUpdatePending}scheduleUpdate(){return this.performUpdate()}performUpdate(){var t;if(!this.isUpdatePending)return;this.hasUpdated,this._$Ei&&(this._$Ei.forEach(((t,i)=>this[i]=t)),this._$Ei=void 0);let i=false;const s=this._$AL;try{i=this.shouldUpdate(s),i?(this.willUpdate(s),null===(t=this._$ES)||void 0===t||t.forEach((t=>{var i;return null===(i=t.hostUpdate)||void 0===i?void 0:i.call(t)})),this.update(s)):this._$Ek();}catch(t){throw i=false,this._$Ek(),t}i&&this._$AE(s);}willUpdate(t){}_$AE(t){var i;null===(i=this._$ES)||void 0===i||i.forEach((t=>{var i;return null===(i=t.hostUpdated)||void 0===i?void 0:i.call(t)})),this.hasUpdated||(this.hasUpdated=true,this.firstUpdated(t)),this.updated(t);}_$Ek(){this._$AL=new Map,this.isUpdatePending=false;}get updateComplete(){return this.getUpdateComplete()}getUpdateComplete(){return this._$E_}shouldUpdate(t){return  true}update(t){ void 0!==this._$EC&&(this._$EC.forEach(((t,i)=>this._$EO(i,this[i],t))),this._$EC=void 0),this._$Ek();}updated(t){}firstUpdated(t){}};u$2[d$1]=true,u$2.elementProperties=new Map,u$2.elementStyles=[],u$2.shadowRootOptions={mode:"open"},null==o$3||o$3({ReactiveElement:u$2}),(null!==(s$3=e$4.reactiveElementVersions)&&void 0!==s$3?s$3:e$4.reactiveElementVersions=[]).push("1.6.3");
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-var t$2;const i$2=window,s$2=i$2.trustedTypes,e$3=s$2?s$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,o$2="$lit$",n$3=`lit$${(Math.random()+"").slice(9)}$`,l$2="?"+n$3,h=`<${l$2}>`,r$1=document,u$1=()=>r$1.createComment(""),d=t=>null===t||"object"!=typeof t&&"function"!=typeof t,c$2=Array.isArray,v=t=>c$2(t)||"function"==typeof(null==t?void 0:t[Symbol.iterator]),a$1="[ \t\n\f\r]",f$1=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m$1=/>/g,p$1=RegExp(`>|${a$1}(?:([^\\s"'>=/]+)(${a$1}*=${a$1}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,w=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=w(1),b=w(2),T=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),E=new WeakMap,C=r$1.createTreeWalker(r$1,129,null,!1);function P(t,i){if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$3?e$3.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,e=[];let l,r=2===i?"<svg>":"",u=f$1;for(let i=0;i<s;i++){const s=t[i];let d,c,v=-1,a=0;for(;a<s.length&&(u.lastIndex=a,c=u.exec(s),null!==c);)a=u.lastIndex,u===f$1?"!--"===c[1]?u=_:void 0!==c[1]?u=m$1:void 0!==c[2]?(y.test(c[2])&&(l=RegExp("</"+c[2],"g")),u=p$1):void 0!==c[3]&&(u=p$1):u===p$1?">"===c[0]?(u=null!=l?l:f$1,v=-1):void 0===c[1]?v=-2:(v=u.lastIndex-c[2].length,d=c[1],u=void 0===c[3]?p$1:'"'===c[3]?$:g):u===$||u===g?u=p$1:u===_||u===m$1?u=f$1:(u=p$1,l=void 0);const w=u===p$1&&t[i+1].startsWith("/>")?" ":"";r+=u===f$1?s+h:v>=0?(e.push(d),s.slice(0,v)+o$2+s.slice(v)+n$3+w):s+n$3+(-2===v?(e.push(void 0),i):w);}return [P(t,r+(t[s]||"<?>")+(2===i?"</svg>":"")),e]};class N{constructor({strings:t,_$litType$:i},e){let h;this.parts=[];let r=0,d=0;const c=t.length-1,v=this.parts,[a,f]=V(t,i);if(this.el=N.createElement(a,e),C.currentNode=this.el.content,2===i){const t=this.el.content,i=t.firstChild;i.remove(),t.append(...i.childNodes);}for(;null!==(h=C.nextNode())&&v.length<c;){if(1===h.nodeType){if(h.hasAttributes()){const t=[];for(const i of h.getAttributeNames())if(i.endsWith(o$2)||i.startsWith(n$3)){const s=f[d++];if(t.push(i),void 0!==s){const t=h.getAttribute(s.toLowerCase()+o$2).split(n$3),i=/([.?@])?(.*)/.exec(s);v.push({type:1,index:r,name:i[2],strings:t,ctor:"."===i[1]?H:"?"===i[1]?L:"@"===i[1]?z:k});}else v.push({type:6,index:r});}for(const i of t)h.removeAttribute(i);}if(y.test(h.tagName)){const t=h.textContent.split(n$3),i=t.length-1;if(i>0){h.textContent=s$2?s$2.emptyScript:"";for(let s=0;s<i;s++)h.append(t[s],u$1()),C.nextNode(),v.push({type:2,index:++r});h.append(t[i],u$1());}}}else if(8===h.nodeType)if(h.data===l$2)v.push({type:2,index:r});else {let t=-1;for(;-1!==(t=h.data.indexOf(n$3,t+1));)v.push({type:7,index:r}),t+=n$3.length-1;}r++;}}static createElement(t,i){const s=r$1.createElement("template");return s.innerHTML=t,s}}function S(t,i,s=t,e){var o,n,l,h;if(i===T)return i;let r=void 0!==e?null===(o=s._$Co)||void 0===o?void 0:o[e]:s._$Cl;const u=d(i)?void 0:i._$litDirective$;return (null==r?void 0:r.constructor)!==u&&(null===(n=null==r?void 0:r._$AO)||void 0===n||n.call(r,!1),void 0===u?r=void 0:(r=new u(t),r._$AT(t,s,e)),void 0!==e?(null!==(l=(h=s)._$Co)&&void 0!==l?l:h._$Co=[])[e]=r:s._$Cl=r),void 0!==r&&(i=S(t,r._$AS(t,i.values),r,e)),i}class M{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){var i;const{el:{content:s},parts:e}=this._$AD,o=(null!==(i=null==t?void 0:t.creationScope)&&void 0!==i?i:r$1).importNode(s,!0);C.currentNode=o;let n=C.nextNode(),l=0,h=0,u=e[0];for(;void 0!==u;){if(l===u.index){let i;2===u.type?i=new R(n,n.nextSibling,this,t):1===u.type?i=new u.ctor(n,u.name,u.strings,this,t):6===u.type&&(i=new Z(n,this,t)),this._$AV.push(i),u=e[++h];}l!==(null==u?void 0:u.index)&&(n=C.nextNode(),l++);}return C.currentNode=r$1,o}v(t){let i=0;for(const s of this._$AV)void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class R{constructor(t,i,s,e){var o;this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cp=null===(o=null==e?void 0:e.isConnected)||void 0===o||o;}get _$AU(){var t,i;return null!==(i=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==i?i:this._$Cp}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===(null==t?void 0:t.nodeType)&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=S(this,t,i),d(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==T&&this._(t):void 0!==t._$litType$?this.g(t):void 0!==t.nodeType?this.$(t):v(t)?this.T(t):this._(t);}k(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}$(t){this._$AH!==t&&(this._$AR(),this._$AH=this.k(t));}_(t){this._$AH!==A&&d(this._$AH)?this._$AA.nextSibling.data=t:this.$(r$1.createTextNode(t)),this._$AH=t;}g(t){var i;const{values:s,_$litType$:e}=t,o="number"==typeof e?this._$AC(t):(void 0===e.el&&(e.el=N.createElement(P(e.h,e.h[0]),this.options)),e);if((null===(i=this._$AH)||void 0===i?void 0:i._$AD)===o)this._$AH.v(s);else {const t=new M(o,this),i=t.u(this.options);t.v(s),this.$(i),this._$AH=t;}}_$AC(t){let i=E.get(t.strings);return void 0===i&&E.set(t.strings,i=new N(t)),i}T(t){c$2(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const o of t)e===i.length?i.push(s=new R(this.k(u$1()),this.k(u$1()),this,this.options)):s=i[e],s._$AI(o),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,!1,!0,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){var i;void 0===this._$AM&&(this._$Cp=t,null===(i=this._$AP)||void 0===i||i.call(this,t));}}class k{constructor(t,i,s,e,o){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=o,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,i=this,s,e){const o=this.strings;let n=!1;if(void 0===o)t=S(this,t,i,0),n=!d(t)||t!==this._$AH&&t!==T,n&&(this._$AH=t);else {const e=t;let l,h;for(t=o[0],l=0;l<o.length-1;l++)h=S(this,e[s+l],i,l),h===T&&(h=this._$AH[l]),n||(n=!d(h)||h!==this._$AH[l]),h===A?t=A:t!==A&&(t+=(null!=h?h:"")+o[l+1]),this._$AH[l]=h;}n&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"");}}class H extends k{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}const I=s$2?s$2.emptyScript:"";class L extends k{constructor(){super(...arguments),this.type=4;}j(t){t&&t!==A?this.element.setAttribute(this.name,I):this.element.removeAttribute(this.name);}}class z extends k{constructor(t,i,s,e,o){super(t,i,s,e,o),this.type=5;}_$AI(t,i=this){var s;if((t=null!==(s=S(this,t,i,0))&&void 0!==s?s:A)===T)return;const e=this._$AH,o=t===A&&e!==A||t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive,n=t!==A&&(e===A||o);o&&this.element.removeEventListener(this.name,this,e),n&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){var i,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(i=this.options)||void 0===i?void 0:i.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){S(this,t);}}const j={O:o$2,P:n$3,A:l$2,C:1,M:V,L:M,R:v,D:S,I:R,V:k,H:L,N:z,U:H,F:Z},B=i$2.litHtmlPolyfillSupport;null==B||B(N,R),(null!==(t$2=i$2.litHtmlVersions)&&void 0!==t$2?t$2:i$2.litHtmlVersions=[]).push("2.8.0");const D=(t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let l=n._$litPart$;if(void 0===l){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=l=new R(i.insertBefore(u$1(),t),t,void 0,null!=s?s:{});}return l._$AI(t),l};
+var t$2;const i$2=window,s$2=i$2.trustedTypes,e$3=s$2?s$2.createPolicy("lit-html",{createHTML:t=>t}):void 0,o$2="$lit$",n$3=`lit$${(Math.random()+"").slice(9)}$`,l$2="?"+n$3,h=`<${l$2}>`,r$1=document,u$1=()=>r$1.createComment(""),d=t=>null===t||"object"!=typeof t&&"function"!=typeof t,c$2=Array.isArray,v=t=>c$2(t)||"function"==typeof(null==t?void 0:t[Symbol.iterator]),a$1="[ \t\n\f\r]",f$1=/<(?:(!--|\/[^a-zA-Z])|(\/?[a-zA-Z][^>\s]*)|(\/?$))/g,_=/-->/g,m$1=/>/g,p$1=RegExp(`>|${a$1}(?:([^\\s"'>=/]+)(${a$1}*=${a$1}*(?:[^ \t\n\f\r"'\`<>=]|("|')|))|$)`,"g"),g=/'/g,$=/"/g,y=/^(?:script|style|textarea|title)$/i,w=t=>(i,...s)=>({_$litType$:t,strings:i,values:s}),x=w(1),b=w(2),T=Symbol.for("lit-noChange"),A=Symbol.for("lit-nothing"),E=new WeakMap,C=r$1.createTreeWalker(r$1,129,null,false);function P(t,i){if(!Array.isArray(t)||!t.hasOwnProperty("raw"))throw Error("invalid template strings array");return void 0!==e$3?e$3.createHTML(i):i}const V=(t,i)=>{const s=t.length-1,e=[];let l,r=2===i?"<svg>":"",u=f$1;for(let i=0;i<s;i++){const s=t[i];let d,c,v=-1,a=0;for(;a<s.length&&(u.lastIndex=a,c=u.exec(s),null!==c);)a=u.lastIndex,u===f$1?"!--"===c[1]?u=_:void 0!==c[1]?u=m$1:void 0!==c[2]?(y.test(c[2])&&(l=RegExp("</"+c[2],"g")),u=p$1):void 0!==c[3]&&(u=p$1):u===p$1?">"===c[0]?(u=null!=l?l:f$1,v=-1):void 0===c[1]?v=-2:(v=u.lastIndex-c[2].length,d=c[1],u=void 0===c[3]?p$1:'"'===c[3]?$:g):u===$||u===g?u=p$1:u===_||u===m$1?u=f$1:(u=p$1,l=void 0);const w=u===p$1&&t[i+1].startsWith("/>")?" ":"";r+=u===f$1?s+h:v>=0?(e.push(d),s.slice(0,v)+o$2+s.slice(v)+n$3+w):s+n$3+(-2===v?(e.push(void 0),i):w);}return [P(t,r+(t[s]||"<?>")+(2===i?"</svg>":"")),e]};class N{constructor({strings:t,_$litType$:i},e){let h;this.parts=[];let r=0,d=0;const c=t.length-1,v=this.parts,[a,f]=V(t,i);if(this.el=N.createElement(a,e),C.currentNode=this.el.content,2===i){const t=this.el.content,i=t.firstChild;i.remove(),t.append(...i.childNodes);}for(;null!==(h=C.nextNode())&&v.length<c;){if(1===h.nodeType){if(h.hasAttributes()){const t=[];for(const i of h.getAttributeNames())if(i.endsWith(o$2)||i.startsWith(n$3)){const s=f[d++];if(t.push(i),void 0!==s){const t=h.getAttribute(s.toLowerCase()+o$2).split(n$3),i=/([.?@])?(.*)/.exec(s);v.push({type:1,index:r,name:i[2],strings:t,ctor:"."===i[1]?H:"?"===i[1]?L:"@"===i[1]?z:k});}else v.push({type:6,index:r});}for(const i of t)h.removeAttribute(i);}if(y.test(h.tagName)){const t=h.textContent.split(n$3),i=t.length-1;if(i>0){h.textContent=s$2?s$2.emptyScript:"";for(let s=0;s<i;s++)h.append(t[s],u$1()),C.nextNode(),v.push({type:2,index:++r});h.append(t[i],u$1());}}}else if(8===h.nodeType)if(h.data===l$2)v.push({type:2,index:r});else {let t=-1;for(;-1!==(t=h.data.indexOf(n$3,t+1));)v.push({type:7,index:r}),t+=n$3.length-1;}r++;}}static createElement(t,i){const s=r$1.createElement("template");return s.innerHTML=t,s}}function S(t,i,s=t,e){var o,n,l,h;if(i===T)return i;let r=void 0!==e?null===(o=s._$Co)||void 0===o?void 0:o[e]:s._$Cl;const u=d(i)?void 0:i._$litDirective$;return (null==r?void 0:r.constructor)!==u&&(null===(n=null==r?void 0:r._$AO)||void 0===n||n.call(r,false),void 0===u?r=void 0:(r=new u(t),r._$AT(t,s,e)),void 0!==e?(null!==(l=(h=s)._$Co)&&void 0!==l?l:h._$Co=[])[e]=r:s._$Cl=r),void 0!==r&&(i=S(t,r._$AS(t,i.values),r,e)),i}class M{constructor(t,i){this._$AV=[],this._$AN=void 0,this._$AD=t,this._$AM=i;}get parentNode(){return this._$AM.parentNode}get _$AU(){return this._$AM._$AU}u(t){var i;const{el:{content:s},parts:e}=this._$AD,o=(null!==(i=null==t?void 0:t.creationScope)&&void 0!==i?i:r$1).importNode(s,true);C.currentNode=o;let n=C.nextNode(),l=0,h=0,u=e[0];for(;void 0!==u;){if(l===u.index){let i;2===u.type?i=new R(n,n.nextSibling,this,t):1===u.type?i=new u.ctor(n,u.name,u.strings,this,t):6===u.type&&(i=new Z(n,this,t)),this._$AV.push(i),u=e[++h];}l!==(null==u?void 0:u.index)&&(n=C.nextNode(),l++);}return C.currentNode=r$1,o}v(t){let i=0;for(const s of this._$AV) void 0!==s&&(void 0!==s.strings?(s._$AI(t,s,i),i+=s.strings.length-2):s._$AI(t[i])),i++;}}class R{constructor(t,i,s,e){var o;this.type=2,this._$AH=A,this._$AN=void 0,this._$AA=t,this._$AB=i,this._$AM=s,this.options=e,this._$Cp=null===(o=null==e?void 0:e.isConnected)||void 0===o||o;}get _$AU(){var t,i;return null!==(i=null===(t=this._$AM)||void 0===t?void 0:t._$AU)&&void 0!==i?i:this._$Cp}get parentNode(){let t=this._$AA.parentNode;const i=this._$AM;return void 0!==i&&11===(null==t?void 0:t.nodeType)&&(t=i.parentNode),t}get startNode(){return this._$AA}get endNode(){return this._$AB}_$AI(t,i=this){t=S(this,t,i),d(t)?t===A||null==t||""===t?(this._$AH!==A&&this._$AR(),this._$AH=A):t!==this._$AH&&t!==T&&this._(t):void 0!==t._$litType$?this.g(t):void 0!==t.nodeType?this.$(t):v(t)?this.T(t):this._(t);}k(t){return this._$AA.parentNode.insertBefore(t,this._$AB)}$(t){this._$AH!==t&&(this._$AR(),this._$AH=this.k(t));}_(t){this._$AH!==A&&d(this._$AH)?this._$AA.nextSibling.data=t:this.$(r$1.createTextNode(t)),this._$AH=t;}g(t){var i;const{values:s,_$litType$:e}=t,o="number"==typeof e?this._$AC(t):(void 0===e.el&&(e.el=N.createElement(P(e.h,e.h[0]),this.options)),e);if((null===(i=this._$AH)||void 0===i?void 0:i._$AD)===o)this._$AH.v(s);else {const t=new M(o,this),i=t.u(this.options);t.v(s),this.$(i),this._$AH=t;}}_$AC(t){let i=E.get(t.strings);return void 0===i&&E.set(t.strings,i=new N(t)),i}T(t){c$2(this._$AH)||(this._$AH=[],this._$AR());const i=this._$AH;let s,e=0;for(const o of t)e===i.length?i.push(s=new R(this.k(u$1()),this.k(u$1()),this,this.options)):s=i[e],s._$AI(o),e++;e<i.length&&(this._$AR(s&&s._$AB.nextSibling,e),i.length=e);}_$AR(t=this._$AA.nextSibling,i){var s;for(null===(s=this._$AP)||void 0===s||s.call(this,false,true,i);t&&t!==this._$AB;){const i=t.nextSibling;t.remove(),t=i;}}setConnected(t){var i;void 0===this._$AM&&(this._$Cp=t,null===(i=this._$AP)||void 0===i||i.call(this,t));}}class k{constructor(t,i,s,e,o){this.type=1,this._$AH=A,this._$AN=void 0,this.element=t,this.name=i,this._$AM=e,this.options=o,s.length>2||""!==s[0]||""!==s[1]?(this._$AH=Array(s.length-1).fill(new String),this.strings=s):this._$AH=A;}get tagName(){return this.element.tagName}get _$AU(){return this._$AM._$AU}_$AI(t,i=this,s,e){const o=this.strings;let n=false;if(void 0===o)t=S(this,t,i,0),n=!d(t)||t!==this._$AH&&t!==T,n&&(this._$AH=t);else {const e=t;let l,h;for(t=o[0],l=0;l<o.length-1;l++)h=S(this,e[s+l],i,l),h===T&&(h=this._$AH[l]),n||(n=!d(h)||h!==this._$AH[l]),h===A?t=A:t!==A&&(t+=(null!=h?h:"")+o[l+1]),this._$AH[l]=h;}n&&!e&&this.j(t);}j(t){t===A?this.element.removeAttribute(this.name):this.element.setAttribute(this.name,null!=t?t:"");}}class H extends k{constructor(){super(...arguments),this.type=3;}j(t){this.element[this.name]=t===A?void 0:t;}}const I=s$2?s$2.emptyScript:"";class L extends k{constructor(){super(...arguments),this.type=4;}j(t){t&&t!==A?this.element.setAttribute(this.name,I):this.element.removeAttribute(this.name);}}class z extends k{constructor(t,i,s,e,o){super(t,i,s,e,o),this.type=5;}_$AI(t,i=this){var s;if((t=null!==(s=S(this,t,i,0))&&void 0!==s?s:A)===T)return;const e=this._$AH,o=t===A&&e!==A||t.capture!==e.capture||t.once!==e.once||t.passive!==e.passive,n=t!==A&&(e===A||o);o&&this.element.removeEventListener(this.name,this,e),n&&this.element.addEventListener(this.name,this,t),this._$AH=t;}handleEvent(t){var i,s;"function"==typeof this._$AH?this._$AH.call(null!==(s=null===(i=this.options)||void 0===i?void 0:i.host)&&void 0!==s?s:this.element,t):this._$AH.handleEvent(t);}}class Z{constructor(t,i,s){this.element=t,this.type=6,this._$AN=void 0,this._$AM=i,this.options=s;}get _$AU(){return this._$AM._$AU}_$AI(t){S(this,t);}}const j={I:R},B=i$2.litHtmlPolyfillSupport;null==B||B(N,R),(null!==(t$2=i$2.litHtmlVersions)&&void 0!==t$2?t$2:i$2.litHtmlVersions=[]).push("2.8.0");const D=(t,i,s)=>{var e,o;const n=null!==(e=null==s?void 0:s.renderBefore)&&void 0!==e?e:i;let l=n._$litPart$;if(void 0===l){const t=null!==(o=null==s?void 0:s.renderBefore)&&void 0!==o?o:null;n._$litPart$=l=new R(i.insertBefore(u$1(),t),t,void 0,null!=s?s:{});}return l._$AI(t),l};
 
 /**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */var l$1,o$1;let s$1 = class s extends u$2{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){var t,e;const i=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=i.firstChild),i}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=D(i,this.renderRoot,this.renderOptions);}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!0);}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(!1);}render(){return T}};s$1.finalized=!0,s$1._$litElement$=!0,null===(l$1=globalThis.litElementHydrateSupport)||void 0===l$1||l$1.call(globalThis,{LitElement:s$1});const n$2=globalThis.litElementPolyfillSupport;null==n$2||n$2({LitElement:s$1});(null!==(o$1=globalThis.litElementVersions)&&void 0!==o$1?o$1:globalThis.litElementVersions=[]).push("3.3.3");
+ */var l$1,o$1;let s$1 = class s extends u$2{constructor(){super(...arguments),this.renderOptions={host:this},this._$Do=void 0;}createRenderRoot(){var t,e;const i=super.createRenderRoot();return null!==(t=(e=this.renderOptions).renderBefore)&&void 0!==t||(e.renderBefore=i.firstChild),i}update(t){const i=this.render();this.hasUpdated||(this.renderOptions.isConnected=this.isConnected),super.update(t),this._$Do=D(i,this.renderRoot,this.renderOptions);}connectedCallback(){var t;super.connectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(true);}disconnectedCallback(){var t;super.disconnectedCallback(),null===(t=this._$Do)||void 0===t||t.setConnected(false);}render(){return T}};s$1.finalized=true,s$1._$litElement$=true,null===(l$1=globalThis.litElementHydrateSupport)||void 0===l$1||l$1.call(globalThis,{LitElement:s$1});const n$2=globalThis.litElementPolyfillSupport;null==n$2||n$2({LitElement:s$1});(null!==(o$1=globalThis.litElementVersions)&&void 0!==o$1?o$1:globalThis.litElementVersions=[]).push("3.3.3");
 
 /**
  * @license
@@ -102,7 +101,7 @@ const i$1=(i,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function t$1(t){return n$1({...t,state:!0})}
+ */function t$1(t){return n$1({...t,state:true})}
 
 /**
  * @license
@@ -115,7 +114,7 @@ const i$1=(i,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
  */
-const t={ATTRIBUTE:1,CHILD:2,PROPERTY:3,BOOLEAN_ATTRIBUTE:4,EVENT:5,ELEMENT:6},e=t=>(...e)=>({_$litDirective$:t,values:e});class i{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i;}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}
+const t={ATTRIBUTE:1,CHILD:2},e=t=>(...e)=>({_$litDirective$:t,values:e});class i{constructor(t){}get _$AU(){return this._$AM._$AU}_$AT(t,e,i){this._$Ct=t,this._$AM=e,this._$Ci=i;}_$AS(t,e){return this.update(t,e)}update(t,e){return this.render(...e)}}
 
 /**
  * @license
@@ -392,7 +391,7 @@ function addMonths(date, amount, options) {
  * //=> Thu Jul 10 2014 12:45:30.750
  */
 function addMilliseconds(date, amount, options) {
-  return constructFrom(date, +toDate$1(date) + amount);
+  return constructFrom(options?.in || date, +toDate$1(date) + amount);
 }
 
 /**
@@ -422,7 +421,62 @@ function addMilliseconds(date, amount, options) {
  * //=> Fri Jul 11 2014 01:00:00
  */
 function addHours(date, amount, options) {
-  return addMilliseconds(date, amount * millisecondsInHour);
+  return addMilliseconds(date, amount * millisecondsInHour, options);
+}
+
+let defaultOptions = {};
+
+function getDefaultOptions() {
+  return defaultOptions;
+}
+
+/**
+ * The {@link startOfWeek} function options.
+ */
+
+/**
+ * @name startOfWeek
+ * @category Week Helpers
+ * @summary Return the start of a week for the given date.
+ *
+ * @description
+ * Return the start of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a week
+ *
+ * @example
+ * // The start of a week for 2 September 2014 11:55:00:
+ * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sun Aug 31 2014 00:00:00
+ *
+ * @example
+ * // If the week starts on Monday, the start of the week for 2 September 2014 11:55:00:
+ * const result = startOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfWeek(date, options) {
+  const defaultOptions = getDefaultOptions();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
+
+  const _date = toDate$1(date, options?.in);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? 7 : 0) + day - weekStartsOn;
+
+  _date.setDate(_date.getDate() - diff);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
 }
 
 /**
@@ -547,6 +601,36 @@ function differenceInCalendarDays(laterDate, earlierDate, options) {
   // milliseconds in a day is not constant (e.g. it's different in the week of
   // the daylight saving time clock shift).
   return Math.round((laterTimestamp - earlierTimestamp) / millisecondsInDay);
+}
+
+/**
+ * The {@link addYears} function options.
+ */
+
+/**
+ * @name addYears
+ * @category Year Helpers
+ * @summary Add the specified number of years to the given date.
+ *
+ * @description
+ * Add the specified number of years to the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of years to be added.
+ * @param options - The options
+ *
+ * @returns The new date with the years added
+ *
+ * @example
+ * // Add 5 years to 1 September 2014:
+ * const result = addYears(new Date(2014, 8, 1), 5)
+ * //=> Sun Sep 01 2019 00:00:00
+ */
+function addYears(date, amount, options) {
+  return addMonths(date, amount * 12, options);
 }
 
 /**
@@ -877,6 +961,226 @@ function differenceInMonths(laterDate, earlierDate, options) {
 }
 
 /**
+ * The {@link startOfQuarter} function options.
+ */
+
+/**
+ * @name startOfQuarter
+ * @category Quarter Helpers
+ * @summary Return the start of a year quarter for the given date.
+ *
+ * @description
+ * Return the start of a year quarter for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - The options
+ *
+ * @returns The start of a quarter
+ *
+ * @example
+ * // The start of a quarter for 2 September 2014 11:55:00:
+ * const result = startOfQuarter(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Jul 01 2014 00:00:00
+ */
+function startOfQuarter(date, options) {
+  const _date = toDate$1(date, options?.in);
+  const currentMonth = _date.getMonth();
+  const month = currentMonth - (currentMonth % 3);
+  _date.setMonth(month, 1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+/**
+ * The {@link startOfMonth} function options.
+ */
+
+/**
+ * @name startOfMonth
+ * @category Month Helpers
+ * @summary Return the start of a month for the given date.
+ *
+ * @description
+ * Return the start of a month for the given date. The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments.
+ * Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed,
+ * or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The start of a month
+ *
+ * @example
+ * // The start of a month for 2 September 2014 11:55:00:
+ * const result = startOfMonth(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function startOfMonth(date, options) {
+  const _date = toDate$1(date, options?.in);
+  _date.setDate(1);
+  _date.setHours(0, 0, 0, 0);
+  return _date;
+}
+
+/**
+ * The {@link endOfYear} function options.
+ */
+
+/**
+ * @name endOfYear
+ * @category Year Helpers
+ * @summary Return the end of a year for the given date.
+ *
+ * @description
+ * Return the end of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - The options
+ *
+ * @returns The end of a year
+ *
+ * @example
+ * // The end of a year for 2 September 2014 11:55:00:
+ * const result = endOfYear(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Wed Dec 31 2014 23:59:59.999
+ */
+function endOfYear(date, options) {
+  const _date = toDate$1(date, options?.in);
+  const year = _date.getFullYear();
+  _date.setFullYear(year + 1, 0, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+/**
+ * The {@link startOfYear} function options.
+ */
+
+/**
+ * @name startOfYear
+ * @category Year Helpers
+ * @summary Return the start of a year for the given date.
+ *
+ * @description
+ * Return the start of a year for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - The options
+ *
+ * @returns The start of a year
+ *
+ * @example
+ * // The start of a year for 2 September 2014 11:55:00:
+ * const result = startOfYear(new Date(2014, 8, 2, 11, 55, 00))
+ * //=> Wed Jan 01 2014 00:00:00
+ */
+function startOfYear(date, options) {
+  const date_ = toDate$1(date, options?.in);
+  date_.setFullYear(date_.getFullYear(), 0, 1);
+  date_.setHours(0, 0, 0, 0);
+  return date_;
+}
+
+/**
+ * The {@link endOfWeek} function options.
+ */
+
+/**
+ * @name endOfWeek
+ * @category Week Helpers
+ * @summary Return the end of a week for the given date.
+ *
+ * @description
+ * Return the end of a week for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The end of a week
+ *
+ * @example
+ * // The end of a week for 2 September 2014 11:55:00:
+ * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Sat Sep 06 2014 23:59:59.999
+ *
+ * @example
+ * // If the week starts on Monday, the end of the week for 2 September 2014 11:55:00:
+ * const result = endOfWeek(new Date(2014, 8, 2, 11, 55, 0), { weekStartsOn: 1 })
+ * //=> Sun Sep 07 2014 23:59:59.999
+ */
+function endOfWeek(date, options) {
+  const defaultOptions = getDefaultOptions();
+  const weekStartsOn =
+    options?.weekStartsOn ??
+    options?.locale?.options?.weekStartsOn ??
+    defaultOptions.weekStartsOn ??
+    defaultOptions.locale?.options?.weekStartsOn ??
+    0;
+
+  const _date = toDate$1(date, options?.in);
+  const day = _date.getDay();
+  const diff = (day < weekStartsOn ? -7 : 0) + 6 - (day - weekStartsOn);
+
+  _date.setDate(_date.getDate() + diff);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+/**
+ * The {@link endOfQuarter} function options.
+ */
+
+/**
+ * @name endOfQuarter
+ * @category Quarter Helpers
+ * @summary Return the end of a year quarter for the given date.
+ *
+ * @description
+ * Return the end of a year quarter for the given date.
+ * The result will be in the local timezone.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The original date
+ * @param options - An object with options
+ *
+ * @returns The end of a quarter
+ *
+ * @example
+ * // The end of a quarter for 2 September 2014 11:55:00:
+ * const result = endOfQuarter(new Date(2014, 8, 2, 11, 55, 0))
+ * //=> Tue Sep 30 2014 23:59:59.999
+ */
+function endOfQuarter(date, options) {
+  const _date = toDate$1(date, options?.in);
+  const currentMonth = _date.getMonth();
+  const month = currentMonth - (currentMonth % 3) + 3;
+  _date.setMonth(month, 0);
+  _date.setHours(23, 59, 59, 999);
+  return _date;
+}
+
+/**
  * The {@link isFirstDayOfMonth} function options.
  */
 
@@ -900,6 +1204,93 @@ function differenceInMonths(laterDate, earlierDate, options) {
  */
 function isFirstDayOfMonth(date, options) {
   return toDate$1(date, options?.in).getDate() === 1;
+}
+
+/**
+ * The {@link subDays} function options.
+ */
+
+/**
+ * @name subDays
+ * @category Day Helpers
+ * @summary Subtract the specified number of days from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of days to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the days subtracted
+ *
+ * @example
+ * // Subtract 10 days from 1 September 2014:
+ * const result = subDays(new Date(2014, 8, 1), 10)
+ * //=> Fri Aug 22 2014 00:00:00
+ */
+function subDays(date, amount, options) {
+  return addDays(date, -amount, options);
+}
+
+/**
+ * The subMonths function options.
+ */
+
+/**
+ * @name subMonths
+ * @category Month Helpers
+ * @summary Subtract the specified number of months from the given date.
+ *
+ * @description
+ * Subtract the specified number of months from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of months to be subtracted.
+ * @param options - An object with options
+ *
+ * @returns The new date with the months subtracted
+ *
+ * @example
+ * // Subtract 5 months from 1 February 2015:
+ * const result = subMonths(new Date(2015, 1, 1), 5)
+ * //=> Mon Sep 01 2014 00:00:00
+ */
+function subMonths(date, amount, options) {
+  return addMonths(date, -amount, options);
+}
+
+/**
+ * The {@link subHours} function options.
+ */
+
+/**
+ * @name subHours
+ * @category Hour Helpers
+ * @summary Subtract the specified number of hours from the given date.
+ *
+ * @description
+ * Subtract the specified number of hours from the given date.
+ *
+ * @typeParam DateType - The `Date` type, the function operates on. Gets inferred from passed arguments. Allows to use extensions like [`UTCDate`](https://github.com/date-fns/utc).
+ * @typeParam ResultDate - The result `Date` type, it is the type returned from the context function if it is passed, or inferred from the arguments.
+ *
+ * @param date - The date to be changed
+ * @param amount - The amount of hours to be subtracted.
+ * @param options - The options
+ *
+ * @returns The new date with the hours subtracted
+ *
+ * @example
+ * // Subtract 2 hours from 11 July 2014 01:00:00:
+ * const result = subHours(new Date(2014, 6, 11, 1, 0), 2)
+ * //=> Thu Jul 10 2014 23:00:00
+ */
+function subHours(date, amount, options) {
+  return addHours(date, -amount, options);
 }
 
 const createStore = (state) => {
@@ -1080,6 +1471,56 @@ const getCollection = (conn, key, fetchCollection, subscribeUpdates, options = {
 
 const STATE_NOT_RUNNING = "NOT_RUNNING";
 
+var safeIsNaN = Number.isNaN ||
+    function ponyfill(value) {
+        return typeof value === 'number' && value !== value;
+    };
+function isEqual(first, second) {
+    if (first === second) {
+        return true;
+    }
+    if (safeIsNaN(first) && safeIsNaN(second)) {
+        return true;
+    }
+    return false;
+}
+function areInputsEqual(newInputs, lastInputs) {
+    if (newInputs.length !== lastInputs.length) {
+        return false;
+    }
+    for (var i = 0; i < newInputs.length; i++) {
+        if (!isEqual(newInputs[i], lastInputs[i])) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function memoizeOne(resultFn, isEqual) {
+    if (isEqual === void 0) { isEqual = areInputsEqual; }
+    var cache = null;
+    function memoized() {
+        var newArgs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+            newArgs[_i] = arguments[_i];
+        }
+        if (cache && cache.lastThis === this && isEqual(newArgs, cache.lastArgs)) {
+            return cache.lastResult;
+        }
+        var lastResult = resultFn.apply(this, newArgs);
+        cache = {
+            lastResult: lastResult,
+            lastArgs: newArgs,
+            lastThis: this,
+        };
+        return lastResult;
+    }
+    memoized.clear = function clear() {
+        cache = null;
+    };
+    return memoized;
+}
+
 /**
  * Returns the [year, month, day, hour, minute, seconds] tokens of the provided
  * `date` as it will be rendered in the `timeZone`.
@@ -1191,7 +1632,6 @@ function newDateUTC(fullYear, month, day, hour, minute, second, millisecond) {
 const MILLISECONDS_IN_HOUR$1 = 3600000;
 const MILLISECONDS_IN_MINUTE$1 = 60000;
 const patterns$1 = {
-    timezone: /([Z+-].*)$/,
     timezoneZ: /^(Z)$/,
     timezoneHH: /^([+-]\d{2})$/,
     timezoneHHMM: /^([+-])(\d{2}):?(\d{2})$/,
@@ -1314,7 +1754,6 @@ const DEFAULT_ADDITIONAL_DIGITS = 2;
 const patterns = {
     dateTimePattern: /^([0-9W+-]+)(T| )(.*)/,
     datePattern: /^([0-9W+-]+)(.*)/,
-    plainTime: /:/,
     // year tokens
     YY: /^(\d{2})$/,
     YYY: [
@@ -1799,56 +2238,6 @@ const calcDateDifferenceProperty = (endDate, startDate, fn, locale, config) => c
     ? toZonedTime(startDate, config.time_zone)
     : startDate);
 
-var safeIsNaN = Number.isNaN ||
-    function ponyfill(value) {
-        return typeof value === 'number' && value !== value;
-    };
-function isEqual(first, second) {
-    if (first === second) {
-        return true;
-    }
-    if (safeIsNaN(first) && safeIsNaN(second)) {
-        return true;
-    }
-    return false;
-}
-function areInputsEqual(newInputs, lastInputs) {
-    if (newInputs.length !== lastInputs.length) {
-        return false;
-    }
-    for (var i = 0; i < newInputs.length; i++) {
-        if (!isEqual(newInputs[i], lastInputs[i])) {
-            return false;
-        }
-    }
-    return true;
-}
-
-function memoizeOne(resultFn, isEqual) {
-    if (isEqual === void 0) { isEqual = areInputsEqual; }
-    var cache = null;
-    function memoized() {
-        var newArgs = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            newArgs[_i] = arguments[_i];
-        }
-        if (cache && cache.lastThis === this && isEqual(newArgs, cache.lastArgs)) {
-            return cache.lastResult;
-        }
-        var lastResult = resultFn.apply(this, newArgs);
-        cache = {
-            lastResult: lastResult,
-            lastArgs: newArgs,
-            lastThis: this,
-        };
-        return lastResult;
-    }
-    memoized.clear = function clear() {
-        cache = null;
-    };
-    return memoized;
-}
-
 const useAmPm = memoizeOne((locale) => {
     if (locale.time_format === TimeFormat.language ||
         locale.time_format === TimeFormat.system) {
@@ -1910,139 +2299,6 @@ const groupBy = (list, keySelector) => {
     return result;
 };
 
-/*
-export type ConfigEntryMutableParams = Partial<
-  Pick<
-    ConfigEntry,
-    "title" | "pref_disable_new_entities" | "pref_disable_polling"
-  >
->;
-
-// https://github.com/home-assistant/core/blob/2286dea636fda001f03433ba14d7adbda43979e5/homeassistant/config_entries.py#L81
-export const ERROR_STATES: ConfigEntry["state"][] = [
-  "migration_error",
-  "setup_error",
-  "setup_retry",
-];
-
-// https://github.com/home-assistant/core/blob/2286dea636fda001f03433ba14d7adbda43979e5/homeassistant/config_entries.py#L81
-export const RECOVERABLE_STATES: ConfigEntry["state"][] = [
-  "not_loaded",
-  "loaded",
-  "setup_error",
-  "setup_retry",
-];
-
-export interface ConfigEntryUpdate {
-  // null means no update as is the current state
-  type: null | "added" | "removed" | "updated";
-  entry: ConfigEntry;
-}
-
-export const subscribeConfigEntries = (
-  hass: HomeAssistant,
-  callbackFunction: (message: ConfigEntryUpdate[]) => void,
-  filters?: {
-    type?: IntegrationType[];
-    domain?: string;
-  }
-): Promise<UnsubscribeFunc> => {
-  const params: any = {
-    type: "config_entries/subscribe",
-  };
-  if (filters && filters.type) {
-    params.type_filter = filters.type;
-  }
-  return hass.connection.subscribeMessage<ConfigEntryUpdate[]>(
-    (message) => callbackFunction(message),
-    params
-  );
-};
-*/
-const getConfigEntries = (hass, filters) => {
-    const params = {};
-    if (filters) {
-        if (filters.type) {
-            params.type_filter = filters.type;
-        }
-        if (filters.domain) {
-            params.domain = filters.domain;
-        }
-    }
-    return hass.callWS(Object.assign({ type: "config_entries/get" }, params));
-};
-/*
-export const getConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
-  hass.callWS<{ config_entry: ConfigEntry }>({
-    type: "config_entries/get_single",
-    entry_id: configEntryId,
-  });
-
-export const updateConfigEntry = (
-  hass: HomeAssistant,
-  configEntryId: string,
-  updatedValues: ConfigEntryMutableParams
-) =>
-  hass.callWS<{ require_restart: boolean; config_entry: ConfigEntry }>({
-    type: "config_entries/update",
-    entry_id: configEntryId,
-    ...updatedValues,
-  });
-
-export const deleteConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
-  hass.callApi<{
-    require_restart: boolean;
-  }>("DELETE", `config/config_entries/entry/${configEntryId}`);
-
-export const reloadConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
-  hass.callApi<{
-    require_restart: boolean;
-  }>("POST", `config/config_entries/entry/${configEntryId}/reload`);
-
-export interface DisableConfigEntryResult {
-  require_restart: boolean;
-}
-
-export const disableConfigEntry = (
-  hass: HomeAssistant,
-  configEntryId: string
-) =>
-  hass.callWS<DisableConfigEntryResult>({
-    type: "config_entries/disable",
-    entry_id: configEntryId,
-    disabled_by: "user",
-  });
-
-export const enableConfigEntry = (hass: HomeAssistant, configEntryId: string) =>
-  hass.callWS<{
-    require_restart: boolean;
-  }>({
-    type: "config_entries/disable",
-    entry_id: configEntryId,
-    disabled_by: null,
-  });
-
-export const sortConfigEntries = (
-  configEntries: ConfigEntry[],
-  manifestLookup: { [domain: string]: IntegrationManifest }
-): ConfigEntry[] => {
-  const sortedConfigEntries = [...configEntries];
-
-  const getScore = (entry: ConfigEntry) => {
-    const manifest = manifestLookup[entry.domain] as
-      | IntegrationManifest
-      | undefined;
-    const isHelper = manifest?.integration_type === "helper";
-    return isHelper ? -1 : 1;
-  };
-
-  const configEntriesCompare = (a: ConfigEntry, b: ConfigEntry) =>
-    getScore(b) - getScore(a);
-
-  return sortedConfigEntries.sort(configEntriesCompare);
-};
-*/
-
 /** Compute the object ID of a state. */
 const computeObjectId = (entityId) => entityId.substr(entityId.indexOf(".") + 1);
 
@@ -2054,6 +2310,364 @@ const computeStateNameFromEntityAttributes = (entityId, attributes) => {
 };
 const computeStateName = (stateObj) => computeStateNameFromEntityAttributes(stateObj.entity_id, stateObj.attributes);
 
+function getWeekStartByRegion(regionCode, regionDayMap) {
+    var code = regionDayMap[typeof regionCode === 'string' ? regionCode.toUpperCase() : regionCode];
+    return typeof code === 'number' ? code : 1;
+}
+
+function getWeekStartByLocale(locale, langRegionMap, regionDayMap) {
+    if (locale) {
+        var data = locale.toLowerCase().split(/[-_]/);
+        var langTag = data[0];
+        var language = langTag;
+        var country;
+        if (data[1] && data[1].length === 4) {
+            language += "_" + (data[1]);
+            country = data[2];
+        } else {
+            country = data[1];
+        }
+        if (!country) {
+            country = langRegionMap[language] || langRegionMap[langTag];
+        }
+        if (country) {
+            return getWeekStartByRegion(country.match(/^\d+$/) ? Number(country) : country, regionDayMap);
+        }
+    }
+    return 1;
+}
+
+var langRegionMap = {
+    en: 'US',
+    hi: 'IN',
+    deva: 'IN',
+    te: 'IN',
+    mr: 'IN',
+    ta: 'IN',
+    gu: 'IN',
+    kn: 'IN',
+    or: 'IN',
+    ml: 'IN',
+    pa: 'IN',
+    bho: 'IN',
+    awa: 'IN',
+    as: 'IN',
+    mwr: 'IN',
+    mai: 'IN',
+    mag: 'IN',
+    bgc: 'IN',
+    hne: 'IN',
+    dcc: 'IN',
+    bn: 'BD',
+    beng: 'BD',
+    rkt: 'BD',
+    dz: 'BT',
+    tibt: 'BT',
+    tn: 'BW',
+    am: 'ET',
+    ethi: 'ET',
+    om: 'ET',
+    quc: 'GT',
+    id: 'ID',
+    jv: 'ID',
+    su: 'ID',
+    mad: 'ID',
+    ms_arab: 'ID',
+    he: 'IL',
+    hebr: 'IL',
+    jam: 'JM',
+    ja: 'JP',
+    jpan: 'JP',
+    km: 'KH',
+    khmr: 'KH',
+    ko: 'KR',
+    kore: 'KR',
+    lo: 'LA',
+    laoo: 'LA',
+    mh: 'MH',
+    my: 'MM',
+    mymr: 'MM',
+    mt: 'MT',
+    ne: 'NP',
+    fil: 'PH',
+    ceb: 'PH',
+    ilo: 'PH',
+    ur: 'PK',
+    pa_arab: 'PK',
+    lah: 'PK',
+    ps: 'PK',
+    sd: 'PK',
+    skr: 'PK',
+    gn: 'PY',
+    th: 'TH',
+    thai: 'TH',
+    tts: 'TH',
+    zh_hant: 'TW',
+    hant: 'TW',
+    sm: 'WS',
+    zu: 'ZA',
+    sn: 'ZW',
+    arq: 'DZ',
+    ar: 'EG',
+    arab: 'EG',
+    arz: 'EG',
+    fa: 'IR',
+    az_arab: 'IR',
+    dv: 'MV',
+    thaa: 'MV'
+};
+
+var regionDayMap = {
+    AG: 0,
+    ATG: 0,
+    28: 0,
+    AS: 0,
+    ASM: 0,
+    16: 0,
+    BD: 0,
+    BGD: 0,
+    50: 0,
+    BR: 0,
+    BRA: 0,
+    76: 0,
+    BS: 0,
+    BHS: 0,
+    44: 0,
+    BT: 0,
+    BTN: 0,
+    64: 0,
+    BW: 0,
+    BWA: 0,
+    72: 0,
+    BZ: 0,
+    BLZ: 0,
+    84: 0,
+    CA: 0,
+    CAN: 0,
+    124: 0,
+    CO: 0,
+    COL: 0,
+    170: 0,
+    DM: 0,
+    DMA: 0,
+    212: 0,
+    DO: 0,
+    DOM: 0,
+    214: 0,
+    ET: 0,
+    ETH: 0,
+    231: 0,
+    GT: 0,
+    GTM: 0,
+    320: 0,
+    GU: 0,
+    GUM: 0,
+    316: 0,
+    HK: 0,
+    HKG: 0,
+    344: 0,
+    HN: 0,
+    HND: 0,
+    340: 0,
+    ID: 0,
+    IDN: 0,
+    360: 0,
+    IL: 0,
+    ISR: 0,
+    376: 0,
+    IN: 0,
+    IND: 0,
+    356: 0,
+    JM: 0,
+    JAM: 0,
+    388: 0,
+    JP: 0,
+    JPN: 0,
+    392: 0,
+    KE: 0,
+    KEN: 0,
+    404: 0,
+    KH: 0,
+    KHM: 0,
+    116: 0,
+    KR: 0,
+    KOR: 0,
+    410: 0,
+    LA: 0,
+    LA0: 0,
+    418: 0,
+    MH: 0,
+    MHL: 0,
+    584: 0,
+    MM: 0,
+    MMR: 0,
+    104: 0,
+    MO: 0,
+    MAC: 0,
+    446: 0,
+    MT: 0,
+    MLT: 0,
+    470: 0,
+    MX: 0,
+    MEX: 0,
+    484: 0,
+    MZ: 0,
+    MOZ: 0,
+    508: 0,
+    NI: 0,
+    NIC: 0,
+    558: 0,
+    NP: 0,
+    NPL: 0,
+    524: 0,
+    PA: 0,
+    PAN: 0,
+    591: 0,
+    PE: 0,
+    PER: 0,
+    604: 0,
+    PH: 0,
+    PHL: 0,
+    608: 0,
+    PK: 0,
+    PAK: 0,
+    586: 0,
+    PR: 0,
+    PRI: 0,
+    630: 0,
+    PT: 0,
+    PRT: 0,
+    620: 0,
+    PY: 0,
+    PRY: 0,
+    600: 0,
+    SA: 0,
+    SAU: 0,
+    682: 0,
+    SG: 0,
+    SGP: 0,
+    702: 0,
+    SV: 0,
+    SLV: 0,
+    222: 0,
+    TH: 0,
+    THA: 0,
+    764: 0,
+    TT: 0,
+    TTO: 0,
+    780: 0,
+    TW: 0,
+    TWN: 0,
+    158: 0,
+    UM: 0,
+    UMI: 0,
+    581: 0,
+    US: 0,
+    USA: 0,
+    840: 0,
+    VE: 0,
+    VEN: 0,
+    862: 0,
+    VI: 0,
+    VIR: 0,
+    850: 0,
+    WS: 0,
+    WSM: 0,
+    882: 0,
+    YE: 0,
+    YEM: 0,
+    887: 0,
+    ZA: 0,
+    ZAF: 0,
+    710: 0,
+    ZW: 0,
+    ZWE: 0,
+    716: 0,
+    AE: 6,
+    ARE: 6,
+    784: 6,
+    AF: 6,
+    AFG: 6,
+    4: 6,
+    BH: 6,
+    BHR: 6,
+    48: 6,
+    DJ: 6,
+    DJI: 6,
+    262: 6,
+    DZ: 6,
+    DZA: 6,
+    12: 6,
+    EG: 6,
+    EGY: 6,
+    818: 6,
+    IQ: 6,
+    IRQ: 6,
+    368: 6,
+    IR: 6,
+    IRN: 6,
+    364: 6,
+    JO: 6,
+    JOR: 6,
+    400: 6,
+    KW: 6,
+    KWT: 6,
+    414: 6,
+    LY: 6,
+    LBY: 6,
+    434: 6,
+    OM: 6,
+    OMN: 6,
+    512: 6,
+    QA: 6,
+    QAT: 6,
+    634: 6,
+    SD: 6,
+    SDN: 6,
+    729: 6,
+    SY: 6,
+    SYR: 6,
+    760: 6,
+    MV: 5,
+    MDV: 5,
+    462: 5
+};
+
+function getWeekStartByLocale$1(locale) {
+    return getWeekStartByLocale(locale, langRegionMap, regionDayMap);
+}
+
+const WEEKDAYS_LONG = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+];
+
+const firstWeekdayIndex = (locale) => {
+    if (locale.first_weekday === FirstWeekday.language) {
+        // @ts-ignore
+        if ("weekInfo" in Intl.Locale.prototype) {
+            // @ts-ignore
+            return new Intl.Locale(locale.language).weekInfo.firstDay % 7;
+        }
+        return (getWeekStartByLocale$1(locale.language) % 7);
+    }
+    return WEEKDAYS_LONG.includes(locale.first_weekday)
+        ? WEEKDAYS_LONG.indexOf(locale.first_weekday)
+        : 1;
+};
+
+var StatisticMeanType;
+(function (StatisticMeanType) {
+    StatisticMeanType[StatisticMeanType["NONE"] = 0] = "NONE";
+    StatisticMeanType[StatisticMeanType["ARITHMETIC"] = 1] = "ARITHMETIC";
+    StatisticMeanType[StatisticMeanType["CIRCULAR"] = 2] = "CIRCULAR";
+})(StatisticMeanType || (StatisticMeanType = {}));
+const VOLUME_UNITS = ["L", "gal", "ft³", "m³", "CCF", "MCF"];
 const getStatisticMetadata = (hass, statistic_ids) => hass.callWS({
     type: "recorder/get_statistics_metadata",
     statistic_ids,
@@ -2111,26 +2725,176 @@ const getStatisticLabel = (hass, statisticsId, statisticsMetaData) => {
     }
     return statisticsId;
 };
+const getDisplayUnit = (hass, statisticsId, statisticsMetaData) => {
+    var _a;
+    let unit;
+    if (statisticsId) {
+        unit = (_a = hass.states[statisticsId]) === null || _a === void 0 ? void 0 : _a.attributes.unit_of_measurement;
+    }
+    return unit === undefined
+        ? statisticsMetaData === null || statisticsMetaData === void 0 ? void 0 : statisticsMetaData.statistics_unit_of_measurement
+        : unit;
+};
+
+const calcDateRange = (hass, range) => {
+    const today = new Date();
+    const weekStartsOn = firstWeekdayIndex(hass.locale);
+    switch (range) {
+        case "today":
+            return [
+                calcDate(today, startOfDay, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+                calcDate(today, endOfDay, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+            ];
+        case "yesterday":
+            return [
+                calcDate(addDays(today, -1), startOfDay, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+                calcDate(addDays(today, -1), endOfDay, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+            ];
+        case "this_week":
+            return [
+                calcDate(today, startOfWeek, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+                calcDate(today, endOfWeek, hass.locale, hass.config, {
+                    weekStartsOn,
+                }),
+            ];
+        case "this_month":
+            return [
+                calcDate(today, startOfMonth, hass.locale, hass.config),
+                calcDate(today, endOfMonth, hass.locale, hass.config),
+            ];
+        case "this_quarter":
+            return [
+                calcDate(today, startOfQuarter, hass.locale, hass.config),
+                calcDate(today, endOfQuarter, hass.locale, hass.config),
+            ];
+        case "this_year":
+            return [
+                calcDate(today, startOfYear, hass.locale, hass.config),
+                calcDate(today, endOfYear, hass.locale, hass.config),
+            ];
+        case "now-7d":
+            return [
+                calcDate(today, subDays, hass.locale, hass.config, 7),
+                calcDate(today, subDays, hass.locale, hass.config, 0),
+            ];
+        case "now-30d":
+            return [
+                calcDate(today, subDays, hass.locale, hass.config, 30),
+                calcDate(today, subDays, hass.locale, hass.config, 0),
+            ];
+        case "now-12m":
+            return [
+                calcDate(today, subMonths, hass.locale, hass.config, 12),
+                calcDate(today, subMonths, hass.locale, hass.config, 0),
+            ];
+        case "now-1h":
+            return [
+                calcDate(today, subHours, hass.locale, hass.config, 1),
+                calcDate(today, subHours, hass.locale, hass.config, 0),
+            ];
+        case "now-12h":
+            return [
+                calcDate(today, subHours, hass.locale, hass.config, 12),
+                calcDate(today, subHours, hass.locale, hass.config, 0),
+            ];
+        case "now-24h":
+            return [
+                calcDate(today, subHours, hass.locale, hass.config, 24),
+                calcDate(today, subHours, hass.locale, hass.config, 0),
+            ];
+    }
+    return [today, today];
+};
+
+const round = (value, precision = 2) => Math.round(value * 10 ** precision) / 10 ** precision;
+
+const numberFormatToLocale = (localeOptions) => {
+    switch (localeOptions.number_format) {
+        case NumberFormat.comma_decimal:
+            return ["en-US", "en"]; // Use United States with fallback to English formatting 1,234,567.89
+        case NumberFormat.decimal_comma:
+            return ["de", "es", "it"]; // Use German with fallback to Spanish then Italian formatting 1.234.567,89
+        case NumberFormat.space_comma:
+            return ["fr", "sv", "cs"]; // Use French with fallback to Swedish and Czech formatting 1 234 567,89
+        case NumberFormat.system:
+            return undefined;
+        default:
+            return localeOptions.language;
+    }
+};
+/**
+ * Formats a number based on the user's preference with thousands separator(s) and decimal character for better legibility.
+ *
+ * @param num The number to format
+ * @param localeOptions The user-selected language and formatting, from `hass.locale`
+ * @param options Intl.NumberFormatOptions to use
+ */
+const formatNumber = (num, localeOptions, options) => {
+    const locale = localeOptions
+        ? numberFormatToLocale(localeOptions)
+        : undefined;
+    // Polyfill for Number.isNaN, which is more reliable than the global isNaN()
+    Number.isNaN =
+        Number.isNaN ||
+            function isNaN(input) {
+                return typeof input === "number" && isNaN(input);
+            };
+    if ((localeOptions === null || localeOptions === void 0 ? void 0 : localeOptions.number_format) !== NumberFormat.none &&
+        !Number.isNaN(Number(num))) {
+        return new Intl.NumberFormat(locale, getDefaultFormatOptions(num, options)).format(Number(num));
+    }
+    if (!Number.isNaN(Number(num)) &&
+        num !== "" &&
+        (localeOptions === null || localeOptions === void 0 ? void 0 : localeOptions.number_format) === NumberFormat.none) {
+        // If NumberFormat is none, use en-US format without grouping.
+        return new Intl.NumberFormat("en-US", getDefaultFormatOptions(num, Object.assign(Object.assign({}, options), { useGrouping: false }))).format(Number(num));
+    }
+    if (typeof num === "string") {
+        return num;
+    }
+    return `${round(num, options === null || options === void 0 ? void 0 : options.maximumFractionDigits).toString()}${(options === null || options === void 0 ? void 0 : options.style) === "currency" ? ` ${options.currency}` : ""}`;
+};
+/**
+ * Generates default options for Intl.NumberFormat
+ * @param num The number to be formatted
+ * @param options The Intl.NumberFormatOptions that should be included in the returned options
+ */
+const getDefaultFormatOptions = (num, options) => {
+    const defaultOptions = Object.assign({ maximumFractionDigits: 2 }, options);
+    if (typeof num !== "string") {
+        return defaultOptions;
+    }
+    // Keep decimal trailing zeros if they are present in a string numeric value
+    if (!options ||
+        (options.minimumFractionDigits === undefined &&
+            options.maximumFractionDigits === undefined)) {
+        const digits = num.indexOf(".") > -1 ? num.split(".")[1].length : 0;
+        defaultOptions.minimumFractionDigits = digits;
+        defaultOptions.maximumFractionDigits = digits;
+    }
+    return defaultOptions;
+};
 
 const energyCollectionKeys = [];
-// export interface EnergyValidationIssue {
-//   type: string;
-//   affected_entities: [string, unknown][];
-//   translation_placeholders: Record<string, string>;
-// }
-// export interface EnergyPreferencesValidation {
-//   energy_sources: EnergyValidationIssue[][];
-//   device_consumption: EnergyValidationIssue[][];
-// }
 const getEnergyInfo = (hass) => hass.callWS({
     type: "energy/info",
 });
-// // export const getEnergyPreferenceValidation = async (hass: HomeAssistant) => {
-// //   await hass.loadBackendTranslation("issues", "energy");
-// //   return hass.callWS<EnergyPreferencesValidation>({
-// //     type: "energy/validate",
-// //   });
-// // };
+// export const getEnergyPreferenceValidation = async (hass: HomeAssistant) => {
+//   await hass.loadBackendTranslation("issues", "energy");
+//   return hass.callWS<EnergyPreferencesValidation>({
+//     type: "energy/validate",
+//   });
+// };
 const getEnergyPreferences = (hass) => hass.callWS({
     type: "energy/get_prefs",
 });
@@ -2170,62 +2934,82 @@ const getReferencedStatisticIds = (prefs, info, includeTypes) => {
             continue;
         }
         // grid source
-        for (const flowFrom of source.flow_from) {
-            statIDs.push(flowFrom.stat_energy_from);
-            if (flowFrom.stat_cost) {
-                statIDs.push(flowFrom.stat_cost);
+        if (source.stat_energy_from) {
+            statIDs.push(source.stat_energy_from);
+            if (source.stat_cost) {
+                statIDs.push(source.stat_cost);
             }
-            const costStatId = info.cost_sensors[flowFrom.stat_energy_from];
-            if (costStatId) {
-                statIDs.push(costStatId);
+            const importCostStatId = info.cost_sensors[source.stat_energy_from];
+            if (importCostStatId) {
+                statIDs.push(importCostStatId);
             }
         }
-        for (const flowTo of source.flow_to) {
-            statIDs.push(flowTo.stat_energy_to);
-            if (flowTo.stat_compensation) {
-                statIDs.push(flowTo.stat_compensation);
+        if (source.stat_energy_to) {
+            statIDs.push(source.stat_energy_to);
+            if (source.stat_compensation) {
+                statIDs.push(source.stat_compensation);
             }
-            const costStatId = info.cost_sensors[flowTo.stat_energy_to];
-            if (costStatId) {
-                statIDs.push(costStatId);
+            const exportCostStatId = info.cost_sensors[source.stat_energy_to];
+            if (exportCostStatId) {
+                statIDs.push(exportCostStatId);
             }
         }
     }
     if (!(includeTypes && !includeTypes.includes("device"))) {
         statIDs.push(...prefs.device_consumption.map((d) => d.stat_consumption));
     }
+    if (!(includeTypes && !includeTypes.includes("water"))) {
+        statIDs.push(...prefs.device_consumption_water.map((d) => d.stat_consumption));
+    }
     return statIDs;
 };
-const getEnergyData = async (hass, prefs, start, end, compare) => {
-    const [configEntries, info] = await Promise.all([
-        getConfigEntries(hass, { domain: "co2signal" }),
-        getEnergyInfo(hass),
-    ]);
-    const co2SignalConfigEntry = configEntries.length
-        ? configEntries[0]
-        : undefined;
-    let co2SignalEntity;
-    if (co2SignalConfigEntry) {
-        for (const entity of Object.values(hass.entities)) {
-            if (entity.platform !== "co2signal") {
-                continue;
+const getReferencedStatisticIdsPower = (prefs) => {
+    const statIDs = [];
+    for (const source of prefs.energy_sources) {
+        if (source.type === "gas" || source.type === "water") {
+            if (source.stat_rate) {
+                statIDs.push(source.stat_rate);
             }
-            // The integration offers 2 entities. We want the % one.
-            const co2State = hass.states[entity.entity_id];
-            if (!co2State || co2State.attributes.unit_of_measurement !== "%") {
-                continue;
-            }
-            co2SignalEntity = co2State.entity_id;
-            break;
+            continue;
         }
+        if (source.type === "solar") {
+            statIDs.push(source.stat_rate);
+            continue;
+        }
+        if (source.type === "battery") {
+            if (source.stat_rate) {
+                statIDs.push(source.stat_rate);
+            }
+            continue;
+        }
+        // grid source
+        if (source.stat_rate) {
+            statIDs.push(source.stat_rate);
+        }
+    }
+    statIDs.push(...prefs.device_consumption.map((d) => d.stat_rate));
+    statIDs.push(...prefs.device_consumption_water.map((d) => d.stat_rate));
+    return statIDs.filter(Boolean);
+};
+const getEnergyData = async (hass, prefs, start, end, compare) => {
+    const info = await getEnergyInfo(hass);
+    let co2SignalEntity;
+    for (const entity of Object.values(hass.entities)) {
+        if (entity.platform !== "co2signal") {
+            continue;
+        }
+        // The integration offers 2 entities. We want the % one.
+        const co2State = hass.states[entity.entity_id];
+        if (!co2State || co2State.attributes.unit_of_measurement !== "%") {
+            continue;
+        }
+        co2SignalEntity = co2State.entity_id;
+        break;
     }
     const consumptionStatIDs = [];
     for (const source of prefs.energy_sources) {
-        // grid source
-        if (source.type === "grid") {
-            for (const flowFrom of source.flow_from) {
-                consumptionStatIDs.push(flowFrom.stat_energy_from);
-            }
+        if (source.type === "grid" && source.stat_energy_from) {
+            consumptionStatIDs.push(source.stat_energy_from);
         }
     }
     const energyStatIds = getReferencedStatisticIds(prefs, info, [
@@ -2235,21 +3019,52 @@ const getEnergyData = async (hass, prefs, start, end, compare) => {
         "gas",
         "device",
     ]);
+    const powerStatIds = getReferencedStatisticIdsPower(prefs);
     const waterStatIds = getReferencedStatisticIds(prefs, info, ["water"]);
-    const allStatIDs = [...energyStatIds, ...waterStatIds];
+    const allStatIDs = [...energyStatIds, ...waterStatIds, ...powerStatIds];
     const dayDifference = differenceInDays(end || new Date(), start);
-    const period = dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour";
-    const lengthUnit = hass.config.unit_system.length || "";
+    const period = getSuggestedPeriod(start, end);
+    const finePeriod = getSuggestedPeriod(start, end, true);
+    const statsMetadata = {};
+    const statsMetadataArray = allStatIDs.length
+        ? await getStatisticMetadata(hass, allStatIDs)
+        : [];
+    if (allStatIDs.length) {
+        statsMetadataArray.forEach((x) => {
+            statsMetadata[x.statistic_id] = x;
+        });
+    }
+    const gasUnit = getEnergyGasUnit(hass, prefs, statsMetadata);
+    const gasIsVolume = VOLUME_UNITS.includes(gasUnit);
     const energyUnits = {
         energy: "kWh",
-        volume: lengthUnit === "km" ? "m³" : "ft³",
+        volume: gasIsVolume
+            ? gasUnit
+            : undefined,
     };
+    const powerUnits = {
+        power: "kW",
+    };
+    const waterUnit = getEnergyWaterUnit(hass, prefs, statsMetadata);
     const waterUnits = {
-        volume: lengthUnit === "km" ? "L" : "gal",
+        volume: waterUnit,
     };
     const _energyStats = energyStatIds.length
         ? fetchStatistics(hass, start, end, energyStatIds, period, energyUnits, [
             "change",
+        ])
+        : {};
+    const _powerStats = powerStatIds.length
+        ? fetchStatistics(hass, start, end, powerStatIds, finePeriod, powerUnits, [
+            "mean",
+        ])
+        : {};
+    // If power stats 5 minute data is selected, then also fetch hourly data which
+    // will be used to back-fill any missing data points in the 5 minute data when
+    // the requested range is beyond the limit of short term statistics.
+    const _powerStatsHour = powerStatIds.length && finePeriod === "5minute"
+        ? fetchStatistics(hass, start, end, powerStatIds, "hour", powerUnits, [
+            "mean",
         ])
         : {};
     const _waterStats = waterStatIds.length
@@ -2263,15 +3078,21 @@ const getEnergyData = async (hass, prefs, start, end, compare) => {
     let _energyStatsCompare = {};
     let _waterStatsCompare = {};
     if (compare) {
-        if (calcDateProperty(start, isFirstDayOfMonth, hass.locale, hass.config) &&
-            calcDateProperty(end || new Date(), isLastDayOfMonth, hass.locale, hass.config)) {
-            // When comparing a month (or multiple), we want to start at the begining of the month
-            startCompare = calcDate(start, addMonths, hass.locale, hass.config, -calcDateDifferenceProperty(end || new Date(), start, differenceInMonths, hass.locale, hass.config) - 1);
+        if (compare === "previous" /* CompareMode.PREVIOUS */) {
+            if (calcDateProperty(start, isFirstDayOfMonth, hass.locale, hass.config) &&
+                calcDateProperty(end || new Date(), isLastDayOfMonth, hass.locale, hass.config)) {
+                // When comparing a month (or multiple), we want to start at the beginning of the month
+                startCompare = calcDate(start, addMonths, hass.locale, hass.config, -calcDateDifferenceProperty(end || new Date(), start, differenceInMonths, hass.locale, hass.config) - 1);
+            }
+            else {
+                startCompare = calcDate(start, addDays, hass.locale, hass.config, (dayDifference + 1) * -1);
+            }
+            endCompare = addMilliseconds(start, -1);
         }
-        else {
-            startCompare = calcDate(start, addDays, hass.locale, hass.config, (dayDifference + 1) * -1);
+        else if (compare === "yoy" /* CompareMode.YOY */) {
+            startCompare = calcDate(start, addYears, hass.locale, hass.config, -1);
+            endCompare = calcDate(end, addYears, hass.locale, hass.config, -1);
         }
-        endCompare = addMilliseconds(start, -1);
         if (energyStatIds.length) {
             _energyStatsCompare = fetchStatistics(hass, startCompare, endCompare, energyStatIds, period, energyUnits, ["change"]);
         }
@@ -2282,59 +3103,74 @@ const getEnergyData = async (hass, prefs, start, end, compare) => {
     let _fossilEnergyConsumption;
     let _fossilEnergyConsumptionCompare;
     if (co2SignalEntity !== undefined) {
-        _fossilEnergyConsumption = getFossilEnergyConsumption(hass, start, consumptionStatIDs, co2SignalEntity, end, dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour");
+        _fossilEnergyConsumption = getFossilEnergyConsumption(hass, start, consumptionStatIDs, co2SignalEntity, end, period);
         if (compare) {
-            _fossilEnergyConsumptionCompare = getFossilEnergyConsumption(hass, startCompare, consumptionStatIDs, co2SignalEntity, endCompare, dayDifference > 35 ? "month" : dayDifference > 2 ? "day" : "hour");
+            _fossilEnergyConsumptionCompare = getFossilEnergyConsumption(hass, startCompare, consumptionStatIDs, co2SignalEntity, endCompare, period);
         }
     }
-    const statsMetadata = {};
-    const _getStatisticMetadata = allStatIDs.length
-        ? getStatisticMetadata(hass, allStatIDs)
-        : [];
-    const [energyStats, waterStats, energyStatsCompare, waterStatsCompare, statsMetadataArray, fossilEnergyConsumption, fossilEnergyConsumptionCompare,] = await Promise.all([
+    const [energyStats, powerStats, powerStatsHour, waterStats, energyStatsCompare, waterStatsCompare, fossilEnergyConsumption, fossilEnergyConsumptionCompare,] = await Promise.all([
         _energyStats,
+        _powerStats,
+        _powerStatsHour,
         _waterStats,
         _energyStatsCompare,
         _waterStatsCompare,
-        _getStatisticMetadata,
         _fossilEnergyConsumption,
         _fossilEnergyConsumptionCompare,
     ]);
-    const stats = Object.assign(Object.assign({}, energyStats), waterStats);
+    // Back-fill any missing power statistics from hourly data if present
+    if (Object.keys(powerStatsHour).length) {
+        powerStatIds.forEach((powerId) => {
+            if (powerId in powerStatsHour) {
+                // If we have extra hourly power statistics for an ID, we may need to
+                // insert data into statistics
+                if (powerId in powerStats && powerStats[powerId].length) {
+                    // We have 5-minute data. Only insert hourly values for time periods
+                    // before the first 5-minute value.
+                    const powerStatFirst = powerStats[powerId][0];
+                    const powerStatHour = powerStatsHour[powerId];
+                    let powerStatHourLast = 0;
+                    for (const powerStat of powerStatHour) {
+                        if (powerStat.end > powerStatFirst.start) {
+                            break;
+                        }
+                        powerStatHourLast++;
+                    }
+                    powerStats[powerId] = [
+                        ...powerStatHour.slice(0, powerStatHourLast),
+                        ...powerStats[powerId],
+                    ];
+                }
+                else {
+                    // There was no 5-minute data, so simply insert full hourly data
+                    powerStats[powerId] = powerStatsHour[powerId];
+                }
+            }
+        });
+    }
+    const stats = Object.assign(Object.assign(Object.assign({}, energyStats), waterStats), powerStats);
     if (compare) {
         statsCompare = Object.assign(Object.assign({}, energyStatsCompare), waterStatsCompare);
-    }
-    if (allStatIDs.length) {
-        statsMetadataArray.forEach((x) => {
-            statsMetadata[x.statistic_id] = x;
-        });
     }
     const data = {
         start,
         end,
         startCompare,
         endCompare,
+        compareMode: compare,
         info,
         prefs,
         stats,
         statsMetadata,
         statsCompare,
-        co2SignalConfigEntry,
         co2SignalEntity,
         fossilEnergyConsumption,
         fossilEnergyConsumptionCompare,
+        waterUnit,
+        gasUnit,
     };
     return data;
 };
-// const clearEnergyCollectionPreferences = (hass: HomeAssistant) => {
-//   energyCollectionKeys.forEach((key) => {
-//     const energyCollection = getEnergyDataCollection(hass, { key });
-//     energyCollection.clearPrefs();
-//     if (energyCollection._active) {
-//       energyCollection.refresh();
-//     }
-//   });
-// };
 const scheduleHourlyRefresh = (collection) => {
     if (collection._refreshTimeout) {
         clearTimeout(collection._refreshTimeout);
@@ -2393,15 +3229,19 @@ const getEnergyDataCollection = (hass, options = {}) => {
     const now = new Date();
     const hour = formatTime24h(now, hass.locale, hass.config).split(":")[0];
     // Set start to start of today if we have data for today, otherwise yesterday
-    collection.start = calcDate(hour === "0" ? addDays(now, -1) : now, startOfDay, hass.locale, hass.config);
-    collection.end = calcDate(hour === "0" ? addDays(now, -1) : now, endOfDay, hass.locale, hass.config);
+    const preferredPeriod = localStorage.getItem(`energy-default-period-${key}`) ||
+        "today";
+    const period = preferredPeriod === "today" && hour === "0" ? "yesterday" : preferredPeriod;
+    const [start, end] = calcDateRange(hass, period);
+    collection.start = calcDate(start, startOfDay, hass.locale, hass.config);
+    collection.end = calcDate(end, endOfDay, hass.locale, hass.config);
     const scheduleUpdatePeriod = () => {
         collection._updatePeriodTimeout = window.setTimeout(() => {
             collection.start = calcDate(new Date(), startOfDay, hass.locale, hass.config);
             collection.end = calcDate(new Date(), endOfDay, hass.locale, hass.config);
+            collection.refresh();
             scheduleUpdatePeriod();
-        }, addHours(calcDate(now, endOfDay, hass.locale, hass.config), 1).getTime() -
-            Date.now() // Switch to next day an hour after the day changed
+        }, addHours(calcDate(new Date(), endOfDay, hass.locale, hass.config), 1).getTime() - Date.now() // Switch to next day an hour after the day changed
         );
     };
     scheduleUpdatePeriod();
@@ -2410,18 +3250,17 @@ const getEnergyDataCollection = (hass, options = {}) => {
     };
     collection.setPeriod = (newStart, newEnd) => {
         var _a;
+        if (collection._updatePeriodTimeout) {
+            clearTimeout(collection._updatePeriodTimeout);
+            collection._updatePeriodTimeout = undefined;
+        }
         collection.start = newStart;
         collection.end = newEnd;
         if (collection.start.getTime() ===
             calcDate(new Date(), startOfDay, hass.locale, hass.config).getTime() &&
             ((_a = collection.end) === null || _a === void 0 ? void 0 : _a.getTime()) ===
-                calcDate(new Date(), endOfDay, hass.locale, hass.config).getTime() &&
-            !collection._updatePeriodTimeout) {
+                calcDate(new Date(), endOfDay, hass.locale, hass.config).getTime()) {
             scheduleUpdatePeriod();
-        }
-        else if (collection._updatePeriodTimeout) {
-            clearTimeout(collection._updatePeriodTimeout);
-            collection._updatePeriodTimeout = undefined;
         }
     };
     collection.setCompare = (compare) => {
@@ -2429,54 +3268,545 @@ const getEnergyDataCollection = (hass, options = {}) => {
     };
     return collection;
 };
-// export const getEnergySolarForecasts = (hass: HomeAssistant) =>
-//   hass.callWS<EnergySolarForecasts>({
-//     type: "energy/solar_forecast",
-//   });
-// const energyGasUnitClass = ["volume", "energy"] as const;
-// export type EnergyGasUnitClass = (typeof energyGasUnitClass)[number];
-// export const getEnergyGasUnitClass = (
-//   prefs: EnergyPreferences,
-//   statisticsMetaData: Record<string, StatisticsMetaData> = {},
-//   excludeSource?: string
-// ): EnergyGasUnitClass | undefined => {
-//   for (const source of prefs.energy_sources) {
-//     if (source.type !== "gas") {
-//       continue;
-//     }
-//     if (excludeSource && excludeSource === source.stat_energy_from) {
-//       continue;
-//     }
-//     const statisticIdWithMeta = statisticsMetaData[source.stat_energy_from];
-//     if (
-//       energyGasUnitClass.includes(
-//         statisticIdWithMeta?.unit_class as EnergyGasUnitClass
-//       )
-//     ) {
-//       return statisticIdWithMeta.unit_class as EnergyGasUnitClass;
-//     }
-//   }
-//   return undefined;
-// };
-// export const getEnergyGasUnit = (
+const energyGasUnitClass = ["volume", "energy"];
+const getEnergyGasUnitClass = (prefs, excludeSource, statisticsMetaData = {}) => {
+    for (const source of prefs.energy_sources) {
+        if (source.type !== "gas") {
+            continue;
+        }
+        const statisticIdWithMeta = statisticsMetaData[source.stat_energy_from];
+        if (energyGasUnitClass.includes(statisticIdWithMeta === null || statisticIdWithMeta === void 0 ? void 0 : statisticIdWithMeta.unit_class)) {
+            return statisticIdWithMeta.unit_class;
+        }
+    }
+    return undefined;
+};
+const getEnergyGasUnit = (hass, prefs, statisticsMetaData = {}) => {
+    const unitClass = getEnergyGasUnitClass(prefs, undefined, statisticsMetaData);
+    if (unitClass === "energy") {
+        return "kWh";
+    }
+    const units = prefs.energy_sources
+        .filter((s) => s.type === "gas")
+        .map((s) => getDisplayUnit(hass, s.stat_energy_from, statisticsMetaData[s.stat_energy_from]));
+    if (units.length) {
+        const first = units[0];
+        if (VOLUME_UNITS.includes(first) &&
+            units.every((u) => u === first)) {
+            return first;
+        }
+    }
+    return hass.config.unit_system.length === "km" ? "m³" : "ft³";
+};
+const getEnergyWaterUnit = (hass, prefs, statisticsMetaData) => {
+    const units = prefs.energy_sources
+        .filter((s) => s.type === "water")
+        .map((s) => getDisplayUnit(hass, s.stat_energy_from, statisticsMetaData[s.stat_energy_from]));
+    if (units.length) {
+        const first = units[0];
+        if (VOLUME_UNITS.includes(first) &&
+            units.every((u) => u === first)) {
+            return first;
+        }
+    }
+    return hass.config.unit_system.length === "km" ? "L" : "gal";
+};
+memoizeOne((data) => {
+    const summedData = getSummedDataPartial(data);
+    const compareSummedData = data.statsCompare
+        ? getSummedDataPartial(data, true)
+        : undefined;
+    return { summedData, compareSummedData };
+});
+const getSummedDataPartial = (data, compare) => {
+    const statIds = {};
+    for (const source of data.prefs.energy_sources) {
+        if (source.type === "solar") {
+            if (statIds.solar) {
+                statIds.solar.push(source.stat_energy_from);
+            }
+            else {
+                statIds.solar = [source.stat_energy_from];
+            }
+            continue;
+        }
+        if (source.type === "battery") {
+            if (statIds.to_battery) {
+                statIds.to_battery.push(source.stat_energy_to);
+                statIds.from_battery.push(source.stat_energy_from);
+            }
+            else {
+                statIds.to_battery = [source.stat_energy_to];
+                statIds.from_battery = [source.stat_energy_from];
+            }
+            continue;
+        }
+        if (source.type !== "grid") {
+            continue;
+        }
+        // grid source
+        if (source.stat_energy_from) {
+            if (statIds.from_grid) {
+                statIds.from_grid.push(source.stat_energy_from);
+            }
+            else {
+                statIds.from_grid = [source.stat_energy_from];
+            }
+        }
+        if (source.stat_energy_to) {
+            if (statIds.to_grid) {
+                statIds.to_grid.push(source.stat_energy_to);
+            }
+            else {
+                statIds.to_grid = [source.stat_energy_to];
+            }
+        }
+    }
+    const summedData = { total: {}, timestamps: [] };
+    const timestamps = new Set();
+    Object.entries(statIds).forEach(([key, subStatIds]) => {
+        const totalStats = {};
+        let sum = 0;
+        subStatIds.forEach((id) => {
+            const stats = compare ? data.statsCompare[id] : data.stats[id];
+            if (!stats) {
+                return;
+            }
+            stats.forEach((stat) => {
+                if (stat.change === null || stat.change === undefined) {
+                    return;
+                }
+                const val = stat.change;
+                sum += val;
+                totalStats[stat.start] =
+                    stat.start in totalStats ? totalStats[stat.start] + val : val;
+                timestamps.add(stat.start);
+            });
+        });
+        summedData[key] = totalStats;
+        summedData.total[key] = sum;
+    });
+    summedData.timestamps = Array.from(timestamps).sort();
+    return summedData;
+};
+memoizeOne((data, compareData) => {
+    const consumption = computeConsumptionDataPartial(data);
+    const compareConsumption = compareData
+        ? computeConsumptionDataPartial(compareData)
+        : undefined;
+    return { consumption, compareConsumption };
+});
+const computeConsumptionDataPartial = (data) => {
+    const outData = {
+        used_total: {},
+        grid_to_battery: {},
+        battery_to_grid: {},
+        solar_to_battery: {},
+        solar_to_grid: {},
+        used_solar: {},
+        used_grid: {},
+        used_battery: {},
+        total: {
+            used_total: 0,
+            grid_to_battery: 0,
+            battery_to_grid: 0,
+            solar_to_battery: 0,
+            solar_to_grid: 0,
+            used_solar: 0,
+            used_grid: 0,
+            used_battery: 0,
+        },
+    };
+    data.timestamps.forEach((t) => {
+        var _a, _b, _c, _d, _e;
+        const { grid_to_battery, battery_to_grid, used_solar, used_grid, used_battery, used_total, solar_to_battery, solar_to_grid, } = computeConsumptionSingle({
+            from_grid: data.from_grid && ((_a = data.from_grid[t]) !== null && _a !== void 0 ? _a : 0),
+            to_grid: data.to_grid && ((_b = data.to_grid[t]) !== null && _b !== void 0 ? _b : 0),
+            solar: data.solar && ((_c = data.solar[t]) !== null && _c !== void 0 ? _c : 0),
+            to_battery: data.to_battery && ((_d = data.to_battery[t]) !== null && _d !== void 0 ? _d : 0),
+            from_battery: data.from_battery && ((_e = data.from_battery[t]) !== null && _e !== void 0 ? _e : 0),
+        });
+        outData.used_total[t] = used_total;
+        outData.total.used_total += used_total;
+        outData.grid_to_battery[t] = grid_to_battery;
+        outData.total.grid_to_battery += grid_to_battery;
+        outData.battery_to_grid[t] = battery_to_grid;
+        outData.total.battery_to_grid += battery_to_grid;
+        outData.used_battery[t] = used_battery;
+        outData.total.used_battery += used_battery;
+        outData.used_grid[t] = used_grid;
+        outData.total.used_grid += used_grid;
+        outData.used_solar[t] = used_solar;
+        outData.total.used_solar += used_solar;
+        outData.solar_to_battery[t] = solar_to_battery;
+        outData.total.solar_to_battery += solar_to_battery;
+        outData.solar_to_grid[t] = solar_to_grid;
+        outData.total.solar_to_grid += solar_to_grid;
+    });
+    return outData;
+};
+const computeConsumptionSingle = (data) => {
+    let to_grid = Math.max(data.to_grid || 0, 0);
+    let to_battery = Math.max(data.to_battery || 0, 0);
+    let solar = Math.max(data.solar || 0, 0);
+    let from_grid = Math.max(data.from_grid || 0, 0);
+    let from_battery = Math.max(data.from_battery || 0, 0);
+    const used_total = (from_grid || 0) +
+        (solar || 0) +
+        (from_battery || 0) -
+        (to_grid || 0) -
+        (to_battery || 0);
+    let used_solar = 0;
+    let grid_to_battery = 0;
+    let battery_to_grid = 0;
+    let solar_to_battery = 0;
+    let solar_to_grid = 0;
+    let used_battery = 0;
+    let used_grid = 0;
+    let used_total_remaining = Math.max(used_total, 0);
+    // Consumption Priority
+    // Solar -> Battery_In
+    // Solar -> Grid_Out
+    // Battery_Out -> Grid_Out
+    // Grid_In -> Battery_In
+    // Solar -> Consumption
+    // Battery_Out -> Consumption
+    // Grid_In -> Consumption
+    // If we have more grid_in than consumption, the excess must be charging the battery
+    // This must be accounted for before filling the battery from solar, or else the grid
+    // input could be stranded with nowhere to go.
+    const excess_grid_in_after_consumption = Math.max(0, Math.min(to_battery, from_grid - used_total_remaining));
+    grid_to_battery += excess_grid_in_after_consumption;
+    to_battery -= excess_grid_in_after_consumption;
+    from_grid -= excess_grid_in_after_consumption;
+    // Fill the remainder of the battery input from solar
+    // Solar -> Battery_In
+    solar_to_battery = Math.min(solar, to_battery);
+    to_battery -= solar_to_battery;
+    solar -= solar_to_battery;
+    // Solar -> Grid_Out
+    solar_to_grid = Math.min(solar, to_grid);
+    to_grid -= solar_to_grid;
+    solar -= solar_to_grid;
+    // Battery_Out -> Grid_Out
+    battery_to_grid = Math.min(from_battery, to_grid);
+    from_battery -= battery_to_grid;
+    to_grid -= battery_to_grid;
+    // Grid_In -> Battery_In (second pass)
+    const grid_to_battery_2 = Math.min(from_grid, to_battery);
+    grid_to_battery += grid_to_battery_2;
+    from_grid -= grid_to_battery_2;
+    to_battery -= grid_to_battery_2;
+    // Solar -> Consumption
+    used_solar = Math.min(used_total_remaining, solar);
+    used_total_remaining -= used_solar;
+    solar -= used_solar;
+    // Battery_Out -> Consumption
+    used_battery = Math.min(from_battery, used_total_remaining);
+    from_battery -= used_battery;
+    used_total_remaining -= used_battery;
+    // Grid_In -> Consumption
+    used_grid = Math.min(used_total_remaining, from_grid);
+    from_grid -= used_grid;
+    used_total_remaining -= from_grid;
+    return {
+        used_solar,
+        used_grid,
+        used_battery,
+        used_total,
+        grid_to_battery,
+        battery_to_grid,
+        solar_to_battery,
+        solar_to_grid,
+    };
+};
+function getSuggestedPeriod(start, end, fine = false) {
+    const dayDifference = differenceInDays(end || new Date(), start);
+    if (fine) {
+        return dayDifference > 64 ? "day" : dayDifference > 8 ? "hour" : "5minute";
+    }
+    return isFirstDayOfMonth(start) &&
+        (!end || isLastDayOfMonth(end)) &&
+        dayDifference > 35
+        ? "month"
+        : dayDifference > 2
+            ? "day"
+            : "hour";
+}
+// export const downloadEnergyData = (
 //   hass: HomeAssistant,
-//   prefs: EnergyPreferences,
-//   statisticsMetaData: Record<string, StatisticsMetaData> = {}
-// ): string | undefined => {
-//   const unitClass = getEnergyGasUnitClass(prefs, statisticsMetaData);
-//   if (unitClass === undefined) {
-//     return undefined;
+//   collectionKey?: string
+// ) => {
+//   const energyData = getEnergyDataCollection(hass, {
+//     key: collectionKey,
+//   });
+//   if (!energyData.prefs || !energyData.state.stats) {
+//     return;
 //   }
-//   return unitClass === "energy"
-//     ? "kWh"
-//     : hass.config.unit_system.length === "km"
-//       ? "m³"
-//       : "ft³";
+//   const gasUnit = energyData.state.gasUnit;
+//   const electricUnit = "kWh";
+//   const energy_sources = energyData.prefs.energy_sources;
+//   const device_consumption = energyData.prefs.device_consumption;
+//   const device_consumption_water = energyData.prefs.device_consumption_water;
+//   const stats = energyData.state.stats;
+//   const timeSet = new Set<number>();
+//   Object.values(stats).forEach((stat) => {
+//     stat.forEach((datapoint) => {
+//       timeSet.add(datapoint.start);
+//     });
+//   });
+//   const times = Array.from(timeSet).sort();
+//   const headers =
+//     "entity_id,type,unit," +
+//     times.map((t) => new Date(t).toISOString()).join(",") +
+//     "\n";
+//   const csv: string[] = [];
+//   csv[0] = headers;
+//   const processCsvRow = function (
+//     id: string,
+//     type: string,
+//     unit: string,
+//     data: StatisticValue[]
+//   ) {
+//     let n = 0;
+//     const row: string[] = [];
+//     row.push(id);
+//     row.push(type);
+//     row.push(unit.normalize("NFKD"));
+//     times.forEach((t) => {
+//       if (n < data.length && data[n].start === t) {
+//         row.push((data[n].change ?? "").toString());
+//         n++;
+//       } else {
+//         row.push("");
+//       }
+//     });
+//     csv.push(row.join(",") + "\n");
+//   };
+//   const processStat = function (stat: string, type: string, unit: string) {
+//     if (!stats[stat]) {
+//       return;
+//     }
+//     processCsvRow(stat, type, unit, stats[stat]);
+//   };
+//   const currency = hass.config.currency;
+//   const printCategory = function (
+//     type: string,
+//     statIds: string[],
+//     unit: string,
+//     costType?: string,
+//     costStatIds?: string[]
+//   ) {
+//     if (statIds.length) {
+//       statIds.forEach((stat) => processStat(stat, type, unit));
+//       if (costType && costStatIds) {
+//         costStatIds.forEach((stat) => processStat(stat, costType, currency));
+//       }
+//     }
+//   };
+//   const grid_consumptions: string[] = [];
+//   const grid_productions: string[] = [];
+//   const grid_consumptions_cost: string[] = [];
+//   const grid_productions_cost: string[] = [];
+//   energy_sources
+//     .filter((s) => s.type === "grid")
+//     .forEach((source) => {
+//       const gridSource = source as GridSourceTypeEnergyPreference;
+//       if (gridSource.stat_energy_from) {
+//         grid_consumptions.push(gridSource.stat_energy_from);
+//         const importCostId =
+//           gridSource.stat_cost ||
+//           energyData.state.info.cost_sensors[gridSource.stat_energy_from];
+//         if (importCostId) {
+//           grid_consumptions_cost.push(importCostId);
+//         }
+//       }
+//       if (gridSource.stat_energy_to) {
+//         grid_productions.push(gridSource.stat_energy_to);
+//         const exportCostId =
+//           gridSource.stat_compensation ||
+//           energyData.state.info.cost_sensors[gridSource.stat_energy_to];
+//         if (exportCostId) {
+//           grid_productions_cost.push(exportCostId);
+//         }
+//       }
+//     });
+//   printCategory(
+//     "grid_consumption",
+//     grid_consumptions,
+//     electricUnit,
+//     "grid_consumption_cost",
+//     grid_consumptions_cost
+//   );
+//   printCategory(
+//     "grid_return",
+//     grid_productions,
+//     electricUnit,
+//     "grid_return_compensation",
+//     grid_productions_cost
+//   );
+//   const battery_ins: string[] = [];
+//   const battery_outs: string[] = [];
+//   energy_sources
+//     .filter((s) => s.type === "battery")
+//     .forEach((source) => {
+//       source = source as BatterySourceTypeEnergyPreference;
+//       battery_ins.push(source.stat_energy_to);
+//       battery_outs.push(source.stat_energy_from);
+//     });
+//   printCategory("battery_in", battery_ins, electricUnit);
+//   printCategory("battery_out", battery_outs, electricUnit);
+//   const solar_productions: string[] = [];
+//   energy_sources
+//     .filter((s) => s.type === "solar")
+//     .forEach((source) => {
+//       source = source as SolarSourceTypeEnergyPreference;
+//       solar_productions.push(source.stat_energy_from);
+//     });
+//   printCategory("solar_production", solar_productions, electricUnit);
+//   const gas_consumptions: string[] = [];
+//   const gas_consumptions_cost: string[] = [];
+//   energy_sources
+//     .filter((s) => s.type === "gas")
+//     .forEach((source) => {
+//       source = source as GasSourceTypeEnergyPreference;
+//       const statId = source.stat_energy_from;
+//       gas_consumptions.push(statId);
+//       const costId =
+//         source.stat_cost || energyData.state.info.cost_sensors[statId];
+//       if (costId) {
+//         gas_consumptions_cost.push(costId);
+//       }
+//     });
+//   printCategory(
+//     "gas_consumption",
+//     gas_consumptions,
+//     gasUnit,
+//     "gas_consumption_cost",
+//     gas_consumptions_cost
+//   );
+//   const water_consumptions: string[] = [];
+//   const water_consumptions_cost: string[] = [];
+//   energy_sources
+//     .filter((s) => s.type === "water")
+//     .forEach((source) => {
+//       source = source as WaterSourceTypeEnergyPreference;
+//       const statId = source.stat_energy_from;
+//       water_consumptions.push(statId);
+//       const costId =
+//         source.stat_cost || energyData.state.info.cost_sensors[statId];
+//       if (costId) {
+//         water_consumptions_cost.push(costId);
+//       }
+//     });
+//   printCategory(
+//     "water_consumption",
+//     water_consumptions,
+//     energyData.state.waterUnit,
+//     "water_consumption_cost",
+//     water_consumptions_cost
+//   );
+//   const devices: string[] = [];
+//   device_consumption.forEach((source) => {
+//     source = source as DeviceConsumptionEnergyPreference;
+//     devices.push(source.stat_consumption);
+//   });
+//   printCategory("device_consumption", devices, electricUnit);
+//   if (device_consumption_water) {
+//     const waterDevices: string[] = [];
+//     device_consumption_water.forEach((source) => {
+//       source = source as DeviceConsumptionEnergyPreference;
+//       waterDevices.push(source.stat_consumption);
+//     });
+//     printCategory(
+//       "device_consumption_water",
+//       waterDevices,
+//       energyData.state.waterUnit
+//     );
+//   }
+//   const { summedData } = getSummedData(energyData.state);
+//   const { consumption } = computeConsumptionData(summedData, undefined);
+//   const processConsumptionData = function (
+//     type: string,
+//     unit: string,
+//     data: Record<number, number>
+//   ) {
+//     const data2: StatisticValue[] = [];
+//     Object.entries(data).forEach(([t, value]) => {
+//       data2.push({
+//         start: Number(t),
+//         end: NaN,
+//         change: value,
+//       });
+//     });
+//     processCsvRow("", type, unit, data2);
+//   };
+//   const hasSolar = !!solar_productions.length;
+//   const hasBattery = !!battery_ins.length;
+//   const hasGridReturn = !!grid_productions.length;
+//   const hasGridSource = !!grid_consumptions.length;
+//   if (hasGridSource) {
+//     processConsumptionData(
+//       "calculated_consumed_grid",
+//       electricUnit,
+//       consumption.used_grid
+//     );
+//     if (hasBattery) {
+//       processConsumptionData(
+//         "calculated_grid_to_battery",
+//         electricUnit,
+//         consumption.grid_to_battery
+//       );
+//     }
+//   }
+//   if (hasGridReturn && hasBattery) {
+//     processConsumptionData(
+//       "calculated_battery_to_grid",
+//       electricUnit,
+//       consumption.battery_to_grid
+//     );
+//   }
+//   if (hasBattery) {
+//     processConsumptionData(
+//       "calculated_consumed_battery",
+//       electricUnit,
+//       consumption.used_battery
+//     );
+//   }
+//   if (hasSolar) {
+//     processConsumptionData(
+//       "calculated_consumed_solar",
+//       electricUnit,
+//       consumption.used_solar
+//     );
+//     if (hasBattery) {
+//       processConsumptionData(
+//         "calculated_solar_to_battery",
+//         electricUnit,
+//         consumption.solar_to_battery
+//       );
+//     }
+//     if (hasGridReturn) {
+//       processConsumptionData(
+//         "calculated_solar_to_grid",
+//         electricUnit,
+//         consumption.solar_to_grid
+//       );
+//     }
+//   }
+//   if ((hasGridSource ? 1 : 0) + (hasSolar ? 1 : 0) + (hasBattery ? 1 : 0) > 1) {
+//     processConsumptionData(
+//       "calculated_total_consumption",
+//       electricUnit,
+//       consumption.used_total
+//     );
+//   }
+//   const blob = new Blob(csv, {
+//     type: "text/csv",
+//   });
+//   const url = window.URL.createObjectURL(blob);
+//   fileDownload(url, "energy.csv");
 // };
-// export const getEnergyWaterUnit = (hass: HomeAssistant): string =>
-//   hass.config.unit_system.length === "km" ? "L" : "gal";
-// export const energyStatisticHelpUrl =
-//   "/docs/energy/faq/#troubleshooting-missing-entities";
 
 function registerCustomCard(params) {
     const windowWithCards = window;
@@ -2553,7 +3883,7 @@ const SubscribeMixin = (superClass) => {
     return SubscribeClass;
 };
 
-var card$8 = {
+var card$9 = {
 	generic: {
 		other: "Ostatní",
 		home: "Domov",
@@ -2566,7 +3896,7 @@ var card$8 = {
 		energy_distribution_today: "Dnešní distribuce"
 	}
 };
-var editor$8 = {
+var editor$9 = {
 	card: {
 		generic: {
 			title: "Nadpis",
@@ -2592,18 +3922,18 @@ var editor$8 = {
 	}
 };
 var cs = {
-	card: card$8,
-	editor: editor$8
+	card: card$9,
+	editor: editor$9
 };
 
 var cs$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$8,
+  card: card$9,
   default: cs,
-  editor: editor$8
+  editor: editor$9
 });
 
-var card$7 = {
+var card$8 = {
 	generic: {
 		other: "Øvrige",
 		home: "Hjem",
@@ -2616,7 +3946,7 @@ var card$7 = {
 		energy_distribution_today: "Dagens energi distribution"
 	}
 };
-var editor$7 = {
+var editor$8 = {
 	card: {
 		generic: {
 			title: "Titel",
@@ -2642,18 +3972,18 @@ var editor$7 = {
 	}
 };
 var da = {
-	card: card$7,
-	editor: editor$7
+	card: card$8,
+	editor: editor$8
 };
 
 var da$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$7,
+  card: card$8,
   default: da,
-  editor: editor$7
+  editor: editor$8
 });
 
-var card$6 = {
+var card$7 = {
 	generic: {
 		other: "Andere",
 		home: "Zuhause",
@@ -2666,7 +3996,7 @@ var card$6 = {
 		energy_distribution_today: "Heutige Energieaufteilung"
 	}
 };
-var editor$6 = {
+var editor$7 = {
 	card: {
 		generic: {
 			title: "Titel",
@@ -2692,18 +4022,18 @@ var editor$6 = {
 	}
 };
 var de = {
-	card: card$6,
-	editor: editor$6
+	card: card$7,
+	editor: editor$7
 };
 
 var de$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$6,
+  card: card$7,
   default: de,
-  editor: editor$6
+  editor: editor$7
 });
 
-var card$5 = {
+var card$6 = {
 	generic: {
 		other: "Other",
 		home: "Home",
@@ -2716,7 +4046,7 @@ var card$5 = {
 		energy_distribution_today: "Energy distribution today"
 	}
 };
-var editor$5 = {
+var editor$6 = {
 	card: {
 		generic: {
 			title: "Title",
@@ -2742,18 +4072,18 @@ var editor$5 = {
 	}
 };
 var en = {
-	card: card$5,
-	editor: editor$5
+	card: card$6,
+	editor: editor$6
 };
 
 var en$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$5,
+  card: card$6,
   default: en,
-  editor: editor$5
+  editor: editor$6
 });
 
-var card$4 = {
+var card$5 = {
 	generic: {
 		other: "Otros",
 		untracked: "Sin seguimiento"
@@ -2765,7 +4095,7 @@ var card$4 = {
 		energy_distribution_today: "Distribución de energía hoy"
 	}
 };
-var editor$4 = {
+var editor$5 = {
 	card: {
 		generic: {
 			title: "Título",
@@ -2791,18 +4121,18 @@ var editor$4 = {
 	}
 };
 var es = {
-	card: card$4,
-	editor: editor$4
+	card: card$5,
+	editor: editor$5
 };
 
 var es$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$4,
+  card: card$5,
   default: es,
-  editor: editor$4
+  editor: editor$5
 });
 
-var card$3 = {
+var card$4 = {
 	generic: {
 		other: "Autre",
 		home: "Maison",
@@ -2815,7 +4145,7 @@ var card$3 = {
 		energy_distribution_today: "Répartition de l'énergie aujourd'hui"
 	}
 };
-var editor$3 = {
+var editor$4 = {
 	card: {
 		generic: {
 			title: "Titre",
@@ -2841,18 +4171,18 @@ var editor$3 = {
 	}
 };
 var fr = {
-	card: card$3,
-	editor: editor$3
+	card: card$4,
+	editor: editor$4
 };
 
 var fr$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$3,
+  card: card$4,
   default: fr,
-  editor: editor$3
+  editor: editor$4
 });
 
-var card$2 = {
+var card$3 = {
 	generic: {
 		other: "Altro",
 		home: "Casa",
@@ -2865,7 +4195,7 @@ var card$2 = {
 		energy_distribution_today: "Distribuzione di energia oggi"
 	}
 };
-var editor$2 = {
+var editor$3 = {
 	card: {
 		generic: {
 			title: "Titolo",
@@ -2891,18 +4221,18 @@ var editor$2 = {
 	}
 };
 var it = {
-	card: card$2,
-	editor: editor$2
+	card: card$3,
+	editor: editor$3
 };
 
 var it$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$2,
+  card: card$3,
   default: it,
-  editor: editor$2
+  editor: editor$3
 });
 
-var card$1 = {
+var card$2 = {
 	generic: {
 		other: "その他",
 		home: "ホーム",
@@ -2915,7 +4245,7 @@ var card$1 = {
 		energy_distribution_today: "今日のエネルギー使用量"
 	}
 };
-var editor$1 = {
+var editor$2 = {
 	card: {
 		generic: {
 			title: "タイトル",
@@ -2941,14 +4271,64 @@ var editor$1 = {
 	}
 };
 var ja = {
-	card: card$1,
-	editor: editor$1
+	card: card$2,
+	editor: editor$2
 };
 
 var ja$1 = /*#__PURE__*/Object.freeze({
   __proto__: null,
-  card: card$1,
+  card: card$2,
   default: ja,
+  editor: editor$2
+});
+
+var card$1 = {
+	generic: {
+		other: "Overig",
+		home: "Thuis",
+		untracked: "Niet gevolgd"
+	},
+	power_sankey: {
+		live_power_flow: "Huidige vermogensstroom"
+	},
+	energy_sankey: {
+		energy_distribution_today: "Energieverdeling vandaag"
+	}
+};
+var editor$1 = {
+	card: {
+		generic: {
+			title: "Titel",
+			max_consumer_branches: "Aantal verbruikers beperken (0 voor onbeperkt)",
+			appearance: "Uiterlijk",
+			advanced_options: "Geavanceerde opties"
+		},
+		power_sankey: {
+			power_from_grid_entity: "Vermogen vanuit het net (optioneel)",
+			power_to_grid_entity: "Vermogen naar het net (optioneel)",
+			generation_entity: "Vermogen vanuit opwekking (optioneel)",
+			hide_small_consumers: "Groepeer verbruikers onder 20W",
+			invert_battery_flows: "Batterijstroom is positief bij opladen",
+			battery_charge_only_from_generation: "Batterijen alleen opladen vanuit opgewekt vermogen",
+			battery_hint_std: "Vermogen vanuit batterij (in/uit gecombineerd per batterij, positief = ontladen)",
+			battery_hint_inverted: "Vermogen naar batterij (in/uit gecombineerd per batterij, positief = opladen)",
+			independent_grid_in_out: "Gebruik aparte sensoren voor vanuit/naar het net"
+		},
+		energy_sankey: {
+			hide_small_consumers: "Groepeer verbruikers onder 0.1kWh",
+			battery_charge_only_from_generation: "Batterijen alleen opladen vanuit opgewekte energie"
+		}
+	}
+};
+var nl = {
+	card: card$1,
+	editor: editor$1
+};
+
+var nl$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  card: card$1,
+  default: nl,
   editor: editor$1
 });
 
@@ -3005,8 +4385,6 @@ var pt_BR = /*#__PURE__*/Object.freeze({
 // import * as ar from "./translations/ar.json";
 // import * as bg from "./translations/bg.json";
 // import * as ca from "./translations/ca.json";
-// import * as pt_PT from "./translations/pt-PT.json";
-// import * as ro from "./translations/ro.json";
 // import * as ru from "./translations/ru.json";
 // import * as sl from "./translations/sl.json";
 // import * as sk from "./translations/sk.json";
@@ -3035,7 +4413,7 @@ const languages = {
     ja: ja$1,
     //   "ko-KR": ko_KR,
     //   nb,
-    //   nl,
+    nl: nl$1,
     //   pl,
     "pt-BR": pt_BR,
     //   "pt-PT": pt_PT,
@@ -3193,17 +4571,17 @@ let EnergyElecFlowCard = class EnergyElecFlowCard extends ElecFlowCardBase {
         const prefs = energyData.prefs;
         const types = energySourcesByType(prefs);
         if (types.grid && types.grid.length > 0) {
-            if (types.grid[0].flow_from.length > 0) {
-                const totalFromGrid = (_a = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_from.map((flow) => flow.stat_energy_from))) !== null && _a !== void 0 ? _a : 0;
-                const gridInId = types.grid[0].flow_from[0].stat_energy_from;
+            if (types.grid[0].stat_energy_from) {
+                const totalFromGrid = (_a = calculateStatisticsSumGrowth(energyData.stats, [types.grid[0].stat_energy_from])) !== null && _a !== void 0 ? _a : 0;
+                const gridInId = types.grid[0].stat_energy_from;
                 this._gridInRoute = {
                     id: gridInId,
                     rate: totalFromGrid,
                 };
             }
-            if (types.grid[0].flow_to.length > 0) {
-                const totalToGrid = (_b = calculateStatisticsSumGrowth(energyData.stats, types.grid[0].flow_to.map((flow) => flow.stat_energy_to))) !== null && _b !== void 0 ? _b : 0;
-                const gridOutId = types.grid[0].flow_to[0].stat_energy_to;
+            if (types.grid[0].stat_energy_to) {
+                const totalToGrid = (_b = calculateStatisticsSumGrowth(energyData.stats, [types.grid[0].stat_energy_to])) !== null && _b !== void 0 ? _b : 0;
+                const gridOutId = types.grid[0].stat_energy_to;
                 this._gridOutRoute = {
                     id: gridOutId,
                     rate: totalToGrid,
@@ -3630,6 +5008,160 @@ const derivedStyles = {
     "material-secondary-text-color": "var(--secondary-text-color)",
 };
 
+const colors = {
+	aliceblue: [240, 248, 255],
+	antiquewhite: [250, 235, 215],
+	aqua: [0, 255, 255],
+	aquamarine: [127, 255, 212],
+	azure: [240, 255, 255],
+	beige: [245, 245, 220],
+	bisque: [255, 228, 196],
+	black: [0, 0, 0],
+	blanchedalmond: [255, 235, 205],
+	blue: [0, 0, 255],
+	blueviolet: [138, 43, 226],
+	brown: [165, 42, 42],
+	burlywood: [222, 184, 135],
+	cadetblue: [95, 158, 160],
+	chartreuse: [127, 255, 0],
+	chocolate: [210, 105, 30],
+	coral: [255, 127, 80],
+	cornflowerblue: [100, 149, 237],
+	cornsilk: [255, 248, 220],
+	crimson: [220, 20, 60],
+	cyan: [0, 255, 255],
+	darkblue: [0, 0, 139],
+	darkcyan: [0, 139, 139],
+	darkgoldenrod: [184, 134, 11],
+	darkgray: [169, 169, 169],
+	darkgreen: [0, 100, 0],
+	darkgrey: [169, 169, 169],
+	darkkhaki: [189, 183, 107],
+	darkmagenta: [139, 0, 139],
+	darkolivegreen: [85, 107, 47],
+	darkorange: [255, 140, 0],
+	darkorchid: [153, 50, 204],
+	darkred: [139, 0, 0],
+	darksalmon: [233, 150, 122],
+	darkseagreen: [143, 188, 143],
+	darkslateblue: [72, 61, 139],
+	darkslategray: [47, 79, 79],
+	darkslategrey: [47, 79, 79],
+	darkturquoise: [0, 206, 209],
+	darkviolet: [148, 0, 211],
+	deeppink: [255, 20, 147],
+	deepskyblue: [0, 191, 255],
+	dimgray: [105, 105, 105],
+	dimgrey: [105, 105, 105],
+	dodgerblue: [30, 144, 255],
+	firebrick: [178, 34, 34],
+	floralwhite: [255, 250, 240],
+	forestgreen: [34, 139, 34],
+	fuchsia: [255, 0, 255],
+	gainsboro: [220, 220, 220],
+	ghostwhite: [248, 248, 255],
+	gold: [255, 215, 0],
+	goldenrod: [218, 165, 32],
+	gray: [128, 128, 128],
+	green: [0, 128, 0],
+	greenyellow: [173, 255, 47],
+	grey: [128, 128, 128],
+	honeydew: [240, 255, 240],
+	hotpink: [255, 105, 180],
+	indianred: [205, 92, 92],
+	indigo: [75, 0, 130],
+	ivory: [255, 255, 240],
+	khaki: [240, 230, 140],
+	lavender: [230, 230, 250],
+	lavenderblush: [255, 240, 245],
+	lawngreen: [124, 252, 0],
+	lemonchiffon: [255, 250, 205],
+	lightblue: [173, 216, 230],
+	lightcoral: [240, 128, 128],
+	lightcyan: [224, 255, 255],
+	lightgoldenrodyellow: [250, 250, 210],
+	lightgray: [211, 211, 211],
+	lightgreen: [144, 238, 144],
+	lightgrey: [211, 211, 211],
+	lightpink: [255, 182, 193],
+	lightsalmon: [255, 160, 122],
+	lightseagreen: [32, 178, 170],
+	lightskyblue: [135, 206, 250],
+	lightslategray: [119, 136, 153],
+	lightslategrey: [119, 136, 153],
+	lightsteelblue: [176, 196, 222],
+	lightyellow: [255, 255, 224],
+	lime: [0, 255, 0],
+	limegreen: [50, 205, 50],
+	linen: [250, 240, 230],
+	magenta: [255, 0, 255],
+	maroon: [128, 0, 0],
+	mediumaquamarine: [102, 205, 170],
+	mediumblue: [0, 0, 205],
+	mediumorchid: [186, 85, 211],
+	mediumpurple: [147, 112, 219],
+	mediumseagreen: [60, 179, 113],
+	mediumslateblue: [123, 104, 238],
+	mediumspringgreen: [0, 250, 154],
+	mediumturquoise: [72, 209, 204],
+	mediumvioletred: [199, 21, 133],
+	midnightblue: [25, 25, 112],
+	mintcream: [245, 255, 250],
+	mistyrose: [255, 228, 225],
+	moccasin: [255, 228, 181],
+	navajowhite: [255, 222, 173],
+	navy: [0, 0, 128],
+	oldlace: [253, 245, 230],
+	olive: [128, 128, 0],
+	olivedrab: [107, 142, 35],
+	orange: [255, 165, 0],
+	orangered: [255, 69, 0],
+	orchid: [218, 112, 214],
+	palegoldenrod: [238, 232, 170],
+	palegreen: [152, 251, 152],
+	paleturquoise: [175, 238, 238],
+	palevioletred: [219, 112, 147],
+	papayawhip: [255, 239, 213],
+	peachpuff: [255, 218, 185],
+	peru: [205, 133, 63],
+	pink: [255, 192, 203],
+	plum: [221, 160, 221],
+	powderblue: [176, 224, 230],
+	purple: [128, 0, 128],
+	rebeccapurple: [102, 51, 153],
+	red: [255, 0, 0],
+	rosybrown: [188, 143, 143],
+	royalblue: [65, 105, 225],
+	saddlebrown: [139, 69, 19],
+	salmon: [250, 128, 114],
+	sandybrown: [244, 164, 96],
+	seagreen: [46, 139, 87],
+	seashell: [255, 245, 238],
+	sienna: [160, 82, 45],
+	silver: [192, 192, 192],
+	skyblue: [135, 206, 235],
+	slateblue: [106, 90, 205],
+	slategray: [112, 128, 144],
+	slategrey: [112, 128, 144],
+	snow: [255, 250, 250],
+	springgreen: [0, 255, 127],
+	steelblue: [70, 130, 180],
+	tan: [210, 180, 140],
+	teal: [0, 128, 128],
+	thistle: [216, 191, 216],
+	tomato: [255, 99, 71],
+	turquoise: [64, 224, 208],
+	violet: [238, 130, 238],
+	wheat: [245, 222, 179],
+	white: [255, 255, 255],
+	whitesmoke: [245, 245, 245],
+	yellow: [255, 255, 0],
+	yellowgreen: [154, 205, 50],
+};
+
+for (const key in colors) Object.freeze(colors[key]);
+Object.freeze(colors);
+
 const expandHex = (hex) => {
     hex = hex.replace("#", "");
     if (hex.length === 6)
@@ -3639,21 +5171,6 @@ const expandHex = (hex) => {
         result += val + val;
     }
     return result;
-};
-// Blend 2 hex colors: c1 is placed over c2, blend is c1's opacity.
-const hexBlend = (c1, c2, blend = 50) => {
-    let color = "";
-    c1 = expandHex(c1);
-    c2 = expandHex(c2);
-    for (let i = 0; i <= 5; i += 2) {
-        const h1 = parseInt(c1.substr(i, 2), 16);
-        const h2 = parseInt(c2.substr(i, 2), 16);
-        let hex = Math.floor(h2 + (h1 - h2) * (blend / 100)).toString(16);
-        while (hex.length < 2)
-            hex = "0" + hex;
-        color += hex;
-    }
-    return `#${color}`;
 };
 
 // Conversion between HEX and RGB
@@ -3690,14 +5207,6 @@ const applyThemesOnElement = (element, themes, selectedTheme, themeSettings, mai
         themeRules = Object.assign({}, darkStyles);
     }
     if (themeToApply === "default") {
-        // Determine the primary and accent colors from the current settings.
-        // Fallbacks are implicitly the HA default blue and orange or the
-        // derived "darkStyles" values, depending on the light vs dark mode.
-        const primaryColor = void 0 ;
-        if (darkMode && primaryColor) {
-            themeRules["app-theme-color"] = hexBlend(primaryColor, "#121212", 8);
-            themeRules["app-header-background-color"] = themeRules["app-theme-color"];
-        }
         // Nothing was changed
         if (((_a = element.__themes) === null || _a === void 0 ? void 0 : _a.cacheKey) === cacheKey) {
             return;
@@ -4216,7 +5725,7 @@ let PowerFlowCard = class PowerFlowCard extends ElecFlowCardBase {
                 case "grid":
                     let power_from_grid_entity = "";
                     power_from_grid_entity =
-                        await this.getPowerEntityIdForEnergyEntityIdWithFail(_hass, source.flow_from[0].stat_energy_from, extEntities);
+                        await this.getPowerEntityIdForEnergyEntityIdWithFail(_hass, source.stat_energy_from, extEntities);
                     returnConfig.power_from_grid_entity = power_from_grid_entity;
                     break;
                 case "solar":
@@ -4496,7 +6005,7 @@ function processEditorEntities(entities) {
  * @license
  * Copyright 2020 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */const {I:l}=j,r=()=>document.createComment(""),c$1=(o,i,n)=>{var t;const v=o._$AA.parentNode,d=void 0===i?o._$AB:i._$AA;if(void 0===n){const i=v.insertBefore(r(),d),t=v.insertBefore(r(),d);n=new l(i,t,o,o.options);}else {const l=n._$AB.nextSibling,i=n._$AM,u=i!==o;if(u){let l;null===(t=n._$AQ)||void 0===t||t.call(n,o),n._$AM=o,void 0!==n._$AP&&(l=o._$AU)!==i._$AU&&n._$AP(l);}if(l!==d||u){let o=n._$AA;for(;o!==l;){const l=o.nextSibling;v.insertBefore(o,d),o=l;}}}return n},f=(o,l,i=o)=>(o._$AI(l,i),o),s={},a=(o,l=s)=>o._$AH=l,m=o=>o._$AH,p=o=>{var l;null===(l=o._$AP)||void 0===l||l.call(o,!1,!0);let i=o._$AA;const n=o._$AB.nextSibling;for(;i!==n;){const o=i.nextSibling;i.remove(),i=o;}};
+ */const {I:l}=j,r=()=>document.createComment(""),c$1=(o,i,n)=>{var t;const v=o._$AA.parentNode,d=void 0===i?o._$AB:i._$AA;if(void 0===n){const i=v.insertBefore(r(),d),t=v.insertBefore(r(),d);n=new l(i,t,o,o.options);}else {const l=n._$AB.nextSibling,i=n._$AM,u=i!==o;if(u){let l;null===(t=n._$AQ)||void 0===t||t.call(n,o),n._$AM=o,void 0!==n._$AP&&(l=o._$AU)!==i._$AU&&n._$AP(l);}if(l!==d||u){let o=n._$AA;for(;o!==l;){const l=o.nextSibling;v.insertBefore(o,d),o=l;}}}return n},f=(o,l,i=o)=>(o._$AI(l,i),o),s={},a=(o,l=s)=>o._$AH=l,m=o=>o._$AH,p=o=>{var l;null===(l=o._$AP)||void 0===l||l.call(o,false,true);let i=o._$AA;const n=o._$AB.nextSibling;for(;i!==n;){const o=i.nextSibling;i.remove(),i=o;}};
 
 /**
  * @license
@@ -6542,75 +8051,6 @@ __decorate([
 ElecSankey = __decorate([
     e$2("elec-sankey")
 ], ElecSankey);
-
-const round = (value, precision = 2) => Math.round(value * 10 ** precision) / 10 ** precision;
-
-const numberFormatToLocale = (localeOptions) => {
-    switch (localeOptions.number_format) {
-        case NumberFormat.comma_decimal:
-            return ["en-US", "en"]; // Use United States with fallback to English formatting 1,234,567.89
-        case NumberFormat.decimal_comma:
-            return ["de", "es", "it"]; // Use German with fallback to Spanish then Italian formatting 1.234.567,89
-        case NumberFormat.space_comma:
-            return ["fr", "sv", "cs"]; // Use French with fallback to Swedish and Czech formatting 1 234 567,89
-        case NumberFormat.system:
-            return undefined;
-        default:
-            return localeOptions.language;
-    }
-};
-/**
- * Formats a number based on the user's preference with thousands separator(s) and decimal character for better legibility.
- *
- * @param num The number to format
- * @param localeOptions The user-selected language and formatting, from `hass.locale`
- * @param options Intl.NumberFormatOptions to use
- */
-const formatNumber = (num, localeOptions, options) => {
-    const locale = localeOptions
-        ? numberFormatToLocale(localeOptions)
-        : undefined;
-    // Polyfill for Number.isNaN, which is more reliable than the global isNaN()
-    Number.isNaN =
-        Number.isNaN ||
-            function isNaN(input) {
-                return typeof input === "number" && isNaN(input);
-            };
-    if ((localeOptions === null || localeOptions === void 0 ? void 0 : localeOptions.number_format) !== NumberFormat.none &&
-        !Number.isNaN(Number(num))) {
-        return new Intl.NumberFormat(locale, getDefaultFormatOptions(num, options)).format(Number(num));
-    }
-    if (!Number.isNaN(Number(num)) &&
-        num !== "" &&
-        (localeOptions === null || localeOptions === void 0 ? void 0 : localeOptions.number_format) === NumberFormat.none) {
-        // If NumberFormat is none, use en-US format without grouping.
-        return new Intl.NumberFormat("en-US", getDefaultFormatOptions(num, Object.assign(Object.assign({}, options), { useGrouping: false }))).format(Number(num));
-    }
-    if (typeof num === "string") {
-        return num;
-    }
-    return `${round(num, options === null || options === void 0 ? void 0 : options.maximumFractionDigits).toString()}${(options === null || options === void 0 ? void 0 : options.style) === "currency" ? ` ${options.currency}` : ""}`;
-};
-/**
- * Generates default options for Intl.NumberFormat
- * @param num The number to be formatted
- * @param options The Intl.NumberFormatOptions that should be included in the returned options
- */
-const getDefaultFormatOptions = (num, options) => {
-    const defaultOptions = Object.assign({ maximumFractionDigits: 2 }, options);
-    if (typeof num !== "string") {
-        return defaultOptions;
-    }
-    // Keep decimal trailing zeros if they are present in a string numeric value
-    if (!options ||
-        (options.minimumFractionDigits === undefined &&
-            options.maximumFractionDigits === undefined)) {
-        const digits = num.indexOf(".") > -1 ? num.split(".")[1].length : 0;
-        defaultOptions.minimumFractionDigits = digits;
-        defaultOptions.maximumFractionDigits = digits;
-    }
-    return defaultOptions;
-};
 
 // end of additional items from frontend src/dialogs/more-info/ha-more-info-dialog.ts
 let HaElecSankey = class HaElecSankey extends ElecSankey {
