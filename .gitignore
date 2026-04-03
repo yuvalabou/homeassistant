@@ -8,6 +8,7 @@
 # Ignore folders.
 .storage
 .cloud
+.cache
 .google.token
 .storage
 .vscode
