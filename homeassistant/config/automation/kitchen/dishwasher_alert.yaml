@@ -1,0 +1,22 @@
+---
+
+- alias: "Notify if Dishwasher automation is disabled"
+  id: d04047a0-6b6f-474c-8f92-540e1e44f8f4
+  trigger:
+    - trigger: time
+      at:
+        entity_id: sensor.jewish_calendar_upcoming_candle_lighting
+        offset: "-00:30:00"
+  condition:
+    - condition: state
+      entity_id: automation.start_dishwasher_on_shabbat
+      state: 'off'
+    - "{{ is_state('group.person', 'home') }}"
+  action:
+    - action: notify.mobile_app_yuval14
+      data:
+        title: "Dishwasher Alert"
+        message: "ATTENTION: The dishwasher automation is currently disabled."
+        data:
+          notification_icon: "mdi:dishwasher-alert"
+          color: "red"

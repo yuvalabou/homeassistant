@@ -5,11 +5,13 @@
   trigger:
     trigger: time
     at:
-      - sensor.yuval_next_alarm
-      - sensor.tohar_next_alarm
+      - sensor.yuval14_next_alarm
+      - sensor.tohar15_next_alarm
   condition:
+    - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
     - "{{ not is_state('light.wall_lights', 'on') }}"
+    - "{{ 5 <= trigger.now.hour < 10 }}"
   action:
     action: scene.turn_on
     data:
