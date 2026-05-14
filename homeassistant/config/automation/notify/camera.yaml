@@ -40,12 +40,45 @@
         filename: "/config/www/reolink/latest.jpg"
     - delay:
         seconds: 1
-    - action: notify.mobile_app_yuval14
-      data:
-        title: "{{ object_type }} Detected in Garden"
-        message: "A {{ trigger.id }} was detected by the garden camera at {{ now().strftime('%H:%M') }}."
-        data:
-          image: "/local/{{ snapshot_filename }}"
-          tag: "garden-camera-alert"
-          channel: "alerts"
-          priority: "high"
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: "person"
+          sequence:
+            - action: ai_task.generate_data
+              target:
+                entity_id: ai_task.google_ai_task
+              data:
+                prompt: >
+                  Write a short description of the person detected, based on an image.
+                  The description should highlight observable traits like race, clothing, hair color, accessories, approximate age, gender, and if they are have any weapons.
+                  If the person appears to be a mail carrier, delivery worker, or police officer, include identifying uniforms, badges, logos, or parcels.
+                  Suitable for a smart home notification.
+                  Keep the response under 100 tokens. No emojis.
+                  It should be written as if spoken by a ill tempered easy to irritate old man that uses cuss words.
+                image_file: "/config/www/{{ snapshot_filename }}"
+              response_variable: ai_description
+            - action: notify.mobile_app_yuval14
+              data:
+                title: "Person Detected in Garden"
+                message: >
+                  A person was detected at {{ now().strftime('%H:%M') }}.
+                  {{ ai_description.text }}
+                data:
+                  image: "/local/{{ snapshot_filename }}"
+                  tag: "garden-camera-alert"
+                  channel: "alerts"
+                  priority: "high"
+        - conditions:
+            - condition: trigger
+              id: "animal"
+          sequence:
+            - action: notify.mobile_app_yuval14
+              data:
+                title: "Animal Detected in Garden"
+                message: "An animal was detected by the garden camera at {{ now().strftime('%H:%M') }}."
+                data:
+                  image: "/local/{{ snapshot_filename }}"
+                  tag: "garden-camera-alert"
+                  channel: "alerts"
+                  priority: "low"

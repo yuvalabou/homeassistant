@@ -53,7 +53,7 @@
                   target: *ac_master
                   data:
                     hvac_mode: cool
-                    temperature: 21
+                    temperature: 20
                 - action: climate.set_fan_mode
                   target: *ac_master
                   data:
