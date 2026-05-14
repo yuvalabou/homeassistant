@@ -108,3 +108,20 @@ services:
       - 10001:10001/udp
       - 8080:8080
     restart: unless-stopped
+
+  syncthing:
+    container_name: syncthing-relay
+    image: syncthing/syncthing:latest
+    hostname: central-vault
+    environment:
+      - PUID=1000
+      - PGID=1000
+    volumes:
+      - ./config:/var/syncthing/config
+      - ./obsidian/storage:/var/syncthing/obsidian
+    ports:
+      - 8384:8384 # GUI
+      - 22000:22000/tcp # Protocol
+      - 22000:22000/udp # Protocol
+      - 21027:21027/udp # Discovery
+    restart: unless-stopped
