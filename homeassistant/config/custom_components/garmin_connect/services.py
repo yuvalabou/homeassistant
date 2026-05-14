@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import logging
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING
@@ -11,6 +10,7 @@ import voluptuous as vol
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv
+from homeassistant.helpers import entity_registry as er
 
 from .const import DOMAIN
 
@@ -18,8 +18,6 @@ if TYPE_CHECKING:
     from ha_garmin import GarminClient
 
     from .coordinator import GarminConnectCoordinators
-
-_LOGGER = logging.getLogger(__name__)
 
 # Service names
 SERVICE_SET_ACTIVE_GEAR = "set_active_gear"
@@ -29,6 +27,7 @@ SERVICE_CREATE_ACTIVITY = "create_activity"
 SERVICE_UPLOAD_ACTIVITY = "upload_activity"
 SERVICE_ADD_GEAR_TO_ACTIVITY = "add_gear_to_activity"
 SERVICE_ADD_HYDRATION = "add_hydration"
+SERVICE_ADD_NUTRITION = "add_nutrition_log"
 
 # Service schemas
 SET_ACTIVE_GEAR_SCHEMA = vol.Schema(
@@ -46,6 +45,7 @@ SET_ACTIVE_GEAR_SCHEMA = vol.Schema(
 
 ADD_BODY_COMPOSITION_SCHEMA = vol.Schema(
     {
+        vol.Optional("entity_id"): cv.entity_id,
         vol.Required("weight"): vol.Coerce(float),
         vol.Optional("timestamp"): cv.string,
         vol.Optional("bmi"): vol.Coerce(float),
@@ -64,6 +64,7 @@ ADD_BODY_COMPOSITION_SCHEMA = vol.Schema(
 
 ADD_BLOOD_PRESSURE_SCHEMA = vol.Schema(
     {
+        vol.Optional("entity_id"): cv.entity_id,
         vol.Required("systolic"): vol.All(vol.Coerce(int), vol.Range(min=60, max=250)),
         vol.Required("diastolic"): vol.All(vol.Coerce(int), vol.Range(min=40, max=150)),
         vol.Required("pulse"): vol.All(vol.Coerce(int), vol.Range(min=30, max=220)),
@@ -74,6 +75,7 @@ ADD_BLOOD_PRESSURE_SCHEMA = vol.Schema(
 
 CREATE_ACTIVITY_SCHEMA = vol.Schema(
     {
+        vol.Optional("entity_id"): cv.entity_id,
         vol.Required("activity_name"): cv.string,
         vol.Required("activity_type"): vol.In(
             [
@@ -87,9 +89,7 @@ CREATE_ACTIVITY_SCHEMA = vol.Schema(
             ]
         ),
         vol.Optional("start_datetime"): cv.string,
-        vol.Required("duration_min"): vol.All(
-            vol.Coerce(int), vol.Range(min=1, max=1440)
-        ),
+        vol.Required("duration_min"): vol.All(vol.Coerce(int), vol.Range(min=1, max=1440)),
         vol.Optional("distance_km", default=0.0): vol.Coerce(float),
         vol.Optional("time_zone"): cv.string,
     }
@@ -97,6 +97,7 @@ CREATE_ACTIVITY_SCHEMA = vol.Schema(
 
 UPLOAD_ACTIVITY_SCHEMA = vol.Schema(
     {
+        vol.Optional("entity_id"): cv.entity_id,
         vol.Required("file_path"): cv.string,
     }
 )
@@ -111,14 +112,31 @@ ADD_GEAR_TO_ACTIVITY_SCHEMA = vol.Schema(
 
 ADD_HYDRATION_SCHEMA = vol.Schema(
     {
+        vol.Optional("entity_id"): cv.entity_id,
         vol.Required("value_in_ml"): vol.Coerce(float),
         vol.Optional("timestamp"): cv.string,
     }
 )
 
+ADD_NUTRITION_SCHEMA = vol.Schema(
+    {
+        vol.Optional("entity_id"): cv.entity_id,
+        vol.Required("calories"): vol.All(vol.Coerce(float), vol.Range(min=0, max=10000)),
+        vol.Optional("carbs"): vol.All(vol.Coerce(float), vol.Range(min=0, max=2000)),
+        vol.Optional("protein"): vol.All(vol.Coerce(float), vol.Range(min=0, max=2000)),
+        vol.Optional("fat"): vol.All(vol.Coerce(float), vol.Range(min=0, max=2000)),
+        vol.Optional("name", default="Quick Add"): cv.string,
+        vol.Optional("timestamp"): cv.string,
+    }
+)
 
-def _get_client(hass: HomeAssistant) -> GarminClient:
-    """Get the Garmin client from the first available config entry."""
+
+def _get_client(
+    hass: HomeAssistant,
+    *,
+    entity_id: str | None = None,
+) -> GarminClient:
+    """Get the Garmin client for a targeted or fallback config entry."""
     entries = hass.config_entries.async_entries(DOMAIN)
     if not entries:
         raise HomeAssistantError(
@@ -127,7 +145,33 @@ def _get_client(hass: HomeAssistant) -> GarminClient:
         )
 
     entry = entries[0]
-    if not hasattr(entry, "runtime_data") or entry.runtime_data is None:
+
+    if entity_id:
+        registry_entry = er.async_get(hass).async_get(entity_id)
+        if registry_entry is None:
+            raise HomeAssistantError(
+                translation_domain=DOMAIN,
+                translation_key="entity_not_found",
+                translation_placeholders={"entity_id": entity_id},
+            )
+
+        matched = next(
+            (
+                candidate
+                for candidate in entries
+                if candidate.entry_id == registry_entry.config_entry_id
+            ),
+            None,
+        )
+        if matched is None:
+            raise HomeAssistantError(
+                translation_domain=DOMAIN,
+                translation_key="entity_not_found",
+                translation_placeholders={"entity_id": entity_id},
+            )
+        entry = matched
+
+    if getattr(entry, "runtime_data", None) is None:
         raise HomeAssistantError(
             translation_domain=DOMAIN,
             translation_key="integration_not_loaded",
@@ -142,13 +186,12 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_set_active_gear(call: ServiceCall) -> None:
         """Handle set_active_gear service call."""
-        client = _get_client(hass)
         activity_type = call.data["activity_type"]
         setting = call.data["setting"]
         gear_uuid = call.data.get("gear_uuid")
+        entity_id = call.data.get("entity_id")
 
         if not gear_uuid:
-            entity_id = call.data.get("entity_id")
             if not entity_id:
                 raise HomeAssistantError(
                     translation_domain=DOMAIN,
@@ -169,6 +212,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
                     translation_placeholders={"entity_id": entity_id},
                 )
 
+        client = _get_client(hass, entity_id=entity_id)
         try:
             await client.set_active_gear(
                 activity_type=activity_type,
@@ -184,7 +228,10 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_add_body_composition(call: ServiceCall) -> None:
         """Handle add_body_composition service call."""
-        client = _get_client(hass)
+        client = _get_client(
+            hass,
+            entity_id=call.data.get("entity_id"),
+        )
         try:
             await client.add_body_composition(
                 timestamp=call.data.get("timestamp"),
@@ -210,7 +257,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_add_blood_pressure(call: ServiceCall) -> None:
         """Handle add_blood_pressure service call."""
-        client = _get_client(hass)
+        client = _get_client(hass, entity_id=call.data.get("entity_id"))
         try:
             await client.set_blood_pressure(
                 systolic=call.data["systolic"],
@@ -228,7 +275,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_create_activity(call: ServiceCall) -> None:
         """Handle create_activity service call."""
-        client = _get_client(hass)
+        client = _get_client(hass, entity_id=call.data.get("entity_id"))
         start_datetime = call.data.get("start_datetime")
         if not start_datetime:
             start_datetime = datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000")
@@ -253,7 +300,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_upload_activity(call: ServiceCall) -> None:
         """Handle upload_activity service call."""
-        client = _get_client(hass)
+        client = _get_client(hass, entity_id=call.data.get("entity_id"))
         file_path = call.data["file_path"]
         path = Path(file_path)
         if not path.is_absolute():
@@ -275,12 +322,11 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_add_gear_to_activity(call: ServiceCall) -> None:
         """Handle add_gear_to_activity service call."""
-        client = _get_client(hass)
         activity_id = call.data["activity_id"]
         gear_uuid = call.data.get("gear_uuid")
+        entity_id = call.data.get("entity_id")
 
         if not gear_uuid:
-            entity_id = call.data.get("entity_id")
             if not entity_id:
                 raise HomeAssistantError(
                     translation_domain=DOMAIN,
@@ -301,6 +347,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
                     translation_placeholders={"entity_id": entity_id},
                 )
 
+        client = _get_client(hass, entity_id=entity_id)
         try:
             await client.add_gear_to_activity(
                 gear_uuid=gear_uuid,
@@ -315,7 +362,7 @@ async def async_setup_services(hass: HomeAssistant) -> None:
 
     async def handle_add_hydration(call: ServiceCall) -> None:
         """Handle add_hydration service call."""
-        client = _get_client(hass)
+        client = _get_client(hass, entity_id=call.data.get("entity_id"))
         try:
             await client.set_hydration(
                 value_in_ml=call.data["value_in_ml"],
@@ -328,26 +375,72 @@ async def async_setup_services(hass: HomeAssistant) -> None:
                 translation_placeholders={"error": str(err)},
             ) from err
 
+    async def handle_add_nutrition(call: ServiceCall) -> None:
+        """Handle add_nutrition_log service call."""
+        client = _get_client(hass, entity_id=call.data.get("entity_id"))
+        try:
+            await client.add_nutrition_log(
+                calories=call.data["calories"],
+                carbs=call.data.get("carbs"),
+                protein=call.data.get("protein"),
+                fat=call.data.get("fat"),
+                name=call.data.get("name", "Quick Add"),
+                timestamp=call.data.get("timestamp"),
+            )
+        except Exception as err:
+            raise HomeAssistantError(
+                translation_domain=DOMAIN,
+                translation_key="add_nutrition_failed",
+                translation_placeholders={"error": str(err)},
+            ) from err
+
     hass.services.async_register(
-        DOMAIN, SERVICE_SET_ACTIVE_GEAR, handle_set_active_gear, schema=SET_ACTIVE_GEAR_SCHEMA
+        DOMAIN,
+        SERVICE_SET_ACTIVE_GEAR,
+        handle_set_active_gear,
+        schema=SET_ACTIVE_GEAR_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_ADD_BODY_COMPOSITION, handle_add_body_composition, schema=ADD_BODY_COMPOSITION_SCHEMA
+        DOMAIN,
+        SERVICE_ADD_BODY_COMPOSITION,
+        handle_add_body_composition,
+        schema=ADD_BODY_COMPOSITION_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_ADD_BLOOD_PRESSURE, handle_add_blood_pressure, schema=ADD_BLOOD_PRESSURE_SCHEMA
+        DOMAIN,
+        SERVICE_ADD_BLOOD_PRESSURE,
+        handle_add_blood_pressure,
+        schema=ADD_BLOOD_PRESSURE_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_CREATE_ACTIVITY, handle_create_activity, schema=CREATE_ACTIVITY_SCHEMA
+        DOMAIN,
+        SERVICE_CREATE_ACTIVITY,
+        handle_create_activity,
+        schema=CREATE_ACTIVITY_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_UPLOAD_ACTIVITY, handle_upload_activity, schema=UPLOAD_ACTIVITY_SCHEMA
+        DOMAIN,
+        SERVICE_UPLOAD_ACTIVITY,
+        handle_upload_activity,
+        schema=UPLOAD_ACTIVITY_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_ADD_GEAR_TO_ACTIVITY, handle_add_gear_to_activity, schema=ADD_GEAR_TO_ACTIVITY_SCHEMA
+        DOMAIN,
+        SERVICE_ADD_GEAR_TO_ACTIVITY,
+        handle_add_gear_to_activity,
+        schema=ADD_GEAR_TO_ACTIVITY_SCHEMA,
     )
     hass.services.async_register(
-        DOMAIN, SERVICE_ADD_HYDRATION, handle_add_hydration, schema=ADD_HYDRATION_SCHEMA
+        DOMAIN,
+        SERVICE_ADD_HYDRATION,
+        handle_add_hydration,
+        schema=ADD_HYDRATION_SCHEMA,
+    )
+    hass.services.async_register(
+        DOMAIN,
+        SERVICE_ADD_NUTRITION,
+        handle_add_nutrition,
+        schema=ADD_NUTRITION_SCHEMA,
     )
 
 
@@ -360,3 +453,4 @@ async def async_unload_services(hass: HomeAssistant) -> None:
     hass.services.async_remove(DOMAIN, SERVICE_UPLOAD_ACTIVITY)
     hass.services.async_remove(DOMAIN, SERVICE_ADD_GEAR_TO_ACTIVITY)
     hass.services.async_remove(DOMAIN, SERVICE_ADD_HYDRATION)
+    hass.services.async_remove(DOMAIN, SERVICE_ADD_NUTRITION)

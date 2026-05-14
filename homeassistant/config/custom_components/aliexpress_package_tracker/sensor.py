@@ -15,6 +15,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.event import async_track_state_change_event
 from homeassistant.helpers.update_coordinator import CoordinatorEntity, DataUpdateCoordinator
 from homeassistant.util import dt as dt_util
+from homeassistant.helpers import entity_registry as er
 
 from .const import (
     ATTRIBUTION,
@@ -90,7 +91,8 @@ async def async_setup_entry(
         valid_ids = {k.lower() for k in stored_data.keys()}
         for uid in list(current_sensors.keys()):
             if uid not in valid_ids:
-                del current_sensors[uid]
+                sensor_to_remove = current_sensors.pop(uid)
+                hass.async_create_task(sensor_to_remove.async_remove())
 
     config_entry.async_on_unload(coordinator.async_add_listener(async_update_sensors))
 
@@ -115,23 +117,46 @@ async def async_setup_entry(
         made_changes = False
         loaded_data = await store.async_load() or {}
 
+        lower_to_actual = {key.lower(): key for key in loaded_data}
+
         if tracking_number_to_remove:
             cleaned_number = _clean_tracking_number(tracking_number_to_remove)
-            if cleaned_number in loaded_data:
-                del loaded_data[cleaned_number]
+            actual_key = lower_to_actual.get(cleaned_number.lower())
+            
+            entity_registry = er.async_get(hass)
+            target_unique_id = cleaned_number.lower()
+            found = False
+            for ent in entity_registry.entities.values():
+                if ent.platform == DOMAIN and ent.unique_id == target_unique_id:
+                    remove_entity_from_registry(hass, ent.entity_id)
+                    found = True
+                    break
+            if not found:
+                remove_entity_from_registry(hass, f"sensor.aliexpress_package_no_{target_unique_id}")
+
+            if actual_key:
+                del loaded_data[actual_key]
                 made_changes = True
-                remove_entity_from_registry(hass, f"sensor.aliexpress_package_no_{cleaned_number.lower()}")
         elif entity_ids_to_remove:
+            entity_registry = er.async_get(hass)
             for entity_id in entity_ids_to_remove:
-                number_from_entity = entity_id.split("aliexpress_package_no_")[-1].lower()
-                if number_from_entity in loaded_data:
-                    del loaded_data[number_from_entity]
+                entity = entity_registry.async_get(entity_id)
+                if entity:
+                    number_from_entity = entity.unique_id.lower()
+                else:
+                    number_from_entity = entity_id.split("aliexpress_package_no_")[-1].lower()
+
+                actual_key = lower_to_actual.get(number_from_entity)
+                if actual_key:
+                    del loaded_data[actual_key]
                     made_changes = True
-                    remove_entity_from_registry(hass, entity_id)
+                
+                # Unconditionally remove from registry to clear ghost entities
+                remove_entity_from_registry(hass, entity_id)
 
         if made_changes:
             await store.async_save(loaded_data)
-            await coordinator.async_request_refresh()
+        await coordinator.async_request_refresh()
 
     async def handle_edit_title(call: ServiceCall) -> None:
         entity_ids = call.data.get("entity_id")
@@ -142,10 +167,20 @@ async def async_setup_entry(
         loaded_data = await store.async_load() or {}
         made_changes = False
 
+        # Create a case-insensitive lookup map for stored tracking numbers
+        lower_to_actual = {key.lower(): key for key in loaded_data}
+
+        entity_registry = er.async_get(hass)
         for entity_id in entity_ids:
-            order_number = entity_id.split("aliexpress_package_no_")[-1].lower()
-            if order_number in loaded_data:
-                loaded_data[order_number][CONF_TITLE] = new_title
+            entity = entity_registry.async_get(entity_id)
+            if entity:
+                order_number = entity.unique_id.lower()
+            else:
+                order_number = entity_id.split("aliexpress_package_no_")[-1].lower()
+
+            actual_key = lower_to_actual.get(order_number)
+            if actual_key:
+                loaded_data[actual_key][CONF_TITLE] = new_title
                 made_changes = True
         if made_changes:
             await store.async_save(loaded_data)
@@ -204,7 +239,7 @@ class AliexpressPackageSensor(CoordinatorEntity, SensorEntity):
             "carrier": api_data.get("destCpInfo", {}).get("cpName"),
             "last_update_time": self._parse_timestamp(api_data.get("latestTrace", {}).get("time")),
         }
-        self._attr_available = bool(data)
+        self._attr_available = bool(api_data)
 
     def _parse_timestamp(self, timestamp_ms: int | None) -> datetime | None:
         """Convert API timestamp to datetime."""

@@ -20,5 +20,5 @@
     "paho-mqtt",
     "shapely==2.1.2"
   ],
-  "version": "v6.18.0"
+  "version": "v6.18.2"
 }

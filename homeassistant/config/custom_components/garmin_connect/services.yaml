@@ -14,6 +14,7 @@ set_active_gear:
       selector:
         entity:
           integration: garmin_connect
+          domain: sensor
     activity_type:
       name: Activity type
       description: The activity type to assign the gear to.
@@ -41,6 +42,14 @@ add_body_composition:
   name: Add body composition
   description: Upload a body composition measurement to Garmin Connect.
   fields:
+    entity_id:
+      name: Garmin Connect weight entity
+      description: Optional Garmin Connect weight sensor whose account should receive the measurement.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
+          device_class: weight
     weight:
       name: Weight (kg)
       description: Body weight in kilograms.
@@ -146,6 +155,13 @@ add_blood_pressure:
   name: Add blood pressure
   description: Upload a blood pressure reading to Garmin Connect.
   fields:
+    entity_id:
+      name: Garmin Connect entity
+      description: Optional Garmin Connect entity whose account should receive the measurement.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
     systolic:
       name: Systolic (mmHg)
       required: true
@@ -188,6 +204,13 @@ create_activity:
   name: Create activity
   description: Create a manual activity in Garmin Connect.
   fields:
+    entity_id:
+      name: Garmin Connect entity
+      description: Optional Garmin Connect entity whose account should receive the activity.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
     activity_name:
       name: Activity name
       required: true
@@ -240,6 +263,13 @@ upload_activity:
   name: Upload activity
   description: Upload a FIT/GPX/TCX activity file to Garmin Connect.
   fields:
+    entity_id:
+      name: Garmin Connect entity
+      description: Optional Garmin Connect entity whose account should receive the upload.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
     file_path:
       name: File path
       description: Absolute path to the activity file on the HA host.
@@ -252,6 +282,13 @@ add_hydration:
   name: Add hydration
   description: Log a hydration intake (or deduction) to Garmin Connect.
   fields:
+    entity_id:
+      name: Garmin Connect entity
+      description: Optional Garmin Connect entity whose account should receive the measurement.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
     value_in_ml:
       name: Amount (mL)
       description: Hydration amount in millilitres. Use a negative value to subtract from today's intake.
@@ -292,3 +329,63 @@ add_gear_to_activity:
       selector:
         entity:
           integration: garmin_connect
+          domain: sensor
+add_nutrition_log:
+  name: Add nutrition log
+  description: >
+    Log a Quick Add nutrition entry to Garmin Connect.
+    Requires a Connect+ subscription and initial nutrition setup in the Garmin Connect app.
+  fields:
+    entity_id:
+      name: Garmin Connect entity
+      description: Optional Garmin Connect entity whose account should receive the entry.
+      selector:
+        entity:
+          integration: garmin_connect
+          domain: sensor
+    calories:
+      name: Calories (kcal)
+      description: Calories to log.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 10000
+          step: 1
+          unit_of_measurement: kcal
+    carbs:
+      name: Carbohydrates (g)
+      selector:
+        number:
+          min: 0
+          max: 2000
+          step: 1
+          unit_of_measurement: g
+    protein:
+      name: Protein (g)
+      selector:
+        number:
+          min: 0
+          max: 2000
+          step: 1
+          unit_of_measurement: g
+    fat:
+      name: Fat (g)
+      selector:
+        number:
+          min: 0
+          max: 2000
+          step: 1
+          unit_of_measurement: g
+    name:
+      name: Label
+      description: Name for the log entry (defaults to "Quick Add").
+      example: "Lunch"
+      selector:
+        text:
+    timestamp:
+      name: Timestamp
+      description: "Log time (ISO 8601). Defaults to now."
+      example: "2024-01-15T12:30:00"
+      selector:
+        text:
