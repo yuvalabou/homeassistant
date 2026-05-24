@@ -1,0 +1,9 @@
+{
+  "domain": "gree_silent",
+  "name": "Gree Silent Mode Patch",
+  "version": "1.0.0",
+  "documentation": "https://gist.github.com/sonic1200/ac1e41f68f7f73ded79eea8223b99857",
+  "dependencies": ["gree"],
+  "codeowners": [],
+  "requirements": []
+}
