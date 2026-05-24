@@ -5,6 +5,7 @@
   mode: restart
   trigger:
     - { id: 'morning_heat', trigger: time, at: '06:10:00' }
+    - { id: 'workday_off', trigger: time, at: '07:00:00' }
     - { id: 'shabbat_wake', trigger: time, at: '08:00:00' }
     - { id: 'night_sleep_prep', trigger: time, at: '22:30:00' }
     - { id: 'shabbat_nap', trigger: time, at: '12:30:00' }
@@ -21,6 +22,7 @@
         {% set shabbat = is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') %}
         {% set tid = trigger.id if trigger is defined else 'manual' %}
         {% if tid == 'morning_heat' %} {{ not shabbat }}
+        {% elif tid == 'workday_off' %} {{ is_state('binary_sensor.workday_sensor', 'on') }}
         {% elif tid == 'shabbat_wake' %} {{ shabbat }}
         {% elif tid == 'night_sleep_prep' %} {{ not shabbat }}
         {% elif tid in ['shabbat_nap', 'shabbat_night_ac', 'shabbat_night_fan', 'stop_morning', 'stop_afternoon'] %} {{ shabbat }}
@@ -47,13 +49,13 @@
                         entity_id: climate.master_bedroom_ac
                       data:
                         hvac_mode: cool
-                        temperature: 19
+                        temperature: 18
               default:
                 - action: climate.set_temperature
                   target: *ac_master
                   data:
                     hvac_mode: cool
-                    temperature: 20
+                    temperature: 19
                 - action: climate.set_fan_mode
                   target: *ac_master
                   data:
@@ -94,7 +96,7 @@
             - *fan_66
         - conditions:
             - condition: trigger
-              id: ['stop_morning', 'stop_afternoon']
+              id: ['stop_morning', 'stop_afternoon', 'workday_off']
           sequence:
             - action: climate.turn_off
               target: *ac_master

@@ -46,24 +46,29 @@
               id: "person"
           sequence:
             - action: ai_task.generate_data
-              target:
-                entity_id: ai_task.google_ai_task
               data:
-                prompt: >
+                entity_id: ai_task.google_ai_task
+                task_name: "Person Detection"
+                instructions: >
                   Write a short description of the person detected, based on an image.
                   The description should highlight observable traits like race, clothing, hair color, accessories, approximate age, gender, and if they are have any weapons.
                   If the person appears to be a mail carrier, delivery worker, or police officer, include identifying uniforms, badges, logos, or parcels.
                   Suitable for a smart home notification.
                   Keep the response under 100 tokens. No emojis.
                   It should be written as if spoken by a ill tempered easy to irritate old man that uses cuss words.
-                image_file: "/config/www/{{ snapshot_filename }}"
+                attachments:
+                  - media_content_id: "media-source://media_source/local/{{ snapshot_filename }}"
+                    media_content_type: "image/jpeg"
+                    metadata:
+                      title: "Garden Person"
+                      media_class: "image"
               response_variable: ai_description
             - action: notify.mobile_app_yuval14
               data:
                 title: "Person Detected in Garden"
                 message: >
                   A person was detected at {{ now().strftime('%H:%M') }}.
-                  {{ ai_description.text }}
+                  {{ ai_description.data }}
                 data:
                   image: "/local/{{ snapshot_filename }}"
                   tag: "garden-camera-alert"

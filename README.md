@@ -1,6 +1,6 @@
-![Maintenance](https://img.shields.io/maintenance/yes/2025.svg?style=plasticr)
+![Maintenance](https://img.shields.io/maintenance/yes/2026.svg?style=plasticr)
 [![GitHub last commit](https://img.shields.io/github/last-commit/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/geekofweek/HomeAssistant-Config/commits/master)
-[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2025.12.4%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
+[![HA Version](https://img.shields.io/badge/Running%20Home%20Assistant-2026.4.1%20-darkblue)](https://github.com/home-assistant/home-assistant/releases/latest)
 [![Commits/Year](https://img.shields.io/github/commit-activity/y/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/commits/master)
 [![GitHub stars](https://img.shields.io/github/stars/yuvalabou/HomeAssistant-Config.svg?style=plasticr)](https://github.com/yuvalabou/HomeAssistant-Config/stargazers)
 
@@ -37,15 +37,15 @@
 | **[Switches](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/switch)** | 46 |
 | **[Buttons](https://www.home-assistant.io/integrations/button)** | 32 |
 | **[Lights](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/light)** | 16 |
-| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 73 |
-| **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 7 |
+| **[Automations](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/automation)** | 72 |
+| **[Scripts](https://github.com/yuvalabou/homeassistant/tree/master/homeassistant/config/components/script)** | 6 |
 
 ### Lines of code
 
 | Type | Lines |
 |:-:|:-:|
-| Python | 28613 |
-| Yaml | 12931 |
+| Python | 39244 |
+| Yaml | 12777 |
 
 -----
 
@@ -63,11 +63,13 @@
 |<img src="https://i0.wp.com/sonoff.tech/wp-content/uploads/2022/07/dongle-p.jpg?fit=1000%2C1000&ssl=1" width=75>|<img src="https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/HP0V2?wid=1144&hei=1144&fmt=jpeg&qlt=95&.v=1586455751752" width=75>|<img src="https://www.megateh.eu/files/products/00/49/45/mccgq11lm.png" width=75>|<img src="https://miot-global.com/uploads/CatalogueImage/pvm_aqara-temperature-and-humidity-sensor-03_15762_1506340175.jpg" width=75>|
 |1|2|4|4|
 
-### Custom devices designed by me
+### Infrastructure & Custom Solutions
 
-| Multisensor (ESPHome) | WLED Strip          | Hot water sensor    |
-|:---------------------:|:-------------------:|:-------------------:|
-|2                      |(2 - Not implemented)|(1 - Not implemented)|
+| Multisensor (ESPHome) | WLED Bed Strip | Hot Water Control | 3-Phase Energy | Reolink Security |
+|:---------------------:|:--------------:|:-----------------:|:--------------:|:----------------:|
+|3 (Ensuite, Bath, Shed)|2 (Harel, Rotem)|1 (Shelly 1PM + Temp)| IoTaWatt/Shelly | RLC-510WA |
+|**Status: Active**     |**Status: Active**|**Status: Active**|**Status: Active**|**Status: Active**|
+
 
 -----
 

@@ -24,6 +24,8 @@ zigbee2mqtt/log
 unifi-controller/
 assist/
 __pycache__
+obsidian
+
 
 # Ignore files
 *.db

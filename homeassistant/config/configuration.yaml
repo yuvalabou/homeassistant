@@ -50,7 +50,6 @@ input_button:
 input_datetime:
 input_number:
 input_select:
-light: !include_dir_merge_list components/light
 media_source:
 mobile_app:
 mqtt: !include_dir_merge_named components/mqtt
@@ -59,7 +58,6 @@ schedule:
 scene: !include_dir_merge_list scene
 script: !include ./scripts.yaml
 sensor: !include_dir_merge_list components/sensor
-switch: !include_dir_merge_list components/switch
 template: !include_dir_merge_list components/template
 timer:
 tts:
@@ -69,6 +67,10 @@ tts:
     type: HilaNeural
 utility_meter:
 zone:
+
+gree_silent:
+  target_macs:
+    - "94:24:b8:b6:28:d6"
 
 ##################################################
 #                  LOG COMPONENTS                #
