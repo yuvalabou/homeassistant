@@ -36,6 +36,8 @@ from .template import inject_template_extensions
 from .tzevaadom import TzevaAdomNotifications
 
 if TYPE_CHECKING:
+    from collections.abc import Callable
+
     from homeassistant.config_entries import ConfigEntry
     from homeassistant.core import (
         HomeAssistant,
@@ -46,10 +48,7 @@ if TYPE_CHECKING:
 
     from .binary_sensor import AlertSensor
 
-from homeassistant.core import (
-    SupportsResponse,
-    callback,
-)
+from homeassistant.core import SupportsResponse
 
 from .config_flow import AREAS_CONFIG
 from .const import (
@@ -74,7 +73,7 @@ from .const import (
     TITLE_FIELD,
     RecordType,
 )
-from .coordinator import OrefAlertCoordinatorUpdater, OrefAlertDataUpdateCoordinator
+from .coordinator import OrefAlertDataUpdateCoordinator
 from .metadata.areas import AREAS
 
 CONFIG_SCHEMA: Final = cv.config_entry_only_config_schema(DOMAIN)
@@ -151,7 +150,6 @@ class OrefAlertRuntimeData:
     """Oref Alert runtime data dataclass."""
 
     coordinator: OrefAlertDataUpdateCoordinator
-    updater: OrefAlertCoordinatorUpdater
     areas_checker: AreasChecker
     pushy: PushyNotifications
     tzevaadom: TzevaAdomNotifications
@@ -160,7 +158,6 @@ class OrefAlertRuntimeData:
     async def stop(self) -> None:
         """Stop background managers and release resources."""
         self.areas_checker.stop()
-        self.updater.stop()
         self.bus_events.stop()
         await asyncio.gather(
             self.coordinator.async_save(),
@@ -386,22 +383,32 @@ async def async_setup_entry(hass: HomeAssistant, entry: OrefAlertConfigEntry) ->
 
     entry.runtime_data = OrefAlertRuntimeData(
         coordinator,
-        OrefAlertCoordinatorUpdater(hass, coordinator),
         AreasChecker(hass),
         pushy,
         tzevaadom,
         OrefAlertBusEventManager(hass, entry),
     )
 
-    @callback
-    def _handle_shutdown(*_: object) -> None:
-        """Persist coordinator state on Home Assistant shutdown."""
-        hass.async_create_task(entry.runtime_data.coordinator.async_save())
-        hass.async_create_task(entry.runtime_data.bus_events.async_save())
+    unsub_shutdown: Callable[[], None] | None = None
 
-    entry.async_on_unload(
-        hass.bus.async_listen_once(EVENT_HOMEASSISTANT_STOP, _handle_shutdown)
+    async def _handle_shutdown(*_: object) -> None:
+        """Persist state and stop background managers on Home Assistant shutdown."""
+        nonlocal unsub_shutdown
+        unsub_shutdown = None
+        await entry.runtime_data.stop()
+
+    unsub_shutdown = hass.bus.async_listen_once(
+        EVENT_HOMEASSISTANT_STOP, _handle_shutdown
     )
+
+    def _unsub_shutdown() -> None:
+        """Unsubscribe shutdown listener if it has not already fired."""
+        nonlocal unsub_shutdown
+        if unsub_shutdown is not None:
+            unsub_shutdown()
+            unsub_shutdown = None
+
+    entry.async_on_unload(_unsub_shutdown)
 
     entry.runtime_data.bus_events.start()
 
@@ -421,8 +428,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: OrefAlertConfigEntry) ->
         LOGGER.exception(f"Error loading {DOMAIN} config entry. Will retry later.")
         await entry.runtime_data.stop()
         raise ConfigEntryNotReady from exc
-
-    entry.runtime_data.updater.start()
 
     return True
 

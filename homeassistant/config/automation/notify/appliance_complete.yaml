@@ -26,36 +26,43 @@
             condition: trigger
             id: 'dishwasher'
           sequence:
-            action: notify.send_message
-            data:
-              target:
-                - mobile_app_yuval14
-                - mobile_app_tohar15
-              message: "Dishwasher finished"
+            - action: notify.mobile_app_yuval14
               data:
-                image: 'https://i.imgflip.com/3w51e9.jpg'
+                message: "Dishwasher finished"
+                data:
+                  image: 'https://i.imgflip.com/3w51e9.jpg'
+            - action: notify.mobile_app_tohar15
+              data:
+                message: "Dishwasher finished"
+                data:
+                  image: 'https://i.imgflip.com/3w51e9.jpg'
         - conditions:
             condition: trigger
             id: 'vacuum'
           sequence:
-            action: notify.send_message
-            data:
-              target:
-                - mobile_app_yuval14
-                - mobile_app_tohar15
-              title: "Finished cleaning"
-              message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int / 60 ) | int }} minutes"
+            - action: notify.mobile_app_yuval14
               data:
-                image: 'https://www.bigsquirrel.com/wp-content/uploads/2015/11/14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg'
+                title: "Finished cleaning"
+                message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int(0) / 60 ) | int(0) }} minutes"
+                data:
+                  image: 'https://www.bigsquirrel.com/wp-content/uploads/2015/11/14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg'
+            - action: notify.mobile_app_tohar15
+              data:
+                title: "Finished cleaning"
+                message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int(0) / 60 ) | int(0) }} minutes"
+                data:
+                  image: 'https://www.bigsquirrel.com/wp-content/uploads/2015/11/14c0f057abec6dabfc5be48cbbd0d904fef889a8781eee667984089207daf998.jpg'
         - conditions:
             condition: trigger
             id: 'washing_machine'
           sequence:
-            - action: notify.send_message
+            - action: notify.mobile_app_yuval14
               data:
-                target:
-                  - mobile_app_yuval14
-                  - mobile_app_tohar15
+                message: "Washing machine finished"
+                data:
+                  image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg'
+            - action: notify.mobile_app_tohar15
+              data:
                 message: "Washing machine finished"
                 data:
                   image: 'https://i.kym-cdn.com/photos/images/newsfeed/001/237/748/a8e.jpg'

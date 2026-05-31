@@ -40,11 +40,14 @@
         - condition: trigger
           id: '10_min'
         sequence:
-          - action: notify.send_message
+          - action: notify.mobile_app_yuval14
             data:
-              target:
-                - mobile_app_yuval14
-                - mobile_app_tohar15
+              title: "שבת שלום!"
+              message: "שבת נכנסת בעוד 10 דקות."
+              data:
+                image: '/local/assets/notification_images/Shalom_Aleichem.jpg'
+          - action: notify.mobile_app_tohar15
+            data:
               title: "שבת שלום!"
               message: "שבת נכנסת בעוד 10 דקות."
               data:

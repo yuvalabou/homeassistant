@@ -747,7 +747,7 @@ ACTIVITY_TRACKING_SENSORS: tuple[GarminConnectSensorEntityDescription, ...] = (
         coordinator_type=CoordinatorType.ACTIVITY,
         value_fn=lambda data: len((data.get("lastActivity") or {}).get("polyline") or []),
         attributes_fn=lambda data: {
-            "polyline": (data.get("lastActivity") or {}).get("polyline") or [],
+            "polyline": ((data.get("lastActivity") or {}).get("polyline") or [])[::max(1, len((data.get("lastActivity") or {}).get("polyline") or []) // 150)],
             "has_polyline": (data.get("lastActivity") or {}).get("hasPolyline", False),
             "activity_name": (data.get("lastActivity") or {}).get("activityName"),
         },
