@@ -10,7 +10,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import ConfigType
 from homeassistant.helpers.entity_registry import async_get
 
-from .common import InteractiveEntityBase, EntityManager, is_boolean_enum, Configuration
+from .common import InteractiveEntityBase, EntityManager, is_boolean_enum, Configuration, find_delayed_operation_option
 from .const import CONF_DELAYED_OPS, CONF_DELAYED_OPS_ABSOLUTE_TIME, CONF_DELAYED_OPS_DEFAULT, CONF_TRANSLATION_MODE, CONF_TRANSLATION_MODE_SERVER, DEVICE_ICON_MAP, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -29,21 +29,24 @@ async def async_setup_entry(hass:HomeAssistant , config_entry:ConfigType, async_
             device = ProgramSelect(appliance, None, conf)
             entity_manager.add(device)
 
+        delayed_option = find_delayed_operation_option(appliance, conf)
+        if delayed_option and (
+            entry_conf[CONF_DELAYED_OPS] == CONF_DELAYED_OPS_DEFAULT or not DelayedOperationTime.has_program_run_time(appliance)):
+            device = DelayedOperationSelect(appliance, delayed_option.key, conf, delayed_option)
+            # remove the TIME delayed operation entity if it exists
+            reg = async_get(hass)
+            time_entity = reg.async_get_entity_id("time", DOMAIN, device.unique_id)
+            if time_entity:
+                reg.async_remove(time_entity)
+
+            entity_manager.add(device)
+
         if appliance.available_programs:
             for program in appliance.available_programs.values():
                 if program.options:
                     for option in program.options.values():
-                        if conf.get_entity_setting(option.key, "type") == "DelayedOperation" and (
-                            entry_conf[CONF_DELAYED_OPS] == CONF_DELAYED_OPS_DEFAULT or not DelayedOperationTime.has_program_run_time(appliance)):
-                            device = DelayedOperationSelect(appliance, option.key, conf, option)
-                            # remove the TIME delayed operation entity if it exists
-                            reg = async_get(hass)
-                            time_entity = reg.async_get_entity_id("time", DOMAIN, device.unique_id)
-                            if time_entity:
-                                reg.async_remove(time_entity)
-
-                            entity_manager.add(device)
-                        elif option.allowedvalues and len(option.allowedvalues)>1:
+                        if conf.get_entity_setting(option.key, "type") != "DelayedOperation" \
+                            and option.allowedvalues and len(option.allowedvalues)>1:
                             device = OptionSelect(appliance, option.key, conf)
                             entity_manager.add(device)
 

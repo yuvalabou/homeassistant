@@ -24,12 +24,7 @@
               target:
                 entity_id: fan.kids_bedroom_fan
               data:
-                percentage: >
-                  {% set temp = states('sensor.kids_room_temperature') | float(22) %}
-                  {% if temp >= 26 %} 100
-                  {% elif temp >= 24 %} 66
-                  {% elif temp >= 22 %} 33
-                  {% else %} 33 {% endif %}
+                percentage: 100
         - conditions: "{{ trigger.id in ['turn_off', 'shabbat_off'] }}"
           sequence:
             - action: fan.turn_off

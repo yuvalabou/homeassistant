@@ -33,12 +33,12 @@
             - condition: trigger
               id: ['night_sleep_prep', 'shabbat_nap', 'shabbat_night_ac']
           sequence:
-            - &fan_66
+            - &fan_100
               action: fan.turn_on
               target:
                 entity_id: fan.master_bedroom_fan
               data:
-                percentage: 66
+                percentage: 100
             - choose:
                 - conditions: &is_winter
                     - condition: template
@@ -68,7 +68,7 @@
             - condition: trigger
               id: ['morning_heat', 'shabbat_wake']
           sequence:
-            - *fan_66
+            - *fan_100
             - choose:
                 - conditions: *is_winter
                   sequence:
@@ -93,7 +93,7 @@
             - condition: trigger
               id: 'shabbat_night_fan'
           sequence:
-            - *fan_66
+            - *fan_100
         - conditions:
             - condition: trigger
               id: ['stop_morning', 'stop_afternoon', 'workday_off']

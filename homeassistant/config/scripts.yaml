@@ -36,24 +36,28 @@ set_balanced:
   description: ''
 notify_for_shabbat_2:
   alias: Notify for Shabbat
+  description: Give a Shabbat brief on a media device using tts
   sequence:
-  - data:
-      volume_level: 1
-    action: media_player.volume_set
+  - action: media_player.volume_set
     target:
       entity_id: media_player.living_room
+    data:
+      volume_level: 1
   - delay: 3
-  - data:
-      message: '"השבת פרשת {{ states(''sensor.jewish_calendar_parshat_hashavua'')
-        }}, כניסת שבת בשעה {{ as_timestamp(states(''sensor.jewish_calendar_upcoming_shabbat_candle_lighting''))
-        | timestamp_custom(''%I:%M'') }}, צאת השבת בשעה {{ as_timestamp(states(''sensor.jewish_calendar_upcoming_havdalah''))
-        | timestamp_custom(''%I:%M'') }}."'
-    action: notify.nest_mini
-  - entity_id: media_player.living_room
+  - action: tts.speak
+    target:
+      device_id: 0887f940fb46d82138d98296dcd1411b
+    data:
+      media_player_entity_id: media_player.living_room
+      message: השבת פרשת {{ states('sensor.jewish_calendar_parshat_hashavua') }},
+        כניסת שבת בשעה {{ as_timestamp(states('sensor.jewish_calendar_upcoming_shabbat_candle_lighting'),
+        0) | timestamp_custom('%H:%M', default='00:00') }}, צאת השבת בשעה {{ as_timestamp(states('sensor.jewish_calendar_upcoming_havdalah'),
+        0) | timestamp_custom('%H:%M', default='00:00') }}.
+  - action: media_player.volume_set
+    target:
+      entity_id: media_player.living_room
     data:
       volume_level: 0.5
-    action: media_player.volume_set
-  description: Give a Shabbat brief on a media device using tts
 heat:
   alias: Heat
   sequence:
@@ -68,7 +72,7 @@ heat:
     action: climate.set_hvac_mode
   - delay: 2
   - data:
-      temperature: input_number.climate_set_temp
+      temperature: "{{ states('input_number.climate_set_temp') | float }}"
     target:
       entity_id: climate.living_room
     action: climate.set_temperature
@@ -88,7 +92,7 @@ cool:
     action: climate.set_hvac_mode
   - delay: 2
   - data:
-      temperature: input_number.climate_set_temp
+      temperature: "{{ states('input_number.climate_set_temp') | float }}"
     target:
       entity_id: climate.living_room
     action: climate.set_temperature

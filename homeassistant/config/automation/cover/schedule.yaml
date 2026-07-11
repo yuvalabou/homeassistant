@@ -8,6 +8,7 @@
     - { id: 'weekday_close', trigger: time, at: '23:00:00' }
     - { id: 'shabbat_open', trigger: time, at: '08:00:00' }
     - { id: 'shabbat_close', trigger: time, at: input_datetime.shabbat_lights_off_time }
+    - { id: 'summer_midday_open', trigger: time, at: '13:00:00' }
   condition:
     - condition: state
       entity_id: group.person
@@ -17,10 +18,11 @@
         {% set shabbat = is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') %}
         {% set tid = trigger.id if trigger is defined else 'manual' %}
         {{ (tid in ['weekday_open', 'weekday_close'] and not shabbat) or
-           (tid in ['shabbat_open', 'shabbat_close'] and shabbat) }}
+           (tid in ['shabbat_open', 'shabbat_close'] and shabbat) or
+           (tid == 'summer_midday_open' and now().month in [7, 8] and is_state('binary_sensor.workday_sensor', 'on')) }}
   action:
     - choose:
-        - conditions: "{{ trigger.id in ['weekday_open', 'shabbat_open'] }}"
+        - conditions: "{{ trigger.id in ['weekday_open', 'shabbat_open', 'summer_midday_open'] }}"
           sequence:
             - action: cover.open_cover
               target:

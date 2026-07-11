@@ -20,44 +20,65 @@
       at:
         - input_datetime.shabbat_lights_off_time
         - '18:00:00'
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
   action:
     choose:
       - conditions:
           - condition: trigger
             id: 'on'
-          - "{{ is_state('group.person', 'home') }}"
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
-          - condition: numeric_state
-            entity_id: sensor.living_room_h_t_temperature
-            above: input_number.threshold_climate_temperature
+          - condition: template
+            value_template: >-
+              {% set temp = states('sensor.living_room_h_t_temperature') | float(0) %}
+              {% set threshold = states('input_number.threshold_climate_temperature') | float(0) %}
+              {{ temp < threshold if (now().month >= 11 or now().month <= 3) else temp > threshold }}
         sequence:
-          action: script.turn_on
-          data:
-            entity_id: script.heat
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ now().month >= 11 or now().month <= 3 }}"
+                sequence:
+                  - action: script.turn_on
+                    data:
+                      entity_id: script.cool
+            default:
+              - action: script.turn_on
+                data:
+                  entity_id: script.cool
       - conditions:
           - condition: trigger
             id: 'off'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'off') }}"
         sequence:
-          action: climate.turn_off
-          data:
-            entity_id: climate.living_room
+          - action: climate.turn_off
+            data:
+              entity_id: climate.living_room
       - conditions:
           - condition: trigger
             id: 'shabbat_morning'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
         sequence:
-          action: script.turn_on
-          data:
-            entity_id: script.heat
+          - choose:
+              - conditions:
+                  - condition: template
+                    value_template: "{{ now().month >= 11 or now().month <= 3 }}"
+                sequence:
+                  - action: script.turn_on
+                    data:
+                      entity_id: script.cool
+            default:
+              - action: script.turn_on
+                data:
+                  entity_id: script.cool
       - conditions:
           - condition: trigger
             id: 'shabbat_night'
           - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
         sequence:
-          action: climate.turn_off
-          data:
-            entity_id: climate.living_room
+          - action: climate.turn_off
+            data:
+              entity_id: climate.living_room
 
 - alias: "Shabbat Night climate automation toggle"
   id: 6fc9b9d3-7069-4a0f-90ae-b2bc9b1ee805
@@ -70,12 +91,13 @@
       trigger: state
       entity_id: binary_sensor.jewish_calendar_issur_melacha_in_effect
       to: 'off'
+  condition:
+    - "{{ is_state('group.person', 'home') }}"
   action:
     - choose:
       - conditions:
           - condition: trigger
             id: 'on'
-          - "{{ is_state('group.person', 'home') }}"
           - "{{ is_state('input_boolean.night_ac_is_needed', 'on') }}"
         sequence:
           action: automation.turn_on
@@ -107,10 +129,19 @@
         entity_id: climate.living_room
         state: 'off'
       then:
-        action: script.turn_on
-        data:
-          entity_id: script.heat
+        - choose:
+            - conditions:
+                - condition: template
+                  value_template: "{{ now().month >= 11 or now().month <= 3 }}"
+              sequence:
+                - action: script.turn_on
+                  data:
+                    entity_id: script.heat
+          default:
+            - action: script.turn_on
+              data:
+                entity_id: script.cool
       else:
-        action: climate.turn_off
-        data:
-          entity_id: climate.living_room
+        - action: climate.turn_off
+          data:
+            entity_id: climate.living_room

@@ -50,6 +50,15 @@
             - action: switch.turn_off
               target:
                 entity_id: switch.boiler
-            - action: notify.nest_mini
+            - action: media_player.volume_set
+              target:
+                entity_id: media_player.living_room
               data:
+                volume_level: 1
+            - delay: 3
+            - action: tts.speak
+              target:
+                device_id: 0887f940fb46d82138d98296dcd1411b
+              data:
+                media_player_entity_id: media_player.living_room
                 message: "הדוד כבה. המים חמים."

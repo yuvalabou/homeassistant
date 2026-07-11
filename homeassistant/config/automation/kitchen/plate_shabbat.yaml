@@ -63,6 +63,7 @@
     at: input_datetime.shabbat_lights_off_time
   condition:
     - "{{ is_state('input_boolean.out_for_shabbat_morning', 'on') }}"
+    - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
   action:
     action: switch.turn_off
     data:

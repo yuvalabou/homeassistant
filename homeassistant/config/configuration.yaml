@@ -61,10 +61,6 @@ sensor: !include_dir_merge_list components/sensor
 template: !include_dir_merge_list components/template
 timer:
 tts:
-  - platform: microsoft
-    api_key: !secret azure_tts
-    language: he-il
-    type: HilaNeural
 utility_meter:
 zone:
 

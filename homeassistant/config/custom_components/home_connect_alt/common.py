@@ -13,6 +13,20 @@ from .const import CONF_NAME_TEMPLATE, CONF_NAME_TEMPLATE_DEFAULT, DOMAIN, DEFAU
 
 _LOGGER = logging.getLogger(__name__)
 
+def find_delayed_operation_option(appliance:Appliance, conf:"Configuration"):
+    """ Return the first option marked as 'DelayedOperation' found on the appliance, looking first in the available program options and falling back to the currently selected program's options. Returns None if no such option exists. """
+    if appliance.available_programs:
+        for program in appliance.available_programs.values():
+            if program.options:
+                for option in program.options.values():
+                    if conf.get_entity_setting(option.key, "type") == "DelayedOperation":
+                        return option
+    if appliance.selected_program and appliance.selected_program.options:
+        for option in appliance.selected_program.options.values():
+            if conf.get_entity_setting(option.key, "type") == "DelayedOperation":
+                return option
+    return None
+
 def is_boolean_enum(values:list[str]) -> bool:
     """ Check if the list of enum values represents a boolean on/off option"""
     if not values or len(values) != 2:
