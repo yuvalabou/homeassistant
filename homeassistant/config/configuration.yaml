@@ -8,6 +8,8 @@ homeassistant:
   internal_url: !secret internal_url
   allowlist_external_dirs:
     - /config
+  media_dirs:
+    local: /config/www
 config:
 cloud:
 my:

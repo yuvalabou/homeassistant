@@ -4,15 +4,22 @@
   id: 3e52818c-536a-4e9e-b92f-088e60a03070
   mode: restart
   trigger:
-    - { id: 'weekday_open', trigger: time, at: '06:15:00' }
-    - { id: 'weekday_close', trigger: time, at: '23:00:00' }
-    - { id: 'shabbat_open', trigger: time, at: '08:00:00' }
-    - { id: 'shabbat_close', trigger: time, at: input_datetime.shabbat_lights_off_time }
-    - { id: 'summer_midday_open', trigger: time, at: '13:00:00' }
+    - id: 'weekday_open'
+      trigger: time
+      at: '06:15:00'
+    - id: 'weekday_close'
+      trigger: time
+      at: '23:00:00'
+    - id: 'shabbat_open'
+      trigger: time
+      at: '08:00:00'
+    - id: 'shabbat_close'
+      trigger: time
+      at: input_datetime.shabbat_lights_off_time
+    - id: 'summer_midday_open'
+      trigger: time
+      at: '13:00:00'
   condition:
-    - condition: state
-      entity_id: group.person
-      state: 'home'
     - condition: template
       value_template: >
         {% set shabbat = is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') %}
@@ -22,7 +29,9 @@
            (tid == 'summer_midday_open' and now().month in [7, 8] and is_state('binary_sensor.workday_sensor', 'on')) }}
   action:
     - choose:
-        - conditions: "{{ trigger.id in ['weekday_open', 'shabbat_open', 'summer_midday_open'] }}"
+        - conditions:
+            - "{{ trigger.id in ['weekday_open', 'shabbat_open'] }}"
+            - "{{ is_state('group.person', 'home') }}"
           sequence:
             - action: cover.open_cover
               target:
@@ -37,6 +46,13 @@
                     - action: light.turn_off
                       target:
                         entity_id: light.pergola_light
+        - conditions:
+            - "{{ trigger.id == 'summer_midday_open' }}"
+            - "{{ is_state('group.person', 'not_home') }}"
+          sequence:
+            - action: cover.open_cover
+              target:
+                entity_id: cover.living_room_shutter
         - conditions: "{% set tid = trigger.id %}
             {% set not_sukkot = state_attr('sensor.jewish_calendar_holiday', 'id') not in ['sukkot', 'hol_hamoed_sukkot'] %}
             {% set guest_ok = is_state('input_boolean.guest_mode', 'off') %}

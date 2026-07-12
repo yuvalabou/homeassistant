@@ -2652,7 +2652,8 @@ var Constants = /*#__PURE__*/_createClass(function Constants() {
   _classCallCheck(this, Constants);
 });
 _defineProperty(Constants, "FALLBACK_LOCALIZATION", en);
-_defineProperty(Constants, "DEFAULT_REFRESH_PERIOD", 20 * 1000);
+// Refresh period in seconds
+_defineProperty(Constants, "DEFAULT_REFRESH_PERIOD", 20);
 // 24 hours in milliseconds
 _defineProperty(Constants, "MS_24_HOURS", 24 * 60 * 60 * 1000);
 // 12 hours in milliseconds
@@ -3321,13 +3322,25 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
     function HorizonCard() {
       var _this;
       _classCallCheck(this, HorizonCard);
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      _this = _super.call.apply(_super, [this].concat(args));
+      _this = _super.call(this);
       _initialize(_assertThisInitialized(_this));
+      _this.data = Constants.DEFAULT_CARD_DATA;
       return _this;
     }
+
+    /**
+     * called by HASS to properly distribute card in lovelace view. It should return height
+     * of the card as a number where 1 is equivalent of 50 pixels.
+     * @see https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card/#api
+     */
+
+    /**
+     * Called by HASS to size the card in the Sections view grid. The grid has 12 columns;
+     * a cell is 56px tall with an 8px gap, so rows = ceil((pxHeight + 8) / 64).
+     * @see https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card/#sizing-in-sections-view
+     */
+
+    // called by HASS whenever config changes
     return _createClass(HorizonCard);
   }(_LitElement);
   return {
@@ -3362,9 +3375,7 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
       kind: "field",
       decorators: [t()],
       key: "data",
-      value: function value() {
-        return Constants.DEFAULT_CARD_DATA;
-      }
+      value: void 0
     }, {
       kind: "field",
       decorators: [t()],
@@ -3382,9 +3393,32 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
       }
     }, {
       kind: "field",
-      key: "wasDisconnected",
+      key: "refreshTimer",
+      value: void 0
+    }, {
+      kind: "field",
+      key: "lastComputeTimestamp",
       value: function value() {
-        return false;
+        return 0;
+      }
+    }, {
+      kind: "field",
+      key: "onVisibilityChange",
+      value: function value() {
+        var _this2 = this;
+        return function () {
+          if (!_this2.config) {
+            return;
+          }
+          if (document.visibilityState !== 'visible') {
+            return;
+          }
+          var p = _this2.refreshPeriodMs();
+          if (p > 0 && Date.now() - _this2.lastComputeTimestamp >= p) {
+            _this2.hasCalculated = false;
+            _this2.requestUpdate();
+          }
+        };
       }
     }, {
       kind: "get",
@@ -3401,13 +3435,15 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
           return "set hass :: ".concat(_hass.locale.language, " :: ").concat(_hass.locale.time_format);
         }, 2);
         this.lastHass = _hass;
+        if (!this.config) {
+          return;
+        }
+        var p = this.refreshPeriodMs();
+        if (p > 0 && Date.now() - this.lastComputeTimestamp >= p) {
+          this.hasCalculated = false;
+          this.requestUpdate();
+        }
       }
-
-      /**
-       * called by HASS to properly distribute card in lovelace view. It should return height
-       * of the card as a number where 1 is equivalent of 50 pixels.
-       * @see https://developers.home-assistant.io/docs/frontend/custom-ui/custom-card/#api
-       */
     }, {
       kind: "method",
       key: "getCardSize",
@@ -3437,8 +3473,60 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
         }, 2);
         return height;
       }
-
-      // called by HASS whenever config changes
+    }, {
+      kind: "method",
+      key: "getGridOptions",
+      value: function getGridOptions() {
+        var rows = this.computeGridRows();
+        // The row model is calibrated at full (12-column) width. min_columns lets the card
+        // be narrowed to half width; at narrower widths reflowed content may need slightly
+        // more height than reported (a cosmetic clip, never on the default full-width layout).
+        return {
+          rows: rows,
+          columns: 12,
+          min_rows: rows,
+          min_columns: 6
+        };
+      }
+    }, {
+      kind: "method",
+      key: "computeGridRows",
+      value: function computeGridRows() {
+        var _this$config;
+        // Section pixel heights measured at ~480px card width (see PR #158).
+        var height = {
+          graph: 187.08,
+          title: 41,
+          sunrise_sunset: 42.17,
+          dawn_noon_dusk: 48.3,
+          single_azimuth_elevation: 48.3,
+          both_azimuth_elevation: 66.78,
+          // Bumped from PR #158's 48.3: the Playwright visual tests showed the busiest
+          // moon config renders one grid row taller than the raw model, so this keeps
+          // getGridOptions() from ever under-reporting rows (which would clip the card).
+          moon_row: 58
+        };
+        var size = height.graph;
+        var fieldConfig = this.expandedFieldConfig();
+        if ((_this$config = this.config) !== null && _this$config !== void 0 && _this$config.title && this.config.title.length > 0) {
+          size += height.title;
+        }
+        if (fieldConfig.sunrise || fieldConfig.sunset) {
+          size += height.sunrise_sunset;
+        }
+        if (fieldConfig.dawn || fieldConfig.noon || fieldConfig.dusk) {
+          size += height.dawn_noon_dusk;
+        }
+        if (fieldConfig.sun_azimuth && fieldConfig.moon_azimuth || fieldConfig.sun_elevation && fieldConfig.moon_elevation) {
+          size += height.both_azimuth_elevation;
+        } else if (fieldConfig.sun_azimuth || fieldConfig.moon_azimuth || fieldConfig.sun_elevation || fieldConfig.moon_elevation) {
+          size += height.single_azimuth_elevation;
+        }
+        if (fieldConfig.moonrise || fieldConfig.moon_phase || fieldConfig.moonset) {
+          size += height.moon_row;
+        }
+        return Math.ceil((size + 8) / 64);
+      }
     }, {
       kind: "method",
       key: "setConfig",
@@ -3481,7 +3569,6 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
       kind: "method",
       key: "updated",
       value: function updated(changedProperties) {
-        var _this2 = this;
         _get(_getPrototypeOf(HorizonCard.prototype), "updated", this).call(this, changedProperties);
         this.debug(function () {
           return "updated() - ".concat(JSON.stringify(Array.from(changedProperties.keys())));
@@ -3495,25 +3582,44 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
           this.calculateStatePartial();
         } else if (this.data.partial) {
           this.calculateStateFinal();
-          var refreshPeriod = this.refreshPeriod();
-          if (refreshPeriod > 0) {
-            window.setTimeout(function () {
-              if (!_this2.wasDisconnected) {
-                _this2.debug('refresh via setTimeout()', 2);
-                if (_this2.hasCalculated) {
-                  _this2.calculateStatePartial();
-                }
-              }
-            }, refreshPeriod);
-          }
+          this.scheduleRefresh();
         }
+      }
+    }, {
+      kind: "method",
+      key: "connectedCallback",
+      value: function connectedCallback() {
+        _get(_getPrototypeOf(HorizonCard.prototype), "connectedCallback", this).call(this);
+        // Lit does not re-render on reconnect, so re-arm the calculation loop
+        // unconditionally to immediately refresh when the view is shown again.
+        this.hasCalculated = false;
+        this.requestUpdate();
+        document.addEventListener('visibilitychange', this.onVisibilityChange);
+        this.debug('connectedCallback()', 2);
       }
     }, {
       kind: "method",
       key: "disconnectedCallback",
       value: function disconnectedCallback() {
-        this.wasDisconnected = true;
+        _get(_getPrototypeOf(HorizonCard.prototype), "disconnectedCallback", this).call(this);
+        window.clearTimeout(this.refreshTimer);
+        document.removeEventListener('visibilitychange', this.onVisibilityChange);
         this.debug('disconnectedCallback()', 2);
+      }
+    }, {
+      kind: "method",
+      key: "scheduleRefresh",
+      value: function scheduleRefresh() {
+        var _this3 = this;
+        window.clearTimeout(this.refreshTimer);
+        if (this.refreshPeriodMs() > 0) {
+          this.refreshTimer = window.setTimeout(function () {
+            _this3.debug('refresh via setTimeout()', 2);
+            if (_this3.hasCalculated) {
+              _this3.calculateStatePartial();
+            }
+          }, this.refreshPeriodMs());
+        }
       }
     }, {
       kind: "method",
@@ -3530,12 +3636,13 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
       kind: "method",
       key: "calculateStatePartial",
       value: function calculateStatePartial() {
-        var _this3 = this;
+        var _this4 = this;
+        this.lastComputeTimestamp = Date.now();
         var now = this.now();
         var latitude = this.latitude();
         var longitude = this.longitude();
         this.debug(function () {
-          return "calculateStatePartial() :: ".concat(now === null || now === void 0 ? void 0 : now.toISOString(), " ").concat(_this3.timeZone(), " :: ").concat(latitude, ", ").concat(longitude);
+          return "calculateStatePartial() :: ".concat(now === null || now === void 0 ? void 0 : now.toISOString(), " ").concat(_this4.timeZone(), " :: ").concat(latitude, ", ").concat(longitude);
         });
         var times = this.readSunTimes(now, latitude, longitude, this.elevation());
         var sunCalcPosition = SunCalc.getPosition(times.now, latitude, longitude);
@@ -3780,17 +3887,17 @@ var HorizonCard = _decorate([e$1('horizon-card')], function (_initialize, _LitEl
       }
     }, {
       kind: "method",
-      key: "refreshPeriod",
-      value: function refreshPeriod() {
-        var _this$config$refresh_;
-        return (_this$config$refresh_ = this.config.refresh_period) !== null && _this$config$refresh_ !== void 0 ? _this$config$refresh_ : Constants.DEFAULT_REFRESH_PERIOD;
+      key: "refreshPeriodMs",
+      value: function refreshPeriodMs() {
+        var _this$config$refresh_, _this$config2;
+        return ((_this$config$refresh_ = (_this$config2 = this.config) === null || _this$config2 === void 0 ? void 0 : _this$config2.refresh_period) !== null && _this$config$refresh_ !== void 0 ? _this$config$refresh_ : Constants.DEFAULT_REFRESH_PERIOD) * 1000;
       }
     }, {
       kind: "method",
       key: "debugLevel",
       value: function debugLevel() {
-        var _this$config$debug_le, _this$config;
-        return (_this$config$debug_le = (_this$config = this.config) === null || _this$config === void 0 ? void 0 : _this$config.debug_level) !== null && _this$config$debug_le !== void 0 ? _this$config$debug_le : 0;
+        var _this$config$debug_le, _this$config3;
+        return (_this$config$debug_le = (_this$config3 = this.config) === null || _this$config3 === void 0 ? void 0 : _this$config3.debug_level) !== null && _this$config$debug_le !== void 0 ? _this$config$debug_le : 0;
       }
     }, {
       kind: "method",
