@@ -8,6 +8,8 @@ import zoneinfo
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Final, TypedDict
 
+from homeassistant.const import STATE_OK
+
 if TYPE_CHECKING:
     from datetime import datetime
 
@@ -21,12 +23,15 @@ ATTR_AREA: Final = "area"
 ATTR_COUNTRY_ACTIVE_ALERTS: Final = "country_active_alerts"
 ATTR_COUNTRY_UPDATES: Final = "country_updates"
 ATTR_DISPLAY: Final = "display"
+ATTR_DISTANCE: Final = "distance"
 ATTR_DISTRICT: Final = "district"
 ATTR_EMOJI: Final = "emoji"
 ATTR_HOME_DISTANCE: Final = "home_distance"
 ATTR_RECORD: Final = "record"
+ATTR_RECORDS: Final = "records"
 ATTR_SELECTED_AREAS_ACTIVE_ALERTS: Final = "selected_areas_active_alerts"
 ATTR_SELECTED_AREAS_UPDATES: Final = "selected_areas_updates"
+ATTR_STATE: Final = "state"
 ATTR_TIME_TO_SHELTER: Final = "time_to_shelter"
 ATTR_TYPE: Final = "type"
 
@@ -45,6 +50,7 @@ REMOVE_AREAS: Final = "remove_areas"
 SYNTHETIC_ALERT_ACTION: Final = "synthetic_alert"
 MANUAL_EVENT_END_ACTION: Final = "manual_event_end"
 OREF_ALERT_UNIQUE_ID: Final = DOMAIN
+OREF_ALERT_RECORD_EVENT: Final = f"{DOMAIN}_record"
 ALL_AREAS_ID_SUFFIX: Final = "all_areas"
 TIME_TO_SHELTER_ID_SUFFIX: Final = "time_to_shelter"
 LOCATION_ID_SUFFIX: Final = "location"
@@ -92,6 +98,14 @@ class RecordType(enum.StrEnum):
     PRE_ALERT = "pre_alert"
     ALERT = "alert"
     END = "end"
+
+
+class AreaStatus(enum.StrEnum):
+    """An area's current computed status (as opposed to an incoming record's type)."""
+
+    OK = STATE_OK
+    PRE_ALERT = RecordType.PRE_ALERT.value
+    ALERT = RecordType.ALERT.value
 
 
 class PublishedData(TypedDict):
