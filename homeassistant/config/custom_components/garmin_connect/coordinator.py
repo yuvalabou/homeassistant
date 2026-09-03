@@ -8,15 +8,19 @@ from __future__ import annotations
 import asyncio
 import logging
 from dataclasses import dataclass
-from datetime import timedelta
+from datetime import date, timedelta
 from typing import Any
 
+from aiohttp import ClientError
 from ha_garmin import GarminAuth, GarminClient
-from ha_garmin.exceptions import GarminAuthError
+from ha_garmin.exceptions import GarminAuthError, GarminConnectError
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
+from homeassistant.helpers import entity_registry as er
+from homeassistant.helpers import issue_registry as ir
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.util import dt as dt_util
 
 from .const import (
     CONF_CLIENT_ID,
@@ -28,6 +32,15 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+# Consecutive empty *calendar days* (not poll cycles - fetch_nutrition_data() always
+# queries "today", so multiple same-day polls must not each count) before raising a
+# "Connect+ required" repair issue. fetch_nutrition_data() returns {} both when the
+# account lacks Connect+ and on transient API errors, so we require a run of empty days
+# to rule out a one-off blip. The issue is never raised (and never re-raised) once any
+# poll has ever returned real data, since that proves the account IS set up correctly -
+# a later gap just means the user hasn't logged food, not that Connect+ is missing.
+_NUTRITION_EMPTY_DAY_THRESHOLD = 3
 
 
 @dataclass
@@ -71,6 +84,10 @@ class BaseGarminCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         self.auth = auth
         self._refresh_lock = asyncio.Lock()
 
+    def set_update_interval(self, update_interval: timedelta) -> None:
+        """Update the coordinator's polling interval."""
+        self.update_interval = update_interval
+
     async def _update_tokens_if_changed(self) -> None:
         """Update stored tokens if they changed during refresh."""
         async with self._refresh_lock:
@@ -111,7 +128,8 @@ class CoreCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching core data: %s", err)
             raise UpdateFailed(f"Error fetching core data: {err}") from err
         return data
 
@@ -137,7 +155,8 @@ class ActivityCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching activity data: %s", err)
             raise UpdateFailed(f"Error fetching activity data: {err}") from err
         return data
 
@@ -163,7 +182,8 @@ class TrainingCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching training data: %s", err)
             raise UpdateFailed(f"Error fetching training data: {err}") from err
         return data
 
@@ -189,7 +209,8 @@ class BodyCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching body data: %s", err)
             raise UpdateFailed(f"Error fetching body data: {err}") from err
         return data
 
@@ -215,7 +236,8 @@ class GoalsCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching goals data: %s", err)
             raise UpdateFailed(f"Error fetching goals data: {err}") from err
         return data
 
@@ -241,7 +263,8 @@ class GearCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching gear data: %s", err)
             raise UpdateFailed(f"Error fetching gear data: {err}") from err
         return data
 
@@ -274,7 +297,8 @@ class BloodPressureCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching blood pressure data: %s", err)
             raise UpdateFailed(f"Error fetching blood pressure data: {err}") from err
         return data
 
@@ -300,7 +324,8 @@ class MenstrualCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching menstrual data: %s", err)
             raise UpdateFailed(f"Error fetching menstrual data: {err}") from err
         return data
 
@@ -318,6 +343,28 @@ class NutritionCoordinator(BaseGarminCoordinator):
         """Initialize."""
         scan_interval = entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
         super().__init__(hass, entry, client, auth, "nutrition", timedelta(seconds=scan_interval))
+        self._ever_had_data = False
+        self._empty_days = 0
+        self._last_empty_date: date | None = None
+
+    @property
+    def _connect_plus_issue_id(self) -> str:
+        return f"nutrition_connect_plus_required_{self.config_entry.entry_id}"
+
+    def _has_enabled_nutrition_entity(self) -> bool:
+        """Return True if the user has enabled at least one nutrition sensor.
+
+        Nutrition sensors are disabled by default and this coordinator polls
+        unconditionally regardless of that, so most installs never touch the
+        feature at all. An empty response is only worth surfacing if the user
+        has actually opted in by enabling a nutrition sensor.
+        """
+        registry = er.async_get(self.hass)
+        prefix = f"{self.config_entry.entry_id}_nutrition"
+        return any(
+            entry.unique_id.startswith(prefix) and entry.disabled_by is None
+            for entry in er.async_entries_for_config_entry(registry, self.config_entry.entry_id)
+        )
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Fetch nutrition data from Garmin Connect."""
@@ -326,8 +373,40 @@ class NutritionCoordinator(BaseGarminCoordinator):
             await self._update_tokens_if_changed()
         except GarminAuthError as err:
             raise ConfigEntryAuthFailed("Authentication failed") from err
-        except Exception as err:
+        except (GarminConnectError, ClientError) as err:
+            _LOGGER.debug("Error fetching nutrition data: %s", err)
             raise UpdateFailed(f"Error fetching nutrition data: {err}") from err
+
+        if data:
+            # Any real data proves Connect+/nutrition is set up - never warn again,
+            # even if the user later goes days without logging food.
+            self._ever_had_data = True
+            self._empty_days = 0
+            self._last_empty_date = None
+            ir.async_delete_issue(self.hass, DOMAIN, self._connect_plus_issue_id)
+        elif self._ever_had_data:
+            pass  # A later gap just means no food was logged, not a missing subscription.
+        elif not self._has_enabled_nutrition_entity():
+            # Feature not opted into - never nag, and start a fresh debounce window
+            # if the user enables it later.
+            self._empty_days = 0
+            self._last_empty_date = None
+            ir.async_delete_issue(self.hass, DOMAIN, self._connect_plus_issue_id)
+        else:
+            today = dt_util.now().date()
+            if today != self._last_empty_date:
+                self._last_empty_date = today
+                self._empty_days += 1
+                if self._empty_days == _NUTRITION_EMPTY_DAY_THRESHOLD:
+                    ir.async_create_issue(
+                        self.hass,
+                        DOMAIN,
+                        self._connect_plus_issue_id,
+                        is_fixable=False,
+                        severity=ir.IssueSeverity.WARNING,
+                        translation_key="connect_plus_required",
+                        translation_placeholders={"title": self.config_entry.title},
+                    )
         return data
 
 
