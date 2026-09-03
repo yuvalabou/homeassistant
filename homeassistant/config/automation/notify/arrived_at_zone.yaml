@@ -29,7 +29,7 @@
         person_entity: "{{ trigger.entity_id }}"
         person_name: "{{ state_attr(trigger.entity_id, 'friendly_name') }}"
         notify_target: >
-          {{ 'mobile_app_tohar15' if 'yuval' in trigger.entity_id else 'mobile_app_yuval14' }}
+          {{ 'mobile_app_tohar15' if 'yuval' in trigger.entity_id else 'mobile_app_pixel_10a' }}
         partner_entity: >
           {{ 'person.tohar' if 'yuval' in trigger.entity_id else 'person.yuval' }}
         verb: >

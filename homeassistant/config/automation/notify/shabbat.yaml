@@ -29,7 +29,7 @@
         - condition: trigger
           id: '30_min'
         sequence:
-          - action: notify.mobile_app_yuval14
+          - action: notify.mobile_app_pixel_10a
             data:
               title: "שבת שלום!"
               message:  "מיחם, נרות ומקרר"
@@ -40,7 +40,7 @@
         - condition: trigger
           id: '10_min'
         sequence:
-          - action: notify.mobile_app_yuval14
+          - action: notify.mobile_app_pixel_10a
             data:
               title: "שבת שלום!"
               message: "שבת נכנסת בעוד 10 דקות."

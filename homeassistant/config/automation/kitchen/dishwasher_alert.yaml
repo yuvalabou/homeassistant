@@ -13,7 +13,7 @@
       state: 'off'
     - "{{ is_state('group.person', 'home') }}"
   action:
-    - action: notify.mobile_app_yuval14
+    - action: notify.mobile_app_pixel_10a
       data:
         title: "Dishwasher Alert"
         message: "ATTENTION: The dishwasher automation is currently disabled."

@@ -5,7 +5,7 @@
   trigger:
     trigger: time
     at:
-      - sensor.yuval14_next_alarm
+      - sensor.pixel_10a_next_alarm
       - sensor.tohar15_next_alarm
   condition:
     - "{{ is_state('binary_sensor.workday_sensor', 'on') }}"

@@ -26,7 +26,7 @@
             condition: trigger
             id: 'dishwasher'
           sequence:
-            - action: notify.mobile_app_yuval14
+            - action: notify.mobile_app_pixel_10a
               data:
                 message: "Dishwasher finished"
                 data:
@@ -40,7 +40,7 @@
             condition: trigger
             id: 'vacuum'
           sequence:
-            - action: notify.mobile_app_yuval14
+            - action: notify.mobile_app_pixel_10a
               data:
                 title: "Finished cleaning"
                 message: "It took me {{ (states('sensor.roborock_s7_cleaning_time') | int(0) / 60 ) | int(0) }} minutes"
@@ -56,7 +56,7 @@
             condition: trigger
             id: 'washing_machine'
           sequence:
-            - action: notify.mobile_app_yuval14
+            - action: notify.mobile_app_pixel_10a
               data:
                 message: "Washing machine finished"
                 data:

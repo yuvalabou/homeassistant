@@ -63,7 +63,7 @@
                       title: "Garden Person"
                       media_class: "image"
               response_variable: ai_description
-            - action: notify.mobile_app_yuval14
+            - action: notify.mobile_app_pixel_10a
               data:
                 title: "Person Detected in Garden"
                 message: >
@@ -78,7 +78,7 @@
             - condition: trigger
               id: "animal"
           sequence:
-            - action: notify.mobile_app_yuval14
+            - action: notify.mobile_app_pixel_10a
               data:
                 title: "Animal Detected in Garden"
                 message: "An animal was detected by the garden camera at {{ now().strftime('%H:%M') }}."
