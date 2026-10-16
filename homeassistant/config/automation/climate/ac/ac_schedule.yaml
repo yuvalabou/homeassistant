@@ -118,8 +118,8 @@
     minutes: 45
   condition:
     - condition: time
-      after: '01:00:00'
-      before: '07:00:00'
+      after: '23:00:00'
+      before: '08:00:00'
     - "{{ is_state('binary_sensor.jewish_calendar_issur_melacha_in_effect', 'on') }}"
     - "{{ is_state('input_boolean.night_ac_is_needed', 'on') }}"
     - "{{ is_state('group.person', 'home') }}"
@@ -134,7 +134,8 @@
                 - condition: template
                   value_template: "{{ now().month >= 11 or now().month <= 3 }}"
               sequence:
-                - action: script.turn_on
+                - enabled: false
+                  action: script.turn_on
                   data:
                     entity_id: script.heat
           default:

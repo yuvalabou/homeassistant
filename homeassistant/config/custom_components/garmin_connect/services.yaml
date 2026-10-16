@@ -182,7 +182,8 @@ add_blood_pressure:
           unit_of_measurement: mmHg
     pulse:
       name: Pulse (bpm)
-      required: true
+      description: Optional. Garmin Connect's own app accepts a reading without a heart rate.
+      required: false
       selector:
         number:
           min: 30
@@ -272,7 +273,7 @@ upload_activity:
           domain: sensor
     file_path:
       name: File path
-      description: Absolute path to the activity file on the HA host.
+      description: FIT, GPX or TCX file on the HA host, absolute or relative to the config directory. Paths outside the config directory must be in allowlist_external_dirs.
       required: true
       example: "/config/activities/run.fit"
       selector:

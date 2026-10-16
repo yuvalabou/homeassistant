@@ -6,12 +6,12 @@
   trigger:
     - { id: 'morning_heat', trigger: time, at: '06:10:00' }
     - { id: 'workday_off', trigger: time, at: '07:00:00' }
-    - { id: 'shabbat_wake', trigger: time, at: '08:00:00' }
+    - { id: 'shabbat_wake', trigger: time, at: '09:30:00' }
     - { id: 'night_sleep_prep', trigger: time, at: '22:30:00' }
     - { id: 'shabbat_nap', trigger: time, at: '12:30:00' }
     - { id: 'shabbat_night_fan', trigger: time, at: '19:30:00' }
     - { id: 'shabbat_night_ac', trigger: time, at: '21:00:00' }
-    - { id: 'stop_morning', trigger: time, at: '09:00:00' }
+    - { id: 'stop_morning', trigger: time, at: '09:30:00' }
     - { id: 'stop_afternoon', trigger: time, at: '16:30:00' }
   condition:
     - condition: state
@@ -49,13 +49,13 @@
                         entity_id: climate.master_bedroom_ac
                       data:
                         hvac_mode: cool
-                        temperature: 18
+                        temperature: 20
               default:
                 - action: climate.set_temperature
                   target: *ac_master
                   data:
                     hvac_mode: cool
-                    temperature: 19
+                    temperature: 20
                 - action: climate.set_fan_mode
                   target: *ac_master
                   data:
